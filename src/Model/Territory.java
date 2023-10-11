@@ -7,15 +7,15 @@ public class Territory {
     private String name;
     private Player owner;
     private int armies;
-    private List<Territory> neighbors;
-    private Coordinate center;
-    private Coordinate[] vertices;
+    private List<Territory> neighbours;
+    private Coordinates center;
+    private Coordinates[] vertices;
 
     public Territory(String name, Coordinate center, Coordinate[] vertices) {
         this.name = name;
         this.owner = null;
         this.armies = 0;
-        this.neighbors = new ArrayList<>();
+        this.neighbours = new ArrayList<>();
         this.center = center;
         this.vertices = vertices;
     }
@@ -47,19 +47,19 @@ public class Territory {
         }
     }
 
-    public List<Territory> getNeighbors() {
-        return neighbors;
+    public List<Territory> getNeighbours() {
+        return neighbours;
     }
 
-    public void addNeighbor(Territory neighbor) {
-        neighbors.add(neighbor);
+    public void addNeighbour(Territory neighbour) {
+        neighbours.add(neighbour);
     }
 
-    public Coordinate getCenter() {
+    public Coordinates getCenter() {
         return center;
     }
 
-    public Coordinate[] getVertices() {
+    public Coordinates[] getVertices() {
         return vertices;
     }
 }
