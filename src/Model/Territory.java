@@ -7,15 +7,13 @@ public class Territory {
     private String name;
     private Player owner;
     private int armies;
-    private List<Territory> adjacentTerritories;
-    private Coordinate coordinates;
+    private List<Territory> neighbours;
 
-    public Territory(String name, Player owner, Coordinate coordinates) {
+    public Territory(String name) {
         this.name = name;
-        this.owner = owner;
+        this.owner = null; // No owner initially
         this.armies = 0;
-        this.adjacentTerritories = new ArrayList<>();
-        this.coordinates = coordinates;
+        this.neighbours = new ArrayList<>();
     }
 
     public String getName() {
@@ -34,27 +32,23 @@ public class Territory {
         return armies;
     }
 
-    public void addArmies(int numArmies) {
-        armies += numArmies;
+    public void addArmies(int count) {
+        armies += count;
     }
 
-    public void removeArmies(int numArmies) {
-        armies -= numArmies;
+    public void removeArmies(int count) {
+        armies -= count;
         if (armies < 0) {
             armies = 0;
         }
     }
 
-    public void addAdjacentTerritory(Territory adjacentTerritory) {
-        adjacentTerritories.add(adjacentTerritory);
+    public List<Territory> getNeighbours() {
+        return neighbours;
     }
 
-    public List<Territory> getAdjacentTerritories() {
-        return adjacentTerritories;
-    }
-
-    public Coordinate getCoordinates() {
-        return coordinates;
+    public void addNeighbour(Territory neighbour) {
+        neighbours.add(neighbour);
     }
 }
 

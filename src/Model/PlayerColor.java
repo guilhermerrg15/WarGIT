@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.HashMap;
-
     public enum PlayerColor {
         BLUE,
         YELLOW,
@@ -9,8 +7,6 @@ import java.util.HashMap;
         BLACK,
         WHITE,
         GREEN;
-    
-    private static HashMap<String, PlayerColor> colorNamesToColors;
 
     public String getName() {
         switch (this) {
@@ -33,19 +29,6 @@ import java.util.HashMap;
     @Override
     public String toString() {
         return getName();
-    }
-    public static PlayerColor getColorByName(String name) {
-        if (colorNamesToColors == null) {
-            colorNamesToColors = new HashMap<String, PlayerColor>();
-
-            colorNamesToColors.put("azul", PlayerColor.BLUE);
-            colorNamesToColors.put("amarelo", PlayerColor.YELLOW);
-            colorNamesToColors.put("vermelho", PlayerColor.RED);
-            colorNamesToColors.put("preto", PlayerColor.BLACK);
-            colorNamesToColors.put("branco", PlayerColor.WHITE);
-            colorNamesToColors.put("verde", PlayerColor.GREEN);
-        }
-        return colorNamesToColors.get(name.toLowerCase());
     }
 }
 
