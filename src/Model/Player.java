@@ -4,12 +4,12 @@ package Model;
 
 public class Player {
     private String name;
-    private String color;
+    private PlayerColor color;
 //    private List<Objective> objectives;
 //    private List<Card> cards;
 //    private List<Territory> territories;
 
-    public Player(String name, String color) {
+    public Player(String name, PlayerColor color) {
         this.name = name;
         this.color = color;
 //        this.objectives = new ArrayList<>();
@@ -34,7 +34,7 @@ public class Player {
         return name;
     }
 
-    public String getColor() {
+    public PlayerColor getColor() {
         return color;
     }
 }
