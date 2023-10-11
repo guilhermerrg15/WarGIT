@@ -97,13 +97,9 @@ class Map {
 		nigeria.addNeighbor(brasil);
 
 		somalia.addNeighbor(arabiaSaudita);
+		argelia.addNeighbor(italia);
+		argelia.addNeighbor(espanha);
 		
-<<<<<<< HEAD
-=======
-		argelia.addNeighbour(italia);
-		argelia.addNeighbour(espanha);
-		
->>>>>>> c2bbc67e1d7625c694fc2a20cd4da1bbc333d863
 		map.continents[0] = new Continent("Africa", new Territory[] {
 				africaDoSul,angola, argelia, egito, nigeria, somalia
 		}, 3);
@@ -133,8 +129,7 @@ class Map {
 		quebec.addNeighbor(vancouver);
 		
 		texas.addNeighbor(vancouver);
-		
-<<<<<<< HEAD
+
 		
 		
 		map.continents[1] = new Continent("America do Norte", new Territory[] {
@@ -285,9 +280,6 @@ class Map {
 	        }
 	    }
 	    return null;
-=======
-		return map;
->>>>>>> c2bbc67e1d7625c694fc2a20cd4da1bbc333d863
 	}
 }
 	
