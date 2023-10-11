@@ -77,179 +77,32 @@ class Map {
 		Territory perth = new Territory("Perth", new Coordinates(82f/1024, 130f/768), new Coordinates[] { new Coordinates(0.083008f, 0.154948f), new Coordinates(0.070312f, 0.178385f), new Coordinates(0.056641f, 0.210938f), new Coordinates(0.108398f, 0.210938f), new Coordinates(0.129883f, 0.154948f) });
 		
 		
-		africaDoSul.addNeighbor(angola);
-		africaDoSul.addNeighbor(somalia);
+		angola.addNeighbour(somalia);
+		angola.addNeighbour(nigeria);
+		angola.addNeighbour(africaDoSul);
 		
-		angola.addNeighbor(somalia);
-		angola.addNeighbor(nigeria);
+		nigeria.addNeighbour(argelia);
+		nigeria.addNeighbour(brasil);
 		
-		argelia.addNeighbor(italia);
-		argelia.addNeighbor(espanha);
-		argelia.addNeighbor(nigeria);
-		argelia.addNeighbor(egito);
-		
-		egito.addNeighbor(nigeria);
-		egito.addNeighbor(somalia);
-		egito.addNeighbor(romenia);
-		egito.addNeighbor(jordania);
-		
-		nigeria.addNeighbor(somalia);
-		nigeria.addNeighbor(brasil);
+		egito.addNeighbour(argelia);
+		egito.addNeighbour(nigeria);
+		egito.addNeighbour(romenia);
+		egito.addNeighbour(jordania);
 
-		somalia.addNeighbor(arabiaSaudita);
-		argelia.addNeighbor(italia);
-		argelia.addNeighbor(espanha);
+		somalia.addNeighbour(nigeria);
+		somalia.addNeighbour(egito);
+		somalia.addNeighbour(arabiaSaudita);
+		somalia.addNeighbour(africaDoSul);
+		
+		argelia.addNeighbour(italia);
+		argelia.addNeighbour(espanha);
 		
 		map.continents[0] = new Continent("Africa", new Territory[] {
-				africaDoSul,angola, argelia, egito, nigeria, somalia
-		}, 3);
-		
-		
-		alasca.addNeighbor(calgary);
-		alasca.addNeighbor(vancouver);
-		alasca.addNeighbor(siberia);
-		
-		calgary.addNeighbor(vancouver);
-		calgary.addNeighbor(groelandia);
-		
-		california.addNeighbor(vancouver);
-		california.addNeighbor(texas);
-		california.addNeighbor(mexico);
-		
-		groelandia.addNeighbor(quebec);
-		groelandia.addNeighbor(reinoUnido);
-		
-		mexico.addNeighbor(texas);
-		mexico.addNeighbor(venezuela);
-		
-		novaYork.addNeighbor(texas);
-		novaYork.addNeighbor(quebec);
+				argelia, egito,
+				nigeria, somalia,
+				angola, africaDoSul
+		}, 3, new Color(101, 45, 144));
 
-		quebec.addNeighbor(texas);
-		quebec.addNeighbor(vancouver);
-		
-		texas.addNeighbor(vancouver);
-
-		
-		
-		map.continents[1] = new Continent("America do Norte", new Territory[] {
-				alasca, calgary, california, groelandia, mexico, novaYork, quebec, texas, vancouver
-		}, 5);
-		
-		
-		arabiaSaudita.addNeighbor(iraque);
-		arabiaSaudita.addNeighbor(jordania);
-		
-		bangladesh.addNeighbor(tailandia);
-		bangladesh.addNeighbor(india);
-		bangladesh.addNeighbor(coreiaDoSul);
-		bangladesh.addNeighbor(indonesia);
-		
-		cazaquistao.addNeighbor(japao);
-		cazaquistao.addNeighbor(siberia);
-		cazaquistao.addNeighbor(russia);
-		cazaquistao.addNeighbor(mongolia);
-		cazaquistao.addNeighbor(china);
-		cazaquistao.addNeighbor(turquia);
-		cazaquistao.addNeighbor(letonia);
-		
-		china.addNeighbor(mongolia);
-		china.addNeighbor(coreiaDoNorte);
-		china.addNeighbor(coreiaDoSul);
-		china.addNeighbor(india);
-		china.addNeighbor(paquistao);
-		china.addNeighbor(turquia);
-		
-		coreiaDoNorte.addNeighbor(japao);
-		coreiaDoNorte.addNeighbor(coreiaDoSul);
-		
-		coreiaDoSul.addNeighbor(tailandia);
-		coreiaDoSul.addNeighbor(india);
-		
-		estonia.addNeighbor(russia);
-		estonia.addNeighbor(letonia);
-		estonia.addNeighbor(suecia);
-		
-		india.addNeighbor(paquistao);
-		india.addNeighbor(indonesia);
-		
-		ira.addNeighbor(paquistao);
-		ira.addNeighbor(siria);
-		ira.addNeighbor(iraque);
-		
-		iraque.addNeighbor(siria);
-		iraque.addNeighbor(jordania);
-		
-		japao.addNeighbor(mongolia);
-		
-		jordania.addNeighbor(siria);
-		
-		
-		letonia.addNeighbor(russia);
-		letonia.addNeighbor(turquia);
-		letonia.addNeighbor(ucrania);
-		letonia.addNeighbor(polonia);
-		letonia.addNeighbor(suecia);
-		
-		paquistao.addNeighbor(turquia);
-		paquistao.addNeighbor(siria);
-		
-		russia.addNeighbor(siberia);
-		
-		siria.addNeighbor(turquia);
-		
-		turquia.addNeighbor(ucrania);
-		
-		map.continents[2] = new Continent("Asia", new Territory[] {
-				arabiaSaudita, bangladesh, cazaquistao, china, coreiaDoNorte, coreiaDoSul, 
-				estonia, india, ira, iraque, japao, jordania, letonia, mongolia, paquistao, 
-				russia, siberia, siria, tailandia, turquia  
-		}, 7);
-		
-		
-		
-		argentina.addNeighbor(peru);
-		argentina.addNeighbor(brasil);
-		
-		brasil.addNeighbor(peru);
-		brasil.addNeighbor(venezuela);
-		
-		peru.addNeighbor(venezuela);
-		
-		map.continents[3] = new Continent("America do Sul", new Territory[] {
-				argentina, brasil, peru, venezuela
-		}, 2);
-		
-		
-		espanha.addNeighbor(franca);
-		
-		franca.addNeighbor(italia);
-		franca.addNeighbor(suecia);
-		franca.addNeighbor(reinoUnido);
-		
-		italia.addNeighbor(romenia);
-		italia.addNeighbor(polonia);
-		italia.addNeighbor(suecia);
-		
-		polonia.addNeighbor(ucrania);
-		polonia.addNeighbor(romenia);
-		
-		romenia.addNeighbor(ucrania);
-		
-		map.continents[4] = new Continent("Europa", new Territory[] {
-				espanha, franca, italia, polonia, reinoUnido, romenia, suecia, ucrania
-		}, 5);
-		
-		australia.addNeighbor(perth);
-		australia.addNeighbor(indonesia);
-		australia.addNeighbor(novaZelandia);
-		
-
-		map.continents[5] = new Continent("Oceania", new Territory[] {
-				indonesia, novaZelandia,
-				australia, perth
-		}, 2);
-				
 		return map;
 		
 	}
