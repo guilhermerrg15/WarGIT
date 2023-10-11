@@ -1,0 +1,40 @@
+package Model;
+//import java.util.ArrayList;
+//import java.util.List;
+
+public class Player {
+    private String name;
+    private String color;
+//    private List<Objective> objectives;
+//    private List<Card> cards;
+//    private List<Territory> territories;
+
+    public Player(String name, String color) {
+        this.name = name;
+        this.color = color;
+//        this.objectives = new ArrayList<>();
+//        this.cards = new ArrayList<>();
+//        this.territories = new ArrayList<>();
+    }
+
+    // Métodos para adicionar objetivos, cartas e territórios
+//    public void addObjective(Objective objective) {
+//        objectives.add(objective);
+//    }
+
+//    public void addCard(Card card) {
+//        cards.add(card);
+//    }
+
+//    public void addTerritory(Territory territory) {
+//        territories.add(territory);
+//    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+}
