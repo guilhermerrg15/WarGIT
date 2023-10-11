@@ -1,7 +1,6 @@
 package Model;
 
 import java.awt.Color;
-import java.io.Serializable;
 
 class Map {
 	
@@ -14,6 +13,7 @@ class Map {
 	}
 	
 	public static Map mapGenerator() {
+
 		Map map = new Map();
 		
 		map.continents = new Continent[6];
@@ -100,21 +100,15 @@ class Map {
 		argelia.addNeighbour(italia);
 		argelia.addNeighbour(espanha);
 		
-		
-
 		map.continents[0] = new Continent("Africa", new Territory[] {
 				argelia, egito,
 				nigeria, somalia,
 				angola, africaDoSul
 		}, 3, new Color(101, 45, 144));
 		
-		
-		
-		
-		
-		
+		return map;
 	}
-	
+}
 	
 
-}
+
