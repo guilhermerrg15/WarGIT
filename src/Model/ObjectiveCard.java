@@ -25,6 +25,6 @@ public class ObjectiveCard {
 
     public String getTarget() {
         return target;
-    } // Retorna o nome do território alvo (nao sei ainda se vai ser utilizado)
+    } 
 }
 

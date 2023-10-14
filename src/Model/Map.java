@@ -9,7 +9,8 @@ class Map {
 		return continents;
 	}
 	
-	private Map() {
+	// tava como private 
+	public Map() {
 	}
 	
 	public static Map mapGenerator() {
