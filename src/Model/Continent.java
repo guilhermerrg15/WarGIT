@@ -8,12 +8,7 @@ public class Continent {
     private int bonusArmies;
     private Color color;
 
-    public Continent(String name, Territory[] territories, int bonusArmies, Color color) {
-        this.name = name;
-        this.territories = territories;
-        this.bonusArmies = bonusArmies;
-        this.color = color;
-    }
+    
 
     public String getName() {
         return name;
@@ -30,5 +25,29 @@ public class Continent {
     public Color getColor() {
         return color;
     }
+    
+    public Territory findTerritory(String name) {
+        for (Territory territory : territories) {
+            if (territory.getName().equals(name)) {
+                return territory;
+            }
+        }
+        return null;
+    }
+
+    public int getNumberTerritories() {
+        return territories.length;
+    }
+    
+    
+    public Continent(String name, Territory[] territories, int bonusArmies, Color color) {
+        this.name = name;
+        this.territories = territories;
+        this.bonusArmies = bonusArmies;
+        this.color = color;
+    }
+
+	
+	
 }
 
