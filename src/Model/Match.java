@@ -78,9 +78,8 @@ class Match {
 	
 	// Avaliar com as cartas de território
 	private static boolean evaluateCardTrioBonus(TerritoryCard c1, TerritoryCard c2, TerritoryCard c3) {
-    return (c1.getGeometry().isNotSame(c2.getGeometry()) && c1.getGeometry().isNotSame(c3.getGeometry())) ||
-           (c1.getGeometry().isSame(c2.getGeometry()) && c1.getGeometry().isSame(c3.getGeometry()));
-	}
+    return c1.getShape().isSameShape(c2.getShape()) && c1.getShape().isSameShape(c3.getShape());
+}
 
 	// tarefa 5 - Posicionar exércitos de acordo com a troca de cartas
 	public void doCardTrade(Player player, TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {

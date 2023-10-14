@@ -1,6 +1,5 @@
 package Model;
 
-import shared Shape;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +10,7 @@ public class Game {
 	private List<Player> players;
 	private List<ObjectiveCard> availableObjectives;
 	private Match match;
+	private Shape shape; // nao sei se precisa disso 
 	
     public Game() {
     	players = new ArrayList<>();
@@ -61,11 +61,14 @@ public class Game {
 		}
 
 		public String getTerritoryCardTerritory(int id) {
+			if(id == 0 || id == 1) {
+				return "Joker Card";
+			}
 			return match.getCardById(id).getTerritory().getName();
 		}
 
 		public void startMatch() {
-			match = new Match(players, world);
+			match = new Match(players, map);
 			match.startMatch();
 		}
 
