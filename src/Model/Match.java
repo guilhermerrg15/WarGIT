@@ -3,15 +3,24 @@ package Model;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 class Match {
 	private Map map;	
 	private List <Player> players;
 	private boolean hasMatchedStarted;
 	private ArrayList<TerritoryCard> allCards = new ArrayList<TerritoryCard>();
-
-	public boolean startMatch() {
+	private int tradeCounter = 0;
+	private static int[] tradeBonusAmount = new int[] {
+			4, 6, 8, 10, 12, 15
+	};
+	
+	public boolean hasStarted() {
 		return hasMatchedStarted;
+	}
+	
+	public List<Player> getPlayers() {
+		return Collections.unmodifiableList(players);
 	}
 
 	public Map getMap() {
@@ -24,44 +33,49 @@ class Match {
 
 	// tarefa 2 - distribuição de territórios para os jogadores
 	private void giveRandomTerritoriesToPlayers() {
-    List<Player> players = getPlayers();
-    List<Territory> territories = map.getAllTerritories(); // Fazer um método que pegue todos os territórios
-    
-    // Embaralhar lista de territórios
-    Collections.shuffle(territories, new Random());
-    
-    int numTerritories = territories.size();
-    int numPlayers = players.size();
-    
-    int territoriesPerPlayer = numTerritories / numPlayers;
-    int remainder = numTerritories % numPlayers;
+	    List<Player> players = getPlayers();
+	    int numPlayers = players.size();
+	    int numTerritories = map.getNumberTerritories();
 
-    int territoryIndex = 0;
+	    int territoriesPerPlayer = numTerritories / numPlayers;
+	    int remainder = numTerritories % numPlayers;
 
-		// Atribuir territórios para cada jogador
-    for (Player player : players) {
-        int territoriesToAssign = territoriesPerPlayer;
-        if (remainder > 0) {
-            territoriesToAssign++;
-            remainder--;
-        }
-				
-				// Designar territórios para o jogador atual
-        for (int i = 0; i < territoriesToAssign; i++) {
-            Territory territory = territories.get(territoryIndex);
-            player.addTerritory(territory);
-            territory.setOwner(player);
-            territory.addArmies(1); // Adicionar exército no território designado ao jogador
-            territoryIndex++;
-        }
-    }
+	    int territoryIndex = 0;
+
+	    List<Integer> territoryIndices = new ArrayList<>();
+	    for (int i = 0; i < numTerritories; i++) {
+	        territoryIndices.add(i);
+	    }
+
+	    
+	    Collections.shuffle(territoryIndices, new Random());
+
+	    
+	    for (Player player : players) {
+	        int territoriesToAssign = territoriesPerPlayer;
+	        if (remainder > 0) {
+	            territoriesToAssign++;
+	            remainder--;
+	        }
+
+
+	        for (int i = 0; i < territoriesToAssign; i++) {
+	            int index = territoryIndices.get(territoryIndex);
+	            Territory territory = map.getTerritory(index); 
+	            player.addTerritory(territory);
+	            territory.setOwner(player);
+	            territory.addArmies(1); 
+	            territoryIndex++;
+	        }
+	    }
 	}
 
+
 	// tarefa 3 - Distribuir exércitos correspondentes à metade do número de territórios que o jogador da vez possui
-	private void distributeGlobalArmiesToPlayers() {
+	private void distributeArmiesToPlayers() {
     for (Player player : players) {
-        int amt = player.getTerritoryCount() / 2;
-        player.addGlobalArmies(amt); // adicionar método no model Player?
+        int amt = player.getTerritories().size() / 2;
+        player.addArmies(amt); 
     }
 	}
 
@@ -69,8 +83,8 @@ class Match {
 	private void distributeContinentalArmiesToPlayers() {
     for (Player player : players) {
         for (Continent continent : map.getContinents()) {
-            if (player.hasEntireContinent(continent)) { // criar hasEntireContinent no model Player
-                player.addContinentalSoldiers(continent, continent.getValue()); // criar addContinentalSoldiers no model Player
+            if (player.hasEntireContinent(continent)) { 
+                player.addContinentalSoldiers(continent, continent.getValue());
             }
         }
     }
@@ -82,31 +96,51 @@ class Match {
 }
 
 	// tarefa 5 - Posicionar exércitos de acordo com a troca de cartas
-	public void doCardTrade(Player player, TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {
-    if (evaluateCardTrioBonus(card1, card2, card3)) {
-        for (TerritoryCard card : Arrays.asList(card1, card2, card3)) {
-            Territory territory = card.getTerritory();
-            if (player.ownsTerritory(territory)) {
-                territory.addArmies(2);
-            }
-            player.removeTerritoryCard(card); // adicionar isso no model Player?
-            unclaimedTerritoryCards.addLast(card); // precisa disso?
-        }
-        
-        int bonus = tradeCounter >= tradeBonusAmount.length ?
-            tradeBonusAmount[tradeBonusAmount.length - 1] + (tradeCounter - tradeBonusAmount.length + 1) * 5 :
-            tradeBonusAmount[tradeCounter];
-        
-        player.addGlobalArmies(bonus); // adicionar método no model Player?
-        tradeCounter++;
-    } 
+	public void doCardsTrade(Player player, TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {
+	    
+	    if (evaluateCardTrioBonus(card1, card2, card3)) {
+	        if (player.ownsTerritory(card1.getTerritory())) {
+	            card1.getTerritory().addArmies(2);
+	        }
+	        if (player.ownsTerritory(card2.getTerritory())) {
+	            card2.getTerritory().addArmies(2);
+	        }
+	        if (player.ownsTerritory(card3.getTerritory())) {
+	            card3.getTerritory().addArmies(2);
+	        }
+
+	        // Calculate the trade bonus based on the tradeCounter
+	        int bonus = calculateTradeBonus();
+
+	        // Add the bonus soldiers to the player's total
+	        player.addArmies(bonus);
+
+	        // Remove the traded cards from the player's hand
+	        player.removeTerritoryCard(card1);
+	        player.removeTerritoryCard(card2);
+	        player.removeTerritoryCard(card3);
+
+			// Increment the trade counter
+	        tradeCounter++;
+	    }
 	}
 
-	public void startMatch() {
-		giveRandomTerritoriesToPlayers()
-		distributeGlobalArmiesToPlayers()
-		distributeContinentalArmiesToPlayers()
+	private int calculateTradeBonus() {
+	    int bonus;
+	    if (tradeCounter >= tradeBonusAmount.length) {
+	        bonus = tradeBonusAmount[tradeBonusAmount.length - 1] + (tradeCounter - tradeBonusAmount.length + 1) * 5;
+	    } else {
+	        bonus = tradeBonusAmount[tradeCounter];
+	    }
+	    return bonus;
+	}
 
-		hasMatchedStarted = true
+
+	public void startMatch() {
+		giveRandomTerritoriesToPlayers();
+		distributeArmiesToPlayers();
+		distributeContinentalArmiesToPlayers();
+
+		hasMatchedStarted = true;
 	}
 }

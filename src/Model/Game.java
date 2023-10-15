@@ -62,7 +62,7 @@ public class Game {
     }
 
 		public void doCardTrade(PlayerColor player, int card1, int card2, int card3) {
-			match.doCardTrade(getPlayerByColor(player),match.getCardById(card1),match.getCardById(card2),match.getCardById(card3));
+			match.doCardsTrade(getPlayerByColor(player),match.getCardById(card1),match.getCardById(card2),match.getCardById(card3));
 		}
 
 		// public String territoryCardDescription(int cardId) {

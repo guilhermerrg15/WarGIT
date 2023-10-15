@@ -7,10 +7,15 @@ public class Continent {
     private Territory[] territories;
     private int bonusArmies;
     private Color color;
+    private int value;
 
     public String getName() {
         return name;
     }
+    
+    public int getValue() {
+		return value;
+	}
 
     public Territory[] getTerritories() {
         return territories;
@@ -44,8 +49,5 @@ public class Continent {
         this.bonusArmies = bonusArmies;
         this.color = color;
     }
-
-	
-	
 }
 

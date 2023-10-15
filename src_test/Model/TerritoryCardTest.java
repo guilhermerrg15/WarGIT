@@ -7,17 +7,26 @@ public class TerritoryCardTest {
 
     @Test
     public void testTerritoryCardInitialization() {
-        TerritoryCard territoryCard = new TerritoryCard("Brazil", "Triangle");
+        int id = 1;
+        String name = "Territorio X";
+        Shape shape = Shape.Square;
+        TerritoryCard territoryCard = new TerritoryCard(id,name, shape);
 
-        assertEquals("Brazil", territoryCard.getName());
-        assertEquals("Triangle", territoryCard.getGeometricShape());
+        assertEquals(name, territoryCard.getName());
+        assertEquals(shape, territoryCard.getShape());
     }
 
     @Test
-    public void testToString() {
-        TerritoryCard territoryCard = new TerritoryCard("Canada", "Square");
+    public void testTerritoryCardToString() {
+        int id = 1;
+        String name = "Territorio Y";
+        Shape shape = Shape.Square;
+        TerritoryCard territoryCard = new TerritoryCard(id,name, shape);
 
-        assertEquals("Canada (Square)", territoryCard.toString());
+        String expectedString = name + " (" + shape + ")";
+        assertEquals(expectedString, territoryCard.toString());
     }
+
 }
+
 

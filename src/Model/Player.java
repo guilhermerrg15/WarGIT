@@ -1,23 +1,25 @@
 package Model;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Hashtable;
 
 public class Player {
     private String name;
     private List <Territory> territories;
-    private List<TerritoryCard> territoryCards;
     private int armies;
     private PlayerColor color;
     private ObjectiveCard objective;
+    private ArrayList<TerritoryCard> territoryCards;
 
 
     public Player(String name, PlayerColor color) {
         this.name = name;
         this.color = color;
         this.territories = new ArrayList<>();
-        this.territoryCards = new ArrayList<>();
         this.armies = 0;
         this.objective = null;
+        this.territoryCards = new ArrayList<TerritoryCard>();
     }
 
     // Métodos para adicionar objetivos, cartas e territórios
@@ -26,8 +28,6 @@ public class Player {
         territory.removeArmies(numArmies);
     }
 
-    
-
     public String getName() {
         return name;
     }
@@ -35,6 +35,14 @@ public class Player {
     public List <Territory> getTerritories() {
         return territories;
     }
+
+    public List<TerritoryCard> getTerritoryCardList() {
+		return Collections.unmodifiableList(territoryCards);
+	}
+    
+    public void addTerritoryCard(TerritoryCard card) {
+		territoryCards.add(card);
+	}
 
     public void addTerritory(Territory territory) {
         territories.add(territory);
@@ -58,14 +66,31 @@ public class Player {
         }
     }
 
-    public List<TerritoryCard> getTerritoryCardList() {
-        return territoryCards;
-    }
+    public boolean hasEntireContinent(Continent c) {
+		for (Territory t : c.getTerritories()) {
+			if (t.getOwner() != this) {
+				return false;
+			}
+		}
+		return true;
+	}
+    
+    private Hashtable<Continent, Integer> unspentContinentalSoldiers = new Hashtable<Continent, Integer>();
+    
+    public int getUnspentContinentalSoldierCount(Continent c) {
+		return unspentContinentalSoldiers.get(c);
+	}
+    
+    public void addContinentalSoldiers(Continent c, int amount) {
+		unspentContinentalSoldiers.putIfAbsent(c, 0);
+		
+		Integer i = unspentContinentalSoldiers.get(c);
+		unspentContinentalSoldiers.put(c, i + amount);
+	}
 
     public ObjectiveCard getObjective() {
         return objective;
     }
-
 
     public void setObjective(ObjectiveCard objective) {
         this.objective = objective;
@@ -74,4 +99,9 @@ public class Player {
     public PlayerColor getColor() {
         return color;
     }
+    
+    public void removeTerritoryCard(TerritoryCard card) {
+		territoryCards.remove(card);
+	}
 }
+

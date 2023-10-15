@@ -263,6 +263,7 @@ class Map {
 	    return null;
 	}
 	
+	
 	public int getNumberTerritories() {
 	    int count = 0;
 	    for (int i = 0; i < continents.length; ++i) {
@@ -270,6 +271,21 @@ class Map {
 		}
 	    return count;
 	}
+
+	public Territory getTerritory(int index) {
+		int currentIndex = 0;
+		for (Continent continent : continents) {
+			Territory[] territories = continent.getTerritories();
+			for (Territory territory : territories) {
+				if (currentIndex == index) {
+					return territory;
+				}
+				currentIndex++;
+			}
+		}
+		return null; // Return null if the index is out of bounds
+	}
+	
 	
 	
 	public Continent findContinent(String name) {
