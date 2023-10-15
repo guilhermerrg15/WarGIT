@@ -26,6 +26,15 @@ public class Game {
         shufflePlayers();
 
     }
+
+    public Player getPlayerByColor(PlayerColor color) {
+        for (Player player : players) {
+            if (player.getColor() == color) {
+                return player;
+            }
+        }
+        return null;
+    }
     
     private void shufflePlayers() {
         long seed = System.nanoTime();
@@ -56,15 +65,15 @@ public class Game {
 			match.doCardTrade(getPlayerByColor(player),match.getCardById(card1),match.getCardById(card2),match.getCardById(card3));
 		}
 
-		public String territoryCardDescription(int cardId) {
-			return match.getCardById(cardId).getDescription();
-		}
+		// public String territoryCardDescription(int cardId) {
+		// 	return match.getCardById(cardId).getDescription();
+		// }
 
 		public String getTerritoryCardTerritory(int id) {
 			if(id == 0 || id == 1) {
 				return "Joker Card";
 			}
-			return match.getCardById(id).getTerritory().getName();
+			return match.getCardById(id).getName();
 		}
 
 		public void startMatch() {
