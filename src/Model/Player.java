@@ -47,6 +47,10 @@ public class Player {
     public void addTerritory(Territory territory) {
         territories.add(territory);
     }
+    
+    public boolean ownsTerritory(Territory t) {
+        return territories.contains(t);
+    }
 
     public void removeTerritory(Territory territory) {
         territories.remove(territory);

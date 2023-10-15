@@ -10,7 +10,7 @@ public class Game {
 	private List<Player> players;
 	private List<ObjectiveCard> availableObjectives;
 	private Match match;
-	private Shape shape; // nao sei se precisa disso 
+	private Map map;
 	
     public Game() {
     	players = new ArrayList<>();

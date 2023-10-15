@@ -15,7 +15,12 @@ class Match {
 			4, 6, 8, 10, 12, 15
 	};
 	
-	public boolean hasStarted() {
+	public Match(List<Player> players, Map map) {
+	    this.players = players;
+	    this.map = map;
+	}
+	
+	public boolean hasStarted() {  
 		return hasMatchedStarted;
 	}
 	
