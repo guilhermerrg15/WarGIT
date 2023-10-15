@@ -8,8 +8,6 @@ public class Continent {
     private int bonusArmies;
     private Color color;
 
-    
-
     public String getName() {
         return name;
     }
