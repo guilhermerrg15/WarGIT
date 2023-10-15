@@ -21,11 +21,6 @@ public class Game {
         players.add(player);
     }
     
-    public void startGame() {
-    	
-        shufflePlayers();
-
-    }
 
     public Player getPlayerByColor(PlayerColor color) {
         for (Player player : players) {
@@ -77,6 +72,7 @@ public class Game {
 		}
 
 		public void startMatch() {
+			shufflePlayers();
 			match = new Match(players, map);
 			match.startMatch();
 		}
