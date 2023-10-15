@@ -5,6 +5,7 @@ import java.util.List;
 public class Player {
     private String name;
     private List <Territory> territories;
+    private List<TerritoryCard> territoryCards;
     private int armies;
     private PlayerColor color;
     private ObjectiveCard objective;
@@ -14,6 +15,7 @@ public class Player {
         this.name = name;
         this.color = color;
         this.territories = new ArrayList<>();
+        this.territoryCards = new ArrayList<>();
         this.armies = 0;
         this.objective = null;
     }
@@ -23,6 +25,8 @@ public class Player {
     public void removeArmies(Territory territory, int numArmies) {
         territory.removeArmies(numArmies);
     }
+
+    
 
     public String getName() {
         return name;
@@ -54,9 +58,14 @@ public class Player {
         }
     }
 
+    public List<TerritoryCard> getTerritoryCardList() {
+        return territoryCards;
+    }
+
     public ObjectiveCard getObjective() {
         return objective;
     }
+
 
     public void setObjective(ObjectiveCard objective) {
         this.objective = objective;
