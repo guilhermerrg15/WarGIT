@@ -13,6 +13,7 @@ class Map {
 	public Map() {
 	}
 	
+	
 	public static Map mapGenerator() {
 
 		Map map = new Map();

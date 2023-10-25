@@ -4,7 +4,7 @@ public class TerritoryCard {
     private String name;
     private Shape geometricShape; 
     private int id;
-    private Territory territory;  // Add this field
+    private Territory territory;
 
     public TerritoryCard(int id, String name, Shape geometricShape) {
         this.id = id;

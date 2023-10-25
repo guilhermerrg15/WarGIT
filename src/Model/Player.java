@@ -22,8 +22,6 @@ public class Player {
         this.territoryCards = new ArrayList<TerritoryCard>();
     }
 
-    // Métodos para adicionar objetivos, cartas e territórios
-
     public void removeArmies(Territory territory, int numArmies) {
         territory.removeArmies(numArmies);
     }
