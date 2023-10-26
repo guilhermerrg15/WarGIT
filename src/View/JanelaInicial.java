@@ -2,11 +2,11 @@ package View;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+// import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridLayout;
+// import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
+// import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import Controller.TratadorStart;
 
 public class JanelaInicial extends JFrame {
 	public JanelaInicial(){
@@ -44,6 +46,11 @@ public class JanelaInicial extends JFrame {
 		setLocationRelativeTo(null);
 		setBounds(0,0,1200,700);
 
+
+		JButton novo = new JButton("Novo jogo");
+		novo.setBounds(50, 50, 600, 60);
+		novo.addActionListener(new TratadorStart(this));
+		newp.add(novo);
 
 		//Trocar esse botao pelo botao novo feito no Illustrator / Canva
 		JButton carregar = new JButton("Carregar jogo"); 
