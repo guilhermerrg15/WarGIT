@@ -27,7 +27,7 @@ public class JanelaInicial extends JFrame {
 			        Image i;
 					try {
 						i = ImageIO.read(new File("resources/imagens/bgconfiguracao.png"));
-						g.drawImage(i,0, 0, 1200, 700, null); 
+						g.drawImage(i,0, -50, 1200, 700, null); 
 					}
 					
 					catch(IOException e){
@@ -44,13 +44,13 @@ public class JanelaInicial extends JFrame {
 		setLocationRelativeTo(null);
 		setBounds(0,0,1200,700);
 
-		JButton comecar = new JButton("Novo jogo");
-		comecar.setBounds(200,270,120,30);
-		newp.add(comecar);
-		JButton carregar = new JButton("Carregar jogo");
-		carregar.setBounds(200,330,120,30);
+
+		//Trocar esse botao pelo botao novo feito no Illustrator / Canva
+		JButton carregar = new JButton("Carregar jogo"); 
+		carregar.setBounds(50, 130, 600, 60); 
 		newp.add(carregar);
 		setVisible(true);
+
 	}
 
 }
