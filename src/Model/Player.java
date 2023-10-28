@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Hashtable;
 
 public class Player {
-    private String name;
+    String name;
     private List <Territory> territories;
     private int armies;
     private PlayerColor color;

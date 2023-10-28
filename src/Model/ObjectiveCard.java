@@ -1,9 +1,13 @@
 package Model;
 
+import java.util.Hashtable;
+import java.util.Collections;
+
 public class ObjectiveCard {
-    private String description;
+    String description;
     private boolean completed;
     private String target;
+    Player dono;
 
     public ObjectiveCard(String description, String target) {
         this.description = description;
@@ -11,9 +15,36 @@ public class ObjectiveCard {
         this.target = target;
     }
 
-    public String getDescription() {
-        return description;
+    void setDono(Player dono) {
+        this.dono = dono;
     }
+
+    static Player retornaDono(ObjectiveCard[] cards, String carta) {
+        for (ObjectiveCard cart : cards) {
+            if (cart.description.equals(carta)) {
+                return cart.dono;
+            }
+        }
+        return null;
+    }
+
+    static Integer idCarta(String carta) {
+        Hashtable<String, Integer> nomeImagens = new Hashtable<String, Integer>();
+        nomeImagens.put("Conquistar 24 territórios a sua escolha", 0);
+        nomeImagens.put("Conquistar na totalidade a Asia e a Africa", 1);
+        nomeImagens.put("Conquistar na totalidade a Asia e a America do Sul", 2);
+        nomeImagens.put("Conquistar na totalidade a America do Norte e a Africa", 3);
+        nomeImagens.put("Conquistar na totalidade a America do Norte e a Oceania", 4);
+        nomeImagens.put("Conquistar na totalidade a Europa, a Oceania e mais um continente a sua escolha", 5);
+        nomeImagens.put("Conquistar na totalidade a Europa, a America do Sul e mais um continente a sua escolha", 6);
+        nomeImagens.put("Conquistar 18 territórios com pelo menos 2 exércitos em cada", 7);
+        return nomeImagens.get(carta);
+    }
+
+
+    // public String getDescription() {
+    //     return description;
+    // }
 
     public boolean isCompleted() {
         return completed;
@@ -27,4 +58,3 @@ public class ObjectiveCard {
         return target;
     } 
 }
-
