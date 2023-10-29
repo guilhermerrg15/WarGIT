@@ -4,11 +4,11 @@ import java.util.Hashtable;
 
 public class TerritoryCard {
     String name;
-    String geometricShape; 
+    Shape geometricShape; 
     private int id;
     Territory territory;
 
-    public TerritoryCard(String name, String geometricShape) {
+    public TerritoryCard(String name, Shape geometricShape) {
         // this.id = id;
         this.name = name;
         this.geometricShape = geometricShape;
