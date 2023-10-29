@@ -42,9 +42,9 @@ public class ObjectiveCard {
     }
 
 
-    // public String getDescription() {
-    //     return description;
-    // }
+    public String getDescription() {
+        return description;
+    }
 
     public boolean isCompleted() {
         return completed;
