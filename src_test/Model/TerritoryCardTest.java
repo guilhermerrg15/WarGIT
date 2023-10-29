@@ -7,10 +7,9 @@ public class TerritoryCardTest {
 
     @Test
     public void testTerritoryCardInitialization() {
-        int id = 1;
         String name = "Territorio X";
         Shape shape = Shape.Square;
-        TerritoryCard territoryCard = new TerritoryCard(id,name, shape);
+        TerritoryCard territoryCard = new TerritoryCard(name, shape);
 
         assertEquals(name, territoryCard.getName());
         assertEquals(shape, territoryCard.getShape());
@@ -18,10 +17,9 @@ public class TerritoryCardTest {
 
     @Test
     public void testTerritoryCardToString() {
-        int id = 1;
         String name = "Territorio Y";
         Shape shape = Shape.Square;
-        TerritoryCard territoryCard = new TerritoryCard(id,name, shape);
+        TerritoryCard territoryCard = new TerritoryCard(name, shape);
 
         String expectedString = name + " (" + shape + ")";
         assertEquals(expectedString, territoryCard.toString());
