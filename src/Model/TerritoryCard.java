@@ -92,7 +92,7 @@ public class TerritoryCard {
         return name;
     }
 
-    public String getShape() {
+    public Shape getShape() {
         return geometricShape;
     }
 
