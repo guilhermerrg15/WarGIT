@@ -57,6 +57,14 @@ public class API {
         }
         return null;
     }
+    
+    public static ArrayList<String> getDescricoesCartas() {
+    	ArrayList<String> descricoes = new ArrayList<>();
+        for (ObjectiveCard cart : cartas) {
+            descricoes.add(cart.getDescription());
+        }
+        return descricoes;
+    }
 
     public static int getQtdJogadores() {
         return numJogadores;
@@ -80,6 +88,15 @@ public class API {
     public static Integer idCarta(String carta) {
         return ObjectiveCard.idCarta(carta);
     }
+    
+//    public static TerritoryCard[] getCartasTerritorio() {
+//        return cartasTerritorio;
+//    }
+
+	public static TerritoryCard[] getCartasTerritorio() {
+		// TODO Auto-generated method stub
+		return cartasTerritorio;
+	}
 
 
 
