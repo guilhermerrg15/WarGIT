@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.util.*;
 
 public class API {
+
     static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
     static Player[] jogadores;
+
+    static TerritoryCard[] cartasTerritorio = TerritoryCardDeck.getInstance().setCartasEmbaralhadas();
+    
+
     private static int numJogadores = 0;
 
     public static void setDono(String carta, Player jog) {
