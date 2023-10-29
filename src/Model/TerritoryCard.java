@@ -9,7 +9,7 @@ public class TerritoryCard {
     Territory territory;
 
     public TerritoryCard(String name, Shape geometricShape) {
-        // this.id = id;
+         this.id = id;
         this.name = name;
         this.geometricShape = geometricShape;
     }

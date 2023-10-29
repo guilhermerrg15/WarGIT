@@ -1,8 +1,8 @@
 package View;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import Model.API;
 import Model.ObjectiveCard;
 import Model.ObjectiveCardDeck;
 
@@ -10,116 +10,97 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import javax.imageio.ImageIO;
+import java.util.Random;
 
-public class ObjectiveCardsView extends JFrame {
-    private BufferedImage[] cardImages;
-    private ObjectiveCard[] objectiveCards;
-    ArrayList<String> descricoesCartas;
-    
-    
-    
+public class ObjectiveCardsView extends JPanel {
+    private BufferedImage cardImage; // A imagem da carta
+    private String objectiveText;
+    private static final int MAX_CHARACTERS_PER_LINE = 250;
 
-    public ObjectiveCardsView() {
-        setTitle("Cartas de Objetivo");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public ObjectiveCardsView(String imagePath) {
+        loadCardImage(imagePath);
+        setRandomObjective();
+    }
 
-        objectiveCards = new ObjectiveCard[8]; // 8 cartas conforme o seu modelo
-        carregarCartasObjetivo();
-
-        setPreferredSize(new Dimension(1200, 700)); // Tamanho da janela
-        pack();
-        setLocationRelativeTo(null); // Centraliza a janela
-        
-        descricoesCartas = API.getDescricoesCartas();
-
-        if (descricoesCartas != null && !descricoesCartas.isEmpty()) {
-            objectiveCards = new ObjectiveCard[descricoesCartas.size()];
-            carregarCartasObjetivo();
-        } else {
-            // Tratamento caso a lista esteja vazia ou nula
-            System.out.println("Lista de descrições de cartas está vazia ou nula.");
-            // Pode ser útil exibir uma mensagem para o usuário informando que não há descrições de cartas disponíveis.
+    private void loadCardImage(String imagePath) {
+        try {
+            File file = new File(imagePath);
+            cardImage = ImageIO.read(file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        
-        
     }
     
-    
+    private void setRandomObjective() {
+        ObjectiveCardDeck objectiveDeck = ObjectiveCardDeck.getInstance();
+        String[] descriptions = objectiveDeck.getDescricao(); // Obtém as descrições dos objetivos
+        Random random = new Random();
+        int randomIndex = random.nextInt(descriptions.length); // Escolhe um índice aleatório
+        objectiveText = descriptions[randomIndex]; // Define o texto do objetivo aleatório
+    }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-        int x = 50; // Posição inicial x para desenhar as cartas
-        int y = 50; // Posição inicial y para desenhar as cartas
+        // Desenhar a imagem da carta, se disponível
+        if (cardImage != null) {
+            g.drawImage(cardImage, 0, 0, this);
+        }
 
-        
-
-        for (int i = 0; i < descricoesCartas.size(); i++) {
-            // Desenhar a imagem da carta
-            g2d.drawImage(cardImages[i], x, y, null);
-
-            // Desenhar o texto do objetivo usando as informações do modelo via API
-            g2d.setColor(Color.BLACK);
-            g2d.drawString(descricoesCartas.get(i), x + 20, y + 200);
-
-            x += 150; // Ajuste a posição x para a próxima carta
+        // Desenhar o texto do objetivo
+        if (objectiveText != null && !objectiveText.isEmpty()) {
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Arial", Font.PLAIN, 40)); // Definir a fonte e o tamanho do texto
+            
+            
+            int textX = 50; // Coordenada x do texto
+            int textY = 200; // Coordenada y do texto - ajuste o valor para deslocar o texto verticalmente
+            drawStringMultiLine(g, objectiveText, textX, textY, MAX_CHARACTERS_PER_LINE);
         }
     }
-
-    private void carregarCartasObjetivo() {
-        cardImages = new BufferedImage[8]; // 8 imagens de cartas conforme seu modelo
-
-        // Carregar as imagens das cartas de objetivo
-        carregarImagensCartasObjetivo();
-
-        // Criar cartas de objetivo com descrições do modelo ObjectiveCardDeck
-        for (int i = 0; i < descricoesCartas.size(); i++) {
-            String descricao = descricoesCartas.get(i);
-            objectiveCards[i] = new ObjectiveCard(descricao, "Alvo " + i);
-        }
-    }
-
-//    private void carregarImagensCartasObjetivo() {
-//        // Carregar imagens de cartas de objetivo (exemplo com caminho "caminho/para/imagem.jpg")
-//        // Para cada carta, carregue a imagem correspondente
-//        for (int i = 0; i < cardImages.length; i++) {
-//            try {
-//            	String imagePath = "../resources/war_carta_objetivo_grande.png"; 
-//                cardImages[i] = ImageIO.read(new File(imagePath));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                // Trate a exceção ou apresente uma imagem padrão para indicar erro
-//            }
-//        }
-//    }
     
-    private void carregarImagensCartasObjetivo() {
-        for (int i = 0; i < cardImages.length; i++) {
-            try {
-                String imagePath = "resources/imagens/war_carta_objetivo_grande.png";
-                File file = new File(imagePath);
-                if (file.exists()) {
-                    cardImages[i] = ImageIO.read(file);
-                } else {
-                    System.out.println("O arquivo de imagem não foi encontrado: " + file.getAbsolutePath());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Erro ao carregar a imagem da carta: " + e.getMessage());
+    
+    private void drawStringMultiLine(Graphics g, String text, int x, int y, int maxWidth) {
+        FontMetrics metrics = g.getFontMetrics();
+        int lineHeight = metrics.getHeight();
+        int curY = y;
+        String[] words = text.split(" ");
+        StringBuilder line = new StringBuilder();
+
+        for (String word : words) {
+            if (metrics.stringWidth(line.toString() + word) < maxWidth) {
+                line.append(word).append(" ");
+            } else {
+                g.drawString(line.toString(), x, curY);
+                curY += lineHeight;
+                line = new StringBuilder(word + " ");
             }
         }
+        g.drawString(line.toString(), x, curY);
     }
 
+    // Método para atualizar a imagem da carta e o texto do objetivo
+//    public void updateObjective(String imagePath, ObjectiveCard[] objectiveCards) {
+//        loadCardImage(imagePath);
+//        this.objectiveCards = objectiveCards;
+//        repaint(); // Repintar a tela para exibir a nova imagem e texto
+//    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            ObjectiveCardsView view = new ObjectiveCardsView();
-            view.setVisible(true);
-        });
+        // Caminho para a imagem da carta
+        String imagePath = "resources/imagens/war_carta_objetivo_grande.png";
+
+        JFrame frame = new JFrame("Visualização de Objetivo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(350, 602);
+
+        ObjectiveCardsView objectiveView = new ObjectiveCardsView(imagePath);
+
+        frame.add(objectiveView);
+        frame.setVisible(true);
     }
 }
+
 
 

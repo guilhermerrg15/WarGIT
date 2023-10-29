@@ -3,32 +3,51 @@ package Model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
 public class ObjectiveCardDeck {
     private static ObjectiveCard[] cards;
     private static ObjectiveCardDeck objectiveSingleton;
 
-    private static final String[] descricao = {"Conquistar 24 territórios a sua escolha",
-    "Conquistar na totalidade a Asia e a Africa", "Conquistar na totalidade a Asia e a America do Sul",
-    "Conquistar na totalidade a America do Norte e a Africa", "Conquistar na totalidade a America do Norte e a Oceania",
-    "Conquistar na totalidade a Europa, a Oceania e mais um continente a sua escolha",
-    "Conquistar na totalidade a Europa, a America do Sul e mais um continente a sua escolha",
-    "Conquistar 18 territórios com pelo menos 2 exércitos em cada"};
+    private static final String[] descricao = {
+            "Conquistar 24 territórios a sua escolha",
+            "Conquistar na totalidade a Asia e a Africa",
+            "Conquistar na totalidade a Asia e a America do Sul",
+            "Conquistar na totalidade a America do Norte e a Africa",
+            "Conquistar na totalidade a America do Norte e a Oceania",
+            "Conquistar na totalidade a Europa, a Oceania e mais um continente a sua escolha",
+            "Conquistar na totalidade a Europa, a America do Sul e mais um continente a sua escolha",
+            "Conquistar 18 territórios com pelo menos 2 exércitos em cada"
+    };
 
-    private ObjectiveCardDeck() {}
+    private ObjectiveCardDeck() {
+    }
 
-    static ObjectiveCardDeck getInstance() {
+    public static ObjectiveCardDeck getInstance() {
         if (objectiveSingleton == null) {
             objectiveSingleton = new ObjectiveCardDeck();
         }
         return objectiveSingleton;
     }
+
+    public String[] getDescricao() {
+        return descricao;
+    }
+
+    public String getRandomObjective() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(descricao.length);
+        return descricao[randomIndex];
+    }
+
     void nullCartas() {
-		cards = null;
-	}
+        cards = null;
+    }
 
     ObjectiveCard[] getCards() {
         return cards;
     }
+
     ObjectiveCard[] setCartasEmbaralhadas() {
         if (cards == null) {
             cards = new ObjectiveCard[8];
