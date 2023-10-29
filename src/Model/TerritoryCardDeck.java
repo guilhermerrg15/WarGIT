@@ -16,6 +16,7 @@ public class TerritoryCardDeck {
     private static final String[] africanos = {"Africa do Sul", "Egito", "Madagascar", "Nigeria"};
     private static final String[] oceanicos = {"Australia", "Indonesia", "Nova Zelandia"};
 
+    //
     private TerritoryCardDeck() {}
     static TerritoryCardDeck getInstance() {
         if (territorySingleton == null) {
