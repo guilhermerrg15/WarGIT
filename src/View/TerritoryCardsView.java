@@ -1,15 +1,12 @@
 package View;
 
 import javax.swing.*;
-
 import Model.API;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import java.util.ArrayList;
 
 public class TerritoryCardsView extends JFrame {
     private JLabel[] cardLabels;
@@ -25,10 +22,21 @@ public class TerritoryCardsView extends JFrame {
         for (int i = 0; i < cardLabels.length; i++) {
             String carta = API.getCartasTerritorio()[i].getName(); // Obtém o nome da carta
 
-            // Carrega a imagem da carta correspondente (supondo que você tenha as imagens de cada carta)
+            // Caminho para a imagem da carta correspondente
+            String imagePath;
+            if (carta.equals("coringa")) {
+                // Se for a carta coringa
+                imagePath = "../resources/war_carta_coringa.png";
+            } else {
+                // Para as outras cartas
+                String continente = carta.substring(3, 5); // Extrai as duas letras do continente
+                String nomeTerritorio = carta.substring(6, carta.indexOf(".png")); // Extrai o nome do território
+                imagePath = String.format("../resources/war_carta_%s_%s.png", continente, nomeTerritorio);
+            }
+
             BufferedImage cardImage = null;
             try {
-                cardImage = ImageIO.read(new File("caminho/para/imagem/" + carta + ".jpg"));
+                cardImage = ImageIO.read(new File(imagePath));
             } catch (IOException e) {
                 e.printStackTrace();
                 // Trate a exceção ou apresente uma imagem padrão para indicar erro

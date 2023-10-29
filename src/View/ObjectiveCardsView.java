@@ -71,7 +71,8 @@ public class ObjectiveCardsView extends JFrame {
         // Para cada carta, carregue a imagem correspondente
         for (int i = 0; i < cardImages.length; i++) {
             try {
-                cardImages[i] = ImageIO.read(new File("caminho/para/imagem" + i + ".jpg"));
+            	String imagePath = "resources/war_carta_objetivo_grande.png"; 
+                cardImages[i] = ImageIO.read(new File(imagePath));
             } catch (IOException e) {
                 e.printStackTrace();
                 // Trate a exceção ou apresente uma imagem padrão para indicar erro

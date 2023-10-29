@@ -88,13 +88,8 @@ public class API {
     public static Integer idCarta(String carta) {
         return ObjectiveCard.idCarta(carta);
     }
-    
-//    public static TerritoryCard[] getCartasTerritorio() {
-//        return cartasTerritorio;
-//    }
 
 	public static TerritoryCard[] getCartasTerritorio() {
-		// TODO Auto-generated method stub
 		return cartasTerritorio;
 	}
 
