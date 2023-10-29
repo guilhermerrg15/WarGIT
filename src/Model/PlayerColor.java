@@ -10,6 +10,24 @@ public enum PlayerColor {
         WHITE,
         GREEN;
 
+        public Color getColor() {
+            switch (this) {
+            case BLUE:
+                return new Color(40, 40, 255);
+            case YELLOW:
+                return new Color(255, 255, 40);
+            case RED:
+                return new Color(255, 40, 40);
+            case BLACK:
+                return new Color(20, 20, 20);
+            case WHITE:
+                return new Color(240, 240, 240);
+            case GREEN:
+            default:
+                return new Color(40, 255, 40);
+            }
+        }
+
     public String getName() {
         switch (this) {
             case BLUE:

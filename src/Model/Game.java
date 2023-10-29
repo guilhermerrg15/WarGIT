@@ -11,7 +11,17 @@ public class Game {
 	private List<ObjectiveCard> availableObjectives;
 	private Match match;
 	private Map map;
+    private String mapForegroundPath;
+    private String mapBackgroundPath;
 	
+    public String getMapForegroundPath() {
+		return mapForegroundPath;
+	}
+	
+	public String getMapBackgroundPath() {
+		return mapBackgroundPath;
+	}
+
     public Game() {
     	players = new ArrayList<>();
         availableObjectives = initializeObjectiveCards();
@@ -51,6 +61,26 @@ public class Game {
 
         return objectives;
     }
+
+    public List<String> getAllTerritoryNames() {
+		ArrayList<String> ret = new ArrayList<String>();
+		
+		for (Continent c : map.getContinents()) {
+			for (Territory t : c.getTerritories()) {
+				ret.add(t.getName());
+			}
+		}
+		
+		return ret;
+	}
+
+    public Coordinates getTerritoryCenter(String territoryName) {
+		return map.findTerritory(territoryName).getCenter();
+	}
+
+	public Coordinates[] getTerritoryVertices(String territoryName) {
+		return map.findTerritory(territoryName).getVertices();
+	}
 
     public List<ObjectiveCard> getAvailableObjectives() {
         return availableObjectives;
