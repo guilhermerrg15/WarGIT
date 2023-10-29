@@ -81,6 +81,7 @@ public class TerritoryCard {
         nomeImagens.put("Indonesia", 48);
         nomeImagens.put("Nova Zelândia", 49);
         nomeImagens.put("Coringa", 47);
+        
         return nomeImagens.get(carta);
     }
 

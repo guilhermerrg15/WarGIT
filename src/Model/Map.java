@@ -2,7 +2,7 @@ package Model;
 
 import java.awt.Color;
 
-class Map {
+public class Map {
 	
 	private Continent[] continents;
 	public Continent[] getContinents() {
@@ -285,6 +285,18 @@ class Map {
 			}
 		}
 		return null; // Return null if the index is out of bounds
+	}
+	
+	public Continent findContinentFromTerritoryName(String territoryName) {
+	    for (Continent continent : continents) {
+	        Territory[] territories = continent.getTerritories();
+	        for (Territory territory : territories) {
+	            if (territory.getName().equals(territoryName)) {
+	                return continent;
+	            }
+	        }
+	    }
+	    return null; // Retorna nulo se o território não for encontrado em nenhum continente
 	}
 	
 	

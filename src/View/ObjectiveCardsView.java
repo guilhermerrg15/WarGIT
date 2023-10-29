@@ -16,7 +16,9 @@ import javax.imageio.ImageIO;
 public class ObjectiveCardsView extends JFrame {
     private BufferedImage[] cardImages;
     private ObjectiveCard[] objectiveCards;
-    ArrayList<String> descricoesCartas = API.getDescricoesCartas();
+    ArrayList<String> descricoesCartas;
+    
+    
     
 
     public ObjectiveCardsView() {
@@ -29,7 +31,22 @@ public class ObjectiveCardsView extends JFrame {
         setPreferredSize(new Dimension(1200, 700)); // Tamanho da janela
         pack();
         setLocationRelativeTo(null); // Centraliza a janela
+        
+        descricoesCartas = API.getDescricoesCartas();
+
+        if (descricoesCartas != null && !descricoesCartas.isEmpty()) {
+            objectiveCards = new ObjectiveCard[descricoesCartas.size()];
+            carregarCartasObjetivo();
+        } else {
+            // Tratamento caso a lista esteja vazia ou nula
+            System.out.println("Lista de descrições de cartas está vazia ou nula.");
+            // Pode ser útil exibir uma mensagem para o usuário informando que não há descrições de cartas disponíveis.
+        }
+        
+        
     }
+    
+    
 
     @Override
     public void paint(Graphics g) {
@@ -66,16 +83,33 @@ public class ObjectiveCardsView extends JFrame {
         }
     }
 
+//    private void carregarImagensCartasObjetivo() {
+//        // Carregar imagens de cartas de objetivo (exemplo com caminho "caminho/para/imagem.jpg")
+//        // Para cada carta, carregue a imagem correspondente
+//        for (int i = 0; i < cardImages.length; i++) {
+//            try {
+//            	String imagePath = "../resources/war_carta_objetivo_grande.png"; 
+//                cardImages[i] = ImageIO.read(new File(imagePath));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                // Trate a exceção ou apresente uma imagem padrão para indicar erro
+//            }
+//        }
+//    }
+    
     private void carregarImagensCartasObjetivo() {
-        // Carregar imagens de cartas de objetivo (exemplo com caminho "caminho/para/imagem.jpg")
-        // Para cada carta, carregue a imagem correspondente
         for (int i = 0; i < cardImages.length; i++) {
             try {
-            	String imagePath = "resources/war_carta_objetivo_grande.png"; 
-                cardImages[i] = ImageIO.read(new File(imagePath));
+                String imagePath = "resources/imagens/war_carta_objetivo_grande.png";
+                File file = new File(imagePath);
+                if (file.exists()) {
+                    cardImages[i] = ImageIO.read(file);
+                } else {
+                    System.out.println("O arquivo de imagem não foi encontrado: " + file.getAbsolutePath());
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-                // Trate a exceção ou apresente uma imagem padrão para indicar erro
+                System.out.println("Erro ao carregar a imagem da carta: " + e.getMessage());
             }
         }
     }
@@ -87,3 +121,5 @@ public class ObjectiveCardsView extends JFrame {
         });
     }
 }
+
+

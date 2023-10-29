@@ -1,6 +1,8 @@
 package Model;
 
-    public enum PlayerColor {
+import java.awt.Color;
+
+public enum PlayerColor {
         BLUE,
         YELLOW,
         RED,
@@ -30,5 +32,6 @@ package Model;
     public String toString() {
         return getName();
     }
+	
 }
 

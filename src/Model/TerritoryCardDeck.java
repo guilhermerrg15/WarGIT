@@ -17,7 +17,11 @@ public class TerritoryCardDeck {
     private static final String[] oceanicos = {"Australia", "Indonesia", "Nova Zelandia"};
 
     //
-    private TerritoryCardDeck() {}
+    private TerritoryCardDeck() {
+    	cards = setCartas();
+        embaralhaCards();
+    }
+    
     static TerritoryCardDeck getInstance() {
         if (territorySingleton == null) {
             territorySingleton = new TerritoryCardDeck();
@@ -32,14 +36,16 @@ public class TerritoryCardDeck {
     TerritoryCard[] getCards() {
         return cards;
     }
+    
     TerritoryCard[] setCartasEmbaralhadas() {
         if (cards == null) {
-            cards = new TerritoryCard[44];
+        	setCartas();
+            embaralhaCards();
 
         }
-        embaralhaCards();
         return cards;
     }
+    
     TerritoryCard[] setCartas() {
         cards = new TerritoryCard[44];
         return cards;
