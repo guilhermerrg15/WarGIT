@@ -3,6 +3,7 @@ import View.JanelaInicial;
 import View.ObjectiveCardsView;
 import View.TerritoryCardsView;
 import View.JanelaSelecaoJogadores;
+import View.JogadasView;
 import View.NotificationView;
 import View.Map;
 
@@ -48,9 +49,11 @@ public class teste {
 		
 		
 //		
-		JFrame test = new TerritoryCardsView();
-		test.setVisible(true);
+//		JFrame test = new TerritoryCardsView();
+//		test.setVisible(true);
 		
+		JogadasView warView = new JogadasView();
+        warView.setVisible(true);
 	}
 }
 
