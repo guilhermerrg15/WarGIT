@@ -31,15 +31,17 @@ public class JanelaSelecaoJogadores extends JFrame {
         add(playersPanel);
         setLayout(new GridBagLayout());
         
-//        JButton startGameButton = new JButton("Iniciar o Jogo");
-//        startGameButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                createPlayers(); // Método para criar jogadores com base nas informações coletadas
-//                startGame(); // Método para iniciar o jogo com os jogadores criados
-//            }
-//        });
-//        add(startGameButton, BorderLayout.SOUTH);
+        JButton startGameButton = new JButton("Iniciar o Jogo");
+        startGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createPlayers(); // Método para criar jogadores com base nas informações coletadas
+                startGame(); // Método para iniciar o jogo com os jogadores criados
+            }
+        });
+        startGameButton.setBounds(50, 130, 500, 60);
+        
+        playersPanel.add(startGameButton);
         
         PlayerColor[] availableColors = PlayerColor.values();
 
