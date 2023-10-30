@@ -40,7 +40,7 @@ public class JanelaSelecaoJogadores extends JFrame {
 //            }
 //        });
 //        add(startGameButton, BorderLayout.SOUTH);
-
+        
         PlayerColor[] availableColors = PlayerColor.values();
 
         for (int i = 0; i < 6; i++) {

@@ -13,10 +13,11 @@ import javax.imageio.ImageIO;
 import Model.Coordinates;
 import Model.Game;
 import Model.PlayerColor;
+
 public class Map extends Frame {
    private Game warGame;
    private BufferedImage foregroundImage;
-   private BufferedImage backgroundImage;
+   public BufferedImage backgroundImage;
    private Hashtable<String, TerritoryMap> territoriesMaps = new Hashtable<>();
    
    public Map(Game game) throws IOException {
@@ -90,7 +91,7 @@ public class Map extends Frame {
        }
 
        public void draw(Graphics2D g2d) {
-           g2d.setColor(ownerColor.getColor()); // isso precisaria retornar uma Color e não uma String
+           g2d.setColor(ownerColor.getColor()); // isso precisaria retornar uma Color e nÃ£o uma String
            g2d.fill(this);
            g2d.setColor(Color.BLACK);
            g2d.drawString(territoryName + " (" + soldierCount + ")", getBounds().x, getBounds().y);
