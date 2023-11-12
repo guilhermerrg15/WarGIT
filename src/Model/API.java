@@ -48,10 +48,14 @@ public class API {
     public static Player getDono(String carta) {
         return ObjectiveCard.retornaDono(cartas, carta);
     }
-
+    //acho que esses dois metodos abaixo estão fazendo a mesma coisa
     public static void setNumJogadores(int i) {
         numJogadores = i;
         return;
+    }
+    
+    public static int getQtdJogadores() {
+        return numJogadores;
     }
 
     public static void restartCartas() {
@@ -75,9 +79,7 @@ public class API {
         return descricoes;
     }
 
-    public static int getQtdJogadores() {
-        return numJogadores;
-    }
+   
 
     public static void setQtdJogadores(int qtdJogadores) {
         API.numJogadores = qtdJogadores;

@@ -93,6 +93,10 @@ class Game {
 
         return objectives;
     }
+    
+    
+    
+    
 
     /**
      * Obtém os nomes de todos os territórios no jogo.
