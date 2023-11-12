@@ -12,7 +12,6 @@ public class Player {
     private ObjectiveCard objective;
     private ArrayList<TerritoryCard> territoryCards;
 
-
     public Player(String name, PlayerColor color) {
         this.name = name;
         this.color = color;
@@ -22,8 +21,12 @@ public class Player {
         this.territoryCards = new ArrayList<TerritoryCard>();
     }
 
-    public void removeArmies(Territory territory, int numArmies) {
-        territory.removeArmies(numArmies);
+    public void removeArmies(int count) {
+        if (count > armies) {
+            armies = 0;
+        } else {
+            armies -= count;
+        }
     }
 
     public String getName() {
@@ -41,6 +44,12 @@ public class Player {
     public void addTerritoryCard(TerritoryCard card) {
 		territoryCards.add(card);
 	}
+    
+    public void removeTerritoryCard(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {
+        territoryCards.remove(card1);
+        territoryCards.remove(card2);
+        territoryCards.remove(card3);
+    }
 
     public void addTerritory(Territory territory) {
         territories.add(territory);
@@ -59,13 +68,6 @@ public class Player {
 
     public void addArmies(int count) {
         armies += count;
-    }
-
-    public void removeArmies(int count) {
-        armies -= count;
-        if (armies < 0) {
-            armies = 0;
-        }
     }
 
     public boolean hasEntireContinent(Continent c) {
@@ -101,9 +103,4 @@ public class Player {
     public PlayerColor getColor() {
         return color;
     }
-    
-    public void removeTerritoryCard(TerritoryCard card) {
-		territoryCards.remove(card);
-	}
 }
-

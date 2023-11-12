@@ -49,11 +49,11 @@ public class teste {
 		
 		
 //		
-//		JFrame test = new TerritoryCardsView();
-//		test.setVisible(true);
+		JFrame test = new TerritoryCardsView();
+		test.setVisible(true);
 		
-		JogadasView warView = new JogadasView();
-        warView.setVisible(true);
+//		JogadasView warView = new JogadasView();
+//        warView.setVisible(true);
 	}
 }
 

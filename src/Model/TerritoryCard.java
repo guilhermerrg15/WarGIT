@@ -3,17 +3,15 @@ package Model;
 import java.util.Hashtable;
 
 public class TerritoryCard {
-    String name;
-    Shape geometricShape; 
+	String name;
     private int id;
     Territory territory;
+    private String shape;
 
-    public TerritoryCard(String name, Shape geometricShape) {
-         this.id = id;
+    public TerritoryCard(String name, String shape) {
         this.name = name;
-        this.geometricShape = geometricShape;
+        this.shape = shape;
     }
-
 
     void setTerritory(Territory territory) {
         this.territory = territory;
@@ -92,19 +90,18 @@ public class TerritoryCard {
     public String getName() {
         return name;
     }
-
-    public Shape getShape() {
-        return geometricShape;
+    
+    public String getShape() {
+        return shape;
     }
 
     public Territory getTerritory() {
         return territory;
     }
 
-
     @Override
     public String toString() {
-        return name + " (" + geometricShape + ")";
+        return name;
     }
 }
 

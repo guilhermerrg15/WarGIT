@@ -5,13 +5,22 @@ import java.util.*;
 
 public class API {
 
-    static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
-    static Player[] jogadores;
+    private static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
+    private static Player[] jogadores;
 
-    static TerritoryCard[] cartasTerritorio = TerritoryCardDeck.getInstance().setCartasEmbaralhadas();
+    private static TerritoryCard[] cartasTerritorio = TerritoryCardDeck.getInstance().setCartasEmbaralhadas();
     
-
     private static int numJogadores = 0;
+
+    private API() {} // Construtor privado para implementar o Singleton
+
+    public static API getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    private static class SingletonHolder {
+        private static final API INSTANCE = new API();
+    }
 
     public static void setDono(String carta, Player jog) {
         for (ObjectiveCard cart:cartas) {
@@ -80,9 +89,8 @@ public class API {
         
     }
 
-    public static int jogaDado() {
+    public static void rolaDado() {
         Dado.jogaDado();
-        return Dado.dado;
     }
     
     public static Integer idCarta(String carta) {

@@ -4,13 +4,12 @@ import javax.swing.*;
 
 import Model.API;
 import Model.Continent;
-import Model.Territory;
 import Model.TerritoryCard;
 import Model.Map;
+import Model.Territory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
 
 public class TerritoryCardsView extends JFrame {
     private JPanel cardsPanel;
@@ -32,39 +31,40 @@ public class TerritoryCardsView extends JFrame {
         Map map = Map.mapGenerator();
 
         for (TerritoryCard card : territoryCards) {
-            if (card != null) { // Verifica se o card não é nulo
-                Territory territory = map.findTerritory(card.getName());
+            if (card != null) {
+                String cardName = card.getName(); // Obtém o nome da carta
 
-                if (territory != null) {
-                    Continent continent = map.findContinentFromTerritoryName(card.getName());
-                    if (continent != null) {
-                        String continentCode = getContinentCode(continent.getName());
-                        String imagePath = String.format("../resources/imagens/war_carta_%s_%s.png", continentCode, card.getName());
-                        ImageIcon cardImage = new ImageIcon(imagePath);
+                Continent continent = map.findContinentFromTerritoryName(cardName);
 
-                        JLabel cardLabel = new JLabel();
-                        cardLabel.setIcon(cardImage);
-                        cardsPanel.add(cardLabel);
-                    }
+                if (continent != null) {
+                    String continentCode = getContinentCode(continent.getName());
+                    String imagePath = String.format("../resources/imagens/war_carta_%s_%s.png", continentCode, cardName);
+
+                    ImageIcon cardImage = new ImageIcon(imagePath);
+
+                    JLabel cardLabel = new JLabel();
+                    cardLabel.setIcon(cardImage);
+                    cardsPanel.add(cardLabel);
                 }
             }
         }
     }
 
+    // Método para mapear os nomes dos continentes para códigos correspondentes
     private String getContinentCode(String continentName) {
         switch (continentName) {
-            case "Africa":
-                return "af";
-            case "America do Norte":
-                return "an";
-            case "Asia":
-                return "as";
-            case "America do Sul":
-                return "asl";
+            case "África":
+                return "africa"; // Atualizado para refletir os nomes dos continentes
+            case "América do Norte":
+                return "america_norte";
+            case "Ásia":
+                return "asia";
+            case "América do Sul":
+                return "america_sul";
             case "Europa":
-                return "eu";
+                return "europa";
             case "Oceania":
-                return "oc";
+                return "oceania";
             default:
                 return ""; // Código vazio para um continente desconhecido (adapte conforme necessário)
         }
@@ -72,7 +72,7 @@ public class TerritoryCardsView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-        	TerritoryCardsView cardsDisplay = new TerritoryCardsView();
+            TerritoryCardsView cardsDisplay = new TerritoryCardsView();
             cardsDisplay.setVisible(true);
         });
     }
