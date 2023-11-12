@@ -14,6 +14,14 @@ class Territory {
 //   private Coordinates center;
 //   private Coordinates[] vertices;
 
+    
+    /**
+     * Cria um novo território com o nome fornecido.
+     * Inicializa o proprietário como nulo e o número de exércitos como 0.
+     * Inicializa a lista de territórios vizinhos como uma lista vazia.
+     *
+     * @param name O nome do território.
+     */
     public Territory(String name) {
         this.name = name;
         this.owner = null;
@@ -31,22 +39,47 @@ class Territory {
         return name;
     }
 
+    /**
+     * Obtém o jogador que possui o território.
+     *
+     * @return O jogador que possui o território.
+     */
     public Player getOwner() {
         return owner;
     }
 
+    /**
+     * Define o jogador que possui o território.
+     *
+     * @param owner O novo proprietário do território.
+     */
     public void setOwner(Player owner) {
         this.owner = owner;
     }
 
+    /**
+     * Obtém o número de exércitos no território.
+     *
+     * @return O número de exércitos no território.
+     */
     public int getArmies() {
         return armies;
     }
 
+    /**
+     * Adiciona exércitos ao território.
+     *
+     * @param count O número de exércitos a serem adicionados.
+     */
     public void addArmies(int count) {
         armies += count;
     }
 
+    /**
+     * Remove exércitos do território.
+     *
+     * @param count O número de exércitos a serem removidos.
+     */
     public void removeArmies(int count) {
         armies -= count;
         if (armies < 0) {
@@ -54,10 +87,21 @@ class Territory {
         }
     }
 
+    
+    /**
+     * Obtém a lista de territórios vizinhos.
+     *
+     * @return A lista de territórios vizinhos.
+     */
     public List<Territory> getNeighbours() {
         return neighbours;
     }
 
+    /**
+     * Adiciona um território à lista de territórios vizinhos.
+     *
+     * @param neighbour O território vizinho a ser adicionado.
+     */
     public void addNeighbour(Territory neighbour) {
         neighbours.add(neighbour);
     }

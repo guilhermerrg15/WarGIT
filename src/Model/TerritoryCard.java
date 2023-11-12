@@ -1,22 +1,40 @@
 package Model;
 
-import java.util.Hashtable;
-
-public class TerritoryCard {
+/**
+ * Representa uma carta de território no jogo War.
+ * Cada carta possui um nome, um território associado e uma forma.
+ */
+class TerritoryCard {
 	String name;
     private int id;
     Territory territory;
     private String shape;
 
-    public TerritoryCard(String name, String shape) {
+    /**
+     * Cria uma nova carta de território com o nome e a forma fornecidos.
+     * @param name O nome da carta de território.
+     * @param shape A forma da carta de território.
+     * @param id de cada carta 
+     */
+    public TerritoryCard(String name, String shape, int id) {
         this.name = name;
         this.shape = shape;
+        this.id = id;
     }
 
+    /**
+     * Define o território associado à carta.
+     * @param territory O território a ser associado à carta.
+     */
     void setTerritory(Territory territory) {
         this.territory = territory;
     }
-
+    /**
+     * Retorna o território associado à carta com o nome especificado.
+     * @param cards A lista de cartas de território.
+     * @param carta O nome da carta cujo território deve ser retornado.
+     * @return O território associado à carta com o nome especificado, ou null se não encontrado.
+     */
     static Territory retornaTerritory(TerritoryCard[] cards, String carta) {
         for (TerritoryCard cart : cards) {
             if (cart.name.equals(carta)) {
@@ -26,79 +44,42 @@ public class TerritoryCard {
         return null;
     }
 
-    static Integer idCarta(String carta) {
-        Hashtable<String, Integer> nomeImagens = new Hashtable<String, Integer>();
-        nomeImagens.put("Africa do Sul", 0);
-        nomeImagens.put("Angola", 1);
-        nomeImagens.put("Argélia", 2);
-        nomeImagens.put("Egito", 3);
-        nomeImagens.put("Nigéria", 4);
-        nomeImagens.put("Somália", 5);
-        nomeImagens.put("Alasca", 6);
-        nomeImagens.put("Calgary", 7);
-        nomeImagens.put("Califórnia", 8);
-        nomeImagens.put("Groelandia", 9);
-        nomeImagens.put("México", 10);
-        nomeImagens.put("Nova York", 11);
-        nomeImagens.put("Quebec", 12);
-        nomeImagens.put("Texas", 13);
-        nomeImagens.put("Vancouver", 14);
-        nomeImagens.put("Arábia Saudita", 15);
-        nomeImagens.put("Bangladesh", 16);
-        nomeImagens.put("Cazaquistao", 17);
-        nomeImagens.put("China", 18);
-        nomeImagens.put("Coreia do Norte", 19);
-        nomeImagens.put("Coreia do Sul", 20);
-        nomeImagens.put("Estonia", 21);
-        nomeImagens.put("India", 22);
-        nomeImagens.put("Ira", 23);
-        nomeImagens.put("Iraque", 24);
-        nomeImagens.put("Japao", 25);
-        nomeImagens.put("Jordania", 26);
-        nomeImagens.put("Letonia", 27);
-        nomeImagens.put("Mongolia", 28);
-        nomeImagens.put("Paquistao", 29);
-        nomeImagens.put("Russia", 30);
-        nomeImagens.put("Sibéria", 31);
-        nomeImagens.put("Síria", 32);
-        nomeImagens.put("Tailandia", 33);
-        nomeImagens.put("Turquia", 34);
-        nomeImagens.put("Argentina", 35);
-        nomeImagens.put("Brasil", 36);
-        nomeImagens.put("Peru", 37);
-        nomeImagens.put("Venezuela", 38);
-        nomeImagens.put("Espanha", 39);
-        nomeImagens.put("Franca", 40);
-        nomeImagens.put("Itália", 41);
-        nomeImagens.put("Polonia", 42);
-        nomeImagens.put("Reino Unido", 43);
-        nomeImagens.put("Romenia", 44);
-        nomeImagens.put("Suecia", 45);
-        nomeImagens.put("Ucrania", 46);
-        nomeImagens.put("Austrália", 47);
-        nomeImagens.put("Indonesia", 48);
-        nomeImagens.put("Nova Zelândia", 49);
-        nomeImagens.put("Coringa", 47);
-        
-        return nomeImagens.get(carta);
-    }
-
+    /**
+     * Retorna o ID da carta de território.
+     * @return O ID da carta de território.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Retorna o nome da carta de território.
+     * @return O nome da carta de território.
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * Retorna a forma da carta de território.
+     * @return A forma da carta de território.
+     */
     public String getShape() {
         return shape;
     }
 
+    /**
+     * Retorna o território associado à carta de território.
+     * @return O território associado à carta de território.
+     */
     public Territory getTerritory() {
         return territory;
     }
 
+    /**
+     * Converte a carta de território para uma representação de string.
+     * @return Uma representação de string da carta de território.
+     */
     @Override
     public String toString() {
         return name;
