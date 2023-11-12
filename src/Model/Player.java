@@ -5,32 +5,75 @@ import java.util.List;
 import java.util.Hashtable;
 
 public class Player {
-    String name;
+
+    private String name;
     private List <Territory> territories;
     private int armies;
     private PlayerColor color;
     private ObjectiveCard objective;
     private ArrayList<TerritoryCard> territoryCards;
 
-    public Player(String name, PlayerColor color) {
+    //cartas
+    private List<String> deckTerritoryCards;
+
+    //dados
+    private int d1 = 6;
+    private int d2 = 6;
+    private boolean estaEscolhendoDados = false;
+    private boolean jogouDadosNaRodada = false;
+
+
+    public Player(String name) {
         this.name = name;
-        this.color = color;
+        this.deckTerritoryCards = new ArrayList<String>();
         this.territories = new ArrayList<>();
         this.armies = 0;
-        this.objective = null;
-        this.territoryCards = new ArrayList<TerritoryCard>();
     }
 
-    public void removeArmies(int count) {
-        if (count > armies) {
-            armies = 0;
-        } else {
-            armies -= count;
-        }
+    // public Player(String name, PlayerColor color) {
+    //     this.name = name;
+    //     this.color = color;
+    //     this.territories = new ArrayList<>();
+    //     this.armies = 0;
+    //     this.objective = null;
+    //     this.territoryCards = new ArrayList<TerritoryCard>();
+    // }
+
+    public void removeArmies(Territory territory, int numArmies) {
+        territory.removeArmies(numArmies);
     }
 
     public String getName() {
-        return name;
+        return this.name;
+    }
+    public void addTerritoryCard(String card) {
+        this.deckTerritoryCards.add(card);
+    }
+
+    public List<String> getTerritoryDeck() {
+        return this.deckTerritoryCards;
+    }
+
+    //dados
+    public void setDados(int d1, int d2) {
+        this.d1 = d1;
+        this.d2 = d2;
+    }
+
+    public int getD1() {
+        return this.d1;
+    }
+
+    public int getD2() {
+        return this.d2;
+    }
+
+    public boolean getEstadoJogadaDados() {
+        return this.jogouDadosNaRodada;
+    }
+
+    public void setEstadoJogadaDados(boolean j) {
+        this.jogouDadosNaRodada = j;
     }
 
     public List <Territory> getTerritories() {
@@ -41,15 +84,9 @@ public class Player {
 		return Collections.unmodifiableList(territoryCards);
 	}
     
-    public void addTerritoryCard(TerritoryCard card) {
-		territoryCards.add(card);
-	}
-    
-    public void removeTerritoryCard(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {
-        territoryCards.remove(card1);
-        territoryCards.remove(card2);
-        territoryCards.remove(card3);
-    }
+    // public void addTerritoryCard(TerritoryCard card) {
+	// 	territoryCards.add(card);
+	// }
 
     public void addTerritory(Territory territory) {
         territories.add(territory);
@@ -68,6 +105,13 @@ public class Player {
 
     public void addArmies(int count) {
         armies += count;
+    }
+
+    public void removeArmies(int count) {
+        armies -= count;
+        if (armies < 0) {
+            armies = 0;
+        }
     }
 
     public boolean hasEntireContinent(Continent c) {
@@ -103,4 +147,9 @@ public class Player {
     public PlayerColor getColor() {
         return color;
     }
+    
+    public void removeTerritoryCard(TerritoryCard card) {
+		territoryCards.remove(card);
+	}
 }
+

@@ -97,7 +97,8 @@ public class JanelaSelecaoJogadores extends JFrame {
             String name = "Jogador " + (i + 1);
             PlayerColor color = PlayerColor.BLUE; // Suponha que você defina a cor padrão como azul
 
-            Player player = new Player(name, color);
+            // Player player = new Player(name, color);
+            Player player = new Player(name);
             players.add(player);
         }
     }
