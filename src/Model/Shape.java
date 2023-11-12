@@ -28,7 +28,7 @@ public enum Shape {
 			case 1:
 				return Shape.Square;
 			
-			case 2
+			case 2:
 				return Shape.Triangle;
 			}
 		}

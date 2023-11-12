@@ -23,9 +23,9 @@ public class API {
     }
 
     public static void setDono(String carta, Player jog) {
-        for (ObjectiveCard cart:cartas) {
-            if (cart.description.equals(carta))
-                cart.dono = jog;
+        for (ObjectiveCard cart : cartas) {
+            if (cart.getDescription().equals(carta))
+                cart.setDono(jog);
         }
     }
 
@@ -34,20 +34,22 @@ public class API {
     }
 
     public static ArrayList<String> getCartasDono(String dono) {
-        ArrayList<String> retorno = new ArrayList<String>();
+        ArrayList<String> retorno = new ArrayList<>();
         Player jog;
-        for(int i=0;i<21;i++) {
-            jog = getDono(cartas[i].description);
-            if (jog != null && jog.name.equals(dono)) {
-                retorno.add(cartas[i].description);
+        for (ObjectiveCard card : cartas) {
+            jog = ObjectiveCard.getOwnerByCardDescription(cartas, card.getDescription());
+            if (jog != null && jog.getName().equals(dono)) {
+                retorno.add(card.getDescription());
             }
         }
         return retorno;
     }
 
     public static Player getDono(String carta) {
-        return ObjectiveCard.retornaDono(cartas, carta);
+        return ObjectiveCard.getOwnerByCardDescription(cartas, carta);
     }
+    
+    
     //acho que esses dois metodos abaixo estão fazendo a mesma coisa
     public static void setNumJogadores(int i) {
         numJogadores = i;
@@ -64,9 +66,9 @@ public class API {
     }
 
     public static ObjectiveCard getCarta(String nome) {
-        for (ObjectiveCard cart:API.cartas) {
-            if (cart.description.equals(nome))
-                return cart;
+        for (ObjectiveCard card : cartas) {
+            if (card.getDescription().equals(nome))
+                return card;
         }
         return null;
     }

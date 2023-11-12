@@ -3,13 +3,13 @@ package Model;
 import java.util.Hashtable;
 import java.util.Collections;
 
-public class ObjectiveCard {
-    String description;
+class ObjectiveCard {
+    private String description;
     private boolean completed;
     private String target;
-    Player dono;
+    private Player dono;
 
-    public ObjectiveCard(String description, String target) {
+    ObjectiveCard(String description, String target) {
         this.description = description;
         this.completed = false;
         this.target = target;
@@ -19,9 +19,9 @@ public class ObjectiveCard {
         this.dono = dono;
     }
 
-    static Player retornaDono(ObjectiveCard[] cards, String carta) {
+    static Player getOwnerByCardDescription(ObjectiveCard[] cards, String cardDescription) {
         for (ObjectiveCard cart : cards) {
-            if (cart.description.equals(carta)) {
+            if (cart.description.equals(cardDescription)) {
                 return cart.dono;
             }
         }
@@ -42,19 +42,19 @@ public class ObjectiveCard {
     }
 
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public boolean isCompleted() {
+    boolean isCompleted() {
         return completed;
     }
 
-    public void setCompleted(boolean completed) {
+    void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
-    public String getTarget() {
+    String getTarget() {
         return target;
-    } 
+    }
 }
