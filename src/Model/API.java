@@ -1,110 +1,133 @@
 package Model;
-
+import View.ViewAPI;
 import java.io.IOException;
 import java.util.*;
 
+import Controller.TabuleiroObservador;
+
 public class API {
 
-    private static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
-    private static Player[] jogadores;
+    private static API apiInstance = null;
+    private Game game;
+    private ViewAPI viewInstance;
+    Dado dado;
 
-    private static TerritoryCard[] cartasTerritorio = TerritoryCardDeck.getInstance().setCartasEmbaralhadas();
-    
-    private static int numJogadores = 0;
-
-    private API() {} // Construtor privado para implementar o Singleton
+    public API() {
+    }
 
     public static API getInstance() {
-        return SingletonHolder.INSTANCE;
-    }
-
-    private static class SingletonHolder {
-        private static final API INSTANCE = new API();
-    }
-
-    public static void setDono(String carta, Player jog) {
-        for (ObjectiveCard cart : cartas) {
-            if (cart.getDescription().equals(carta))
-                cart.setDono(jog);
+        if (apiInstance == null) {
+            apiInstance = new API();
         }
+        return apiInstance;
     }
 
-    public static String getNomeJogador(Player jogador) {
-        return jogador.name;
-    }
-
-    public static ArrayList<String> getCartasDono(String dono) {
-        ArrayList<String> retorno = new ArrayList<>();
-        Player jog;
-        for (ObjectiveCard card : cartas) {
-            jog = ObjectiveCard.getOwnerByCardDescription(cartas, card.getDescription());
-            if (jog != null && jog.getName().equals(dono)) {
-                retorno.add(card.getDescription());
-            }
-        }
-        return retorno;
-    }
-
-    public static Player getDono(String carta) {
-        return ObjectiveCard.getOwnerByCardDescription(cartas, carta);
-    }
+    // //inicia jogo
+    // public void initGame() {
+    //     this.dado = new Dado();
+    // }
     
-    
-    //acho que esses dois metodos abaixo estão fazendo a mesma coisa
-    public static void setNumJogadores(int i) {
-        numJogadores = i;
-        return;
-    }
-    
-    public static int getQtdJogadores() {
-        return numJogadores;
+    public void createGame() {
+        this.game = new Game();
+        game.addObserver(viewInstance.getTabuleiroObservador());
+        viewInstance.redraw();
     }
 
-    public static void restartCartas() {
-        ObjectiveCardDeck.getInstance().nullCartas();
-        cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
-    }
-
-    public static ObjectiveCard getCarta(String nome) {
-        for (ObjectiveCard card : cartas) {
-            if (card.getDescription().equals(nome))
-                return card;
-        }
+    public static TerritoryCard[] getCartasTerritorio() {
         return null;
     }
+
+    public void addObserver(TabuleiroObservador observer) {
+        game.addObserver(observer);
+    }
+
+    // static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
+    // static Player[] jogadores;
+
+    // static TerritoryCard[] cartasTerritorio = TerritoryCardDeck.getInstance().setCartasEmbaralhadas();
     
-    public static ArrayList<String> getDescricoesCartas() {
-    	ArrayList<String> descricoes = new ArrayList<>();
-        for (ObjectiveCard cart : cartas) {
-            descricoes.add(cart.getDescription());
-        }
-        return descricoes;
-    }
 
-   
+    // private static int numJogadores = 0;
 
-    public static void setQtdJogadores(int qtdJogadores) {
-        API.numJogadores = qtdJogadores;
-    }
+    // public static void setDono(String carta, Player jog) {
+    //     for (ObjectiveCard cart:cartas) {
+    //         if (cart.description.equals(carta))
+    //             cart.dono = jog;
+    //     }
+    // }
 
-    public static void incQtdJogadores(boolean bool) {
-        if (bool) {numJogadores++;return;}
-        numJogadores--;
+    // public static String getNomeJogador(Player jogador) {
+    //     return jogador.name;
+    // }
+
+    // public static ArrayList<String> getCartasDono(String dono) {
+    //     ArrayList<String> retorno = new ArrayList<String>();
+    //     Player jog;
+    //     for(int i=0;i<21;i++) {
+    //         jog = getDono(cartas[i].description);
+    //         if (jog != null && jog.name.equals(dono)) {
+    //             retorno.add(cartas[i].description);
+    //         }
+    //     }
+    //     return retorno;
+    // }
+
+    // public static Player getDono(String carta) {
+    //     return ObjectiveCard.retornaDono(cartas, carta);
+    // }
+
+    // public static void setNumJogadores(int i) {
+    //     numJogadores = i;
+    //     return;
+    // }
+
+    // public static void restartCartas() {
+    //     ObjectiveCardDeck.getInstance().nullCartas();
+    //     cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
+    // }
+
+    // public static ObjectiveCard getCarta(String nome) {
+    //     for (ObjectiveCard cart:API.cartas) {
+    //         if (cart.description.equals(nome))
+    //             return cart;
+    //     }
+    //     return null;
+    // }
+    
+    // public static ArrayList<String> getDescricoesCartas() {
+    // 	ArrayList<String> descricoes = new ArrayList<>();
+    //     for (ObjectiveCard cart : cartas) {
+    //         descricoes.add(cart.getDescription());
+    //     }
+    //     return descricoes;
+    // }
+
+    // public static int getQtdJogadores() {
+    //     return numJogadores;
+    // }
+
+    // public static void setQtdJogadores(int qtdJogadores) {
+    //     API.numJogadores = qtdJogadores;
+    // }
+
+    // public static void incQtdJogadores(boolean bool) {
+    //     if (bool) {numJogadores++;return;}
+    //     numJogadores--;
         
-    }
+    // }
 
-    public static void rolaDado() {
-        Dado.jogaDado();
-    }
+    // public static int jogaDado() {
+    //     Dado.jogaDado();
+    //     return Dado.dado;
+    // }
     
-    public static Integer idCarta(String carta) {
-    	return ObjectiveCardDeck.getDescricaoIdMap().get(carta);
-    }
+    // public static Integer idCarta(String carta) {
+    //     return ObjectiveCard.idCarta(carta);
+    // }
 
-	public static TerritoryCard[] getCartasTerritorio() {
-		return cartasTerritorio;
-	}
-
+	// public static TerritoryCard[] getCartasTerritorio() {
+	// 	return cartasTerritorio;
+	// }
 
 
 }
