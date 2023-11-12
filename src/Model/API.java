@@ -98,7 +98,7 @@ public class API {
     }
     
     public static Integer idCarta(String carta) {
-        return ObjectiveCard.idCarta(carta);
+    	return ObjectiveCardDeck.getDescricaoIdMap().get(carta);
     }
 
 	public static TerritoryCard[] getCartasTerritorio() {

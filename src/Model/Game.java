@@ -12,11 +12,12 @@ import java.util.Random;
  */
 class Game {
 	private List<Player> players = new ArrayList<>();
-    private List<ObjectiveCard> availableObjectives = initializeObjectiveCards();
+    private List<ObjectiveCard> availableObjectives;
     private Match match;
     private Map map;
     private String mapForegroundPath;
     private String mapBackgroundPath;
+    private ObjectiveCardDeck objectiveCardDeck = ObjectiveCardDeck.getInstance();
 	
     /**
      * Obtém o caminho para a imagem de primeiro plano do mapa.
@@ -39,7 +40,9 @@ class Game {
 	 /**
      * Construtor da classe Game.
      */
-    public Game() {}
+    public Game() {
+    	initializeObjectiveCards();
+    }
 
     /**
      * Adiciona um jogador à lista de jogadores.
@@ -72,30 +75,7 @@ class Game {
         long seed = System.nanoTime();
         Collections.shuffle(players, new Random(seed));
     }
-    
-    /**
-     * Inicializa as cartas de objetivo do jogo.
-     *
-     * @return Uma lista de cartas de objetivo inicializadas.
-     */
-    private List<ObjectiveCard> initializeObjectiveCards() {
-        List<ObjectiveCard> objectives = new ArrayList<>();
 
-        objectives.add(new ObjectiveCard("Conquistar 24 territórios a sua escolha", "Território alvo"));
-        objectives.add(new ObjectiveCard("Conquistar na totalidade a Asia e a Africa", "Território alvo"));
-        objectives.add(new ObjectiveCard("Conquistar na totalidade a Asia e a America do Sul", "Território alvo"));
-        objectives.add(new ObjectiveCard("Conquistar na totalidade a America do Norte e a Africa", "Território alvo"));
-        objectives.add(new ObjectiveCard("Conquistar na totalidade a America do Norte e a Oceania", "Território alvo"));
-        objectives.add(new ObjectiveCard("Conquistar na totalidade a Europa, a Oceania e mais um continente a sua escolha", "Território alvo"));
-        objectives.add(new ObjectiveCard("Conquistar na totalidade a Europa, a America do Sul e mais um continente a sua escolha", "Território alvo"));
-        objectives.add(new ObjectiveCard("Conquistar 18 territórios com pelo menos 2 exércitos em cada", "Território alvo"));
-        
-
-        return objectives;
-    }
-    
-    
-    
     
 
     /**
@@ -135,6 +115,14 @@ class Game {
 		return map.findTerritory(territoryName).getVertices();
 	}
 
+	/**
+     * Inicializa as cartas de objetivo do jogo usando o ObjectiveCardDeck.
+     */
+    private void initializeObjectiveCards() {
+        ObjectiveCard[] objectiveArray = objectiveCardDeck.setCartasEmbaralhadas();
+        availableObjectives = new ArrayList<>(List.of(objectiveArray));
+    }
+    
 	/**
      * Obtém as cartas de objetivo disponíveis.
      *

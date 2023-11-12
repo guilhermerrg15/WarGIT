@@ -1,11 +1,18 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Map;
 
-public class ObjectiveCardDeck {
+
+/**
+ * Representa o baralho de cartas de objetivo no jogo.
+ */
+class ObjectiveCardDeck {
     private static ObjectiveCard[] cards;
     private static ObjectiveCardDeck objectiveSingleton;
 
@@ -19,10 +26,28 @@ public class ObjectiveCardDeck {
             "Conquistar na totalidade a Europa, a America do Sul e mais um continente a sua escolha",
             "Conquistar 18 territórios com pelo menos 2 exércitos em cada"
     };
+    
+ // Mapa que associa descrições a IDs
+    private static final Map<String, Integer> descricaoIdMap;
+
+    static {
+        descricaoIdMap = new HashMap<>();
+    }
+
+    static {
+        for (int i = 0; i < descricao.length; i++) {
+            descricaoIdMap.put(descricao[i], i);
+        }
+    }
 
     private ObjectiveCardDeck() {
     }
 
+    /**
+     * Obtém a instância única do baralho de cartas de objetivo.
+     *
+     * @return Instância única do baralho de cartas de objetivo.
+     */
     public static ObjectiveCardDeck getInstance() {
         if (objectiveSingleton == null) {
             objectiveSingleton = new ObjectiveCardDeck();
@@ -30,27 +55,63 @@ public class ObjectiveCardDeck {
         return objectiveSingleton;
     }
 
+    /**
+     * Obtém as descrições das cartas de objetivo.
+     *
+     * @return Array de descrições das cartas de objetivo.
+     */
     public String[] getDescricao() {
         return descricao;
     }
+    
+ 
 
-    public String getRandomObjective() {
+    /**
+     * Obtém uma descrição aleatória de uma carta de objetivo.
+     *
+     * @return Descrição aleatória de uma carta de objetivo.
+     */
+    String getRandomObjective() {
+        if (cards == null) {
+            initializeCards();
+        }
         Random random = new Random();
-        int randomIndex = random.nextInt(descricao.length);
-        return descricao[randomIndex];
+        int randomIndex = random.nextInt(cards.length);
+        return cards[randomIndex].getDescription();
+    }
+    
+    private void initializeCards() {
+        cards = new ObjectiveCard[8];
+        setCartasEmbaralhadas();
     }
 
+    /**
+     * Torna as cartas nulas.
+     */
     void nullCartas() {
         cards = null;
     }
 
+    /**
+     * Obtém as cartas de objetivo.
+     *
+     * @return Array de cartas de objetivo.
+     */
     ObjectiveCard[] getCards() {
+        if (cards == null) {
+            initializeCards();
+        }
         return cards;
     }
 
+    /**
+     * Inicializa e embaralha as cartas de objetivo.
+     *
+     * @return Array de cartas de objetivo embaralhadas.
+     */
     ObjectiveCard[] setCartasEmbaralhadas() {
         if (cards == null) {
-            cards = new ObjectiveCard[8];
+            initializeCards();
         }
         embaralhaCards();
         return cards;
@@ -61,10 +122,19 @@ public class ObjectiveCardDeck {
         return cards;
     }
 
-    ObjectiveCard[] embaralhaCards() {
+    private void embaralhaCards() {
         List<ObjectiveCard> cardList = Arrays.asList(cards);
         Collections.shuffle(cardList);
         cardList.toArray(cards);
-        return cards;
     }
+    
+    public List<ObjectiveCard> getObjectiveCardList() {
+        return Arrays.asList(cards);
+    }
+
+	public static Map<String, Integer>  getDescricaoIdMap() {
+		return descricaoIdMap;
+	}
+	
+	
 }

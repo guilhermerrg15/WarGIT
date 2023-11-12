@@ -3,22 +3,43 @@ package Model;
 import java.util.Hashtable;
 import java.util.Collections;
 
+/**
+ * Classe que representa uma carta de objetivo no jogo.
+ */
 class ObjectiveCard {
     private String description;
     private boolean completed;
     private String target;
     private Player dono;
 
+    /**
+     * Construtor da classe ObjectiveCard.
+     *
+     * @param description Descrição da carta de objetivo.
+     * @param target      Alvo do objetivo.
+     */
     ObjectiveCard(String description, String target) {
         this.description = description;
         this.completed = false;
         this.target = target;
     }
 
+    /**
+     * Define o jogador dono da carta.
+     *
+     * @param dono Jogador dono da carta.
+     */
     void setDono(Player dono) {
         this.dono = dono;
     }
 
+    /**
+     * Obtém o jogador dono de uma carta com base na descrição.
+     *
+     * @param cards          Array de cartas de objetivo.
+     * @param cardDescription Descrição da carta de objetivo.
+     * @return Jogador dono da carta ou null se não encontrado.
+     */
     static Player getOwnerByCardDescription(ObjectiveCard[] cards, String cardDescription) {
         for (ObjectiveCard cart : cards) {
             if (cart.description.equals(cardDescription)) {
@@ -28,32 +49,39 @@ class ObjectiveCard {
         return null;
     }
 
-    static Integer idCarta(String carta) {
-        Hashtable<String, Integer> nomeImagens = new Hashtable<String, Integer>();
-        nomeImagens.put("Conquistar 24 territórios a sua escolha", 0);
-        nomeImagens.put("Conquistar na totalidade a Asia e a Africa", 1);
-        nomeImagens.put("Conquistar na totalidade a Asia e a America do Sul", 2);
-        nomeImagens.put("Conquistar na totalidade a America do Norte e a Africa", 3);
-        nomeImagens.put("Conquistar na totalidade a America do Norte e a Oceania", 4);
-        nomeImagens.put("Conquistar na totalidade a Europa, a Oceania e mais um continente a sua escolha", 5);
-        nomeImagens.put("Conquistar na totalidade a Europa, a America do Sul e mais um continente a sua escolha", 6);
-        nomeImagens.put("Conquistar 18 territórios com pelo menos 2 exércitos em cada", 7);
-        return nomeImagens.get(carta);
-    }
 
-
+    /**
+     * Obtém a descrição da carta de objetivo.
+     *
+     * @return Descrição da carta de objetivo.
+     */
     String getDescription() {
         return description;
     }
 
+    /**
+     * Verifica se o objetivo associado à carta foi concluído.
+     *
+     * @return true se o objetivo foi concluído, false caso contrário.
+     */
     boolean isCompleted() {
         return completed;
     }
 
+    /**
+     * Define se o objetivo associado à carta foi concluído.
+     *
+     * @param completed Valor indicando se o objetivo foi concluído.
+     */
     void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
+    /**
+     * Obtém o alvo do objetivo associado à carta.
+     *
+     * @return Alvo do objetivo.
+     */
     String getTarget() {
         return target;
     }
