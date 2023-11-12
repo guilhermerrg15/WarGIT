@@ -56,9 +56,9 @@ public class API {
     //     }
     // }
 
-    // public static String getNomeJogador(Player jogador) {
-    //     return jogador.name;
-    // }
+//    public static String getNomeJogador(Player jogador) {
+//        return jogador.getName();
+//    }
 
     // public static ArrayList<String> getCartasDono(String dono) {
     //     ArrayList<String> retorno = new ArrayList<String>();
