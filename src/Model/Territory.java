@@ -3,13 +3,16 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Territory {
+/**
+ * Representa um território no jogo War.
+ */
+class Territory {
     private String name;
     private Player owner;
     private int armies;
     private List<Territory> neighbours;
-   private Coordinates center;
-   private Coordinates[] vertices;
+//   private Coordinates center;
+//   private Coordinates[] vertices;
 
     public Territory(String name) {
         this.name = name;
@@ -20,6 +23,10 @@ public class Territory {
     //    this.vertices = vertices;
     }
 
+    /**
+     * Obtém o nome do território.
+     * @return O nome do território.
+     */
     public String getName() {
         return name;
     }
@@ -55,13 +62,13 @@ public class Territory {
         neighbours.add(neighbour);
     }
 
-   public Coordinates getCenter() {
-       return center;
-   }
+//   public Coordinates getCenter() {
+//       return center;
+//   }
 
-   public Coordinates[] getVertices() {
-       return vertices;
-   }
+//   public Coordinates[] getVertices() {
+//       return vertices;
+//   }
 }
 
 

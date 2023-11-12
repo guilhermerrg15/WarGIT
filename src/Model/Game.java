@@ -102,9 +102,9 @@ class Game extends TabuleiroObservado {
      * @param territoryName O nome do território.
      * @return As coordenadas do centro do território.
      */
-    public Coordinates getTerritoryCenter(String territoryName) {
-		return map.findTerritory(territoryName).getCenter();
-	}
+//    public Coordinates getTerritoryCenter(String territoryName) {
+//		return map.findTerritory(territoryName).getCenter();
+//	}
 
     /**
      * Obtém as coordenadas dos vértices de um território.
@@ -112,9 +112,9 @@ class Game extends TabuleiroObservado {
      * @param territoryName O nome do território.
      * @return As coordenadas dos vértices do território.
      */
-	public Coordinates[] getTerritoryVertices(String territoryName) {
-		return map.findTerritory(territoryName).getVertices();
-	}
+//	public Coordinates[] getTerritoryVertices(String territoryName) {
+//		return map.findTerritory(territoryName).getVertices();
+//	}
 
 	/**
      * Inicializa as cartas de objetivo do jogo usando o ObjectiveCardDeck.
