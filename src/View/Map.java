@@ -45,16 +45,34 @@ public class Map extends JFrame {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         // Adicione os botões ao painel de botões
-        JButton saveButton = new JButton("Salvar Jogo");
-        JButton rollDiceButton = new JButton("Lançar Dados");
-        JButton nextTurnButton = new JButton("Próxima Jogada");
+        JButton checkObjectivesButton = new JButton("Ver Objetivos");
+        JButton checkCardsButton = new JButton("Ver Cartas");
+        JButton placeGlobalArmyButton = new JButton("Posicionar Exércitos Globais");
+        JButton placeContinentalArmyButton = new JButton("Posicionar Exércitos Continentais");
+        JButton attackButton = new JButton("Atacar");
+        JButton moveTroopsButton = new JButton("Mover Tropas");
+        JButton finishButton = new JButton("Finalizar Jogada");
+        JButton cancelButton = new JButton("Cancelar");
+        
 
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaço entre os botões
-        buttonPanel.add(saveButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaço entre os botões
-        buttonPanel.add(rollDiceButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaço entre os botões
-        buttonPanel.add(nextTurnButton);
+
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10))); 
+        buttonPanel.add(checkObjectivesButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(checkCardsButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(placeGlobalArmyButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(placeContinentalArmyButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(attackButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(moveTroopsButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(finishButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(cancelButton);
+
 
         // Adicione o painel de botões à lateral direita
         add(buttonPanel, BorderLayout.EAST);

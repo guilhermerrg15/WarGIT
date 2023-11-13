@@ -108,15 +108,15 @@ public class JanelaSelecaoJogadores extends JFrame {
         Game game = new Game();
         for (Player player : players) {
             game.addPlayer(player);
+            System.out.println(player.getName());
         }
         game.startMatch();
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new JanelaSelecaoJogadores();
-        });
-    }
-    
+    // public static void main(String[] args) {
+    //     SwingUtilities.invokeLater(() -> {
+    //         new JanelaSelecaoJogadores();
+    //     });
+    // }
 }
 

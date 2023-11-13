@@ -16,8 +16,11 @@ public class teste {
 
 		System.out.println("Hello World!!!");
 		
+		// JanelaInicial janela = new JanelaInicial();
+		// janela.setVisible(true);
 
-		
+		Map map = new Map();
+		map.setVisible(true);
 		
 //		String nomeVencedor = "Jogador1"; // Substitua pelo nome do vencedor
 //		PlayerColor corVencedor = PlayerColor.RED; // Substitua pela cor do vencedor
@@ -49,8 +52,8 @@ public class teste {
 		
 		
 //		
-		JFrame test = new TerritoryCardsView();
-		test.setVisible(true);
+		// JFrame test = new TerritoryCardsView();
+		// test.setVisible(true);
 		
 //		JogadasView warView = new JogadasView();
 //        warView.setVisible(true);

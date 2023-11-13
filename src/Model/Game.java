@@ -10,7 +10,7 @@ import Controller.*;
 /**
  * A classe Game representa o estado e a lógica do jogo.
  */
-class Game extends TabuleiroObservado {
+public class Game extends TabuleiroObservado {
 	private List<Player> players = new ArrayList<>();
     private List<ObjectiveCard> availableObjectives;
     private Match match;

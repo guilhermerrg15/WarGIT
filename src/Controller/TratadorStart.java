@@ -9,10 +9,12 @@ import View.*;
 
 public class TratadorStart implements ActionListener {
     Component c;
+    
     public TratadorStart(Component x) {
         c = x;
     }
     public void actionPerformed(ActionEvent e) {
         JFrame window = new JanelaSelecaoJogadores();
+        
     }
 }

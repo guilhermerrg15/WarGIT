@@ -18,8 +18,10 @@ import javax.swing.JPanel;
 import Controller.TratadorStart;
 
 public class JanelaInicial extends JFrame {
+
+	private JPanel menuPanel;
 	public JanelaInicial(){
-		super("Detetive");
+		super("War");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		JPanel newp = new JPanel() {
@@ -59,5 +61,7 @@ public class JanelaInicial extends JFrame {
 		setVisible(true);
 
 	}
-
+	public JPanel getMenuPanel() {
+		return menuPanel;
+	}
 }
