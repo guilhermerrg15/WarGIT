@@ -14,12 +14,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+import Controller.MouseListener;
 import Controller.TratadorStart;
 
 public class JanelaInicial extends JFrame {
 
 	private JPanel menuPanel;
+
 	public JanelaInicial(){
 		super("War");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,6 +42,7 @@ public class JanelaInicial extends JFrame {
 			    }
 			
 		};
+		newp.addMouseListener(new MouseListener());
 		newp.setLayout(null);
 		newp.setBackground(Color.BLACK);
 		newp.setPreferredSize(new Dimension(400,500));
@@ -50,7 +52,7 @@ public class JanelaInicial extends JFrame {
 
 
 		JButton novo = new JButton("Novo jogo");
-		novo.setBounds(50, 50, 600, 60);
+		novo.setBounds(50, 150, 600, 60);
 		novo.addActionListener(new TratadorStart(this));
 		newp.add(novo);
 
@@ -59,7 +61,7 @@ public class JanelaInicial extends JFrame {
 		carregar.setBounds(50, 130, 600, 60); 
 		newp.add(carregar);
 		setVisible(true);
-
+		//(50,10), (50,50), (650, 10), (650,50)
 	}
 	public JPanel getMenuPanel() {
 		return menuPanel;

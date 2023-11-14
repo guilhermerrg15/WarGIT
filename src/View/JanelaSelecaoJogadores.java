@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 
+import Controller.TratadorSelecao;
 import Model.Game;
 import Model.Player;
 import Model.PlayerColor;
@@ -32,13 +33,16 @@ public class JanelaSelecaoJogadores extends JFrame {
         setLayout(new GridBagLayout());
         
         JButton startGameButton = new JButton("Iniciar o Jogo");
-        startGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createPlayers(); // Método para criar jogadores com base nas informações coletadas
-                startGame(); // Método para iniciar o jogo com os jogadores criados
-            }
-        });
+        startGameButton.addActionListener(new TratadorSelecao(this));
+        
+        
+        // startGameButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         createPlayers(); // Método para criar jogadores com base nas informações coletadas
+        //         startGame(); // Método para iniciar o jogo com os jogadores criados
+        //     }
+        // });
         startGameButton.setBounds(50, 130, 500, 60);
         
         playersPanel.add(startGameButton);

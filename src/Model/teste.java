@@ -16,11 +16,11 @@ public class teste {
 
 		System.out.println("Hello World!!!");
 		
-		// JanelaInicial janela = new JanelaInicial();
-		// janela.setVisible(true);
+		JanelaInicial janela = new JanelaInicial();
+		janela.setVisible(true);
 
-		Map map = new Map();
-		map.setVisible(true);
+		// Map map = new Map();
+		// map.setVisible(true);
 		
 //		String nomeVencedor = "Jogador1"; // Substitua pelo nome do vencedor
 //		PlayerColor corVencedor = PlayerColor.RED; // Substitua pela cor do vencedor
