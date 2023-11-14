@@ -2,10 +2,12 @@ package Model;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.List;
 
 class Continent {
 	private String name;
-    private Territory[] territories;
+    // private Territory[] territories;
+    private List<Territory> territories;
     private int bonusArmies;
     private Color color;
 
@@ -24,7 +26,10 @@ class Continent {
      *
      * @return Os territórios do continente.
      */
-    public Territory[] getTerritories() {
+    // public Territory[] getTerritories() {
+    //     return territories;
+    // }
+    public List<Territory> getTerritories() {
         return territories;
     }
 
@@ -51,11 +56,16 @@ class Continent {
      *
      * @param territory O território a ser adicionado.
      */
+    // public void addTerritory(Territory territory) {
+    //     if (territories != null) {
+    //         Territory[] newTerritories = Arrays.copyOf(territories, territories.length + 1);
+    //         newTerritories[territories.length] = territory;
+    //         territories = newTerritories;
+    //     }
+    // }
     public void addTerritory(Territory territory) {
         if (territories != null) {
-            Territory[] newTerritories = Arrays.copyOf(territories, territories.length + 1);
-            newTerritories[territories.length] = territory;
-            territories = newTerritories;
+            territories.add(territory);
         }
     }
     
@@ -80,8 +90,11 @@ class Continent {
      *
      * @return O número de territórios.
      */
+    // public int getNumberTerritories() {
+    //     return territories.length;
+    // }
     public int getNumberTerritories() {
-        return territories.length;
+        return territories.size();
     }
     
     /**
@@ -92,16 +105,21 @@ class Continent {
      * @param bonusArmies  O número de exércitos de bônus concedidos ao dono do continente.
      * @param color        A cor associada ao continente.
      */
-    
-    public Continent(String name, Territory[] territories, int bonusArmies, Color color) {
-        if (name == null || territories == null || territories.length == 0 || bonusArmies < 0) {
-            throw new IllegalArgumentException("Parâmetros inválidos para criar um continente.");
-        }
-
+    public Continent(String name, int bonusArmies, List<Territory> territories) {
         this.name = name;
-        this.territories = territories;
         this.bonusArmies = bonusArmies;
-        this.color = color;
+        this.territories = territories;
     }
+    
+    // public Continent(String name, Territory[] territories, int bonusArmies, Color color) {
+    //     if (name == null || territories == null || territories.length == 0 || bonusArmies < 0) {
+    //         throw new IllegalArgumentException("Parâmetros inválidos para criar um continente.");
+    //     }
+
+    //     this.name = name;
+    //     this.territories = territories;
+    //     this.bonusArmies = bonusArmies;
+    //     this.color = color;
+    // }
 }
 

@@ -7,13 +7,13 @@ import java.util.List;
  * Representa um território no jogo War.
  */
 class Territory {
+
     private String name;
     private Player owner;
     private int armies;
-    private List<Territory> neighbours;
-//   private Coordinates center;
-//   private Coordinates[] vertices;
-
+    private String continent;
+    // private List<Territory> neighbours;
+    private List<String> neighbours;
     
     /**
      * Cria um novo território com o nome fornecido.
@@ -22,13 +22,18 @@ class Territory {
      *
      * @param name O nome do território.
      */
-    public Territory(String name) {
+    // public Territory(String name) {
+    //     this.name = name;
+    //     this.owner = null;
+    //     this.armies = 0;
+    //     this.neighbours = new ArrayList<>();
+    // //    this.center = center;
+    // //    this.vertices = vertices;
+    // }
+    public Territory(String name, String continent, List<String> neighbours) {
         this.name = name;
-        this.owner = null;
-        this.armies = 0;
-        this.neighbours = new ArrayList<>();
-    //    this.center = center;
-    //    this.vertices = vertices;
+        this.neighbours = neighbours;
+        this.continent = continent;
     }
 
     /**
@@ -37,6 +42,10 @@ class Territory {
      */
     public String getName() {
         return name;
+    }
+
+    public String getContinent() {
+        return continent;
     }
 
     /**
@@ -93,7 +102,10 @@ class Territory {
      *
      * @return A lista de territórios vizinhos.
      */
-    public List<Territory> getNeighbours() {
+    // public List<Territory> getNeighbours() {
+    //     return neighbours;
+    // }
+    public List<String> getNeighbours() {
         return neighbours;
     }
 
@@ -102,9 +114,9 @@ class Territory {
      *
      * @param neighbour O território vizinho a ser adicionado.
      */
-    public void addNeighbour(Territory neighbour) {
-        neighbours.add(neighbour);
-    }
+    // public void addNeighbour(Territory neighbour) {
+    //     neighbours.add(neighbour);
+    // }
 
 //   public Coordinates getCenter() {
 //       return center;
