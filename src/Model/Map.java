@@ -402,19 +402,19 @@ class Map {
 	     * @param index O índice do território desejado.
 	     * @return O objeto Territory correspondente ao território no índice fornecido, ou null se o índice estiver fora dos limites.
 	     */
-	public Territory getTerritory(int index) {
-		int currentIndex = 0;
-		for (Continent continent : continents) {
-			Territory[] territories = continent.getTerritories();
-			for (Territory territory : territories) {
-				if (currentIndex == index) {
-					return territory;
-				}
-				currentIndex++;
-			}
-		}
-		return null; // Return null if the index is out of bounds
-	}
+	// public Territory getTerritory(int index) {
+	// 	int currentIndex = 0;
+	// 	for (Continent continent : continents) {
+	// 		Territory[] territories = continent.getTerritories();
+	// 		for (Territory territory : territories) {
+	// 			if (currentIndex == index) {
+	// 				return territory;
+	// 			}
+	// 			currentIndex++;
+	// 		}
+	// 	}
+	// 	return null; // Return null if the index is out of bounds
+	// }
 	
     /**
      * Encontra o continente ao qual um território pertence com base no nome do território.
@@ -422,17 +422,17 @@ class Map {
      * @param territoryName O nome do território cujo continente está sendo procurado.
      * @return O objeto Continent correspondente ao continente do território encontrado, ou null se o território não for encontrado em nenhum continente.
      */
-	public Continent findContinentFromTerritoryName(String territoryName) {
-	    for (Continent continent : continents) {
-	        Territory[] territories = continent.getTerritories();
-	        for (Territory territory : territories) {
-	            if (territory.getName().equals(territoryName)) {
-	                return continent;
-	            }
-	        }
-	    }
-	    return null; // Retorna nulo se o território não for encontrado em nenhum continente
-	}
+	// public Continent findContinentFromTerritoryName(String territoryName) {
+	//     for (Continent continent : continents) {
+	//         Territory[] territories = continent.getTerritories();
+	//         for (Territory territory : territories) {
+	//             if (territory.getName().equals(territoryName)) {
+	//                 return continent;
+	//             }
+	//         }
+	//     }
+	//     return null; // Retorna nulo se o território não for encontrado em nenhum continente
+	// }
 	
 	
     /**

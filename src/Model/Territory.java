@@ -44,8 +44,18 @@ class Territory {
         return name;
     }
 
+
+    public boolean faz_fronteira(String territory) {
+		for (String border : this.neighbours) {
+			if (border.equals(territory)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
     public String getContinent() {
-        return continent;
+        return this.continent;
     }
 
     /**

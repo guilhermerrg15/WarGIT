@@ -84,17 +84,17 @@ public class Game extends TabuleiroObservado {
      *
      * @return Uma lista de nomes de territórios.
      */
-    public List<String> getAllTerritoryNames() {
-		ArrayList<String> ret = new ArrayList<String>();
+    // public List<String> getAllTerritoryNames() {
+	// 	ArrayList<String> ret = new ArrayList<String>();
 		
-		for (Continent c : map.getContinents()) {
-			for (Territory t : c.getTerritories()) {
-				ret.add(t.getName());
-			}
-		}
+	// 	for (Continent c : map.getContinents()) {
+	// 		for (Territory t : c.getTerritories()) {
+	// 			ret.add(t.getName());
+	// 		}
+	// 	}
 		
-		return ret;
-	}
+	// 	return ret;
+	// }
 
     /**
      * Obtém as coordenadas do centro de um território.

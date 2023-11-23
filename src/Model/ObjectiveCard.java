@@ -11,6 +11,7 @@ class ObjectiveCard {
     private boolean completed;
     private String target;
     private Player dono;
+    private String name;
 
     /**
      * Construtor da classe ObjectiveCard.
@@ -24,6 +25,9 @@ class ObjectiveCard {
         this.target = target;
     }
 
+    public String getName() {
+        return name;
+    }
     /**
      * Define o jogador dono da carta.
      *
