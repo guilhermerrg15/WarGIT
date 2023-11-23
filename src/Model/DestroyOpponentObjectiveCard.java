@@ -22,10 +22,10 @@ class DestroyOpponentObjectiveCard {
     public boolean checkStatus() {
         for (Player player : this.todos_jogadores) {
             if (player.getColor().equals(color)) {
-                if (player.destroyedPlayer(dono) != null && player.destroyedPlayer(dono).equals(dono)) {
+                if (player.getEnemy() != null && player.getEnemy().equals(dono)) {
                     return true;
                 }
-                if (player.destroyedPlayer(dono) == null) {
+                if (player.getEnemy() == null) {
                     return false;
                 }
             }
