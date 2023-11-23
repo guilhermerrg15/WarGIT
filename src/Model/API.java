@@ -14,6 +14,7 @@ public class API {
     private Dado dado;
     private ObjectiveCardDeck objectiveDeck;
     private List<Player> players;
+    public int turn;
 
     public API() {
         map = this.initMap();
@@ -35,7 +36,6 @@ public class API {
         Map map = new Map();
         return map;
     }
-
     
     public void createGame() {
         this.game = new Game();
@@ -58,6 +58,38 @@ public class API {
     public void initDeckObjective() {
     	objectiveDeck = new ObjectiveCardDeck(this.map,this.players);
 	} 
+
+    public int getPlayerNumberCards() {
+        return players.get(this.turn).getCards();
+    }
+
+    public boolean checkPlayerTerritoryBorder(String territory, String border) {
+        return players.get(this.turn).checkBorder(territory, border);
+    }
+
+    public boolean checkPlayerTerritory(String territory) {
+        return players.get(this.turn).verifyTerritory(territory);
+    }
+
+    public void nextPlayer() {
+        this.turn++;
+        if(this.turn >= this.players.size())this.turn = 0;
+        while(players.get(this.turn).verifyDestroyed()) {
+            this.turn++;
+            if(this.turn >= this.players.size())this.turn = 0;
+        }
+    }
+
+    public boolean placeArmy(int army, String territory) {
+        return players.get(this.turn).placeArmy(army, territory);
+    }
+
+
+    public void getPlayerAddArmy() {
+        Player player = players.get(this.turn);
+        player.setArmies(0);
+        player.addArmy();
+    }
     
     public void sorteia_obj_todos_jogadores(List<Player> players, ObjectiveCardDeck objectiveDeck) {
 		Collections.shuffle(players);
