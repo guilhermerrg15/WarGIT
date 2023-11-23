@@ -8,10 +8,10 @@ import java.util.concurrent.ThreadLocalRandom;
  * A classe Dado representa um dado utilizado no jogo.
  * Este dado é usado para simular lançamentos de dados para ataques e defesas.
  */
-public class Dado {
+class Dado {
     private static int valor;
 
-    private Dado() {} // Construtor privado para impedir a criação de instâncias
+    Dado() {} // Construtor privado para impedir a criação de instâncias
     
     /**
      * Simula o lançamento do dado e define seu valor.

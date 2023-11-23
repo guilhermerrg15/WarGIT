@@ -10,9 +10,12 @@ public class API {
     private static API apiInstance = null;
     private Game game;
     private ViewAPI viewInstance;
-    Dado dado;
+    private Map map;
+    private Dado dado;
 
     public API() {
+        map = this.initMap();
+        dado = new Dado();
     }
 
     public static API getInstance() {
@@ -21,11 +24,15 @@ public class API {
         }
         return apiInstance;
     }
+    public Map getMap() {
+        return map;
+    }
+    
+    public Map initMap() {
+        Map map = new Map();
+        return map;
+    }
 
-    // //inicia jogo
-    // public void initGame() {
-    //     this.dado = new Dado();
-    // }
     
     public void createGame() {
         this.game = new Game();

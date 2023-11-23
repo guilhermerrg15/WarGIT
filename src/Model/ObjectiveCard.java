@@ -3,12 +3,15 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class ObjectiveCard {
-    protected Player dono;
-    protected Continent asia, europa, americasul, americanorte, africa, oceania;
-    protected List<Player> todos_jogadores;
-    protected String nome;
-    protected String corAlvo;
+/**
+ * Classe que representa uma carta de objetivo no jogo.
+ */
+class ObjectiveCard {
+    private String description;
+    private boolean completed;
+    private String target;
+    private Player dono;
+    private String name;
 
     // construtor
     public ObjectiveCard(List<Player> todos_jogadores, List<Continent> mapa, String name, String corAlvo) {
@@ -18,7 +21,7 @@ abstract class ObjectiveCard {
         }
         for (Continent reg : mapa) {
         	if(reg.getName().equals("África")) {
-    			this.africa= reg; 
+    			this.africa= reg;
     		}
     		if(reg.getName().equals("Ásia")) {
     			this.asia = reg;
@@ -50,9 +53,3 @@ abstract class ObjectiveCard {
         this.dono = dono;
     }
 }
-
-
-
-
-
-
