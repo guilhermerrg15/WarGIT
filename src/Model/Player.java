@@ -12,7 +12,7 @@ public class Player {
 
     private String name;
     private PlayerColor color;
-    private List <Territory> territories;
+    protected List <Territory> territories;
     private List<TerritoryCard> territoryCards;
 //    private ObjectiveCardDeck objective;
     private int armies;
@@ -103,6 +103,7 @@ public class Player {
     public int getArmySize() {
         return territories.size();
     }
+
 
 
     /**
@@ -219,6 +220,10 @@ public class Player {
         this.armies += army;
     }
 
+    public void addArmy() { //add exercito de acordo com metade dos territórios
+    	//System.out.println("CHAMOU AUMENTA EXERCITO BASEADO TERRITORIO = " + this.domina.size()/2);
+    	this.armies += this.territories.size()/2;
+    }
 
     ////metodos que precisam da classe exercitoRegiao
     // public int getArmyRegion(String continent) {
