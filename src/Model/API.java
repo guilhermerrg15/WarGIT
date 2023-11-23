@@ -12,6 +12,8 @@ public class API {
     private ViewAPI viewInstance;
     private Map map;
     private Dado dado;
+    private ObjectiveCardDeck objectiveDeck;
+    private List<Player> players;
 
     public API() {
         map = this.initMap();
@@ -24,6 +26,7 @@ public class API {
         }
         return apiInstance;
     }
+    
     public Map getMap() {
         return map;
     }
@@ -48,6 +51,50 @@ public class API {
         game.addObserver(observer);
     }
 
+    public ObjectiveCardDeck getDeckCardObjective(){
+		return this.objectiveDeck;
+	}
+    
+    public void initDeckObjective() {
+    	objectiveDeck = new ObjectiveCardDeck(this.map,this.players);
+	} 
+    
+    public void sorteia_obj_todos_jogadores(List<Player> players, ObjectiveCardDeck objectiveDeck) {
+		Collections.shuffle(players);
+		for(Player player : players) {
+			objectiveDeck.sorteia_objetivo(player);
+			System.out.printf("O objetivo do jogador %s é %s.\n",player.getName(),player.getObjective().getClass());
+		}
+	}
+    
+//    public void reset_all() {
+//		for(Map map: map) {
+//			for(Territory terr: map.get_paises()) {
+//				terr.reset();
+//			}
+//		}
+//		for(Player players : players) {
+//			players.reset(deck, objectiveDeck);
+//		}
+//		this.vez = 0;
+//	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
     // static Player[] jogadores;
 

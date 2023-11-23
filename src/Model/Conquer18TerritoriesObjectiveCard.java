@@ -15,14 +15,13 @@ class Conquer18TerritoriesObjectiveCard {
     public boolean verifica_status() {
         if(dono.qtd_territorios() >= 18) {
             for(Territory terr : dono.domina) {
-                if(terr.get_exercitos() < 2) {
+                if(terr.getArmies() < 2) {
                     return false;
                 }
             }
             return true;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public void ganha_dono(Player dono) {
