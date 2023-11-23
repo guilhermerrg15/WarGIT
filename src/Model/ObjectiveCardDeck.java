@@ -1,140 +1,67 @@
+
 package Model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.Map;
-
+import java.util.*;
 
 /**
- * Representa o baralho de cartas de objetivo no jogo.
+ * Uma lista com todos os objetivos do jogo.
  */
 class ObjectiveCardDeck {
-    private static ObjectiveCard[] cards;
-    private static ObjectiveCardDeck objectiveSingleton;
-
-    private static final String[] descricao = {
-            "Conquistar 24 territórios a sua escolha",
-            "Conquistar na totalidade a Asia e a Africa",
-            "Conquistar na totalidade a Asia e a America do Sul",
-            "Conquistar na totalidade a America do Norte e a Africa",
-            "Conquistar na totalidade a America do Norte e a Oceania",
-            "Conquistar na totalidade a Europa, a Oceania e mais um continente a sua escolha",
-            "Conquistar na totalidade a Europa, a America do Sul e mais um continente a sua escolha",
-            "Conquistar 18 territórios com pelo menos 2 exércitos em cada"
-    };
+	private List<Object> objectiveCards;
+	private Map map;
     
- // Mapa que associa descrições a IDs
-    private static final Map<String, Integer> descricaoIdMap;
-
-    static {
-        descricaoIdMap = new HashMap<>();
+    //Temos que passar uma referência aos continentes criados para verificar alguns objetivos
+    public ObjectiveCardDeck(Map map, List<Player> todos_jogadores) {
+    	
+    	this.map = map;
+        this.objectiveCards = new ArrayList<>();
+    	
+    	//cartas de destruir oponente
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 1", "azul"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 2", "amarelo"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 3", "branco"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 4", "verde"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 5", "preto"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 6", "vermelho"));
+    	
+    	//cartas de conquistar 2 continentes
+    	objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 7", map.findContinent("North America"), map.findContinent("Africa")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 8", map.findContinent("Asia"), map.findContinent("Africa")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 9", map.findContinent("North America"), map.findContinent("Oceania")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 10", map.findContinent("Asia"), map.findContinent("South America")));
+        
+        //cartas de conquistar 3 continentes
+        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo 11", map.findContinent("Europe"), map.findContinent("South America"), map));
+        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo 12", map.findContinent("Europe"), map.findContinent("Oceania"), map));
+    	
+        //carta para conquistar 18 territorios com 2 exercitos em cada
+        objectiveCards.add(new Conquer18TerritoriesObjectiveCard("Objetivo 13"));
+        
+      //carta para conquistar 24 territorios 
+        objectiveCards.add(new Conquer24TerritoriesObjectiveCard("Objetivo 14"));
     }
-
-    static {
-        for (int i = 0; i < descricao.length; i++) {
-            descricaoIdMap.put(descricao[i], i);
+    public void sorteia_objetivo(Player player){
+    	Random rand = new Random();
+    	Object objetivoSorteado = objectiveCards.get(rand.nextInt(objectiveCards.size()));
+    	
+    	if (objetivoSorteado instanceof DestroyOpponentObjectiveCard) {
+            player.recebe_objetivo((DestroyOpponentObjectiveCard) objetivoSorteado);
+    	} else if (objetivoSorteado instanceof ConquerTwoContinentsObjectiveCard) {
+            player.recebe_objetivo((ConquerTwoContinentsObjectiveCard) objetivoSorteado);
+        }else if (objetivoSorteado instanceof ConquerThreeContinentsObjectiveCard) {
+            player.recebe_objetivo((ConquerThreeContinentsObjectiveCard) objetivoSorteado);
         }
-    }
-
-    private ObjectiveCardDeck() {
-    }
-
-    /**
-     * Obtém a instância única do baralho de cartas de objetivo.
-     *
-     * @return Instância única do baralho de cartas de objetivo.
-     */
-    public static ObjectiveCardDeck getInstance() {
-        if (objectiveSingleton == null) {
-            objectiveSingleton = new ObjectiveCardDeck();
-        }
-        return objectiveSingleton;
-    }
-
-    /**
-     * Obtém as descrições das cartas de objetivo.
-     *
-     * @return Array de descrições das cartas de objetivo.
-     */
-    public String[] getDescricao() {
-        return descricao;
-    }
-    
- 
-
-    /**
-     * Obtém uma descrição aleatória de uma carta de objetivo.
-     *
-     * @return Descrição aleatória de uma carta de objetivo.
-     */
-    String getRandomObjective() {
-        if (cards == null) {
-            initializeCards();
-        }
-        Random random = new Random();
-        int randomIndex = random.nextInt(cards.length);
-        return cards[randomIndex].getDescription();
+            
+            
+    	player.get_objetivo().ganha_dono(player);
+    	objetiveCards.remove(player.get_objetivo());
     }
     
-    private void initializeCards() {
-        cards = new ObjectiveCard[8];
-        setCartasEmbaralhadas();
-    }
-
-    /**
-     * Torna as cartas nulas.
-     */
-    void nullCartas() {
-        cards = null;
-    }
-
-    /**
-     * Obtém as cartas de objetivo.
-     *
-     * @return Array de cartas de objetivo.
-     */
-    ObjectiveCard[] getCards() {
-        if (cards == null) {
-            initializeCards();
-        }
-        return cards;
-    }
-
-    /**
-     * Inicializa e embaralha as cartas de objetivo.
-     *
-     * @return Array de cartas de objetivo embaralhadas.
-     */
-    ObjectiveCard[] setCartasEmbaralhadas() {
-        if (cards == null) {
-            initializeCards();
-        }
-        embaralhaCards();
-        return cards;
-    }
-
-    ObjectiveCard[] setCards() {
-        cards = new ObjectiveCard[8];
-        return cards;
-    }
-
-    private void embaralhaCards() {
-        List<ObjectiveCard> cardList = Arrays.asList(cards);
-        Collections.shuffle(cardList);
-        cardList.toArray(cards);
+    public void objetivoRetornaDeck(Object objetivo) {
+        objectiveCards.add(objetivo);
     }
     
-    public List<ObjectiveCard> getObjectiveCardList() {
-        return Arrays.asList(cards);
+    public Object getObjetivo(int index) {
+        return objectiveCards.get(index - 1);
     }
-
-	public static Map<String, Integer>  getDescricaoIdMap() {
-		return descricaoIdMap;
-	}
-	
-	
 }
