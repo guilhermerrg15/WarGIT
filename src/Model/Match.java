@@ -239,7 +239,7 @@ class Match {
         }
     }
 
-	/**
+/**
      * Calcula o bônus de troca com base no contador de trocas.
      *
      * @return Bônus de troca calculado.
