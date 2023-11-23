@@ -10,7 +10,7 @@ import java.util.List;
  * Representa um baralho singleton contendo objetos TerritoryCard.
  */
 class TerritoryCardDeck {
-    private static TerritoryCard[] cards;
+	private static List<TerritoryCard> cards;
     private int maximumCards;
 
     /**
@@ -27,7 +27,7 @@ class TerritoryCardDeck {
      *
      * @return O array de objetos TerritoryCard.
      */
-    private TerritoryCard[] setCartas() {
+    private List<TerritoryCard> setCartas() {
         ArrayList<TerritoryCard> cardList = new ArrayList<>();
         
         cardList.add(new TerritoryCard("Africa do Sul", "triangulo"));
@@ -92,8 +92,7 @@ class TerritoryCardDeck {
         cardList.add(new TerritoryCard("Coringa 2", "coringa"));
 
 
-        cards = cardList.toArray(new TerritoryCard[0]);
-        return cards;
+        return cardList;
     }
 
     /**
@@ -101,7 +100,7 @@ class TerritoryCardDeck {
      *
      * @return O array de objetos TerritoryCard.
      */
-    public TerritoryCard[] getCards() {
+    public List<TerritoryCard> getCards() {
         return cards;
     }
 
@@ -110,9 +109,9 @@ class TerritoryCardDeck {
      *
      * @return O array embaralhado de objetos TerritoryCard.
      */
-    public TerritoryCard[] setShuffleCards() {
+    public List<TerritoryCard> setShuffleCards() {
         if (cards == null) {
-            setCartas();
+            cards = setCartas();
         }
         shuffleCards();
         return cards;
@@ -123,10 +122,8 @@ class TerritoryCardDeck {
      *
      * @return O array embaralhado de objetos TerritoryCard.
      */
-    public TerritoryCard[] shuffleCards() {
-        List<TerritoryCard> cartaList = new ArrayList<>(Arrays.asList(cards));
-        Collections.shuffle(cartaList);
-        cards = cartaList.toArray(new TerritoryCard[0]);
+    public List<TerritoryCard> shuffleCards() {
+        Collections.shuffle(cards);
         return cards;
     }
 
@@ -134,18 +131,18 @@ class TerritoryCardDeck {
     public void pickRandomCard(Player player) {
         int count = 0;
 
-        while(cards[count] == null) {
+        while (cards.get(count) == null) {
             count++;
         }
-        player.addCard(cards[count]);
-        cards[count] = null;
+        player.addCard(cards.get(count));
+        cards.set(count, null);
     }
 
     // Retorna uma carta ao deck 
     public void returnCard(TerritoryCard card) {
-        for (int i = 0; i < cards.length; i++) {
-            if (cards[i] == null) {
-                cards[i] = card;
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i) == null) {
+                cards.set(i, card);
                 return;  // Se encontrou uma posição nula, adicionou e saiu do método
             }
         }

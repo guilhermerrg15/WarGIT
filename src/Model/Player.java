@@ -29,9 +29,23 @@ public class Player {
         return territoryCards.size();
     }
 
-    // public String getObjectiveName() {
-    //     return objective.getName();
-    // }
+    public String getObjectiveName() {
+        Object objective = getObjective();
+
+        if (objective instanceof DestroyOpponentObjectiveCard) {
+            return ((DestroyOpponentObjectiveCard) objective).getName();
+        } else if (objective instanceof ConquerTwoContinentsObjectiveCard) {
+            return ((ConquerTwoContinentsObjectiveCard) objective).getName();
+        } else if (objective instanceof ConquerThreeContinentsObjectiveCard) {
+            return ((ConquerThreeContinentsObjectiveCard) objective).getName();
+        } else if (objective instanceof Conquer18TerritoriesObjectiveCard) {
+            return ((Conquer18TerritoriesObjectiveCard) objective).getName();
+        } else if (objective instanceof Conquer24TerritoriesObjectiveCard) {
+            return ((Conquer24TerritoriesObjectiveCard) objective).getName();
+        } else {
+            return "No objective";
+        }
+    }
 
     public List<Territory> getConqueredTerritories() {
         return this.territories;
@@ -41,14 +55,14 @@ public class Player {
 
     // }
 
-    // public void ganha_cartas_jogador_destruido(List<CartaConquista> cartas,ConjuntoCartaConquista deck){
-    // 	this.cartaTroca.addAll(cartas);
-	// 	Random rand = new Random();
-    // 	while(this.cartaTroca.size() > 5) {
-    // 		CartaConquista carta_escolhida = this.cartaTroca.remove(rand.nextInt(this.cartaTroca.size()));
-    // 		deck.carta_retorna_deck(carta_escolhida);
-    // 	}
-    // }
+//     public void ganha_cartas_jogador_destruido(List<CartaConquista> cartas,ConjuntoCartaConquista deck){
+//     	this.cartaTroca.addAll(cartas);
+//	 	Random rand = new Random();
+//     	while(this.cartaTroca.size() > 5) {
+//     		CartaConquista carta_escolhida = this.cartaTroca.remove(rand.nextInt(this.cartaTroca.size()));
+//     		deck.carta_retorna_deck(carta_escolhida);
+//     	}
+//     }
 
     public List<TerritoryCard> getAllCards() {
         List<TerritoryCard> cartas = getCard().stream().collect(Collectors.toList());
