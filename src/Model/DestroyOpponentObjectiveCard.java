@@ -33,7 +33,7 @@ class DestroyOpponentObjectiveCard {
         return dono.getDomina().size() >= 24;
     }
 
-    public void ganhaDono(Player dono) {
+    public void checkOwner(Player dono) {
         this.dono = dono;
     }
 }

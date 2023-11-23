@@ -14,11 +14,16 @@ public class Player {
     private PlayerColor color;
     private List <Territory> territories;
     private List<TerritoryCard> territoryCards;
-    private ObjectiveCardDeck objective;
+//    private ObjectiveCardDeck objective;
     private int armies;
     private boolean conquered;
     private Player enemy;
-
+    private DestroyOpponentObjectiveCard destroyObjective;
+    private ConquerTwoContinentsObjectiveCard conquerTwoContinentsObjective;
+    private ConquerThreeContinentsObjectiveCard conquerThreeContinentsObjective;
+    private Conquer18TerritoriesObjectiveCard conquer18TerritoriesObjectiveCard;
+    private Conquer24TerritoriesObjectiveCard conquer24TerritoriesObjectiveCard;
+    
     
     public int getCards () {
         return territoryCards.size();
@@ -136,12 +141,60 @@ public class Player {
         return this.enemy;
     }
 
-    ///rever depois
-    public ObjectiveCardDeck getObjective(ObjectiveCardDeck objective) {
-        this.objective = objective;
-        return this.objective;  
+    public void riceiveObjective(DestroyOpponentObjectiveCard objetivo) {
+        destroyObjective = objetivo;
+        objetivo.checkOwner(this);
     }
-    ///
+    public void riceiveObjective(ConquerTwoContinentsObjectiveCard objetivo) {
+        conquerTwoContinentsObjective = objetivo;
+        objetivo.checkOwner(this);
+    }
+    public void riceiveObjective(ConquerThreeContinentsObjectiveCard objetivo) {
+        conquerThreeContinentsObjective = objetivo;
+        objetivo.checkOwner(this);
+    }
+    public void riceiveObjective(Conquer18TerritoriesObjectiveCard objetivo) {
+        conquer18TerritoriesObjectiveCard = objetivo;
+        objetivo.checkOwner(this);
+    }
+    public void riceiveObjective(Conquer24TerritoriesObjectiveCard objetivo) {
+        conquer24TerritoriesObjectiveCard = objetivo;
+        objetivo.checkOwner(this);
+    }
+    
+    public DestroyOpponentObjectiveCard getDestroyObjective() {
+        return this.destroyObjective;
+    }
+
+    public ConquerTwoContinentsObjectiveCard getConquerTwoContinentsObjective() {
+        return this.conquerTwoContinentsObjective;
+    }
+    
+    public ConquerThreeContinentsObjectiveCard getConquerThreeContinentsObjective() {
+        return this.conquerThreeContinentsObjective;
+    }
+    public Conquer18TerritoriesObjectiveCard getConquer18TerritoriesObjectiveCard() {
+        return this.conquer18TerritoriesObjectiveCard;
+    }
+    public Conquer24TerritoriesObjectiveCard getConquer24TerritoriesObjectiveCard() {
+        return this.conquer24TerritoriesObjectiveCard;
+    }
+    
+    public Object getObjective() {
+        if (destroyObjective != null) {
+            return destroyObjective;
+        } else if (conquerTwoContinentsObjective != null) {
+            return conquerTwoContinentsObjective;
+        }else if (conquerThreeContinentsObjective != null) {
+            return conquerThreeContinentsObjective;
+        }else if (conquer18TerritoriesObjectiveCard != null) {
+            return conquer18TerritoriesObjectiveCard;
+        }else if (conquer24TerritoriesObjectiveCard != null) {
+            return conquer24TerritoriesObjectiveCard;
+        }
+        
+        return null;
+    }
 
     public List<TerritoryCard> getCard(){
     	return this.territoryCards;

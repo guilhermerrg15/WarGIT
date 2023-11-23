@@ -40,24 +40,29 @@ class ObjectiveCardDeck {
         objectiveCards.add(new Conquer24TerritoriesObjectiveCard("Objetivo conquistar 24 territorios"));
     }
     public void sorteia_objetivo(Player player){
-    	Random rand = new Random();
-    	Object objetivoSorteado = objectiveCards.get(rand.nextInt(objectiveCards.size()));
+    	Random random = new Random();
+    	Object objetivoSorteado = objectiveCards.get(random.nextInt(objectiveCards.size()));
     	
     	if (objetivoSorteado instanceof DestroyOpponentObjectiveCard) {
-            player.recebe_objetivo((DestroyOpponentObjectiveCard) objetivoSorteado);
+            player.riceiveObjective((DestroyOpponentObjectiveCard) objetivoSorteado);
+            player.getDestroyObjective().checkOwner(player);
     	} else if (objetivoSorteado instanceof ConquerTwoContinentsObjectiveCard) {
-            player.recebe_objetivo((ConquerTwoContinentsObjectiveCard) objetivoSorteado);
+            player.riceiveObjective((ConquerTwoContinentsObjectiveCard) objetivoSorteado);
+            player.getConquerTwoContinentsObjective().checkOwner(player);
         }else if (objetivoSorteado instanceof ConquerThreeContinentsObjectiveCard) {
-            player.recebe_objetivo((ConquerThreeContinentsObjectiveCard) objetivoSorteado);
+            player.riceiveObjective((ConquerThreeContinentsObjectiveCard) objetivoSorteado);
+            player.getConquerThreeContinentsObjective().checkOwner(player);
         }else if (objetivoSorteado instanceof Conquer18TerritoriesObjectiveCard) {
-            player.recebe_objetivo((Conquer18TerritoriesObjectiveCard) objetivoSorteado);
+            player.riceiveObjective((Conquer18TerritoriesObjectiveCard) objetivoSorteado);
+            player.getConquer18TerritoriesObjectiveCard().checkOwner(player);
         }else if (objetivoSorteado instanceof Conquer24TerritoriesObjectiveCard) {
-            player.recebe_objetivo((Conquer24TerritoriesObjectiveCard) objetivoSorteado);
+            player.riceiveObjective((Conquer24TerritoriesObjectiveCard) objetivoSorteado);
+            player.getConquer24TerritoriesObjectiveCard().checkOwner(player);
         }
             
-            
-    	player.get_objetivo().ganha_dono(player);
-    	objectiveCards.remove(player.get_objetivo());
+        
+    	objectiveCards.remove(player.getObjective());
+    	
     }
     
     public String getName(int index) {
@@ -85,7 +90,7 @@ class ObjectiveCardDeck {
         objectiveCards.add(objetivo);
     }
     
-    public Object getObjetivo(int index) {
+    public Object getObjective(int index) {
         return objectiveCards.get(index - 1);
     }
 }

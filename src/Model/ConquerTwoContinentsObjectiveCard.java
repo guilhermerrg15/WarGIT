@@ -19,7 +19,7 @@ class ConquerTwoContinentsObjectiveCard {
         return continente1.checkContinentDomain(dono) && continente2.checkContinentDomain(dono);
     }
 
-    public void ganha_dono(Player dono) {
+    public void checkOwner(Player dono) {
         this.dono = dono;
     }
 }

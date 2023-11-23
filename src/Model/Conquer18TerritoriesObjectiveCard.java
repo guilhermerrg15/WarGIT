@@ -24,7 +24,7 @@ class Conquer18TerritoriesObjectiveCard {
         return false;
     }
 
-    public void ganha_dono(Player dono) {
+    public void checkOwner(Player dono) {
         this.dono = dono;
     }
 }
