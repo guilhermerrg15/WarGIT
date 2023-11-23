@@ -16,28 +16,28 @@ class ObjectiveCardDeck {
         this.objectiveCards = new ArrayList<>();
     	
     	//cartas de destruir oponente
-    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 1", "azul"));
-    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 2", "amarelo"));
-    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 3", "branco"));
-    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 4", "verde"));
-    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 5", "preto"));
-    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo 6", "vermelho"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo destruir azul", "azul"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo destruir amarelo", "amarelo"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo destruir branco", "branco"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo destruir verde", "verde"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo destruir preto", "preto"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard(todos_jogadores,"Objetivo destruir vermelho", "vermelho"));
     	
     	//cartas de conquistar 2 continentes
-    	objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 7", map.findContinent("North America"), map.findContinent("Africa")));
-        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 8", map.findContinent("Asia"), map.findContinent("Africa")));
-        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 9", map.findContinent("North America"), map.findContinent("Oceania")));
-        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo 10", map.findContinent("Asia"), map.findContinent("South America")));
+    	objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo conquistar Norte America e Africa", map.findContinent("North America"), map.findContinent("Africa")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo conquistar Asia e Africa", map.findContinent("Asia"), map.findContinent("Africa")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo conquistar Norte America e Oceania", map.findContinent("North America"), map.findContinent("Oceania")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo conquistar Asia e America do Sul", map.findContinent("Asia"), map.findContinent("South America")));
         
         //cartas de conquistar 3 continentes
-        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo 11", map.findContinent("Europe"), map.findContinent("South America"), map));
-        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo 12", map.findContinent("Europe"), map.findContinent("Oceania"), map));
+        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo conquistar Europa e America do Sul e mais um", map.findContinent("Europe"), map.findContinent("South America"), map));
+        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo conquistar Europa e Oceania e mais um", map.findContinent("Europe"), map.findContinent("Oceania"), map));
     	
         //carta para conquistar 18 territorios com 2 exercitos em cada
-        objectiveCards.add(new Conquer18TerritoriesObjectiveCard("Objetivo 13"));
+        objectiveCards.add(new Conquer18TerritoriesObjectiveCard("Objetivo conquistar 18 territorios"));
         
       //carta para conquistar 24 territorios 
-        objectiveCards.add(new Conquer24TerritoriesObjectiveCard("Objetivo 14"));
+        objectiveCards.add(new Conquer24TerritoriesObjectiveCard("Objetivo conquistar 24 territorios"));
     }
     public void sorteia_objetivo(Player player){
     	Random rand = new Random();
@@ -57,7 +57,7 @@ class ObjectiveCardDeck {
             
             
     	player.get_objetivo().ganha_dono(player);
-    	objetiveCards.remove(player.get_objetivo());
+    	objectiveCards.remove(player.get_objetivo());
     }
     
     public String getName(int index) {

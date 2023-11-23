@@ -16,7 +16,7 @@ class ConquerTwoContinentsObjectiveCard {
     }
 
     public boolean verifica_status() {
-        return continente1.verifica_monopolio(dono) && continente2.verifica_monopolio(dono);
+        return continente1.checkContinentDomain(dono) && continente2.checkContinentDomain(dono);
     }
 
     public void ganha_dono(Player dono) {
