@@ -10,7 +10,6 @@ class ObjectiveCardDeck {
 	private List<Object> objectiveCards;
 	private Map map;
     
-    //Temos que passar uma referência aos continentes criados para verificar alguns objetivos
     public ObjectiveCardDeck(Map map, List<Player> todos_jogadores) {
     	
     	this.map = map;
