@@ -15,7 +15,7 @@ class DestroyOpponentObjectiveCard {
         this.color = color;
     }
 
-    public String getNome() {
+    public String getName() {
         return this.nome;
     }
 

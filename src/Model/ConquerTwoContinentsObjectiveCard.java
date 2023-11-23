@@ -11,7 +11,7 @@ class ConquerTwoContinentsObjectiveCard {
         this.continente2 = continente2;
     }
 
-    public String get_nome() {
+    public String getName() {
         return this.nome;
     }
 

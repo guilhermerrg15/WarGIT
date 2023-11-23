@@ -13,7 +13,7 @@ class ConquerThreeContinentsObjectiveCard {
         this.map = map;
         
     }
-    public String get_nome() {
+    public String getName() {
         return this.nome;
     }
 

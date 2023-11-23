@@ -8,7 +8,7 @@ class Conquer24TerritoriesObjectiveCard {
         this.nome = name;
      }
 
-    public String get_nome() {
+    public String getName() {
         return this.nome;
     }
 
