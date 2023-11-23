@@ -12,6 +12,10 @@ import java.util.List;
 class TerritoryCardDeck {
 	private static List<TerritoryCard> cards;
     private int maximumCards;
+    private int tradeCounter = 0;
+	private static final int[] tradeBonusAmount = new int[] {
+            4, 6, 8, 10, 12, 15
+    };
 
     /**
      * Construtor privado para impor o padrão singleton e inicializar o baralho.
@@ -153,12 +157,61 @@ class TerritoryCardDeck {
         return this.maximumCards;
     }
 
-    // public int doCardTrade(){
-    //     return 0;
-    // }
+    /**
+     * Calcula o bônus de troca com base no contador de trocas.
+     *
+     * @return Bônus de troca calculado.
+     */
+	private int calculateTradeBonus() {
+	    int bonus;
+	    if (tradeCounter >= tradeBonusAmount.length) {
+	        bonus = tradeBonusAmount[tradeBonusAmount.length - 1] + (tradeCounter - tradeBonusAmount.length + 1) * 5;
+	    } else {
+	        bonus = tradeBonusAmount[tradeCounter];
+	    }
+	    return bonus;
+	}
 
 
-    // public boolean evaluateCardTrade() {
+    public boolean evaluateCardTrade(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {
+        // Caso em que as 3 cartas possuem símbolos disintos
+        if(card1.getShape() != card2.getShape() && card1.getShape() != card3.getShape() && card2.getShape() != card3.getShape()) {
+            return true;
+        }
+        
+        // Caso de uma ou mais cartas serem coringas
+        if(card1.getShape() == "Coringa") {
+            // Caso em que as duas cartas restantes possuem o mesmo símbolo
+            if(card2.getShape() == card3.getShape()) {
+                return true;
+            }
 
-    // }
+            // Caso em que a segunda ou a terceira carta seja Coringa
+            if(card2.getShape() == "Coringa" || card3.getShape() == "Coringa") {
+                return true;
+            }            
+        } else if(card2.getShape() == "Coringa") {
+            if(card1.getShape() == card3.getShape()) {
+                return true;
+            }
+
+            if(card1.getShape() == "Coringa" || card3.getShape() == "Coringa") {
+                return true;
+            }
+        } else if(card1.getShape() == "Coringa") {
+            if(card2.getShape() == card3.getShape()) {
+                return true;
+            }
+
+            if(card2.getShape() == "Coringa" || card3.getShape() == "Coringa") {
+                return true;
+            }
+        }
+        
+        // Caso em que as 3 cartas possuem o mesmo símbolo
+        if(card1.getShape() == card2.getShape() && card2.getShape() == card3.getShape()) {
+            return true;
+        }
+        return false;
+    }
 }
