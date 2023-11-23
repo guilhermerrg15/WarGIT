@@ -11,6 +11,7 @@ class TerritoryCard {
     private String shape;
 
     /**
+     * 
      * Cria uma nova carta de território com o nome e a forma fornecidos.
      * @param name O nome da carta de território.
      * @param shape A forma da carta de território.
