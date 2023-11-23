@@ -2,6 +2,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.Hashtable;
 //
@@ -55,19 +56,20 @@ public class Player {
 
     // }
 
-//     public void ganha_cartas_jogador_destruido(List<CartaConquista> cartas,ConjuntoCartaConquista deck){
-//     	this.cartaTroca.addAll(cartas);
-//	 	Random rand = new Random();
-//     	while(this.cartaTroca.size() > 5) {
-//     		CartaConquista carta_escolhida = this.cartaTroca.remove(rand.nextInt(this.cartaTroca.size()));
-//     		deck.carta_retorna_deck(carta_escolhida);
-//     	}
-//     }
+    //nao entendi objetivo desse metodo
+     public void backToDeckPlayerDestroyed(List<TerritoryCard> cards ,TerritoryCardDeck territoryDeck){
+     	this.territoryCards.addAll(cards);
+	 	Random rand = new Random();
+     	while(this.territoryCards.size() > 5) {
+     		TerritoryCard card = this.territoryCards.remove(rand.nextInt(this.territoryCards.size()));
+     		territoryDeck.returnCard(card);
+     	}
+     }
 
     public List<TerritoryCard> getAllCards() {
-        List<TerritoryCard> cartas = getCard().stream().collect(Collectors.toList());
+        List<TerritoryCard> cards = this.getCard();
         territoryCards.clear();
-        return cartas;
+        return cards;
     }
 
     public String getTerritoryRegion(String territory) {
@@ -114,7 +116,7 @@ public class Player {
         return this.armies;
     }
 
-    public int getArmySize() {
+    public int getTerritoryNumber() {
         return territories.size();
     }
 
@@ -135,12 +137,15 @@ public class Player {
         this.enemy = null;
         this.territoryCards = new ArrayList<TerritoryCard>();
     }
+    
+    
 
     public void loseTerritory(Territory territory) {
         territories.remove(territory);
     }
 
     public void winTerritory(Territory territory) {
+    	territory.setOwner(this);
         territories.add(territory);
     }
 
@@ -158,8 +163,6 @@ public class Player {
     public Player getEnemy() {
         return this.enemy;
     }
-
-
 
     public void riceiveObjective(DestroyOpponentObjectiveCard objetivo) {
         destroyObjective = objetivo;
@@ -239,12 +242,12 @@ public class Player {
         this.armies += army;
     }
 
-    public void addArmy() { //add exercito de acordo com metade dos territórios
-    	//System.out.println("CHAMOU AUMENTA EXERCITO BASEADO TERRITORIO = " + this.domina.size()/2);
+    public void addArmy() { 
     	this.armies += this.territories.size()/2;
     }
 
     ////metodos que precisam da classe exercitoRegiao
+    
     // public int getArmyRegion(String continent) {
         //precisa da classe exercitoRegiao
     // }
