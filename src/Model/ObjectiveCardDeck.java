@@ -49,11 +49,36 @@ class ObjectiveCardDeck {
             player.recebe_objetivo((ConquerTwoContinentsObjectiveCard) objetivoSorteado);
         }else if (objetivoSorteado instanceof ConquerThreeContinentsObjectiveCard) {
             player.recebe_objetivo((ConquerThreeContinentsObjectiveCard) objetivoSorteado);
+        }else if (objetivoSorteado instanceof Conquer18TerritoriesObjectiveCard) {
+            player.recebe_objetivo((Conquer18TerritoriesObjectiveCard) objetivoSorteado);
+        }else if (objetivoSorteado instanceof Conquer24TerritoriesObjectiveCard) {
+            player.recebe_objetivo((Conquer24TerritoriesObjectiveCard) objetivoSorteado);
         }
             
             
     	player.get_objetivo().ganha_dono(player);
     	objetiveCards.remove(player.get_objetivo());
+    }
+    
+    public String getName(int index) {
+        if (index >= 1 && index <= objectiveCards.size()) {
+            Object objetivo = objectiveCards.get(index - 1);
+
+            if (objetivo instanceof DestroyOpponentObjectiveCard) {
+                return ((DestroyOpponentObjectiveCard) objetivo).getName();
+            } else if (objetivo instanceof ConquerTwoContinentsObjectiveCard) {
+                return ((ConquerTwoContinentsObjectiveCard) objetivo).getName();
+            } else if (objetivo instanceof ConquerThreeContinentsObjectiveCard) {
+                return ((ConquerThreeContinentsObjectiveCard) objetivo).getName();
+            } else if (objetivo instanceof Conquer18TerritoriesObjectiveCard) {
+                return ((Conquer18TerritoriesObjectiveCard) objetivo).getName();
+            } else if (objetivo instanceof Conquer24TerritoriesObjectiveCard) {
+                return ((Conquer24TerritoriesObjectiveCard) objetivo).getName();
+            }
+        }
+
+        // Retornar null indicando que o índice é inválido
+        return null;
     }
     
     public void objetivoRetornaDeck(Object objetivo) {
