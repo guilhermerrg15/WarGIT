@@ -12,7 +12,7 @@ public class Player {
 
     private String name;
     private PlayerColor color;
-    private List <Territory> territories;
+    protected List <Territory> territories;
     private List<TerritoryCard> territoryCards;
     private ObjectiveCardDeck objective;
     private int armies;

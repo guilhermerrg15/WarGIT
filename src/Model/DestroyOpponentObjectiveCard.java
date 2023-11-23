@@ -19,18 +19,18 @@ class DestroyOpponentObjectiveCard {
         return this.nome;
     }
 
-    public boolean verificaStatus() {
+    public boolean checkStatus() {
         for (Player player : this.todos_jogadores) {
             if (player.getColor().equals(color)) {
-                if (player.getDestruidoPor() != null && player.getDestruidoPor().equals(dono)) {
+                if (player.destroyedPlayer(dono) != null && player.destroyedPlayer(dono).equals(dono)) {
                     return true;
                 }
-                if (player.getDestruidoPor() == null) {
+                if (player.destroyedPlayer(dono) == null) {
                     return false;
                 }
             }
         }
-        return dono.getDomina().size() >= 24;
+        return dono.getConqueredTerritories().size() >= 24;
     }
 
     public void ganhaDono(Player dono) {
