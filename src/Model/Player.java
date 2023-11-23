@@ -137,10 +137,15 @@ public class Player {
         return true;
     }
 
-    public Player destroyedPlayer(Player player) {
+    public void destroyedPlayer(Player player) {
         this.enemy = player;
+    }
+
+    public Player getEnemy() {
         return this.enemy;
     }
+
+
 
     public void riceiveObjective(DestroyOpponentObjectiveCard objetivo) {
         destroyObjective = objetivo;
@@ -286,4 +291,3 @@ public class Player {
 
     
 }
-
