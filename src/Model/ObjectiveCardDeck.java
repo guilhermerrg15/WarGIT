@@ -39,6 +39,7 @@ class ObjectiveCardDeck {
       //carta para conquistar 24 territorios 
         objectiveCards.add(new Conquer24TerritoriesObjectiveCard("Objetivo conquistar 24 territorios"));
     }
+    
     public void sorteia_objetivo(Player player){
     	Random random = new Random();
     	Object objetivoSorteado = objectiveCards.get(random.nextInt(objectiveCards.size()));
@@ -90,7 +91,4 @@ class ObjectiveCardDeck {
         objectiveCards.add(objetivo);
     }
     
-    public Object getObjective(int index) {
-        return objectiveCards.get(index - 1);
-    }
 }

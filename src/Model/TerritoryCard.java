@@ -5,15 +5,15 @@ package Model;
  * Cada carta possui um nome, um território associado e uma forma.
  */
 class TerritoryCard {
-	String name;
-    private String shape;
+	private String name;
+    private Shape shape;
 
     /**
      * Cria uma nova carta de território com o nome e a forma fornecidos.
      * @param name O nome da carta de território.
      * @param shape A forma da carta de território.
      */
-    public TerritoryCard(String name, String shape) {
+    public TerritoryCard(String name, Shape shape) {
         this.name = name;
         this.shape = shape;
     }
@@ -30,7 +30,7 @@ class TerritoryCard {
      * Retorna a forma da carta de território.
      * @return A forma da carta de território.
      */
-    public String getShape() {
+    public Shape getShape() {
         return shape;
     }
 }

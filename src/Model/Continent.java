@@ -1,7 +1,6 @@
 package Model;
 
 import java.awt.Color;
-import java.util.Arrays;
 import java.util.List;
 
 class Continent {
@@ -35,7 +34,7 @@ class Continent {
      * @return O número de exércitos de bônus.
      */
     public int getBonusArmies() {
-        return bonusArmies;
+        return this.bonusArmies;
     }
 
     /**
@@ -85,7 +84,7 @@ class Continent {
     
     public boolean checkContinentDomain(Player player) {
 		for(Territory territory: territories) {
-			if(!player.equals(territory.getOwner())) { //verifica se o jogador dos paises é diferente do jogador que queremos conferir
+			if(player != territory.getOwner()) { //verifica se o jogador dos paises é diferente do jogador que queremos conferir
 				return false;
 			}
 		}
@@ -106,15 +105,6 @@ class Continent {
         this.territories = territories;
     }
     
-    // public Continent(String name, Territory[] territories, int bonusArmies, Color color) {
-    //     if (name == null || territories == null || territories.length == 0 || bonusArmies < 0) {
-    //         throw new IllegalArgumentException("Parâmetros inválidos para criar um continente.");
-    //     }
 
-    //     this.name = name;
-    //     this.territories = territories;
-    //     this.bonusArmies = bonusArmies;
-    //     this.color = color;
-    // }
 }
 

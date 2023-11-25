@@ -1,11 +1,8 @@
 package Model;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.Hashtable;
 //
 /**
  * Representa um jogador no jogo.
@@ -16,7 +13,6 @@ public class Player {
     private PlayerColor color;
     protected List <Territory> territories;
     private List<TerritoryCard> territoryCards; // cartas para troca
-//    private ObjectiveCardDeck objective;
     private int armies;
     private boolean conquered;
     private Player enemy;
