@@ -13,7 +13,7 @@ class Conquer18TerritoriesObjectiveCard {
     }
 
     public boolean verifica_status() {
-        if(dono.getArmySize() >= 18) {
+        if(dono.getTerritoryNumber() >= 18) {
             for(Territory terr : dono.territories) {
                 if(terr.getArmies() < 2) {
                     return false;
