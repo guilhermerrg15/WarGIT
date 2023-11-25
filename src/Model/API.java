@@ -98,6 +98,47 @@ public class API {
 			System.out.printf("O objetivo do jogador %s é %s.\n",player.getName(),player.getObjective().getClass());
 		}
 	}
+
+    // Conferir vencedor da batalha
+    /// batalhas podem ter no mínimo um exército e no máximo três exércitos
+    /// retirar a quantidade de acordo com o resultado dos dados
+    /// List com os resultados dos dados de ataque e de defesa
+
+
+    // Código do menino
+    public boolean[] confere_vencedor() {
+		List<Integer> ataque = new ArrayList<>((List<Integer>)dado.get('a'));
+		List<Integer> defesa = new ArrayList<>((List<Integer>)dado.get('d'));
+		boolean[] batalhas = new boolean [(defesa.size() > ataque.size()) ? ataque.size() : defesa.size()];
+		int batalha=0;
+		while(defesa.size()!=0 && ataque.size()!=0) {
+			int maioratk=0;
+			int maiordef=0;
+			for(int i=0;i<ataque.size(); i++) {
+				 if(ataque.get(maioratk)<ataque.get(i)) {
+					 maioratk=i;
+				 }
+			}
+			for(int i=0;i<defesa.size(); i++) {
+				 if(defesa.get(maiordef)<defesa.get(i)) {
+					 maiordef=i;
+				 }
+			}
+			if(ataque.get(maioratk)>defesa.get(maiordef)) {
+				batalhas[batalha]=true;
+			}
+			else{
+				batalhas[batalha]=false;
+			}
+			batalha++;
+			ataque.remove(maioratk);
+			defesa.remove(maiordef);
+		}
+		return batalhas;
+	}
+    ////////////////////////////////////////////////////////////////////////////
+
+
     
 //    public void reset_all() {
 //		for(Map map: map) {
