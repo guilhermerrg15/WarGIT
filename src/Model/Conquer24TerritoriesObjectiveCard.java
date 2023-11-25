@@ -13,7 +13,7 @@ class Conquer24TerritoriesObjectiveCard {
     }
 
     public boolean verifica_status() {
-		if(dono.getArmySize()>=24) {
+		if(dono.getTerritoryNumber()>=24) {
 			return true;
 		}
 		return false;

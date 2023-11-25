@@ -1,6 +1,6 @@
 package View;
 
-import java.awt.Graphics;
+//import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-class ImagemInfo {
+class ImageDrawer {
 	protected String name;
 	protected String caminho;
 	protected int x;
@@ -17,7 +17,7 @@ class ImagemInfo {
 	protected int h;
 	protected BufferedImage imagem;
 
-	public ImagemInfo(String path, int x, int y, int w, int h) {
+	public ImageDrawer(String path, int x, int y, int w, int h) {
 		this.caminho = path;
 		this.x = x;
 		this.y = y;
@@ -26,7 +26,7 @@ class ImagemInfo {
 		this.load_image();
 	}
 	
-	public ImagemInfo(String path, int x, int y, int w, int h,String nome) {
+	public ImageDrawer(String path, int x, int y, int w, int h,String nome) {
 		this.caminho = path;
 		this.x = x;
 		this.y = y;
@@ -36,7 +36,7 @@ class ImagemInfo {
 		this.load_image();
 	}
 
-	public BufferedImage get_image() {
+	public BufferedImage getImage() {
 		return this.imagem;
 	}
 
@@ -44,23 +44,23 @@ class ImagemInfo {
 		return this.caminho;
 	}
 
-	public int get_x() {
+	public int getX() {
 		return this.x;
 	}
 
-	public int get_y() {
+	public int getY() {
 		return this.y;
 	}
 
-	public int get_w() {
+	public int getW() {
 		return this.w;
 	}
 
-	public int get_h() {
+	public int getH() {
 		return this.h;
 	}
 	
-	public String get_name() {
+	public String getName() {
     	return this.name;
     }
 
@@ -86,14 +86,8 @@ class ImagemInfo {
 
 	public void load_image() {
 		try {
+			this.imagem = ImageIO.read(new File("resources/imagens/" + this.caminho));
 
-			// if (System.getProperty("os.name").startsWith("Mac")) {
-				// this.imagem = ImageIO.read(new File("resources/imagens/" + this.caminho));
-			// }
-			// else
-			// {
-				this.imagem = ImageIO.read(new File("resources/imagens/" + this.caminho));
-			// }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

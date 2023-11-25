@@ -8,7 +8,7 @@ import Controller.TabuleiroObservador;
 public class API {
 
     private static API apiInstance = null;
-    private Game game;
+//    private Game game;
     private ViewAPI viewInstance;
     private Map map;
     private Dado dado;
@@ -37,19 +37,19 @@ public class API {
         return map;
     }
     
-    public void createGame() {
-        this.game = new Game();
-        game.addObserver(viewInstance.getTabuleiroObservador());
-        viewInstance.redraw();
-    }
+//    public void createGame() {
+//        this.game = new Game();
+//        game.addObserver(viewInstance.getTabuleiroObservador());
+//        viewInstance.redraw();
+//    }
 
     public static TerritoryCard[] getCartasTerritorio() {
         return null;
     }
 
-    public void addObserver(TabuleiroObservador observer) {
-        game.addObserver(observer);
-    }
+//    public void addObserver(TabuleiroObservador observer) {
+//        game.addObserver(observer);
+//    }
 
     public ObjectiveCardDeck getDeckCardObjective(){
 		return this.objectiveDeck;
@@ -111,22 +111,7 @@ public class API {
 //		this.vez = 0;
 //	}
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     // static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
     // static Player[] jogadores;
 

@@ -1,71 +1,78 @@
 package View;
 
-import java.awt.Color;
+import java.util.ArrayList;
+//import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+//import java.awt.Graphics2D;
 import java.util.List;
-// import Model.Observado;
+//import Model.Observado;
 
 import javax.swing.JButton;
 
 abstract class LoadScene {
-	protected ImagemInfo[] images;
-	protected OutlineTerritory[] formas_geometricas;
-	protected int count_images,count_formas_geometricas;
-	
-	public OutlineTerritory[] get_formas() {
-		return formas_geometricas;
-	}
-	
-	public void set_count_images(int number) {
-		this.count_images = number;
-	}
-	
+    protected ImageDrawer[] images;
+    protected OutlineTerritory[] geometric_shapes;
+    protected int imageCount;
+//    protected int shapeCount;
+
+//    public OutlineTerritory[] getShapes() {
+//        return geometric_shapes;
+//    }
+
+    public void setImageCount(int count) {
+        this.imageCount = count;
+    }
 	// public void notify(Observado o) {
-		
+	
 	// }
-	
-	public void count_images_loaded(ImagemInfo imagem) {
-		count_images++;
-		this.images[count_images-1] = imagem;
-	}
-	
-	public void count_terras_loaded(OutlineTerritory formas_geometricas) {
-		count_formas_geometricas++;
-		this.formas_geometricas[count_formas_geometricas-1] = formas_geometricas;
-	}
-	
-	public void desenha(Graphics g) {
-		for(int i = 0; i < this.count_images; i++) {
-		    if (images[i] != null) {
-		    	g.drawImage(images[i].get_image(), images[i].get_x(), images[i].get_y(), images[i].get_w(), images[i].get_h(), null);
-		    }
-	    }
-		Graphics2D g2d = (Graphics2D) g;
-		for(int i = 0; i < this.count_formas_geometricas; i++) {
-		    if (formas_geometricas[i] != null) {
-		    	g2d.setColor(formas_geometricas[i].get_cor());
-		    	g2d.fill(formas_geometricas[i].get_polygon());
-		    	g2d.setColor(Color.BLACK);
-		    	g2d.draw(formas_geometricas[i].get_polygon());
-		    }
-	    }
-	}
-	
-	public OutlineTerritory formas_geometricas_clicada(int x, int y) {
-		for(int i = 0; i < this.count_formas_geometricas; i++) {
-			if (formas_geometricas[i].clicou(x,y)) {
-		    	return formas_geometricas[i];
-		    }
-		}
-		return null;
-	}
-	
-	abstract List<String> get_jogares_name();
-	
-	abstract List<String> get_jogares_color();
-	
-	abstract JButton get_button(int pos);
 
+    public void imageLoaded(ImageDrawer image) {
+        imageCount++;
+        this.images[imageCount - 1] = image;
+    }
+
+//    public void shapeLoaded(OutlineTerritory shape) {
+//        shapeCount++;
+//        this.geometric_shapes[shapeCount - 1] = shape;
+//    }
+
+    public void draw(Graphics g) {
+        for (int i = 0; i < this.imageCount; i++) {
+            if (images[i] != null) {
+                g.drawImage(images[i].getImage(), images[i].getX(), images[i].getY(), images[i].getW(),
+                        images[i].getH(), null);
+            }
+        }
+
+//        Graphics2D g2d = (Graphics2D) g;
+//        for (int i = 0; i < this.shapeCount; i++) {
+//            if (geometric_shapes[i] != null) {
+//                g2d.setColor(geometric_shapes[i].getColor());
+//                g2d.fill(geometric_shapes[i].getPolygon());
+//                g2d.setColor(Color.BLACK);
+//                g2d.draw(geometric_shapes[i].getPolygon());
+//            }
+//        }
+    }
+
+//    public OutlineTerritory clickedShape(int x, int y) {
+//        for (int i = 0; i < this.shapeCount; i++) {
+//            if (geometric_shapes[i].isClicked(x, y)) {
+//                return geometric_shapes[i];
+//            }
+//        }
+//        return null;
+//    }
+
+    public List<String> getPlayerNames() {
+        return new ArrayList<>(); // Implementação padrão, pode ser substituída nas subclasses
+    }
+
+    public List<String> getPlayerColors() {
+        return new ArrayList<>(); // Implementação padrão, pode ser substituída nas subclasses
+    }
+
+    public JButton getButton(int position) {
+        return new JButton(); // Implementação padrão, pode ser substituída nas subclasses
+    }
 }
-
