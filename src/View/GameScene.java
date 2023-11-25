@@ -9,7 +9,6 @@ public class GameScene extends JFrame {
     public final int xScreen = 867;
     public final int yScreen = 656;
     private JanelaInicial janelaInicial;
-    private JanelaSelecaoJogadores janelaSelecaoJogadores;
     
     public GameScene() {
         gerarPainel();
@@ -17,7 +16,6 @@ public class GameScene extends JFrame {
 
     public void gerarPainel() {
         this.janelaInicial = new JanelaInicial();
-        this.janelaSelecaoJogadores = new JanelaSelecaoJogadores();
         janelaInicial.addMouseListener(new MouseListener());
 
         setTitle("War");
@@ -32,7 +30,7 @@ public class GameScene extends JFrame {
         setContentPane(contentPane);
         
         JPanel menuPanel = janelaInicial.getMenuPanel();
-        contentPane.add(janelaSelecaoJogadores);
+        
         contentPane.add(menuPanel, BorderLayout.EAST);
         setVisible(true);
     }
@@ -40,7 +38,4 @@ public class GameScene extends JFrame {
         repaint();
     }
 
-    public JanelaSelecaoJogadores getJanelaSelecaoJogadores() {
-        return this.janelaSelecaoJogadores;
-    }
 }
