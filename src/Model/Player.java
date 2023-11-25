@@ -1,5 +1,6 @@
 package Model;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -14,7 +15,7 @@ public class Player {
     private String name;
     private PlayerColor color;
     protected List <Territory> territories;
-    private List<TerritoryCard> territoryCards;
+    private List<TerritoryCard> territoryCards; // cartas para troca
 //    private ObjectiveCardDeck objective;
     private int armies;
     private boolean conquered;
@@ -24,6 +25,7 @@ public class Player {
     private ConquerThreeContinentsObjectiveCard conquerThreeContinentsObjective;
     private Conquer18TerritoriesObjectiveCard conquer18TerritoriesObjectiveCard;
     private Conquer24TerritoriesObjectiveCard conquer24TerritoriesObjectiveCard;
+    private TerritoryCardDeck cardDeck;
     
     
     public int getCards () {
@@ -238,12 +240,36 @@ public class Player {
         return this.conquered;
     }
 
-    public void addArmy(int army) {
+    public void addArmyTraded(int army) {
         this.armies += army;
     }
 
     public void addArmy() { 
     	this.armies += this.territories.size()/2;
+    }
+
+    // Troca de cartas e adição de soldados após validação de troca
+    public void exchangeCards(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3, List<TerritoryCard> cards, List <Territory> territories){
+        // Verificação de troca
+        if(cardDeck.evaluateCardTrade(card1, card2, card3)){
+            // Adicionar exércitos com base na troca realizada
+            this.addArmyTraded(cardDeck.calculateTradeBonus());
+
+            // Remover cartas trocadas da lista
+            cards.removeAll(Arrays.asList(card1, card2, card3));
+
+            // Iterar sobre as cartas trocadas
+            for(TerritoryCard cardTraded : Arrays.asList(card1, card2, card3)) {
+                // Iterar sobre os territórios
+                for(Territory territory : territories) {
+                    // Verificar se a carta trocada é um território do jogador
+                    if(territory.getName() == cardTraded.getName()) {
+                        // Adicionar dois exércitos ao território
+                        territory.addArmies(2);
+                    }
+                }
+            }
+        }
     }
 
     ////metodos que precisam da classe exercitoRegiao

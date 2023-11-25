@@ -162,7 +162,7 @@ class TerritoryCardDeck {
      *
      * @return Bônus de troca calculado.
      */
-	private int calculateTradeBonus() {
+	public int calculateTradeBonus() {
 	    int bonus;
 	    if (tradeCounter >= tradeBonusAmount.length) {
 	        bonus = tradeBonusAmount[tradeBonusAmount.length - 1] + (tradeCounter - tradeBonusAmount.length + 1) * 5;
@@ -172,7 +172,7 @@ class TerritoryCardDeck {
 	    return bonus;
 	}
 
-
+    // Verifica troca de cartas
     public boolean evaluateCardTrade(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {
         // Caso em que as 3 cartas possuem símbolos disintos
         if(card1.getShape() != card2.getShape() && card1.getShape() != card3.getShape() && card2.getShape() != card3.getShape()) {
