@@ -1,5 +1,6 @@
 package View;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 // import Controller.TratadorSelecao;
 // import Model.Game;
@@ -7,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +31,10 @@ public class PlayerConfig extends JPanel {
 
     // Adicionar fundo da tela inicial
 	Image background;
-    
+
+    // Componente gráfico da tela inicial
+	Graphics2D graphic;
+
 
     // Construtor da tela de configuração de jogadores
     public PlayerConfig() {
@@ -76,6 +82,14 @@ public class PlayerConfig extends JPanel {
         
     }
 
+    // Desenha a imagem de fundo
+	public void paintComponent(Graphics graphic) {
+		super.paintComponent(graphic);
+		this.graphic = (Graphics2D) graphic;
+		this.graphic.drawImage(background, 0, 0, 1440, 900, null);
+
+	}
+
     // Verificar casos de erro de configuração de jogadores
     public boolean verifyConfigErrors(ArrayList<String> nomes, ArrayList<Color> cores) {
         
@@ -103,6 +117,7 @@ public class PlayerConfig extends JPanel {
 
     // Desenha jogadores
 	public void drawPlayers() {
+        add(Box.createVerticalStrut(150));
 		for(int i = 0;i < numPlayers;i++) {
 			Selection selection = new Selection();
 			add(selection);
@@ -110,7 +125,14 @@ public class PlayerConfig extends JPanel {
 		}
         add(startGameButton);
         add(Box.createVerticalGlue()); 
-        add(Box.createVerticalStrut(550));
+        add(Box.createVerticalStrut(250));
+
+        try {
+			background = ImageIO.read(new File ("resources/imagens/war_tabuleiro_fundo.png"));
+		}
+		catch (IOException e) {
+			System.out.println("Erro na leitura do plano de fundo\n");
+		}
 	}
 
     // Altera número de jogadores

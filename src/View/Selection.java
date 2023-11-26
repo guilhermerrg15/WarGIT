@@ -3,8 +3,16 @@ package View;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.Color;
-
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import Model.PlayerColor;
 
 class Selection extends JPanel {
@@ -23,12 +31,33 @@ class Selection extends JPanel {
 	// Guarda o nome escolhido
 	private String nome; 
 
+	// Adicionar fundo da tela inicial
+	Image background;
+
+    // Componente gráfico da tela inicial
+	Graphics2D graphic;
+
 	// Construtor
 	public Selection() {
 		add(textField);
 		add(comboBox);
+
+		try {
+			background = ImageIO.read(new File ("resources/imagens/war_tabuleiro_fundo.png"));
+		}
+		catch (IOException e) {
+			System.out.println("Erro na leitura do plano de fundo\n");
+		}
 	}
-	
+
+	// Desenha a imagem de fundo
+	public void paintComponent(Graphics graphic) {
+		super.paintComponent(graphic);
+		this.graphic = (Graphics2D) graphic;
+		this.graphic.drawImage(background, 0, 0, 1440, 900, null);
+
+	}
+
 	// Pega o nome do jogador
 	private void setNome() {
 		if (!textField.getText().equals("Nome do jogador")) {
