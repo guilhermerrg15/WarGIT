@@ -13,8 +13,8 @@ public class NumPlayersView extends JPanel {
 
     public static NumPlayersView numPlayersView = null;
 
-    JRadioButton radioButton3 = new JRadioButton("3 jogadores");
-    JRadioButton radioButton4 = new JRadioButton("4 jogadores");
+    JRadioButton player3Button = new JRadioButton("3 jogadores");
+    JRadioButton player4Button = new JRadioButton("4 jogadores");
     JRadioButton radioButton5 = new JRadioButton("5 jogadores");
     JRadioButton radioButton6 = new JRadioButton("6 jogadores");
     ButtonGroup buttonGroup = new ButtonGroup();
@@ -37,22 +37,22 @@ public class NumPlayersView extends JPanel {
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.insets = new Insets(0, 0, 20, 10); 
 
-        radioButton3.setAlignmentX(CENTER_ALIGNMENT);
-        radioButton4.setAlignmentX(CENTER_ALIGNMENT);
+        player3Button.setAlignmentX(CENTER_ALIGNMENT);
+        player4Button.setAlignmentX(CENTER_ALIGNMENT);
         radioButton5.setAlignmentX(CENTER_ALIGNMENT);
         radioButton6.setAlignmentX(CENTER_ALIGNMENT);
 
         Font buttonFont = new Font("Arial", Font.BOLD, 24);
-        radioButton3.setFont(buttonFont);
-        radioButton4.setFont(buttonFont);
+        player3Button.setFont(buttonFont);
+        player4Button.setFont(buttonFont);
         radioButton5.setFont(buttonFont);
         radioButton6.setFont(buttonFont);
         confirmar.setFont(buttonFont);
        
 
 
-        buttonGroup.add(radioButton3);
-        buttonGroup.add(radioButton4);
+        buttonGroup.add(player3Button);
+        buttonGroup.add(player4Button);
         buttonGroup.add(radioButton5);
         buttonGroup.add(radioButton6);
 
@@ -60,11 +60,11 @@ public class NumPlayersView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selected = 0;
-                if (radioButton3.isSelected()) {
+                if (player3Button.isSelected()) {
                     // PlayerConfig.getPlayerConfig().setNumJogadores(3);
                     selected++;
                 }
-                if (radioButton4.isSelected()) {
+                if (player4Button.isSelected()) {
 					// PlayerConfig.getPlayerConfig().setNumJogadores(4);
 					selected++;
 				}
@@ -87,9 +87,9 @@ public class NumPlayersView extends JPanel {
             }
         });
 
-        add(radioButton3, gbc);
+        add(player3Button, gbc);
         gbc.gridy++;
-        add(radioButton4, gbc);
+        add(player4Button, gbc);
         gbc.gridy++;
         add(radioButton5, gbc);
         gbc.gridy++;
