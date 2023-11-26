@@ -50,6 +50,7 @@ class StartView extends JPanel {
         // Adicionar botões na tela inicial
         add(start);
         add(continueGame);
+        
     }
 
     // Desenha a imagem de fundo
