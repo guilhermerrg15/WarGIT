@@ -73,7 +73,7 @@ class ObjectiveCardDeck {
         return null;
     }
     
-    public void objetivoRetornaDeck(Objective objetivo) {
+    public void returnObjectiveCard(Objective objetivo) {
         objectiveCards.add(objetivo);
     }
 }

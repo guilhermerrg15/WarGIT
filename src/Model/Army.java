@@ -2,17 +2,20 @@ package Model;
 
 class Army {
 	protected int army;
-	protected String continent;
+	protected Continent continent;
 	
-	public Army(String continent) {
+	public Army(Continent continent) {
 		this.continent = continent;
 	}
-	public String retrieveContinent() {
+
+	public Continent retrieveContinent() {
 		return this.continent;
 	}
+
     public void addArmy(int num) {
 		this.army += num;
 	}
+
 	public int retrieveArmyCount() {
 		return this.army;
 	}

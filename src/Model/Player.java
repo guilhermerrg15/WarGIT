@@ -14,7 +14,7 @@ public class Player {
     protected List <Territory> territories;
     private List<TerritoryCard> territoryCards; // cartas para troca
     private int armies;
-    private boolean conquered;
+    private boolean conqueredTerritory;
     private Player enemy;
     private DestroyOpponentObjectiveCard destroyObjective;
     private ConquerTwoContinentsObjectiveCard conquerTwoContinentsObjective;
@@ -22,12 +22,17 @@ public class Player {
     private Conquer18TerritoriesObjectiveCard conquer18TerritoriesObjectiveCard;
     private Conquer24TerritoriesObjectiveCard conquer24TerritoriesObjectiveCard;
     private TerritoryCardDeck cardDeck;
+    private Objective objective;
+    private List<Continent> continents;
+    protected List<Army> continentalArmies;
     
     
+    // Pegar número de cartas
     public int getCards () {
         return territoryCards.size();
     }
 
+    // Pegar nome do objetivo
     public String getObjectiveName() {
         Object objective = getObjective();
 
@@ -46,13 +51,26 @@ public class Player {
         }
     }
 
+    // Pegar lista de territórios conquistados
     public List<Territory> getConqueredTerritories() {
         return this.territories;
     }
 
-    // public void reset() {
+    // Resetar o jogador
+    public void reset(TerritoryCardDeck territoryCardDeck, ObjectiveCardDeck objectiveCardDeck) {
+        this.conqueredTerritory = false;
+        this.enemy = null;
+        this.armies = 0;
 
-    // }
+        for(TerritoryCard territoryCard : this.territoryCards) {
+            territoryCardDeck.returnCard(territoryCard);
+        }
+
+        objectiveCardDeck.returnObjectiveCard(objective); // verificar se é objective
+        this.objective = null;
+        this.territoryCards.clear();
+        this.territories.clear();
+    }
 
     //nao entendi objetivo desse metodo
      public void backToDeckPlayerDestroyed(List<TerritoryCard> cards ,TerritoryCardDeck territoryDeck){
@@ -134,6 +152,10 @@ public class Player {
         this.armies = 0;
         this.enemy = null;
         this.territoryCards = new ArrayList<TerritoryCard>();
+        this.continentalArmies = new ArrayList<Army>();
+        for(Continent continent : continents){
+            this.continentalArmies.add(new Army(continent));
+        }
     }
     
     
@@ -198,8 +220,10 @@ public class Player {
     }
 
     public boolean addCard(TerritoryCard card) {
-        if(this.conquered) {
-            this.conquered = false;
+        if(this.conqueredTerritory
+) {
+            this.conqueredTerritory
+     = false;
             if(this.territoryCards.size() < 5) {
                 this.territoryCards.add(card);
                 return true;
@@ -209,15 +233,25 @@ public class Player {
     }
 
     public boolean getConquered() {
-        return this.conquered;
+        return this.conqueredTerritory
+;
     }
 
+    // Adicionar exércitos conquistados por troca de cartas
     public void addArmyTraded(int army) {
         this.armies += army;
     }
 
+    // Adicionar exércitos
     public void addArmy() { 
-    	this.armies += this.territories.size()/2;
+        
+        if(this.armies > 1) {
+            // Adicionar a metade da quantidade de territórios em posse do jogador
+            this.armies += this.territories.size()/2;
+        } else {
+            // Caso em que o jogador tenha apenas um terriório
+            this.armies = 1;
+        }
     }
 
     // Troca de cartas e adição de soldados após validação de troca
@@ -263,6 +297,9 @@ public class Player {
     //     }
     // }
 
+
+
+    // Posicionar exércitos ao final de uma conquista
     public boolean placeArmy(int army, String destiny) {
         if(army > this.armies) {
             return false;
@@ -283,21 +320,66 @@ public class Player {
         }
     }
 
-    // // Pegar quantidade de exércitos em um continente
-    // public int countContinentalArmy() {
+    // Pegar quantidade de exércitos em um continente
+    public int countContinentalArmy(Continent continent) {
+        for(Army continentalArmy : this.continentalArmies) {
+            if(continentalArmy.retrieveContinent() == continent) {
+                return continentalArmy.retrieveArmyCount();
+            }
+        }
 
-    // }
+        return 0;
+    }
 
-    // // Código do menino
-    // public int get__exercito_regiao(String regiao) {
-    // 	for(ExercitoRegiao exercito : this.exercitos_regiao) {
-    // 		if(exercito.get_regiao() == regiao) {
-    // 			return exercito.get_exercito();
-    // 		}
-    // 	}
-    // 	return 0;
-    // }
-    // ///////////////////////////////////////////////
+    // Adicionar exércitos em um continente
+    public void addContinentalArmy(Continent continent, int num){
+        for(Army army : this.continentalArmies) {
+            if(army.retrieveContinent() == continent) {
+                army.addArmy(num);
+            }
+        }
+    }
+
+    // Posicionar exércitos no continente
+    public boolean positionContinentalArmies(Continent continent, Territory territory, int num) {
+        int countArmies = 0;
+        for(Army army : this.continentalArmies) {
+            if(army.retrieveContinent() == continent) {
+                countArmies = army.retrieveArmyCount();
+            }
+        }
+
+        if(num > countArmies) {
+            return false;
+        }
+
+        for(Territory region : this.territories) {
+            if(region.getName().equals(territory.getName()) && territory.getContinent().equals(region.getName())) {
+                territory.addArmies(num);
+                this.addContinentalArmy(continent, -num);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    // Posicionar exércitos em um território
+    public boolean placeArmy(Territory territory, int count) {
+        if(count > this.armies) {
+            return false;
+        }
+
+        for(Territory territory2 : this.territories) {
+            if(territory2.equals(territory)) {
+                territory.addArmies(count);
+                this.armies -= count;
+            }
+        }
+
+        return false;
+    }
 
 
     /**
@@ -317,8 +399,4 @@ public class Player {
     public PlayerColor getColor() {
         return color;
     }
-    
-    
-
-    
 }
