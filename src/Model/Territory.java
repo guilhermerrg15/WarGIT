@@ -3,10 +3,12 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import Controller.Observed;
+import Controller.Observer;
 /**
  * Representa um território no jogo War.
  */
-class Territory {
+class Territory implements Observed {
 
     private String name;
     private Player owner;
@@ -14,7 +16,9 @@ class Territory {
     private String continent;
     // private List<Territory> neighbours;
     private List<String> neighbours;
-    
+    private List<Observer> lst = new ArrayList<Observer>();
+
+    private int i1, i2 = -1;
     /**
      * Cria um novo território com o nome fornecido.
      * Inicializa o proprietário como nulo e o número de exércitos como 0.
@@ -43,6 +47,22 @@ class Territory {
     public String getName() {
         return name;
     }
+
+    public void add(Observer o) {
+		lst.add(o);
+	}
+
+	public void remove(Observer o) {
+		lst.remove(o);
+	}
+    
+    public int get(int i) {
+		if (i == 1)
+			return i1;
+		else if (i == 2)
+			return i2;
+		return -1;
+	}
 
 
     public boolean faz_fronteira(String territory) {
