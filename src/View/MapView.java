@@ -77,7 +77,6 @@ public class MapView extends JPanel {
 
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
         jogadorDaVezLabel.setText(jogadorDaVez);
-        this.g.drawImage(backgroundImage, 0, 0, 1440, 850, null);
     }
 
     //singleton
