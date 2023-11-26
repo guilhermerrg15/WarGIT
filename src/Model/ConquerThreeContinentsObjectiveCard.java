@@ -1,49 +1,39 @@
 package Model;
 
-class ConquerThreeContinentsObjectiveCard implements Objective {
-	private Player dono;
+import java.util.Map;
+
+class ConquerThreeContinentsObjectiveCard extends ObjectiveCard {
     private String nome;
-    private Continent continente1, continente2;
-    private Map map;
+    private Continent continent1, continent2;
     
-    public ConquerThreeContinentsObjectiveCard(String name, Continent continente1, Continent continente2, Map map) {
+    public ConquerThreeContinentsObjectiveCard(String name, Continent continent1, Continent continent2) {
         this.nome = name;
-        this.continente1 = continente1;
-        this.continente2 = continente2;
-        this.map = map;
+        this.continent1 = continent1;
+        this.continent2 = continent2;
+        this.image = "war_carta_" + name + ".png";
+        this.description = "Conquistar na totalidade a " + continent1 + " e a " + continent2 + " e mais um continente a sua escolha";
         
     }
     public String getName() {
         return this.nome;
     }
 
-    @Override
     public boolean checkStatus() {
-        if (continente1.checkContinentDomain(dono) && continente2.checkContinentDomain(dono)) {
-        	if (continente2.getName().equals("Oceania")) {
-                // Verifica se o jogador tem o monopólio de um dos continentes: "North America", "Africa", "Asia", "South America"
-                return continenteMonopolio(dono, "North America", "Africa", "Asia", "South America");
+        if (continent1.checkContinentDomain(owner) && continent2.checkContinentDomain(owner)) {
+        	for(Continent continent: Continent.getContinent()){
+                if(!continent.equals(this.continent1) && !continent.equals(this.continent2) && continent.checkContinentDomain(owner)){
+                    return true;
+                }
+
             }
-        	else if (continente2.getName().equals("South America")) {
-                // Verifica se o jogador tem o monopólio de um dos continentes: "North America", "Africa", "Asia", "Oceania"
-                return continenteMonopolio(dono, "North America", "Africa", "Asia", "Oceania");
-            }
+        	
         }
 		return false;
     }
-    
-    private boolean continenteMonopolio(Player dono, String... continentes) {
-        for (String continente : continentes) {
-            if (map.findContinent(continente).checkContinentDomain(dono)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    @Override
-    public void checkOwner(Player dono) {
-        this.dono = dono;
-    }
+     public void checkOwner(Player dono) {
+         this.owner = dono;
+     }
     
 }
+

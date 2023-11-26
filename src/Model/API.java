@@ -3,7 +3,7 @@ import View.ViewAPI;
 import java.io.IOException;
 import java.util.*;
 
-import Controller.TabuleiroObservador;
+//import Controller.TabuleiroObservador;
 
 public class API {
 
@@ -134,7 +134,7 @@ public class API {
     public void shuffleObjectives(List<Player> players, ObjectiveCardDeck objectiveDeck) {
 		Collections.shuffle(players);
 		for(Player player : players) {
-			objectiveDeck.sorteia_objetivo(player);
+			objectiveDeck.shuffleObjective(player);
 		}
 	}
 

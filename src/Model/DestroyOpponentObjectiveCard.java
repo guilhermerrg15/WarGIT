@@ -1,41 +1,43 @@
 package Model;
 
-import java.util.List;
-
-class DestroyOpponentObjectiveCard implements Objective {
-    private Player dono;
-    private List<Player> todos_jogadores;
-    private String nome;
+class DestroyOpponentObjectiveCard extends ObjectiveCard{
+    Player enemy;
+    private String name;
     private String color;
 
-    public DestroyOpponentObjectiveCard(List<Player> players, String name, String color) {
-        this.todos_jogadores = players;
-       
-        this.nome = name;
+    public DestroyOpponentObjectiveCard( String name, String color) {
+        this.name = name;
         this.color = color;
+        this.image = "war_carta_" + name + ".png";
+        this.description = "Destruir todos os exércitos"+ color +". Se você é quem possui os exércitos " + color + "ou se esses exércitos já foram destruídos por outro jogador, o seu objetivo passa a ser conquistar 24 territorios a sua escolha.";
     }
 
     public String getName() {
-        return this.nome;
-    }
+        return this.name;
+    } 
 
-    @Override
     public boolean checkStatus() {
-        for (Player player : this.todos_jogadores) {
-            if (player.getColor().equals(color)) {
-                if (player.getEnemy() != null && player.getEnemy().equals(dono)) {
-                    return true;
-                }
-                if (player.getEnemy() == null) {
-                    return false;
-                }
+
+        if (enemy.getEnemy().getColor().equals(color)) {
+            if (owner.getTerritoryNumber() >= 24){
+                return true;
             }
+            return false;
         }
-        return dono.getConqueredTerritories().size() >= 24;
+        if (enemy.getEnemy() == null){
+            return false;
+        }
+        else if (enemy.getEnemy().equals(owner)){
+            return true;
+        }
+        else if (owner.getTerritoryNumber() >= 24){
+            return true;
+        }
+        return false;
     }
 
-    @Override
     public void checkOwner(Player dono) {
-        this.dono = dono;
+        this.owner = dono;
     }
+
 }

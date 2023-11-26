@@ -22,7 +22,7 @@ public class Player {
     private Conquer18TerritoriesObjectiveCard conquer18TerritoriesObjectiveCard;
     private Conquer24TerritoriesObjectiveCard conquer24TerritoriesObjectiveCard;
     private TerritoryCardDeck cardDeck;
-    private Objective objective;
+    private ObjectiveCard objective;
     private List<Continent> continents;
     protected List<Army> continentalArmies;
     
@@ -30,25 +30,6 @@ public class Player {
     // Pegar número de cartas
     public int getCards () {
         return territoryCards.size();
-    }
-
-    // Pegar nome do objetivo
-    public String getObjectiveName() {
-        Object objective = getObjective();
-
-        if (objective instanceof DestroyOpponentObjectiveCard) {
-            return ((DestroyOpponentObjectiveCard) objective).getName();
-        } else if (objective instanceof ConquerTwoContinentsObjectiveCard) {
-            return ((ConquerTwoContinentsObjectiveCard) objective).getName();
-        } else if (objective instanceof ConquerThreeContinentsObjectiveCard) {
-            return ((ConquerThreeContinentsObjectiveCard) objective).getName();
-        } else if (objective instanceof Conquer18TerritoriesObjectiveCard) {
-            return ((Conquer18TerritoriesObjectiveCard) objective).getName();
-        } else if (objective instanceof Conquer24TerritoriesObjectiveCard) {
-            return ((Conquer24TerritoriesObjectiveCard) objective).getName();
-        } else {
-            return "No objective";
-        }
     }
 
     // Pegar lista de territórios conquistados
@@ -186,35 +167,19 @@ public class Player {
         return this.enemy;
     }
     
-    public void receiveObjective(Objective objetivo) {
+    public void receiveObjective(ObjectiveCard objetivo) {
         if (objetivo != null) {
-            setObjective(objetivo);
+            objective = objetivo;
             objetivo.checkOwner(this);
         }
     }
     
-    public void setObjective(Objective objetivo) {
-        if (objetivo instanceof DestroyOpponentObjectiveCard) {
-            destroyObjective = (DestroyOpponentObjectiveCard) objetivo;
-        } else if (objetivo instanceof ConquerTwoContinentsObjectiveCard) {
-            conquerTwoContinentsObjective = (ConquerTwoContinentsObjectiveCard) objetivo;
-        } else if (objetivo instanceof ConquerThreeContinentsObjectiveCard) {
-            conquerThreeContinentsObjective = (ConquerThreeContinentsObjectiveCard) objetivo;
-        } else if (objetivo instanceof Conquer18TerritoriesObjectiveCard) {
-            conquer18TerritoriesObjectiveCard = (Conquer18TerritoriesObjectiveCard) objetivo;
-        } else if (objetivo instanceof Conquer24TerritoriesObjectiveCard) {
-            conquer24TerritoriesObjectiveCard = (Conquer24TerritoriesObjectiveCard) objetivo;
-        }
+    public ObjectiveCard getObjective() {
+       return objective;
     }
     
-    public Objective getObjective() {
-        for (Objective objetivo : Arrays.asList(destroyObjective, conquerTwoContinentsObjective, conquerThreeContinentsObjective,
-                conquer18TerritoriesObjectiveCard, conquer24TerritoriesObjectiveCard)) {
-            if (objetivo != null) {
-                return objetivo;
-            }
-        }
-        return null;
+    public String getObjectiveName() {
+    	return objective.getName();
     }
 
     public List<TerritoryCard> getCard(){

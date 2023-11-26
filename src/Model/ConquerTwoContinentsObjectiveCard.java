@@ -1,27 +1,28 @@
 package Model;
 
-class ConquerTwoContinentsObjectiveCard implements Objective{
-    private Player dono;
-    private String nome;
-    private Continent continente1, continente2;
 
-    public ConquerTwoContinentsObjectiveCard( String name, Continent continente1, Continent continente2) {
+class ConquerTwoContinentsObjectiveCard extends ObjectiveCard{
+    private String nome;
+    private Continent continent1, continent2;
+
+    public ConquerTwoContinentsObjectiveCard( String name, Continent continent1, Continent continent2) {
         this.nome = name;
-        this.continente1 = continente1;
-        this.continente2 = continente2;
+        this.continent1 = continent1;
+        this.continent2 = continent2;
+        this.image = "war_carta_" + name + ".png";
+        this.description = "Conquistar na totalidade a " + continent1 + " e a " + continent2;
     }
 
     public String getName() {
         return this.nome;
     }
 
-    @Override
     public boolean checkStatus() {
-        return continente1.checkContinentDomain(dono) && continente2.checkContinentDomain(dono);
+        return continent1.checkContinentDomain(owner) && continent2.checkContinentDomain(owner);
     }
 
-    @Override
-    public void checkOwner(Player dono) {
-        this.dono = dono;
-    }
+     public void checkOwner(Player dono) {
+         this.owner = dono;
+     }
 }
+

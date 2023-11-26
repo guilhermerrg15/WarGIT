@@ -1,27 +1,27 @@
 package Model;
 
-class Conquer24TerritoriesObjectiveCard implements Objective {
-    protected Player dono;
-    protected String nome;
+class Conquer24TerritoriesObjectiveCard extends ObjectiveCard {
+    protected String name;
     
     public Conquer24TerritoriesObjectiveCard(String name) {
-        this.nome = name;
+        this.name = name;
+        this.image = "war_carta_" + name + ".png";
+        this.description = "Conquistar 24 territorios a sua escolha";
      }
 
     public String getName() {
-        return this.nome;
+        return this.name;
     }
 
-    @Override
     public boolean checkStatus() {
-		if(dono.getTerritoryNumber()>=24) {
+		if(owner.getTerritoryNumber()>=24) {
 			return true;
 		}
 		return false;
 	}
 
-    @Override
-    public void checkOwner(Player dono) {
-        this.dono = dono;
-    }
+
+     public void checkOwner(Player dono) {
+         this.owner = dono;
+     }
 }

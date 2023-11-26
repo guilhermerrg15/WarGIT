@@ -124,7 +124,7 @@ class Territory implements Observed {
         if (armies < 0) {
             armies = 0;
         }
-    }
+    } 
 
     
     /**

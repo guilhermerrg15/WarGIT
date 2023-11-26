@@ -1,21 +1,21 @@
 package Model;
 
-class Conquer18TerritoriesObjectiveCard implements Objective {
-    protected Player dono;
+class Conquer18TerritoriesObjectiveCard extends ObjectiveCard {
     protected String nome;
     
     public Conquer18TerritoriesObjectiveCard(String name) {
         this.nome = name;
+        this.image = "war_carta_" + name + ".png";
+        this.description = "Conquistar 18 territorios com pelo menos 2 exércitos em cada";
      }
 
     public String getName() {
         return this.nome;
     }
 
-    @Override
     public boolean checkStatus() {
-        if(dono.getTerritoryNumber() >= 18) {
-            for(Territory terr : dono.territories) {
+        if(owner.getTerritoryNumber() >= 18) {
+            for(Territory terr : owner.getConqueredTerritories()) {
                 if(terr.getArmies() < 2) {
                     return false;
                 }
@@ -25,8 +25,7 @@ class Conquer18TerritoriesObjectiveCard implements Objective {
         return false;
     }
 
-    @Override
-    public void checkOwner(Player dono) {
-        this.dono = dono;
-    }
+     public void checkOwner(Player dono) {
+         this.owner = dono;
+     }
 }

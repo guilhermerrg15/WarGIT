@@ -1,6 +1,7 @@
 package Model;
 
 import java.awt.Color;
+import java.util.Hashtable;
 import java.util.List;
 
 class Continent {
@@ -8,6 +9,7 @@ class Continent {
     private List<Territory> territories;
     private int bonusArmies;
     private Color color;
+    private static Hashtable<String, Continent> continents = new Hashtable<String, Continent>();
 
     /**
      * Obtém o nome do continente.
@@ -18,6 +20,9 @@ class Continent {
         return name;
     }
     
+    public static Continent[] getContinent() {
+    	return continents.values().toArray(new Continent[continents.size()]);
+    }
 
     /**
      * Obtém os territórios que compõem o continente.
@@ -103,6 +108,8 @@ class Continent {
         this.name = name;
         this.bonusArmies = bonusArmies;
         this.territories = territories;
+        continents.put(name, this);
+        
     }
     
 
