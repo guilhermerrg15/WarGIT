@@ -22,10 +22,10 @@ public class PlayerConfig extends JPanel {
     // Botão de iniciar jogo
     JButton startGameButton = new JButton("Iniciar o Jogo");
         
-    //Guarda os componentes de seleção de personagem
+    // Guarda os componentes de seleção de personagem
 	private ArrayList <Selection> selectionComponents = new ArrayList<Selection>();
 
-    //Guarda os nomes e cores dos jogadores em um array
+    // Guarda os nomes e cores dos jogadores em um array
 	private ArrayList <String> nomesJogadores = new ArrayList<String>();
     private ArrayList <Color> coresJogadores = new ArrayList<Color>();
 
@@ -138,6 +138,16 @@ public class PlayerConfig extends JPanel {
     // Altera número de jogadores
 	public void setNumPlayers(int numPlayers) {
 		this.numPlayers = numPlayers;
+	}
+
+    // Pegar o nome dos jogadores
+	public ArrayList<String> getNomesJogadores() {
+		return nomesJogadores;
+	}
+
+	// Pegar a cor dos jogadores
+	public ArrayList<Color> getCoresJogadores() {
+		return coresJogadores;
 	}
 
     // Singleton

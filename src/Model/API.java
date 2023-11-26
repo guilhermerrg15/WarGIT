@@ -1,6 +1,7 @@
 package Model;
 import View.ViewAPI;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.*;
 
 import javax.swing.plaf.TreeUI;
@@ -13,9 +14,10 @@ public class API {
 //    private Game game;
     private ViewAPI viewInstance;
     private Map map;
+    private Game game;
     private Dado dado;
     private ObjectiveCardDeck objectiveDeck;
-    private List<Player> players;
+    private ArrayList<Player> players;
     public int turn;
     private int tradeCounter = 0;
 	private static final int[] tradeBonusAmount = new int[] { 4, 6, 8, 10, 12, 15 };
@@ -35,8 +37,18 @@ public class API {
     }
 
     // Retornar todos os jogadores
-    public List<Player> getAllPlayers() {
+    public ArrayList<Player> getAllPlayers() {
         return this.players;
+    }
+
+    public String[] getNomesJogadores() {
+    	String[] nomes = new String[getAllPlayers().size()];
+    	int cont = 0;
+    	for (Player j : getAllPlayers()) {
+    		nomes[cont] = j.getName();
+    		cont++;
+    	}
+    	return nomes;
     }
     
     public Map getMap() {
@@ -48,11 +60,10 @@ public class API {
         return map;
     }
     
-//    public void createGame() {
-//        this.game = new Game();
-//        game.addObserver(viewInstance.getTabuleiroObservador());
-//        viewInstance.redraw();
-//    }
+    // Iniciar jogo
+    public boolean startGame() {
+        return game.startGame();
+    }
 
     // Pegar carta de objetivo do jogador
     public String playerObjective() {
@@ -83,12 +94,12 @@ public class API {
     }
 
     // Pegar o nome do jogador
-    public static String playerName(Player player) { // verificar se é static mesmo
-       return player.getName();
+    public String playerName() { 
+       return players.get(this.turn).getName();
     }
 
     // Pegar a cor do jogador
-    public PlayerColor get_vez_jogador_color() {
+    public PlayerColor playerColor() {
 		return players.get(this.turn).getColor();
 	}
 

@@ -7,7 +7,7 @@ public class Window extends JFrame {
     private StartView startView = StartView.getStartView();
     private PlayerConfig playerConfig = PlayerConfig.getPlayerConfig();
     private NumPlayersView numPlayersView = NumPlayersView.getNumPlayersView();
-    private MapView map = MapView.getMapView();
+    private MapView mapView = MapView.getMapView();
 
     // Construtor
     private Window(){
@@ -43,6 +43,6 @@ public class Window extends JFrame {
 
     public void configureMap() {
         playerConfig.setVisible(false);
-        getContentPane().add(map);
+        getContentPane().add(mapView);
     }
 }

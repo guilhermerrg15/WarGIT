@@ -1,5 +1,10 @@
 package View;
 import javax.swing.*;
+
+import Controller.APIController;
+
+import Model.PlayerColor;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +24,17 @@ public class MapView extends JPanel {
 
     Graphics2D g;
 
+    //Jogador da vez e cor do jogador
+	String jogadorDaVez;
+	Color corDoJogador;
+	String descricaoObjetivo;
+	JLabel jogadorDaVezLabel = new JLabel();
+
+    APIController controller = APIController.getInstance();
+
     public MapView() {
         // setLayout(new BorderLayout());
+        setLayout(null);
     
         try {
             backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
@@ -46,15 +60,24 @@ public class MapView extends JPanel {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(finishButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-
+        // buttonPanel.add(cancelButton);
 
         add(buttonPanel);
+
+        //Cria e adiciona o label do jogador da vez
+        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        jogadorDaVezLabel.setForeground(Color.WHITE);
+        jogadorDaVezLabel.setBounds(640,660,200,30);
+        add(jogadorDaVezLabel);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.g = (Graphics2D) g;
+
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
+        jogadorDaVezLabel.setText(jogadorDaVez);
+        this.g.drawImage(backgroundImage, 0, 0, 1440, 850, null);
     }
 
     //singleton
@@ -64,4 +87,13 @@ public class MapView extends JPanel {
         }
         return MapView;
     }
+
+    // Atualiza view no início da rodada de posicionamento para determinar o primeiro jogador
+	public void determinaPrimeiroJogador(String jogadorDaVez, PlayerColor corDoJogador){
+		// Adicionar frase "Primeiro jogador: NOME - COR"
+		// Adicionar descrição do objetivo em cima da carta
+		// NÃO IMPRIMIR AINDA, SÓ ADD PARA IMPRIMIR AO CHAMAR O DRAWCOMPONENT DO MAINFRAME
+		this.jogadorDaVez = jogadorDaVez;
+		// this.corDoJogador = corDoJogador;
+	}
 }
