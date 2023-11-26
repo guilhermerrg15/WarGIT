@@ -29,14 +29,26 @@ public class NumPlayersView extends JPanel {
 
     public NumPlayersView() {
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new GridBagLayout());
 
-        add(Box.createVerticalStrut(250));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.insets = new Insets(0, 0, 20, 10); 
 
         radioButton3.setAlignmentX(CENTER_ALIGNMENT);
         radioButton4.setAlignmentX(CENTER_ALIGNMENT);
         radioButton5.setAlignmentX(CENTER_ALIGNMENT);
         radioButton6.setAlignmentX(CENTER_ALIGNMENT);
+
+        Font buttonFont = new Font("Arial", Font.BOLD, 24);
+        radioButton3.setFont(buttonFont);
+        radioButton4.setFont(buttonFont);
+        radioButton5.setFont(buttonFont);
+        radioButton6.setFont(buttonFont);
+        confirmar.setFont(buttonFont);
+       
 
 
         buttonGroup.add(radioButton3);
@@ -75,24 +87,21 @@ public class NumPlayersView extends JPanel {
             }
         });
 
-        add(Box.createVerticalGlue()); 
-
-        add(radioButton3);
-        add(Box.createVerticalStrut(10));
-        add(radioButton4);
-        add(Box.createVerticalStrut(10));
-        add(radioButton5);
-        add(Box.createVerticalStrut(10));
-        add(radioButton6);
-        add(Box.createVerticalStrut(10));
-        add(confirmar);
-
-        add(Box.createVerticalGlue());
+        add(radioButton3, gbc);
+        gbc.gridy++;
+        add(radioButton4, gbc);
+        gbc.gridy++;
+        add(radioButton5, gbc);
+        gbc.gridy++;
+        add(radioButton6, gbc);
+        gbc.gridy++;
+        gbc.anchor = GridBagConstraints.CENTER; // Alinha o botão Confirmar ao centro
+        add(confirmar, gbc);
 
         //Carrega a imagem de fundo
 		try {
 			background = ImageIO.read(new File ("resources/imagens/war_tabuleiro_fundo.png"));
-            foreground = ImageIO.read(new File("resources/imagens/war_tabuleiro_fundo.png"));
+            foreground = ImageIO.read(new File("resources/imagens/bgconfiguracao.png"));
 		}
 		catch (IOException e) {
 			System.out.println("Erro na leitura do plano de fundo\n");
@@ -103,7 +112,21 @@ public class NumPlayersView extends JPanel {
 	public void paintComponent(Graphics graphic) {
 		super.paintComponent(graphic);
 		this.graphic = (Graphics2D) graphic;
+        
 		this.graphic.drawImage(background, 0, 0, 1440, 900, null);
+        this.graphic.drawImage(foreground, 520, 120, 400, 600, null);
+
+        // Desenha um retângulo entre a imagem de foreground e os botões
+        int rectangleWidth = 340;
+        int rectangleHeight = 380;
+        int rectangleX = 550;
+        int rectangleY = 250;
+
+        this.graphic.setColor(Color.LIGHT_GRAY); // Cor do retângulo
+        this.graphic.fillRect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
+        this.graphic.setColor(Color.BLACK); // Cor da borda do retângulo
+        this.graphic.drawRect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
+
 	}
 
 

@@ -37,7 +37,7 @@ public class Window extends JFrame {
 
     // Fechar tela inicial e exibir tela de configuração de jogadores
 	public void configurePlayers() {
-		startView.setVisible(false);
+		numPlayersView.setVisible(false);
 		getContentPane().add(playerConfig);
 	}
 
