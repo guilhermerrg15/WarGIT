@@ -6,14 +6,15 @@ import Controller.TratadorSelecao;
 // import Model.Player;
 // import Model.PlayerColor;
 import java.awt.*;
-// import java.awt.event.ActionEvent;
-// import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 // import java.util.ArrayList;
 
 public class PlayerConfig extends JPanel {
     private String imagePath = "resources/imagens/war_tabuleiro_fundo.png";
     public static PlayerConfig playerConfig = null;
     // private ArrayList<Player> players = new ArrayList<>();
+    JButton startGameButton = new JButton("Iniciar o Jogo");
 
     // Construtor da tela de configuração de jogadores
     public PlayerConfig() {
@@ -28,8 +29,13 @@ public class PlayerConfig extends JPanel {
         playersPanel.setOpaque(false);
         add(playersPanel, BorderLayout.SOUTH);
 
-        JButton startGameButton = new JButton("Iniciar o Jogo");
-        startGameButton.addActionListener(new TratadorSelecao(this));
+        
+        startGameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Map.getMap();
+                Window.getWindow().configureMap();
+            }
+        });
 
         playersPanel.add(startGameButton);
 

@@ -6,6 +6,7 @@ public class Window extends JFrame {
     private static Window window = null;
     private StartView startView = StartView.getStartView();
     private PlayerConfig playerConfig = PlayerConfig.getPlayerConfig();
+    private Map map = Map.getMap();
 
     // Construtor
     private Window(){
@@ -28,8 +29,15 @@ public class Window extends JFrame {
     }
 
     // Fechar tela inicial e exibir tela de configuração de jogadores
-		public void configurePlayers() {
-			startView.setVisible(false);
-			getContentPane().add(playerConfig);
-		}
+	public void configurePlayers() {
+		startView.setVisible(false);
+		getContentPane().add(playerConfig);
+	}
+
+    public void configureMap() {
+        playerConfig.setVisible(false);
+        getContentPane().add(map);
+    }
+
+
 }

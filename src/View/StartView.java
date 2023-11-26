@@ -42,6 +42,7 @@ class StartView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PlayerConfig.getPlayerConfig();
+                Window.getWindow().configurePlayers();
             }
 
             // TODO: Adicionar método de retirar visibilidade do panel da tela inicial
