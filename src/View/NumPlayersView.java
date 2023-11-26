@@ -59,19 +59,19 @@ public class NumPlayersView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int selected = 0;
                 if (player3Button.isSelected()) {
-                    // PlayerConfig.getPlayerConfig().setNumJogadores(3);
+                    PlayerConfig.getPlayerConfig().setNumPlayers(3);
                     selected++;
                 }
                 if (player4Button.isSelected()) {
-					// PlayerConfig.getPlayerConfig().setNumJogadores(4);
+					PlayerConfig.getPlayerConfig().setNumPlayers(4);
 					selected++;
 				}
 				if (player5Button.isSelected()) {
-					// PlayerConfig.getPlayerConfig().setNumJogadores(5);
+					PlayerConfig.getPlayerConfig().setNumPlayers(5);
 					selected++;
 				}
 				if (player6Button.isSelected()) {
-					// PlayerConfig.getPlayerConfig().setNumJogadores(6);
+					PlayerConfig.getPlayerConfig().setNumPlayers(6);
 					selected++;
 				}
 

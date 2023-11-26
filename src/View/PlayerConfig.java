@@ -39,6 +39,12 @@ public class PlayerConfig extends JPanel {
         // playersPanel.setOpaque(false);
         // add(playersPanel, BorderLayout.SOUTH);
 
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        
+
+        startGameButton.setAlignmentX(CENTER_ALIGNMENT);
+
         startGameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 for(Selection selection : selectionComponents) {
@@ -62,7 +68,8 @@ public class PlayerConfig extends JPanel {
 
         // Adicionar layout e botão de iniciar jogo
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(startGameButton);
+        
+        
     }
 
     // Verificar casos de erro de configuração de jogadores
@@ -97,6 +104,9 @@ public class PlayerConfig extends JPanel {
 			add(selection);
 			selectionComponents.add(selection);
 		}
+        add(startGameButton);
+        add(Box.createVerticalGlue()); 
+        add(Box.createVerticalStrut(550));
 	}
 
     // Altera número de jogadores
