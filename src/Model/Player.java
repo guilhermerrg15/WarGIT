@@ -221,30 +221,6 @@ public class Player {
         }
     }
 
-    // Troca de cartas e adição de soldados após validação de troca
-    public void exchangeCards(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3, List<TerritoryCard> cards, List <Territory> territories){
-        // Verificação de troca
-        if(cardDeck.evaluateCardTrade(card1, card2, card3)){
-            // Adicionar exércitos com base na troca realizada
-            this.addArmyTraded(cardDeck.calculateTradeBonus());
-
-            // Remover cartas trocadas da lista
-            cards.removeAll(Arrays.asList(card1, card2, card3));
-
-            // Iterar sobre as cartas trocadas
-            for(TerritoryCard cardTraded : Arrays.asList(card1, card2, card3)) {
-                // Iterar sobre os territórios
-                for(Territory territory : territories) {
-                    // Verificar se a carta trocada é um território do jogador
-                    if(territory.getName() == cardTraded.getName()) {
-                        // Adicionar dois exércitos ao território
-                        territory.addArmies(2);
-                    }
-                }
-            }
-        }
-    }
-
     ////metodos que precisam da classe exercitoRegiao
     
     // public int getArmyRegion(String continent) {
