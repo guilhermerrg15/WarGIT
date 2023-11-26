@@ -7,7 +7,7 @@ public class Window extends JFrame {
     private StartView startView = StartView.getStartView();
     private PlayerConfig playerConfig = PlayerConfig.getPlayerConfig();
     private NumPlayersView numPlayersView = NumPlayersView.getNumPlayersView();
-    private Map map = Map.getMap();
+    private MapView map = MapView.getMapView();
 
     // Construtor
     private Window(){

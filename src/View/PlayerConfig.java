@@ -64,7 +64,7 @@ public class PlayerConfig extends JPanel {
                     coresJogadores.add(playerColor);
                 }
                 if(verifyConfigErrors(nomesJogadores, coresJogadores)) {
-                    Map.getMap();
+                    MapView.getMapView();
                     Window.getWindow().configureMap();  
                 } else {
 					nomesJogadores.clear();
