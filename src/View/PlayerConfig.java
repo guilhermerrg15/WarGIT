@@ -4,17 +4,24 @@ import javax.swing.*;
 import Controller.TratadorSelecao;
 // import Model.Game;
 // import Model.Player;
-// import Model.PlayerColor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-// import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class PlayerConfig extends JPanel {
     private String imagePath = "resources/imagens/war_tabuleiro_fundo.png";
     public static PlayerConfig playerConfig = null;
-    // private ArrayList<Player> players = new ArrayList<>();
+    private int numPlayers;
+
     JButton startGameButton = new JButton("Iniciar o Jogo");
+    
+    //Guarda os componentes de seleção de personagem
+	private ArrayList <Selection> selectionComponents = new ArrayList<Selection>();
+
+    //Guarda os nomes e cores dos jogadores em um array
+	private ArrayList <String> nomesJogadores = new ArrayList<String>();
+    private ArrayList <Color> coresJogadores = new ArrayList<Color>();
 
     // Construtor da tela de configuração de jogadores
     public PlayerConfig() {
@@ -39,32 +46,22 @@ public class PlayerConfig extends JPanel {
 
         playersPanel.add(startGameButton);
 
-        // PlayerColor[] availableColors = PlayerColor.values();
-
-        for (int i = 0; i < 6; i++) {
-            JPanel playerPanel = new JPanel(new GridBagLayout());
-            playerPanel.setOpaque(false);
-
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.insets = new Insets(5, 5, 5, 5);
-
-            JLabel nameLabel = new JLabel("Jogador " + (i + 1));
-            playerPanel.add(nameLabel, gbc);
-
-            gbc.gridy = 1;
-            JTextField nameField = new JTextField(10);
-            playerPanel.add(nameField, gbc);
-
-            gbc.gridy = 2;
-            // JComboBox<PlayerColor> colorComboBox = new JComboBox<>(availableColors);
-            // playerPanel.add(colorComboBox, gbc);
-
-            playersPanel.add(playerPanel);
+        for(Selection selection : selectionComponents) {
+            nomesJogadores.add(selection.getName());
+            coresJogadores.add(selection.getCor());
         }
     }
 
+    // Desenha jogadores
+	public void drawPlayers() {
+		for(int i = 0;i < numPlayers;i++) {
+			Selection selection = new Selection();
+			add(selection);
+			selectionComponents.add(selection);
+		}
+	}
+
+    // Singleton
     public static PlayerConfig getPlayerConfig() {
         if(playerConfig == null) {
             playerConfig = new PlayerConfig();
