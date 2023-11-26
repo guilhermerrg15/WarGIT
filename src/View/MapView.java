@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Map extends JPanel {
-    public static Map map = null;
+public class MapView extends JPanel {
+    public static MapView MapView = null;
 
     JButton checkObjectivesButton = new JButton("Ver Objetivos");
     JButton checkCardsButton = new JButton("Ver Cartas");
@@ -21,7 +21,7 @@ public class Map extends JPanel {
 
     Graphics2D g;
 
-    public Map() {
+    public MapView() {
         // setLayout(new BorderLayout());
     
         try {
@@ -32,7 +32,7 @@ public class Map extends JPanel {
         }
 
         // try {
-        //     territoriesImage = ImageIO.read(new File("resources/imagens/war_tabuleiro_mapa copy.png"));
+        //     territoriesImage = ImageIO.read(new File("resources/imagens/war_tabuleiro_MapViewa copy.png"));
         //     // g.drawImage(territoriesImage, 0, 0, 1060, 675, null);
         // } catch (IOException e) {
         //     e.printStackTrace();
@@ -68,11 +68,11 @@ public class Map extends JPanel {
     }
 
     //singleton
-    public static Map getMap() {
-        if (map == null) {
-            map = new Map();
+    public static MapView getMapView() {
+        if (MapView == null) {
+            MapView = new MapView();
         }
-        return map;
+        return MapView;
     }
 }
 
@@ -84,9 +84,9 @@ public class Map extends JPanel {
 // import java.io.IOException;
 // import javax.imageio.ImageIO;
 
-// public class Map extends JFrame {
+// public class MapView extends JFrame {
 
-//     public Map() {
+//     public MapView() {
 
 //         JPanel panel = new JPanel() {
 //             @Override
@@ -101,7 +101,7 @@ public class Map extends JPanel {
 //                 }
 
 //                 try {
-//                     Image territoriesImage = ImageIO.read(new File("resources/imagens/war_tabuleiro_mapa copy.png"));
+//                     Image territoriesImage = ImageIO.read(new File("resources/imagens/war_tabuleiro_MapViewa copy.png"));
 //                     g.drawImage(territoriesImage, 0, 0, 1060, 675, null);
 //                 } catch (IOException e) {
 //                     e.printStackTrace();
@@ -156,7 +156,7 @@ public class Map extends JPanel {
 
 //     public static void main(String[] args) {
 //         SwingUtilities.invokeLater(() -> {
-//             Map tabuleiro = new Map();
+//             MapView tabuleiro = new MapView();
 //             tabuleiro.setVisible(true);
 //         });
 //     }
@@ -177,18 +177,18 @@ public class Map extends JPanel {
 // // import Model.Game;
 // // import Model.PlayerColor;
 
-// // public class Map extends Frame {
+// // public class MapView extends Frame {
 // //    private Game warGame;
 // //    private BufferedImage foregroundImage;
 // //    public BufferedImage backgroundImage;
-// //    private Hashtable<String, TerritoryMap> territoriesMaps = new Hashtable<>();
+// //    private Hashtable<String, TerritoryMapView> territoriesMapViews = new Hashtable<>();
    
-// //    public Map(Game game) throws IOException {
+// //    public MapView(Game game) throws IOException {
 // //        this.warGame = game;
-// //        this.backgroundImage = ImageIO.read(getClass().getResource(game.getMapForegroundPath()));
-// //        this.foregroundImage = ImageIO.read(getClass().getResource(game.getMapForegroundPath()));
+// //        this.backgroundImage = ImageIO.read(getClass().getResource(game.getMapViewForegroundPath()));
+// //        this.foregroundImage = ImageIO.read(getClass().getResource(game.getMapViewForegroundPath()));
 // //        List<String> territoryNames = warGame.getAllTerritoryNames();
-// //        setupTerritoryMaps(territoryNames);
+// //        setupTerritoryMapViews(territoryNames);
        
 // //        addMouseListener(new MouseAdapter() {
 // //            @Override
@@ -207,17 +207,17 @@ public class Map extends JPanel {
 // //         public void onTerritorySoldierCountChange(String territoryName, int newTerritoryCount);
 // //     }
 
-// //     private void setupTerritoryMaps(List<String> territoryNames) {
+// //     private void setupTerritoryMapViews(List<String> territoryNames) {
 // //         for (String territoryName : territoryNames) {
-// //             TerritoryMap territoryMap = new TerritoryMap(territoryName, warGame.getTerritoryVertices(territoryName));
-// //             territoriesMaps.put(territoryName, territoryMap);
+// //             TerritoryMapView territoryMapView = new TerritoryMapView(territoryName, warGame.getTerritoryVertices(territoryName));
+// //             territoriesMapViews.put(territoryName, territoryMapView);
 // //         }
 // //     }
    
 // //    public String getTerritoryNameInPoint(Point p) {
-// //        for (TerritoryMap territoryMap : territoriesMaps.values()) {
-// //            if (territoryMap.contains(p)) {
-// //                return territoryMap.territoryName;
+// //        for (TerritoryMapView territoryMapView : territoriesMapViews.values()) {
+// //            if (territoryMapView.contains(p)) {
+// //                return territoryMapView.territoryName;
 // //            }
 // //        }
 // //        return null;
@@ -228,17 +228,17 @@ public class Map extends JPanel {
 // //        super.paint(g);
 // //        Graphics2D g2d = (Graphics2D) g;
 // //        g2d.drawImage(backgroundImage, 0, 0, this);
-// //        for (TerritoryMap territoryMap : territoriesMaps.values()) {
-// //            territoryMap.draw(g2d);
+// //        for (TerritoryMapView territoryMapView : territoriesMapViews.values()) {
+// //            territoryMapView.draw(g2d);
 // //        }
 // //    }
 
-// //    private class TerritoryMap extends Polygon {
+// //    private class TerritoryMapView extends Polygon {
 // //        private String territoryName;
 // //        private PlayerColor ownerColor;
 // //        private int soldierCount;
 
-// //        public TerritoryMap(String territoryName, Coordinates[] vertices) {
+// //        public TerritoryMapView(String territoryName, Coordinates[] vertices) {
 // //            for (Coordinates vertex : vertices) {
 // //                addPoint((int) (vertex.x * getWidth()), (int) (vertex.y * getHeight()));
 // //            }
@@ -263,20 +263,20 @@ public class Map extends JPanel {
 
 // //    public static void main(String[] args) throws IOException {
 // //        Game warGame = new Game(); // You should initialize WarGame with the proper parameters
-// //        Map worldMap = new Map(warGame);
-// //        worldMap.setSize(worldMap.backgroundImage.getWidth(), worldMap.backgroundImage.getHeight());
-// //        worldMap.setVisible(true);
+// //        MapView worldMapView = new MapView(warGame);
+// //        worldMapView.setSize(worldMapView.backgroundImage.getWidth(), worldMapView.backgroundImage.getHeight());
+// //        worldMapView.setVisible(true);
 // //    }
 
 // // //    @Override
 // //    public void onTerritoryOwnershipChange(String territoryName, PlayerColor newOwnerColor) {
-// //        territoriesMaps.get(territoryName).updateOwnerColor(newOwnerColor);
+// //        territoriesMapViews.get(territoryName).updateOwnerColor(newOwnerColor);
 // //        repaint();
 // //    }
 
 // // //    @Override
 // //    public void onTerritorySoldierCountChange(String territoryName, int newSoldierCount) {
-// //        territoriesMaps.get(territoryName).updateSoldierCount(newSoldierCount);
+// //        territoriesMapViews.get(territoryName).updateSoldierCount(newSoldierCount);
 // //        repaint();
 // //    }
 // // }
