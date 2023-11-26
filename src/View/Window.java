@@ -6,6 +6,7 @@ public class Window extends JFrame {
     private static Window window = null;
     private StartView startView = StartView.getStartView();
     private PlayerConfig playerConfig = PlayerConfig.getPlayerConfig();
+    private NumPlayersView numPlayersView = NumPlayersView.getNumPlayersView();
 
     // Construtor
     private Window(){
@@ -27,9 +28,15 @@ public class Window extends JFrame {
         return window;	
     }
 
+    // Direcionamento entre os frames (tela inicial)
+		public void goToCsPanel() {
+			startView.setVisible(false); // Esconde o painel inicial
+			getContentPane().add(numPlayersView); // Adiciona o painel de seleção de jogadores
+		}
+
     // Fechar tela inicial e exibir tela de configuração de jogadores
 		public void configurePlayers() {
-			startView.setVisible(false);
+			numPlayersView.setVisible(false);
 			getContentPane().add(playerConfig);
 		}
 }

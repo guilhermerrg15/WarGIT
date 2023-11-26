@@ -41,7 +41,8 @@ class StartView extends JPanel {
             // Implementar ação do botão de iniciar jogo
             @Override
             public void actionPerformed(ActionEvent e) {
-                PlayerConfig.getPlayerConfig();
+                // PlayerConfig.getPlayerConfig();
+                Window.getWindow().goToCsPanel();
             }
 
             // TODO: Adicionar método de retirar visibilidade do panel da tela inicial
