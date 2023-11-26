@@ -7,6 +7,7 @@ public class Window extends JFrame {
     private StartView startView = StartView.getStartView();
     private PlayerConfig playerConfig = PlayerConfig.getPlayerConfig();
     private NumPlayersView numPlayersView = NumPlayersView.getNumPlayersView();
+    private Map map = Map.getMap();
 
     // Construtor
     private Window(){
@@ -25,7 +26,7 @@ public class Window extends JFrame {
             window = new Window();
         }
 
-        return window;	
+        return window;
     }
 
     // Direcionamento entre os frames (tela inicial)
@@ -35,8 +36,15 @@ public class Window extends JFrame {
 		}
 
     // Fechar tela inicial e exibir tela de configuração de jogadores
-		public void configurePlayers() {
-			numPlayersView.setVisible(false);
-			getContentPane().add(playerConfig);
-		}
+	public void configurePlayers() {
+		startView.setVisible(false);
+		getContentPane().add(playerConfig);
+	}
+
+    public void configureMap() {
+        playerConfig.setVisible(false);
+        getContentPane().add(map);
+    }
+
+
 }

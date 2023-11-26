@@ -64,7 +64,7 @@ class StartView extends JPanel {
         add(Box.createVerticalStrut(10)); // Espaçamento entre os botões
         add(continueGame);
         add(Box.createVerticalGlue()); // Espaçamento abaixo dos botões
-        
+
     }
 
     // Desenha a imagem de fundo
@@ -77,7 +77,7 @@ class StartView extends JPanel {
     //Singleton
 	public static StartView getStartView() {
 		if (startView == null) {
-			startView = new StartView();	
+			startView = new StartView();
 		}
 		return startView;
 	}
