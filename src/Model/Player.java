@@ -1,6 +1,5 @@
 package Model;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 //
@@ -16,12 +15,6 @@ public class Player {
     private int armies;
     private boolean conqueredTerritory;
     private Player enemy;
-    private DestroyOpponentObjectiveCard destroyObjective;
-    private ConquerTwoContinentsObjectiveCard conquerTwoContinentsObjective;
-    private ConquerThreeContinentsObjectiveCard conquerThreeContinentsObjective;
-    private Conquer18TerritoriesObjectiveCard conquer18TerritoriesObjectiveCard;
-    private Conquer24TerritoriesObjectiveCard conquer24TerritoriesObjectiveCard;
-    private TerritoryCardDeck cardDeck;
     private ObjectiveCard objective;
     private List<Continent> continents;
     protected List<Army> continentalArmies;
