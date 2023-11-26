@@ -110,19 +110,22 @@ public class Player {
                 .anyMatch(territory -> territory.getName().equals(country));
     }
     
-    // public boolean verifica_territorio_reg(String pais) {
-    // 	for (Territory territory : this.territories) {
-    // 		if(terr.get_nome() == pais) {
-    // 			for(ExercitoRegiao exer_reg : this.exercitos_regiao) {
-    // 				if((terr.get_Regiao() == exer_reg.get_regiao() && exer_reg.get_exercito() > 0)) {
-    //     				return true;
-    //     			}
-    // 			}
-    // 			return false;
-    // 		}
-    // 	}
-    // 	return false;
-    // }
+
+    public boolean verifyContinentTerritory(String region) {
+        for(Territory territory : this.territories) {
+            if(territory.getName() == region) {
+                for(Army army : this.continentalArmies) {
+                    if(territory.getContinent() == army.retrieveContinent().getName() && army.retrieveArmyCount() > 0) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        return false;
+    }
 
     public void setArmies(int armies) {
         this.armies = armies;
@@ -159,7 +162,6 @@ public class Player {
     }
     
     
-
     public void loseTerritory(Territory territory) {
         territories.remove(territory);
     }
