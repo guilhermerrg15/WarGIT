@@ -161,59 +161,35 @@ public class Player {
     public Player getEnemy() {
         return this.enemy;
     }
-
-    public void riceiveObjective(DestroyOpponentObjectiveCard objetivo) {
-        destroyObjective = objetivo;
-        objetivo.checkOwner(this);
-    }
-    public void riceiveObjective(ConquerTwoContinentsObjectiveCard objetivo) {
-        conquerTwoContinentsObjective = objetivo;
-        objetivo.checkOwner(this);
-    }
-    public void riceiveObjective(ConquerThreeContinentsObjectiveCard objetivo) {
-        conquerThreeContinentsObjective = objetivo;
-        objetivo.checkOwner(this);
-    }
-    public void riceiveObjective(Conquer18TerritoriesObjectiveCard objetivo) {
-        conquer18TerritoriesObjectiveCard = objetivo;
-        objetivo.checkOwner(this);
-    }
-    public void riceiveObjective(Conquer24TerritoriesObjectiveCard objetivo) {
-        conquer24TerritoriesObjectiveCard = objetivo;
-        objetivo.checkOwner(this);
-    }
     
-    public DestroyOpponentObjectiveCard getDestroyObjective() {
-        return this.destroyObjective;
-    }
-
-    public ConquerTwoContinentsObjectiveCard getConquerTwoContinentsObjective() {
-        return this.conquerTwoContinentsObjective;
-    }
-    
-    public ConquerThreeContinentsObjectiveCard getConquerThreeContinentsObjective() {
-        return this.conquerThreeContinentsObjective;
-    }
-    public Conquer18TerritoriesObjectiveCard getConquer18TerritoriesObjectiveCard() {
-        return this.conquer18TerritoriesObjectiveCard;
-    }
-    public Conquer24TerritoriesObjectiveCard getConquer24TerritoriesObjectiveCard() {
-        return this.conquer24TerritoriesObjectiveCard;
-    }
-    
-    public Object getObjective() {
-        if (destroyObjective != null) {
-            return destroyObjective;
-        } else if (conquerTwoContinentsObjective != null) {
-            return conquerTwoContinentsObjective;
-        }else if (conquerThreeContinentsObjective != null) {
-            return conquerThreeContinentsObjective;
-        }else if (conquer18TerritoriesObjectiveCard != null) {
-            return conquer18TerritoriesObjectiveCard;
-        }else if (conquer24TerritoriesObjectiveCard != null) {
-            return conquer24TerritoriesObjectiveCard;
+    public void receiveObjective(Objective objetivo) {
+        if (objetivo != null) {
+            setObjective(objetivo);
+            objetivo.checkOwner(this);
         }
-        
+    }
+    
+    public void setObjective(Objective objetivo) {
+        if (objetivo instanceof DestroyOpponentObjectiveCard) {
+            destroyObjective = (DestroyOpponentObjectiveCard) objetivo;
+        } else if (objetivo instanceof ConquerTwoContinentsObjectiveCard) {
+            conquerTwoContinentsObjective = (ConquerTwoContinentsObjectiveCard) objetivo;
+        } else if (objetivo instanceof ConquerThreeContinentsObjectiveCard) {
+            conquerThreeContinentsObjective = (ConquerThreeContinentsObjectiveCard) objetivo;
+        } else if (objetivo instanceof Conquer18TerritoriesObjectiveCard) {
+            conquer18TerritoriesObjectiveCard = (Conquer18TerritoriesObjectiveCard) objetivo;
+        } else if (objetivo instanceof Conquer24TerritoriesObjectiveCard) {
+            conquer24TerritoriesObjectiveCard = (Conquer24TerritoriesObjectiveCard) objetivo;
+        }
+    }
+    
+    public Objective getObjective() {
+        for (Objective objetivo : Arrays.asList(destroyObjective, conquerTwoContinentsObjective, conquerThreeContinentsObjective,
+                conquer18TerritoriesObjectiveCard, conquer24TerritoriesObjectiveCard)) {
+            if (objetivo != null) {
+                return objetivo;
+            }
+        }
         return null;
     }
 
@@ -306,6 +282,22 @@ public class Player {
             System.out.println(territory.getName());
         }
     }
+
+    // // Pegar quantidade de exércitos em um continente
+    // public int countContinentalArmy() {
+
+    // }
+
+    // // Código do menino
+    // public int get__exercito_regiao(String regiao) {
+    // 	for(ExercitoRegiao exercito : this.exercitos_regiao) {
+    // 		if(exercito.get_regiao() == regiao) {
+    // 			return exercito.get_exercito();
+    // 		}
+    // 	}
+    // 	return 0;
+    // }
+    // ///////////////////////////////////////////////
 
 
     /**

@@ -1,6 +1,6 @@
 package Model;
 
-class ConquerTwoContinentsObjectiveCard {
+class ConquerTwoContinentsObjectiveCard implements Objective{
     private Player dono;
     private String nome;
     private Continent continente1, continente2;
@@ -15,10 +15,12 @@ class ConquerTwoContinentsObjectiveCard {
         return this.nome;
     }
 
-    public boolean verifica_status() {
+    @Override
+    public boolean checkStatus() {
         return continente1.checkContinentDomain(dono) && continente2.checkContinentDomain(dono);
     }
 
+    @Override
     public void checkOwner(Player dono) {
         this.dono = dono;
     }

@@ -1,6 +1,6 @@
 package Model;
 
-class Conquer18TerritoriesObjectiveCard {
+class Conquer18TerritoriesObjectiveCard implements Objective {
     protected Player dono;
     protected String nome;
     
@@ -12,7 +12,8 @@ class Conquer18TerritoriesObjectiveCard {
         return this.nome;
     }
 
-    public boolean verifica_status() {
+    @Override
+    public boolean checkStatus() {
         if(dono.getTerritoryNumber() >= 18) {
             for(Territory terr : dono.territories) {
                 if(terr.getArmies() < 2) {
@@ -24,6 +25,7 @@ class Conquer18TerritoriesObjectiveCard {
         return false;
     }
 
+    @Override
     public void checkOwner(Player dono) {
         this.dono = dono;
     }

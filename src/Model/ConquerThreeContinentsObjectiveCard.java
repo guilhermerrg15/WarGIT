@@ -1,6 +1,6 @@
 package Model;
 
-class ConquerThreeContinentsObjectiveCard {
+class ConquerThreeContinentsObjectiveCard implements Objective {
 	private Player dono;
     private String nome;
     private Continent continente1, continente2;
@@ -17,7 +17,8 @@ class ConquerThreeContinentsObjectiveCard {
         return this.nome;
     }
 
-    public boolean verifica_status() {
+    @Override
+    public boolean checkStatus() {
         if (continente1.checkContinentDomain(dono) && continente2.checkContinentDomain(dono)) {
         	if (continente2.getName().equals("Oceania")) {
                 // Verifica se o jogador tem o monopólio de um dos continentes: "North America", "Africa", "Asia", "South America"
@@ -40,6 +41,7 @@ class ConquerThreeContinentsObjectiveCard {
         return false;
     }
 
+    @Override
     public void checkOwner(Player dono) {
         this.dono = dono;
     }

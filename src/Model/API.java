@@ -19,13 +19,20 @@ public class API {
     public API() {
         map = this.initMap();
         dado = new Dado();
+        players = new ArrayList<>();
     }
 
+    // Singleton
     public static API getInstance() {
         if (apiInstance == null) {
             apiInstance = new API();
         }
         return apiInstance;
+    }
+
+    // Retornar todos os jogadores
+    public List<Player> getAllPlayers() {
+        return this.players;
     }
     
     public Map getMap() {
@@ -43,6 +50,11 @@ public class API {
 //        viewInstance.redraw();
 //    }
 
+    // Pegar carta de objetivo do jogador
+    public String playerObjective() {
+        return players.get(this.turn).getObjectiveName();
+    }
+
     public static TerritoryCard[] getCartasTerritorio() {
         return null;
     }
@@ -50,6 +62,21 @@ public class API {
 //    public void addObserver(TabuleiroObservador observer) {
 //        game.addObserver(observer);
 //    }
+
+    // Adicionar jogadores
+    public void addPlayer(String name, PlayerColor color) {
+        players.add(new Player(name, color));
+    }
+
+    // Pegar o nome do jogador
+    public static String playerName(Player player) { // verificar se é static mesmo
+       return player.getName();
+    }
+
+    // Pegar a cor do jogador
+    public PlayerColor get_vez_jogador_color() {
+		return players.get(this.turn).getColor();
+	}
 
     public ObjectiveCardDeck getDeckCardObjective(){
 		return this.objectiveDeck;
@@ -59,9 +86,15 @@ public class API {
     	objectiveDeck = new ObjectiveCardDeck(this.map,this.players);
 	} 
 
+    // Pegar o número de cartas de um jogador
     public int getPlayerNumberCards() {
         return players.get(this.turn).getCards();
     }
+
+    // Verificar status de objetivo do jogador
+	public boolean verifica_vez_jogador_objetivo() {
+		return players.get(this.turn).getObjective().checkStatus();
+	}
 
     public boolean checkPlayerTerritoryBorder(String territory, String border) {
         return players.get(this.turn).checkBorder(territory, border);
@@ -84,59 +117,73 @@ public class API {
         return players.get(this.turn).placeArmy(army, territory);
     }
 
-
-    public void getPlayerAddArmy() {
+    // Adicionar exércitos em território da posse do jogador
+    public void getPlayerAddArmy(String territory) {
         Player player = players.get(this.turn);
         player.setArmies(0);
         player.addArmy();
+        for(Territory region : player.territories) {
+            if(region.getName() == territory) {
+                // Temos que fazer isso aqui!
+                // player.add_exercito_regiao(region.getName(),region.getArmies());
+            }
+        }
     }
     
-    public void sorteia_obj_todos_jogadores(List<Player> players, ObjectiveCardDeck objectiveDeck) {
+    // Sorteia objetivos para todos os jogadores
+    public void shuffleObjectives(List<Player> players, ObjectiveCardDeck objectiveDeck) {
 		Collections.shuffle(players);
 		for(Player player : players) {
 			objectiveDeck.sorteia_objetivo(player);
-			System.out.printf("O objetivo do jogador %s é %s.\n",player.getName(),player.getObjective().getClass());
 		}
 	}
 
     // Conferir vencedor da batalha
-    /// batalhas podem ter no mínimo um exército e no máximo três exércitos
-    /// retirar a quantidade de acordo com o resultado dos dados
-    /// List com os resultados dos dados de ataque e de defesa
+    public Integer[] battleWinner(List<Integer> diceAttack, List<Integer> diceDefense) {
+        // Criar lista de quantidade de derrotas
+        Integer[] battle = new Integer[2];
+        
+        // Quantidade de dados
+        int attackCount = diceAttack.size();
+        int defenseCount = diceDefense.size();
 
+        // Contador de derrotas
+        int countAttack = 0;
+        int countDefense = 0;
+        
+        // Verifica que ambos ainda possuem dados a serem comparados
+        while(attackCount != 0 && defenseCount != 0){
+            int attackValue = 0;
+            int defenseValue = 0;
 
-    // Código do menino
-    public boolean[] confere_vencedor() {
-		List<Integer> ataque = new ArrayList<>((List<Integer>)dado.get('a'));
-		List<Integer> defesa = new ArrayList<>((List<Integer>)dado.get('d'));
-		boolean[] batalhas = new boolean [(defesa.size() > ataque.size()) ? ataque.size() : defesa.size()];
-		int batalha=0;
-		while(defesa.size()!=0 && ataque.size()!=0) {
-			int maioratk=0;
-			int maiordef=0;
-			for(int i=0;i<ataque.size(); i++) {
-				 if(ataque.get(maioratk)<ataque.get(i)) {
-					 maioratk=i;
-				 }
-			}
-			for(int i=0;i<defesa.size(); i++) {
-				 if(defesa.get(maiordef)<defesa.get(i)) {
-					 maiordef=i;
-				 }
-			}
-			if(ataque.get(maioratk)>defesa.get(maiordef)) {
-				batalhas[batalha]=true;
-			}
-			else{
-				batalhas[batalha]=false;
-			}
-			batalha++;
-			ataque.remove(maioratk);
-			defesa.remove(maiordef);
-		}
-		return batalhas;
-	}
-    ////////////////////////////////////////////////////////////////////////////
+            // Encontrar o maior valor de ataque
+            for(int i = 0; i < attackCount; i++) {
+                if(diceAttack.get(attackValue) < diceAttack.get(i)) {
+                    attackValue = i;
+                }
+            }
+
+            // Encontrar o maior valor de defesa
+            for(int i = 0; i< defenseCount; i++) {
+                if(diceDefense.get(defenseValue) < diceDefense.get(i)) {
+                    defenseValue = i;
+                }
+            }
+
+            // Comparar os dois maiores valores encontrados
+            if(diceAttack.get(attackValue) < diceDefense.get(defenseValue)) {
+                countAttack++;
+            } else {
+                countDefense++;
+            }
+        }
+
+        // Salvar quantidade de derrotas
+        battle[0] = countAttack;
+        battle[1] = countDefense;
+
+        return battle;
+    }
 
 
     
@@ -168,9 +215,7 @@ public class API {
     //     }
     // }
 
-//    public static String getNomeJogador(Player jogador) {
-//        return jogador.getName();
-//    }
+
 
     // public static ArrayList<String> getCartasDono(String dono) {
     //     ArrayList<String> retorno = new ArrayList<String>();

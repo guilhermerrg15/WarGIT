@@ -1,6 +1,6 @@
 package Model;
 
-class Conquer24TerritoriesObjectiveCard {
+class Conquer24TerritoriesObjectiveCard implements Objective {
     protected Player dono;
     protected String nome;
     
@@ -12,13 +12,15 @@ class Conquer24TerritoriesObjectiveCard {
         return this.nome;
     }
 
-    public boolean verifica_status() {
+    @Override
+    public boolean checkStatus() {
 		if(dono.getTerritoryNumber()>=24) {
 			return true;
 		}
 		return false;
 	}
 
+    @Override
     public void checkOwner(Player dono) {
         this.dono = dono;
     }

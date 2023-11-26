@@ -2,7 +2,7 @@ package Model;
 
 import java.util.List;
 
-class DestroyOpponentObjectiveCard {
+class DestroyOpponentObjectiveCard implements Objective {
     private Player dono;
     private List<Player> todos_jogadores;
     private String nome;
@@ -19,6 +19,7 @@ class DestroyOpponentObjectiveCard {
         return this.nome;
     }
 
+    @Override
     public boolean checkStatus() {
         for (Player player : this.todos_jogadores) {
             if (player.getColor().equals(color)) {
@@ -33,6 +34,7 @@ class DestroyOpponentObjectiveCard {
         return dono.getConqueredTerritories().size() >= 24;
     }
 
+    @Override
     public void checkOwner(Player dono) {
         this.dono = dono;
     }

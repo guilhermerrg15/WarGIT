@@ -7,7 +7,7 @@ import java.util.*;
  * Uma lista com todos os objetivos do jogo.
  */
 class ObjectiveCardDeck {
-	private List<Object> objectiveCards;
+	private List<Objective> objectiveCards;
 	private Map map;
     
     public ObjectiveCardDeck(Map map, List<Player> todos_jogadores) {
@@ -42,33 +42,19 @@ class ObjectiveCardDeck {
     
     public void sorteia_objetivo(Player player){
     	Random random = new Random();
-    	Object objetivoSorteado = objectiveCards.get(random.nextInt(objectiveCards.size()));
-    	
-    	if (objetivoSorteado instanceof DestroyOpponentObjectiveCard) {
-            player.riceiveObjective((DestroyOpponentObjectiveCard) objetivoSorteado);
-            player.getDestroyObjective().checkOwner(player);
-    	} else if (objetivoSorteado instanceof ConquerTwoContinentsObjectiveCard) {
-            player.riceiveObjective((ConquerTwoContinentsObjectiveCard) objetivoSorteado);
-            player.getConquerTwoContinentsObjective().checkOwner(player);
-        }else if (objetivoSorteado instanceof ConquerThreeContinentsObjectiveCard) {
-            player.riceiveObjective((ConquerThreeContinentsObjectiveCard) objetivoSorteado);
-            player.getConquerThreeContinentsObjective().checkOwner(player);
-        }else if (objetivoSorteado instanceof Conquer18TerritoriesObjectiveCard) {
-            player.riceiveObjective((Conquer18TerritoriesObjectiveCard) objetivoSorteado);
-            player.getConquer18TerritoriesObjectiveCard().checkOwner(player);
-        }else if (objetivoSorteado instanceof Conquer24TerritoriesObjectiveCard) {
-            player.riceiveObjective((Conquer24TerritoriesObjectiveCard) objetivoSorteado);
-            player.getConquer24TerritoriesObjectiveCard().checkOwner(player);
+    	Objective objetivoSorteado = objectiveCards.get(random.nextInt(objectiveCards.size()));
+
+        if (objetivoSorteado instanceof Objective) {
+            player.receiveObjective(objetivoSorteado);
+            objetivoSorteado.checkStatus();
         }
-            
         
     	objectiveCards.remove(player.getObjective());
-    	
     }
     
     public String getName(int index) {
         if (index >= 1 && index <= objectiveCards.size()) {
-            Object objetivo = objectiveCards.get(index - 1);
+            Objective objetivo = objectiveCards.get(index - 1);
 
             if (objetivo instanceof DestroyOpponentObjectiveCard) {
                 return ((DestroyOpponentObjectiveCard) objetivo).getName();
@@ -87,8 +73,7 @@ class ObjectiveCardDeck {
         return null;
     }
     
-    public void objetivoRetornaDeck(Object objetivo) {
+    public void objetivoRetornaDeck(Objective objetivo) {
         objectiveCards.add(objetivo);
     }
-    
 }
