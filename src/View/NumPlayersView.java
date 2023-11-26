@@ -23,6 +23,7 @@ public class NumPlayersView extends JPanel {
     // Adicionar fundo da tela inicial
 	Image background;
     Image foreground;
+    
 
     // Componente gráfico da tela inicial
 	Graphics2D graphic;
