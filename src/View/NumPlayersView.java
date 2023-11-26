@@ -15,10 +15,10 @@ public class NumPlayersView extends JPanel {
 
     JRadioButton player3Button = new JRadioButton("3 jogadores");
     JRadioButton player4Button = new JRadioButton("4 jogadores");
-    JRadioButton radioButton5 = new JRadioButton("5 jogadores");
-    JRadioButton radioButton6 = new JRadioButton("6 jogadores");
-    ButtonGroup buttonGroup = new ButtonGroup();
-    JButton confirmar = new JButton("Confirmar");
+    JRadioButton player5Button = new JRadioButton("5 jogadores");
+    JRadioButton player6Button = new JRadioButton("6 jogadores");
+    ButtonGroup allButtons = new ButtonGroup();
+    JButton confirmeButton = new JButton("Confirmar");
 
     // Adicionar fundo da tela inicial
 	Image background;
@@ -39,24 +39,22 @@ public class NumPlayersView extends JPanel {
 
         player3Button.setAlignmentX(CENTER_ALIGNMENT);
         player4Button.setAlignmentX(CENTER_ALIGNMENT);
-        radioButton5.setAlignmentX(CENTER_ALIGNMENT);
-        radioButton6.setAlignmentX(CENTER_ALIGNMENT);
+        player5Button.setAlignmentX(CENTER_ALIGNMENT);
+        player6Button.setAlignmentX(CENTER_ALIGNMENT);
 
         Font buttonFont = new Font("Arial", Font.BOLD, 24);
         player3Button.setFont(buttonFont);
         player4Button.setFont(buttonFont);
-        radioButton5.setFont(buttonFont);
-        radioButton6.setFont(buttonFont);
-        confirmar.setFont(buttonFont);
-       
+        player5Button.setFont(buttonFont);
+        player6Button.setFont(buttonFont);
+        confirmeButton.setFont(buttonFont);
 
+        allButtons.add(player3Button);
+        allButtons.add(player4Button);
+        allButtons.add(player5Button);
+        confirmeButton.add(player6Button);
 
-        buttonGroup.add(player3Button);
-        buttonGroup.add(player4Button);
-        buttonGroup.add(radioButton5);
-        buttonGroup.add(radioButton6);
-
-        confirmar.addActionListener(new ActionListener() {
+        confirmeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selected = 0;
@@ -68,11 +66,11 @@ public class NumPlayersView extends JPanel {
 					// PlayerConfig.getPlayerConfig().setNumJogadores(4);
 					selected++;
 				}
-				if (radioButton5.isSelected()) {
+				if (player5Button.isSelected()) {
 					// PlayerConfig.getPlayerConfig().setNumJogadores(5);
 					selected++;
 				}
-				if (radioButton6.isSelected()) {
+				if (player6Button.isSelected()) {
 					// PlayerConfig.getPlayerConfig().setNumJogadores(6);
 					selected++;
 				}
@@ -91,12 +89,12 @@ public class NumPlayersView extends JPanel {
         gbc.gridy++;
         add(player4Button, gbc);
         gbc.gridy++;
-        add(radioButton5, gbc);
+        add(player5Button, gbc);
         gbc.gridy++;
-        add(radioButton6, gbc);
+        add(player6Button, gbc);
         gbc.gridy++;
         gbc.anchor = GridBagConstraints.CENTER; // Alinha o botão Confirmar ao centro
-        add(confirmar, gbc);
+        add(confirmeButton, gbc);
 
         //Carrega a imagem de fundo
 		try {
