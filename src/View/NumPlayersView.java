@@ -80,7 +80,7 @@ public class NumPlayersView extends JPanel {
                     return;
                 }
 
-                // PlayerConfig.getPlayerConfig().drawPlayers();
+                PlayerConfig.getPlayerConfig().drawPlayers();
                 Window.getWindow().configurePlayers();
             }
         });

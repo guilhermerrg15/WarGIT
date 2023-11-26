@@ -45,6 +45,4 @@ public class Window extends JFrame {
         playerConfig.setVisible(false);
         getContentPane().add(map);
     }
-
-
 }
