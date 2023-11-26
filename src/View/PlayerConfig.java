@@ -26,6 +26,10 @@ public class PlayerConfig extends JPanel {
 	private ArrayList <String> nomesJogadores = new ArrayList<String>();
     private ArrayList <Color> coresJogadores = new ArrayList<Color>();
 
+    // Adicionar fundo da tela inicial
+	Image background;
+    
+
     // Construtor da tela de configuração de jogadores
     public PlayerConfig() {
         // Carregar a imagem de fundo
