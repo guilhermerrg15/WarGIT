@@ -54,7 +54,7 @@ public class MapView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.g = (Graphics2D) g;
-        this.g.drawImage(backgroundImage, 0, 0, 1440, 800, null);
+        this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
     }
 
     //singleton
