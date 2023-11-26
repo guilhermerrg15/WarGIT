@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.*;
@@ -26,6 +28,15 @@ class StartView extends JPanel {
 
     // Construtor da tela inicial
     public StartView() {
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        add(Box.createVerticalStrut(650));
+
+        start.setAlignmentX(CENTER_ALIGNMENT);
+        continueGame.setAlignmentX(CENTER_ALIGNMENT);
+
+
         start.addActionListener(new ActionListener() {
             // Implementar ação do botão de iniciar jogo
             @Override
@@ -42,14 +53,16 @@ class StartView extends JPanel {
 		try {
 			i = ImageIO.read(new File ("resources/imagens/war_janelaInicial.png"));
 		}
-		
 		catch (IOException e) {
 			System.out.println("Erro na leitura do plano de fundo\n");
 		}
 
         // Adicionar botões na tela inicial
+        add(Box.createVerticalGlue()); // Espaçamento acima dos botões
         add(start);
+        add(Box.createVerticalStrut(10)); // Espaçamento entre os botões
         add(continueGame);
+        add(Box.createVerticalGlue()); // Espaçamento abaixo dos botões
         
     }
 
