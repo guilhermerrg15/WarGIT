@@ -7,12 +7,14 @@ import Controller.TratadorSelecao;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-// import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class PlayerConfig extends JPanel {
     private String imagePath = "resources/imagens/war_tabuleiro_fundo.png";
     public static PlayerConfig playerConfig = null;
     private int numPlayers;
+
+    JButton startGameButton = new JButton("Iniciar o Jogo");
     
     //Guarda os componentes de seleção de personagem
 	private ArrayList <Selection> selectionComponents = new ArrayList<Selection>();
