@@ -20,7 +20,7 @@ public class ViewAPI {
 		MapView.getMapView().determinaPrimeiroJogador(nome, cor);
 	}
 
-    public ViewAPI() {
+    private ViewAPI() {
     }
 
     public static ViewAPI getInstance() {
@@ -28,6 +28,10 @@ public class ViewAPI {
             apiInstance = new ViewAPI();
         }
         return apiInstance;
+    }
+
+    public Observer getObserver() {
+        return (Observer) MapView.getMapView();
     }
 
     //Retorna os nomes dos jogadores

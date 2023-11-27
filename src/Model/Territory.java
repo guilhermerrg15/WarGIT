@@ -3,12 +3,12 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import Controller.Observed;
-import Controller.Observer;
+import View.Observer;
+import View.Observed;
 /**
  * Representa um território no jogo War.
  */
-class Territory implements Observed {
+class Territory {
 
     private String name;
     private Player owner;

@@ -11,7 +11,7 @@ import javax.swing.plaf.TreeUI;
 public class API {
 
     private static API apiInstance = null;
-    private ViewAPI viewInstance;
+    private ViewAPI viewInstance = ViewAPI.getInstance();
     private Map map;
     private Game game = Game.getInstance();
     private Dado dado;
@@ -60,8 +60,13 @@ public class API {
     }
     
     // Iniciar jogo
+    // public boolean startGame() {
+    //     return game.initiateGame();
+    // }
     public boolean startGame() {
-        return game.initiateGame();
+        boolean r = game.initiateGame();
+        game.add(viewInstance.getObserver());
+        return r;
     }
 
     // Pegar carta de objetivo do jogador
@@ -180,6 +185,10 @@ public class API {
                 // player.add_exercito_regiao(region.getName(),region.getArmies());
             }
         }
+    }
+
+    public void resetPlayers() {
+        game.getPlayers().clear();
     }
     
     // Sorteia objetivos para todos os jogadores
