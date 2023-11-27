@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.Map;
-
 class ConquerThreeContinentsObjectiveCard extends ObjectiveCard {
     private String nome;
     private Continent continent1, continent2;

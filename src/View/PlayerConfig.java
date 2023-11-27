@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import Controller.APIController;
-import Model.API;
 
 public class PlayerConfig extends JPanel {
     // private String imagePath = "resources/imagens/war_tabuleiro_fundo.png";
@@ -61,10 +60,10 @@ public class PlayerConfig extends JPanel {
         startGameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 for(Selection selection : selectionComponents) {
-                    String playerName = selection.getNome();
-                    Color playerColor = selection.getCor();
-                    nomesJogadores.add(playerName);
-                    coresJogadores.add(playerColor);
+                    // String playerName = selection.getNome();
+                    // Color playerColor = selection.getCor();
+                    nomesJogadores.add(selection.getNome());
+                    coresJogadores.add(selection.getCor());
                 }
                 if(APIController.getInstance().startMatch(nomesJogadores, coresJogadores)) {
                     // MapView.getMapView();
@@ -74,11 +73,12 @@ public class PlayerConfig extends JPanel {
 					coresJogadores.clear();
 					JOptionPane.showMessageDialog(null, "Nomes ou cores inválidos ou repetidos", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
+                System.out.println("HELLOO");
             }
         });
 
-        startGameButton.setBounds(0,5,200,100);
-
+        // startGameButton.setBounds(0,5,200,100);
+        
         // Adicionar layout e botão de iniciar jogo
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
@@ -129,14 +129,17 @@ public class PlayerConfig extends JPanel {
         add(startGameButton);
         add(Box.createVerticalGlue()); 
         add(Box.createVerticalStrut(250));
+        System.out.println("HELLOO");
 
         try {
 			background = ImageIO.read(new File ("resources/imagens/war_tabuleiro_fundo.png"));
+            System.out.println("HELLOO TRY");
 		}
 		catch (IOException e) {
 			System.out.println("Erro na leitura do plano de fundo\n");
 		}
 	}
+    
 
     // Altera número de jogadores
 	public void setNumPlayers(int numPlayers) {

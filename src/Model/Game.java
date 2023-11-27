@@ -8,7 +8,6 @@ import View.Observer;
 class Game implements Observed{
     private static Game game = null;
     
-
     // Lista de jogadores
     private ArrayList<Player> players = new ArrayList<Player>();
 
@@ -22,6 +21,14 @@ class Game implements Observed{
         return true;
     }
     private Game() {}
+
+    // Singleton
+    public static Game getInstance(){
+        if(game == null){
+            game = new Game();
+        }
+        return game;
+    }
 
     public void add(Observer o){
         lst.add(o);
@@ -59,13 +66,5 @@ class Game implements Observed{
         }
         players.add(jogador);
         return true;
-    }
-
-    // Singleton
-    public static Game getInstance(){
-        if(game == null){
-            game = new Game();
-        }
-        return game;
     }
 }

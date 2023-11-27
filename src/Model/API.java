@@ -107,6 +107,10 @@ public class API {
     public String getNomeJogadorVez(int i){
         return game.getJogadorVez(i).getName();
     }
+    // Método que retorna a cor do jogador da vez
+    public PlayerColor getCorJogadorVez(int i){
+        return game.getJogadorVez(i).getColor();
+    }
 
 
     // Pegar a cor do jogador

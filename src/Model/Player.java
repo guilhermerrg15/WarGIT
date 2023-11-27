@@ -29,6 +29,26 @@ public class Player {
     public List<Territory> getConqueredTerritories() {
         return this.territories;
     }
+     /**
+     * Construtor da classe Player.
+    *
+    * @param name  O nome do jogador.
+    * @param color A cor do jogador.
+    */
+
+    
+    public Player(String name, PlayerColor color) {
+        this.name = name;
+        this.color = color;
+        this.territories = new ArrayList<>();
+        this.armies = 0;
+        this.enemy = null;
+        this.territoryCards = new ArrayList<TerritoryCard>();
+        this.continentalArmies = new ArrayList<Army>();
+        for(Continent continent : continents){
+            this.continentalArmies.add(new Army(continent));
+        }
+    }
 
     // Resetar o jogador
     public void reset(TerritoryCardDeck territoryCardDeck, ObjectiveCardDeck objectiveCardDeck) {
@@ -111,28 +131,6 @@ public class Player {
 
     public int getTerritoryNumber() {
         return territories.size();
-    }
-
-
-
-    /**
-     * Construtor da classe Player.
-    *
-    * @param name  O nome do jogador.
-    * @param color A cor do jogador.
-    */
-
-    public Player(String name, PlayerColor color) {
-        this.name = name;
-        this.color = color;
-        this.territories = new ArrayList<>();
-        this.armies = 0;
-        this.enemy = null;
-        this.territoryCards = new ArrayList<TerritoryCard>();
-        this.continentalArmies = new ArrayList<Army>();
-        for(Continent continent : continents){
-            this.continentalArmies.add(new Army(continent));
-        }
     }
     
     
