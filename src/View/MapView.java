@@ -2,7 +2,7 @@ package View;
 import javax.swing.*;
 
 import Controller.APIController;
-
+import Model.API;
 import Model.PlayerColor;
 
 import java.awt.*;
@@ -31,6 +31,7 @@ public class MapView extends JPanel {
 	JLabel jogadorDaVezLabel = new JLabel();
 
     APIController controller = APIController.getInstance();
+    API game = API.getInstance();
 
     public MapView() {
         // setLayout(new BorderLayout());
@@ -65,9 +66,9 @@ public class MapView extends JPanel {
         add(buttonPanel);
 
         //Cria e adiciona o label do jogador da vez
-        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
         jogadorDaVezLabel.setForeground(Color.WHITE);
-        jogadorDaVezLabel.setBounds(640,660,200,30);
+        // jogadorDaVezLabel.setBounds(640,660,200,30);
         add(jogadorDaVezLabel);
     }
 

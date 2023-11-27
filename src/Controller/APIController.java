@@ -1,7 +1,12 @@
 package Controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import Model.API;
 import View.ViewAPI;
+import java.awt.Color;
 
 public class APIController {
     public static APIController controller = null;
@@ -10,9 +15,21 @@ public class APIController {
     private ViewAPI view = ViewAPI.getInstance();
     private API game = API.getInstance();
 
-    public boolean startMatch() {
+    public boolean startMatch(ArrayList<String> nomes, ArrayList<Color> cores) {
+        int cont = 0;
+        for(String nome : nomes){
+            // Verificar se há um nome igual a null
+            if(nome == null || nome.equals("")) {
+                return false;
+            }
+            if(game.addPlayer(nome) == false){
+                return false;
+            };
+            cont++;
+        }
+        
         if(game.startGame()) {
-            view.determinaPrimeiroJogador(game.playerName(), game.playerColor());
+            view.determinaPrimeiroJogador(game.getNomeJogadorVez(0), game.playerColor());
             return true;
         }
 

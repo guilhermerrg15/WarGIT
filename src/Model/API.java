@@ -11,10 +11,9 @@ import javax.swing.plaf.TreeUI;
 public class API {
 
     private static API apiInstance = null;
-//    private Game game;
     private ViewAPI viewInstance;
     private Map map;
-    private Game game;
+    private Game game = Game.getInstance();
     private Dado dado;
     private ObjectiveCardDeck objectiveDeck;
     private ArrayList<Player> players;
@@ -62,7 +61,7 @@ public class API {
     
     // Iniciar jogo
     public boolean startGame() {
-        return game.startGame();
+        return game.initiateGame();
     }
 
     // Pegar carta de objetivo do jogador
@@ -89,14 +88,21 @@ public class API {
 //    }
 
     // Adicionar jogadores
-    public void addPlayer(String name, PlayerColor color) {
-        players.add(new Player(name, color));
+    public boolean addPlayer(String name) {
+        Player player = new Player(name, PlayerColor.AZUL);
+        return game.addPlayer(player);
     }
 
     // Pegar o nome do jogador
     public String playerName() { 
        return players.get(this.turn).getName();
     }
+
+    // Pegar o nome do jogador da vez
+    public String getNomeJogadorVez(int i){
+        return game.getJogadorVez(i).getName();
+    }
+
 
     // Pegar a cor do jogador
     public PlayerColor playerColor() {

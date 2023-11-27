@@ -8,7 +8,7 @@ public class teste {
 		System.out.println("Hello World!!!");
 
 		Window.getWindow();
-
+		API.getInstance();
 	}
 }
 

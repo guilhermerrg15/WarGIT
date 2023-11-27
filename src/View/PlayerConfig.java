@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import Controller.APIController;
+import Model.API;
+
 public class PlayerConfig extends JPanel {
     // private String imagePath = "resources/imagens/war_tabuleiro_fundo.png";
     public static PlayerConfig playerConfig = null;
@@ -63,7 +66,7 @@ public class PlayerConfig extends JPanel {
                     nomesJogadores.add(playerName);
                     coresJogadores.add(playerColor);
                 }
-                if(verifyConfigErrors(nomesJogadores, coresJogadores)) {
+                if(APIController.getInstance().startMatch(nomesJogadores, coresJogadores)) {
                     MapView.getMapView();
                     Window.getWindow().configureMap();  
                 } else {
@@ -90,30 +93,30 @@ public class PlayerConfig extends JPanel {
 
 	}
 
-    // Verificar casos de erro de configuração de jogadores
-    public boolean verifyConfigErrors(ArrayList<String> nomes, ArrayList<Color> cores) {
+    // // Verificar casos de erro de configuração de jogadores
+    // public boolean verifyConfigErrors(ArrayList<String> nomes, ArrayList<Color> cores) {
         
-        // Conjuntos para adicionar cores e nomes únicos
-        Set<String> uniqueNames = new HashSet<>();
-        Set<Color> uniqueColors = new HashSet<>();
+    //     // Conjuntos para adicionar cores e nomes únicos
+    //     Set<String> uniqueNames = new HashSet<>();
+    //     Set<Color> uniqueColors = new HashSet<>();
 
-        for(int i = 0; i < nomes.size(); i++) {
-            String nome = nomes.get(i);
-            Color cor = cores.get(i);
+    //     for(int i = 0; i < nomes.size(); i++) {
+    //         String nome = nomes.get(i);
+    //         Color cor = cores.get(i);
 
-            // Verificar se há um nome igual a null
-            if(nome == null || nome.equals("")) {
-                return false;
-            }
+    //         // Verificar se há um nome igual a null
+    //         if(nome == null || nome.equals("")) {
+    //             return false;
+    //         }
 
-            // Verificar nomes ou cores repetidos
-            if (!uniqueNames.add(nome) || !uniqueColors.add(cor)) {
-                return false;
-            }
-        }
+    //         // Verificar nomes ou cores repetidos
+    //         if (!uniqueNames.add(nome) || !uniqueColors.add(cor)) {
+    //             return false;
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     // Desenha jogadores
 	public void drawPlayers() {
