@@ -1,6 +1,6 @@
 package Model;
 
-abstract class ObjectiveCard {
+public abstract class ObjectiveCard {
     protected String description;
     protected Player owner;
     protected String image; 

@@ -96,8 +96,8 @@ class Selection extends JPanel {
 	}
 
 	// Devolve a cor que está no comboBox
-	public Color getCor() {
-		setCor();
-		return cor;
+	public PlayerColor getCor() {
+		// setCor();
+		return (PlayerColor) comboBox.getSelectedItem();
 	}
 }

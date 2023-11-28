@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import Controller.APIController;
+import Model.PlayerColor;
 
 public class PlayerConfig extends JPanel {
     // private String imagePath = "resources/imagens/war_tabuleiro_fundo.png";
@@ -29,7 +30,7 @@ public class PlayerConfig extends JPanel {
 
     // Guarda os nomes e cores dos jogadores em um array
 	private ArrayList <String> nomesJogadores = new ArrayList<String>();
-    private ArrayList <Color> coresJogadores = new ArrayList<Color>();
+    private ArrayList <PlayerColor> coresJogadores = new ArrayList<PlayerColor>();
 
     // Adicionar fundo da tela inicial
 	Image background;
@@ -152,7 +153,7 @@ public class PlayerConfig extends JPanel {
 	}
 
 	// Pegar a cor dos jogadores
-	public ArrayList<Color> getCoresJogadores() {
+	public ArrayList<PlayerColor> getCoresJogadores() {
 		return coresJogadores;
 	}
 

@@ -1,5 +1,7 @@
 package Model;
 import View.ViewAPI;
+
+import java.awt.Color;
 import java.io.IOException;
 import java.sql.Array;
 import java.util.*;
@@ -16,7 +18,7 @@ public class API {
     private Game game = Game.getInstance();
     private Dado dado;
     private ObjectiveCardDeck objectiveDeck;
-    private ArrayList<Player> players;
+    // private ArrayList<Player> players;
     public int turn;
     private int tradeCounter = 0;
 	private static final int[] tradeBonusAmount = new int[] { 4, 6, 8, 10, 12, 15 };
@@ -24,7 +26,7 @@ public class API {
     public API() {
         map = this.initMap();
         dado = new Dado();
-        players = new ArrayList<>();
+        // players = new ArrayList<>();
     }
 
     // Singleton
@@ -37,7 +39,7 @@ public class API {
 
     // Retornar todos os jogadores
     public ArrayList<Player> getAllPlayers() {
-        return this.players;
+        return this.game.getPlayers();
     }
 
     public String[] getNomesJogadores() {
@@ -71,7 +73,7 @@ public class API {
 
     // Pegar carta de objetivo do jogador
     public String playerObjective() {
-        return players.get(this.turn).getObjectiveName();
+        return game.getPlayers().get(this.turn).getObjectiveName();
     }
 
     public static TerritoryCard[] getCartasTerritorio() {
@@ -80,12 +82,12 @@ public class API {
 
     // Pegar todas as cartas de território do jogador
     public List<TerritoryCard> retrieveTerritoryCards() {
-        return players.get(this.turn).getAllCards();
+        return game.getPlayers().get(this.turn).getAllCards();
     }
 
     // Pegar lista de territórios em posse do jogador
     public List<Territory> retrieveTerritories() {
-        return players.get(this.turn).getConqueredTerritories();
+        return game.getPlayers().get(this.turn).getConqueredTerritories();
     }
 
 //    public void addObserver(TabuleiroObservador observer) {
@@ -93,14 +95,14 @@ public class API {
 //    }
 
     // Adicionar jogadores
-    public boolean addPlayer(String name) {
-        Player player = new Player(name, PlayerColor.AZUL);
+    public boolean addPlayer(String name, PlayerColor color) {
+        Player player = new Player(name, color);
         return game.addPlayer(player);
     }
 
     // Pegar o nome do jogador
     public String playerName() { 
-       return players.get(this.turn).getName();
+       return game.getPlayers().get(this.turn).getName();
     }
 
     // Pegar o nome do jogador da vez
@@ -115,7 +117,7 @@ public class API {
 
     // Pegar a cor do jogador
     public PlayerColor playerColor() {
-		return players.get(this.turn).getColor();
+		return game.getPlayers().get(this.turn).getColor();
 	}
 
     // Pegar quantidade de exércitos de um território
@@ -144,43 +146,43 @@ public class API {
 	}
     
     public void initDeckObjective() {
-    	objectiveDeck = new ObjectiveCardDeck(this.map,this.players);
+    	objectiveDeck = new ObjectiveCardDeck(this.map,this.game.getPlayers());
 	} 
 
     // Pegar o número de cartas de um jogador
     public int getPlayerNumberCards() {
-        return players.get(this.turn).getCards();
+        return game.getPlayers().get(this.turn).getCards();
     }
 
     // Verificar status de objetivo do jogador
 	public boolean verifica_vez_jogador_objetivo() {
-		return players.get(this.turn).getObjective().checkStatus();
+		return game.getPlayers().get(this.turn).getObjective().checkStatus();
 	}
 
     public boolean checkPlayerTerritoryBorder(String territory, String border) {
-        return players.get(this.turn).checkBorder(territory, border);
+        return game.getPlayers().get(this.turn).checkBorder(territory, border);
     }
 
     public boolean checkPlayerTerritory(String territory) {
-        return players.get(this.turn).verifyTerritory(territory);
+        return game.getPlayers().get(this.turn).verifyTerritory(territory);
     }
 
     public void nextPlayer() {
         this.turn++;
-        if(this.turn >= this.players.size())this.turn = 0;
-        while(players.get(this.turn).verifyDestroyed()) {
+        if(this.turn >= this.game.getPlayers().size())this.turn = 0;
+        while(game.getPlayers().get(this.turn).verifyDestroyed()) {
             this.turn++;
-            if(this.turn >= this.players.size())this.turn = 0;
+            if(this.turn >= this.game.getPlayers().size())this.turn = 0;
         }
     }
 
     public boolean placeArmy(int army, String territory) {
-        return players.get(this.turn).placeArmy(army, territory);
+        return game.getPlayers().get(this.turn).placeArmy(army, territory);
     }
 
     // Adicionar exércitos em território da posse do jogador
     public void getPlayerAddArmy(String territory) {
-        Player player = players.get(this.turn);
+        Player player = game.getPlayers().get(this.turn);
         player.setArmies(0);
         player.addArmy();
         for(Territory region : player.territories) {
@@ -316,7 +318,7 @@ public class API {
         // Verificação de troca
         if(evaluateCardTrade(card1, card2, card3)) {
             // Adicionar exércitos com base na troca realizada
-            players.get(this.turn).addArmyTraded(calculateTradeBonus());
+            game.getPlayers().get(this.turn).addArmyTraded(calculateTradeBonus());
 
             // Remover cartas trocadas da lista
             cards.removeAll(Arrays.asList(card1, card2, card3));
@@ -352,7 +354,7 @@ public class API {
 //			}
 //		}
 //		for(Player players : players) {
-//			players.reset(deck, objectiveDeck);
+//			game.getPlayers().reset(deck, objectiveDeck);
 //		}
 //		this.vez = 0;
 //	}
