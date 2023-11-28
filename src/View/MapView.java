@@ -28,9 +28,11 @@ public class MapView extends JPanel implements Observer{
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
-	Color corDoJogador;
+	// Color corDoJogador;
 	String descricaoObjetivo;
 	JLabel jogadorDaVezLabel = new JLabel();
+
+    private PlayerColor corDoJogadorEscolhida;
 
     APIController controller = APIController.getInstance();
     API game = API.getInstance();
@@ -50,6 +52,12 @@ public class MapView extends JPanel implements Observer{
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.RIGHT));
 
+        //Cria e adiciona o label do jogador da vez
+        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        jogadorDaVezLabel.setForeground(Color.WHITE);
+        // jogadorDaVezLabel.setBounds(640,660,200,30);
+        add(jogadorDaVezLabel);
+
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkObjectivesButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -67,11 +75,7 @@ public class MapView extends JPanel implements Observer{
 
         add(buttonPanel);
 
-        //Cria e adiciona o label do jogador da vez
-        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
-        jogadorDaVezLabel.setForeground(Color.WHITE);
-        // jogadorDaVezLabel.setBounds(640,660,200,30);
-        add(jogadorDaVezLabel);
+        
     }
 
     public void paintComponent(Graphics g) {
@@ -96,8 +100,38 @@ public class MapView extends JPanel implements Observer{
 		// Adicionar descrição do objetivo em cima da carta
 		// NÃO IMPRIMIR AINDA, SÓ ADD PARA IMPRIMIR AO CHAMAR O DRAWCOMPONENT DO MAINFRAME
 		this.jogadorDaVez = jogadorDaVez;
-		this.corDoJogador = Color.BLUE;
+        this.corDoJogadorEscolhida = corDoJogador;
+
+        // Adiciona o quadrado de cor ao jogadorDaVezLabel
+        adicionarQuadradoCor();
 	}
+
+    private void adicionarQuadradoCor() {
+        JLabel corLabel = new JLabel();
+        corLabel.setOpaque(true);
+        corLabel.setBackground(getColorFromPlayerColor(corDoJogadorEscolhida));
+        corLabel.setPreferredSize(new Dimension(20, 20));
+        add(corLabel);
+    }
+
+    private Color getColorFromPlayerColor(PlayerColor playerColor) {
+        switch (playerColor) {
+            case AMARELO:
+                return Color.YELLOW;
+            case AZUL:
+                return Color.BLUE;
+            case BRANCO:
+                return Color.WHITE;
+            case PRETO:
+                return Color.BLACK;
+            case VERMELHO:
+                return Color.RED;
+            case VERDE:
+                return Color.GREEN;
+            default:
+                return Color.BLACK; // Cor padrão, caso a enumeração não seja reconhecida
+        }
+    }
 
     @Override
     public void notify(Observed o){
