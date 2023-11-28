@@ -45,9 +45,9 @@ public class Player {
         this.enemy = null;
         this.territoryCards = new ArrayList<TerritoryCard>();
         this.continentalArmies = new ArrayList<Army>();
-        for(Continent continent : continents){
-            this.continentalArmies.add(new Army(continent));
-        }
+        // for(Continent continent : continents){
+        //     this.continentalArmies.add(new Army(continent));
+        // }
     }
 
     // Resetar o jogador

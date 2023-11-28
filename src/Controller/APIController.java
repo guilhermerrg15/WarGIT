@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import Model.API;
+import Model.PlayerColor;
 import View.ViewAPI;
 import java.awt.Color;
 
@@ -15,15 +16,15 @@ public class APIController {
     private ViewAPI view = ViewAPI.getInstance();
     private API api = API.getInstance();
 
-    public boolean startMatch(ArrayList<String> nomes, ArrayList<Color> cores) {
-        // int cont = 0;
-        for(String nome : nomes){
+    public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
+        int numPlayers = nomes.size();
+        for(int i = 0; i < numPlayers; i++){
             // Verificar se há um nome igual a null
-            if(nome == null || nome.equals("")) {
+            if(nomes.get(i) == null || nomes.get(i).equals("")) {
                 api.resetPlayers();
                 return false;
             }
-            if(api.addPlayer(nome) == false){
+            if(api.addPlayer(nomes.get(i), cores.get(i)) == false){
                 api.resetPlayers();
                 return false;
             };

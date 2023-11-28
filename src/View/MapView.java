@@ -8,9 +8,11 @@ import Model.PlayerColor;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
+
 import javax.imageio.ImageIO;
 
-public class MapView extends JPanel {
+public class MapView extends JPanel implements Observer{
     public static MapView MapView = null;
 
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
@@ -94,6 +96,10 @@ public class MapView extends JPanel {
 		// Adicionar descrição do objetivo em cima da carta
 		// NÃO IMPRIMIR AINDA, SÓ ADD PARA IMPRIMIR AO CHAMAR O DRAWCOMPONENT DO MAINFRAME
 		this.jogadorDaVez = jogadorDaVez;
-		// this.corDoJogador = corDoJogador;
+		this.corDoJogador = Color.BLUE;
 	}
+
+    @Override
+    public void notify(Observed o){
+    }
 }

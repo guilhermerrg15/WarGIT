@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Uma lista com todos os objetivos do jogo.
  */
-class ObjectiveCardDeck {
+public class ObjectiveCardDeck {
 	private List<ObjectiveCard> objectiveCards;
 	private Map map;
     

@@ -10,7 +10,7 @@ class OutlineTerritory {
 	protected final Color borda;
 	protected boolean redesenha;
 	protected Path2D terra;
-	protected Army exercito;
+	// protected Army exercito;
 	protected boolean selected;
 	
 	public void set_slctd(boolean status) {
@@ -38,7 +38,7 @@ class OutlineTerritory {
 		// ********* EXERCITO 2D *******
 		Point coord = this.get_centroDeMassa(this.terra, xs, ys);
 
-		this.exercito = new Army(coord.x, coord.y, 22, 1); // Tamanho configurável aqui
+		// this.exercito = new Army(coord.x, coord.y, 22, 1); // Tamanho configurável aqui
 	}
 
 	// OVERLOAD, para ajustar a posicao dos exercitos
@@ -59,7 +59,7 @@ class OutlineTerritory {
 		// ********* EXERCITO 2D *******
 		Point coord = this.get_centroDeMassa(this.terra, xs, ys);
 
-		this.exercito = new Army(coord.x + ajx, coord.y + ajy, 22, 1); // Tamanho configurável aqui
+		// this.exercito = new Army(coord.x + ajx, coord.y + ajy, 22, 1); // Tamanho configurável aqui
 	}
 
 	public String get_nome() {
@@ -74,9 +74,9 @@ class OutlineTerritory {
 		return this.borda;
 	}
 
-	public Army get_exercito_2d() {
-		return this.exercito;
-	}
+	// public Army get_exercito_2d() {
+	// 	return this.exercito;
+	// }
 
 	public Path2D get_polygon() {
 		return this.terra;

@@ -31,7 +31,7 @@ public class ViewAPI {
     }
 
     public Observer getObserver() {
-        return (Observer) MapView.getMapView();
+        return MapView.getMapView();
     }
 
     //Retorna os nomes dos jogadores
