@@ -38,6 +38,14 @@ public class APIController {
         return false;
     }
 
+    //init deck cartas obj(chamar na view do map)
+    public void showObjCards() {
+        api.initDeckObjective();
+        api.shuffleObjectives(api.getAllPlayers(), api.getDeckCardObjective());
+        System.out.println("CLICKED");
+        
+    }
+
     // Pegar o nome dos jogadores
     public String[] getNomesJogadores(){
         return api.getNomesJogadores();

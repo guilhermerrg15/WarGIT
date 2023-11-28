@@ -18,7 +18,7 @@ public class API {
     private Game game = Game.getInstance();
     private Dado dado;
     private ObjectiveCardDeck objectiveDeck;
-    // private ArrayList<Player> players;
+    private ArrayList<Player> players;
     public int turn;
     private int tradeCounter = 0;
 	private static final int[] tradeBonusAmount = new int[] { 4, 6, 8, 10, 12, 15 };
@@ -60,7 +60,6 @@ public class API {
         Map map = new Map();
         return map;
     }
-    
     // Iniciar jogo
     // public boolean startGame() {
     //     return game.initiateGame();

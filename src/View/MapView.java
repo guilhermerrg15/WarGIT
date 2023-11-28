@@ -8,8 +8,10 @@ import Model.PlayerColor;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Observable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import Controller.APIController;
 import javax.imageio.ImageIO;
 
 public class MapView extends JPanel implements Observer{
@@ -77,6 +79,13 @@ public class MapView extends JPanel implements Observer{
         jogadorDaVezLabel.setForeground(Color.BLACK);
         // jogadorDaVezLabel.setBounds(640,660,200,30);
         add(jogadorDaVezLabel);
+
+        checkCardsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                APIController.getInstance().showObjCards();
+            }
+        });
         
     }
 
