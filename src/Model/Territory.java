@@ -18,7 +18,9 @@ class Territory {
     // private List<Territory> neighbours;
     private List<String> neighbours;
     private List<Observer> lst = new ArrayList<Observer>();
-    private Color cor;
+
+    //Guarda a cor do território 
+	private PlayerColor cor;
 
     private int i1, i2 = -1;
     /**
@@ -41,6 +43,8 @@ class Territory {
         this.neighbours = neighbours;
         this.continent = continent;
     }
+
+    
 
     /**
      * Obtém o nome do território.
@@ -96,6 +100,7 @@ class Territory {
      */
     public void setOwner(Player owner) {
         this.owner = owner;
+        this.cor = owner.getColor();
     }
 
     /**
@@ -159,7 +164,7 @@ class Territory {
 //   }
 
     //Retorna a cor do territorio
-    public Color getCor() {
+    public PlayerColor getCor() {
         return cor;
     }
 

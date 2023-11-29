@@ -61,12 +61,12 @@ public class APIController {
     }
 
     // Método que retorna a cor de um território
-    public Color getCorTerritorio(String t){
+    public PlayerColor getCorTerritorio(String t){
         return api.getCorTerritorio(t);
     }
 
     // Singleton
-    public static APIController getInstance(){
+    public static APIController getInstance(){  
         if(controller == null){
             controller = new APIController();
         }

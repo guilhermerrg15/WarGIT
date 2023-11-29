@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import Model.PlayerColor;
 
 import javax.swing.JComponent;
 class ArmyView extends JComponent {
@@ -25,10 +26,10 @@ class ArmyView extends JComponent {
 	//OBS : Cor do jogador correspondente à cor do exército
 
 	//Construtor
-	public ArmyView(int x, int y,Color color, String qntExercitos) {
+	public ArmyView(int x, int y,PlayerColor color, String qntExercitos) {
 		this.posX = x;
 		this.posY = y;
-		this.cor = color;
+		this.cor = getColorFromPlayerColor(color);
 		this.qntExercitos = qntExercitos;
 		setBounds(0,0, 660, 660);
 	}
@@ -39,7 +40,7 @@ class ArmyView extends JComponent {
 		this.g2d = (Graphics2D) g;
 
 		// Pega a cor do jogador
-		this.g2d.setPaint(Color.BLUE);
+		this.g2d.setPaint(cor);
 		Ellipse2D player = new Ellipse2D.Float(posX, posY, 22, 22);
 
 		// Preenche a bolinha com a cor do jogador
@@ -53,8 +54,6 @@ class ArmyView extends JComponent {
 			this.g2d.setPaint(Color.BLACK);
 		}
 
-		// Desenha a borda 
-		this.g2d.draw(player);
 
 		//ajustar posição do texto
 		if(qntExercitos.length() == 1)
@@ -103,6 +102,25 @@ class ArmyView extends JComponent {
 	//Retorna a componente gráfica
 	public Graphics2D getG2d() {
 		return g2d;
+	}
+
+	private Color getColorFromPlayerColor(PlayerColor playerColor) {
+		switch (playerColor) {
+			case AMARELO: 
+				return Color.YELLOW;
+			case AZUL: 
+				return Color.BLUE;
+			case BRANCO:
+				return Color.WHITE;
+			case PRETO: 
+				return Color.BLACK;
+			case VERMELHO: 
+				return Color.RED;
+			case VERDE:
+				return Color.GREEN;
+			default: 
+			return Color.BLACK;
+		}
 	}
 
 	//Altera a componente gráfica

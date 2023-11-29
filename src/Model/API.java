@@ -54,7 +54,7 @@ public class API {
 		return terr;
 	}
 
-    public Color getCorTerritorio(String t) {
+    public PlayerColor getCorTerritorio(String t) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
     
