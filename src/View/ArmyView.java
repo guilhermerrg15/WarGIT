@@ -39,7 +39,7 @@ class ArmyView extends JComponent {
 		this.g2d = (Graphics2D) g;
 
 		// Pega a cor do jogador
-		this.g2d.setPaint(Color.BLUE);
+		this.g2d.setPaint(cor);
 		Ellipse2D player = new Ellipse2D.Float(posX, posY, 22, 22);
 
 		// Preenche a bolinha com a cor do jogador
@@ -50,7 +50,7 @@ class ArmyView extends JComponent {
 			this.g2d.setPaint(Color.WHITE);
 		}
 		else {
-			this.g2d.setPaint(Color.BLACK);
+			this.g2d.setPaint(Color.RED);
 		}
 
 		// Desenha a borda 

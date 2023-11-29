@@ -18,9 +18,12 @@ public class MapView extends JPanel implements Observer{
 
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
     JButton checkCardsButton = new JButton("Ver Cartas de Território");
+	JLabel moveTroopsLabel = new JLabel("Alocar Tropas");
+	JComboBox<String> territoryPlacementBox = new JComboBox<String>();
+	JComboBox<String> territoryNumberBox = new JComboBox<String>();
+
     JButton addArmy = new JButton("Adicionar Exército");
     JButton attackButton = new JButton("Atacar");
-    JButton moveTroopsButton = new JButton("Realocar Tropas");
     JButton finishButton = new JButton("Finalizar Jogada");
     Image backgroundImage;
     Image territoriesImage;
@@ -62,18 +65,18 @@ public class MapView extends JPanel implements Observer{
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.LEFT));        
         
-
+		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(moveTroopsLabel);
+		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		buttonPanel.add(territoryPlacementBox);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkObjectivesButton);
-        
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(addArmy);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(attackButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(moveTroopsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(finishButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -86,7 +89,7 @@ public class MapView extends JPanel implements Observer{
         jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
         jogadorDaVezLabel.setForeground(Color.BLACK);
         add(jogadorDaVezLabel);
-        
+        // add(territoryNum);
     }
 
     public void paintComponent(Graphics graphic) {
@@ -119,9 +122,16 @@ public class MapView extends JPanel implements Observer{
 		// NÃO IMPRIMIR AINDA, SÓ ADD PARA IMPRIMIR AO CHAMAR O DRAWCOMPONENT DO MAINFRAME
 		this.jogadorDaVez = jogadorDaVez;
         this.corDoJogadorEscolhida = corDoJogador;
-
+		// this.updatePlacement(territorios);
         // Adiciona o quadrado de cor ao jogadorDaVezLabel
         adicionarQuadradoCor();
+	}
+
+	public void updatePlacement(String[] territories) {
+		territoryPlacementBox.removeAllItems();
+		for (String territory : territories) {
+			territoryPlacementBox.addItem(territory);
+		}
 	}
 
 	private void adicionarQuadradoCor() {

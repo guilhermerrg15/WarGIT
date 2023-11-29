@@ -54,6 +54,7 @@ public class API {
 		return terr;
 	}
 
+
     public Color getCorTerritorio(String t) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
@@ -203,6 +204,11 @@ public class API {
 		return game.getPlayers().get(this.turn).getObjective().checkStatus();
 	}
 
+    // public boolean verifyWin(int turn) {
+    //     Player player = game.getJogadorVez(turn);
+    //     return player.getObjective().checkStatus(player);
+    // }
+
     public boolean checkPlayerTerritoryBorder(String territory, String border) {
         return game.getPlayers().get(this.turn).checkBorder(territory, border);
     }
@@ -218,6 +224,10 @@ public class API {
             this.turn++;
             if(this.turn >= this.game.getPlayers().size())this.turn = 0;
         }
+    }
+
+    public int getQtdExercitosPosic(int turn) {
+        return game.getJogadorVez(turn).getArmies();
     }
 
     public boolean placeArmy(int army, String territory) {
