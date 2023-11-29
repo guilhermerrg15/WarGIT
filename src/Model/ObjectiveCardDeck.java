@@ -14,28 +14,28 @@ public class ObjectiveCardDeck {
         this.objectiveCards = new ArrayList<>(); 
     	
     	//cartas de destruir oponente
-    	objectiveCards.add(new DestroyOpponentObjectiveCard("Objetivo1", "azul"));
-        objectiveCards.add(new DestroyOpponentObjectiveCard("Objetiv2", "verde"));
-        objectiveCards.add(new DestroyOpponentObjectiveCard("Objetivo3", "vermelho"));
-        objectiveCards.add(new DestroyOpponentObjectiveCard("Objetivo4", "branco"));
-        objectiveCards.add(new DestroyOpponentObjectiveCard("Objetivo5", "preto"));
-        objectiveCards.add(new DestroyOpponentObjectiveCard("Objetivo6", "amarelo"));
+    	objectiveCards.add(new DestroyOpponentObjectiveCard("objetivo1", "azul"));
+        objectiveCards.add(new DestroyOpponentObjectiveCard("objetiv2", "verde"));
+        objectiveCards.add(new DestroyOpponentObjectiveCard("objetivo3", "vermelho"));
+        objectiveCards.add(new DestroyOpponentObjectiveCard("objetivo4", "branco"));
+        objectiveCards.add(new DestroyOpponentObjectiveCard("objetivo5", "preto"));
+        objectiveCards.add(new DestroyOpponentObjectiveCard("objetivo6", "amarelo"));
     	
     	//cartas de conquistar 2 continentes
-    	objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo11", map.findContinent("North America"), map.findContinent("Africa")));
-        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo9", map.findContinent("Asia"), map.findContinent("Africa")));
-        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo12", map.findContinent("North America"), map.findContinent("Oceania")));
-        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "Objetivo10", map.findContinent("Asia"), map.findContinent("South America")));
+    	objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "objetivo11", map.findContinent("North America"), map.findContinent("Africa")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "objetivo9", map.findContinent("Asia"), map.findContinent("Africa")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "objetivo12", map.findContinent("North America"), map.findContinent("Oceania")));
+        objectiveCards.add(new ConquerTwoContinentsObjectiveCard( "objetivo10", map.findContinent("Asia"), map.findContinent("South America")));
         
         //cartas de conquistar 3 continentes
-        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo14", map.findContinent("Europe"), map.findContinent("South America")));
-        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "Objetivo13", map.findContinent("Europe"), map.findContinent("Oceania")));
+        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "objetivo14", map.findContinent("Europe"), map.findContinent("South America")));
+        objectiveCards.add(new ConquerThreeContinentsObjectiveCard( "objetivo13", map.findContinent("Europe"), map.findContinent("Oceania")));
     	
         //carta para conquistar 18 territorios com 2 exercitos em cada
-        objectiveCards.add(new Conquer18TerritoriesObjectiveCard("Objetivo8"));
+        objectiveCards.add(new Conquer18TerritoriesObjectiveCard("objetivo8"));
         
       //carta para conquistar 24 territorios 
-        objectiveCards.add(new Conquer24TerritoriesObjectiveCard("Objetivo7"));
+        objectiveCards.add(new Conquer24TerritoriesObjectiveCard("objetivo7"));
     }
     
     public void shuffleObjective(Player player){
