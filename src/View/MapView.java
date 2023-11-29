@@ -8,10 +8,9 @@ import Model.PlayerColor;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Observable;
 
-import Controller.APIController;
 import javax.imageio.ImageIO;
 
 public class MapView extends JPanel implements Observer{
@@ -39,6 +38,15 @@ public class MapView extends JPanel implements Observer{
     APIController controller = APIController.getInstance();
     API game = API.getInstance();
 
+    //Array list de exércitos 
+	ArrayList<ArmyView> armyList = new ArrayList<ArmyView>();
+
+    //Boolean para saber se os exércitos já foram criados
+	Boolean ExercitosNaoCriados = true;
+
+    //Lista de territórios no jogo
+	String[] territorios;
+
     public MapView() {
         // setLayout(new BorderLayout());
         setLayout(null);
@@ -52,10 +60,17 @@ public class MapView extends JPanel implements Observer{
 
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        //Cria e adiciona o label do jogador da vez
+        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        jogadorDaVezLabel.setForeground(Color.WHITE);
+        // jogadorDaVezLabel.setBounds(640,660,200,30);
+        add(jogadorDaVezLabel);
 
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkObjectivesButton);
+        
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -69,33 +84,25 @@ public class MapView extends JPanel implements Observer{
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         // buttonPanel.add(cancelButton);
 
-        add(Box.createHorizontalStrut(20));
-
         add(buttonPanel);
 
-        add(Box.createHorizontalStrut(50));
-        //Cria e adiciona o label do jogador da vez
-        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
-        jogadorDaVezLabel.setForeground(Color.BLACK);
-        // jogadorDaVezLabel.setBounds(640,660,200,30);
-        add(jogadorDaVezLabel);
-
-        checkCardsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                APIController.getInstance().showObjCards();
-            }
-        });
         
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        this.g = (Graphics2D) g;
+    public void paintComponent(Graphics graphic) {
+        super.paintComponent(graphic);
+        this.g = (Graphics2D) graphic;
 
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
         jogadorDaVezLabel.setText(jogadorDaVez);
+        if(ExercitosNaoCriados) {
+			criaExercitos(g);
+			ExercitosNaoCriados = false;
+		}
+		desenhaExercitos(this.g);
     }
+
+
 
     //singleton
     public static MapView getMapView() {
@@ -122,19 +129,201 @@ public class MapView extends JPanel implements Observer{
         corLabel.setOpaque(true);
         corLabel.setBackground(getColorFromPlayerColor(corDoJogadorEscolhida));
         corLabel.setPreferredSize(new Dimension(20, 20));
-    
-        // Adiciona o quadrado de cor à esquerda do jogadorDaVezLabel
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.add(corLabel, BorderLayout.WEST);
-        panel.add(jogadorDaVezLabel, BorderLayout.CENTER);
-    
-        // Define a posição e tamanho do painel combinado
-        panel.setBounds(10, 660, 300, 30); // Ajuste as coordenadas conforme necessário
-    
-        add(panel);
+        add(corLabel);
     }
-    
+
+    // Desenha cada bolinha nos territórios
+	void desenhaExercitos(Graphics2D graphic) {
+		for (ArmyView army : armyList) {
+			army.drawPlayer(graphic);
+		}
+	}
+
+    // Instancia os objetos dos exércitos
+	void criaExercitos(Graphics2D g2d) {
+		//Pega a lista de territórios
+		this.territorios = controller.getTerritoriosLista();
+		ArmyView exercitos;
+		
+		//Verifica qual o território e desenha o exército na posição correta
+		for (String t: territorios) { 
+			switch(t){
+				//América do Sul
+				case "Brasil":
+					exercitos = new ArmyView(425,540,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Argentina":
+					exercitos = new ArmyView(405,600,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Peru":
+					exercitos = new ArmyView(345,580,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Venezuela":
+					exercitos = new ArmyView(272,500,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+
+				// //América do Norte
+				case "Nova York":
+					exercitos = new ArmyView(282,308,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "México":
+					exercitos = new ArmyView(188,401,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Califórnia":
+					exercitos = new ArmyView(145,306,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Groelândia":
+					exercitos = new ArmyView(425,135,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Alasca":
+					exercitos = new ArmyView(124,165,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Vancouver":
+					exercitos = new ArmyView(184,221,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Calgary":
+					exercitos = new ArmyView(216,165,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Quebec":
+					exercitos = new ArmyView(425,195,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Texas":
+					exercitos = new ArmyView(250,282,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+					
+				// //Europa
+				// case "Polonia":
+				// 	exercitos = new ArmyView(666,209,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Franca":
+				// 	exercitos = new ArmyView(570,252,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Suecia":
+				// 	exercitos = new ArmyView(615,152,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Espanha":
+				// 	exercitos = new ArmyView(521,285,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Reino Unido":
+				// 	exercitos = new ArmyView(540,192,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Romenia":
+				// 	exercitos = new ArmyView(678,278,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Ucrania":
+				// 	exercitos = new ArmyView(696,244,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Italia":
+				// 	exercitos = new ArmyView(628,235,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				
+				// //África
+				// case "Egito":
+				// 	exercitos = new ArmyView(674,406,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Argelia":
+				// 	exercitos = new ArmyView(549,392,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Nigeria":
+				// 	exercitos = new ArmyView(622,459,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Somalia":
+				// 	exercitos = new ArmyView(731,494,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Angola":
+				// 	exercitos = new ArmyView(655,532,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Africa do Sul":
+				// 	exercitos = new ArmyView(679,590,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				
+				// //Ásia
+				// case "Estonia":
+				// 	exercitos = new ArmyView(784,150,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Letonia":
+				// 	exercitos = new ArmyView(770,199,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Russia":
+				// 	exercitos = new ArmyView(910,164,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Siberia":
+				// 	exercitos = new ArmyView(1032,157,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Turquia":
+				// 	exercitos = new ArmyView(860,255,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Cazaquistao":
+				// 	exercitos = new ArmyView(982,229,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Japao":
+				// 	exercitos = new ArmyView(1105,286,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Siria":
+				// 	exercitos = new ArmyView(776,298,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Paquistao":
+				// 	exercitos = new ArmyView(879,339,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "China":
+				// 	exercitos = new ArmyView(931,311,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Mongolia":
+				// 	exercitos = new ArmyView(1014,262,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Coreia do Norte":
+				// 	exercitos = new ArmyView(1012,315,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Coreia do Sul":
+				// 	exercitos = new ArmyView(1006,340,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Jordania":
+				// 	exercitos = new ArmyView(729,363,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Iraque":
+				// 	exercitos = new ArmyView(790,360,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Ira":
+				// 	exercitos = new ArmyView(846,358,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "India":
+				// 	exercitos = new ArmyView(936,401,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Bangladesh":
+				// 	exercitos = new ArmyView(984,392,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Tailandia":
+				// 	exercitos = new ArmyView(1048,386,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Arabia Saudita":
+				// 	exercitos = new ArmyView(796,426,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				
+				// //Oceania
+				// case "Australia":
+				// 	exercitos = new ArmyView(1034,629,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Indonesia":
+				// 	exercitos = new ArmyView(1053,520,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Perth":
+				// 	exercitos = new ArmyView(951,616,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+				// case "Nova Zelandia":
+				// 	exercitos = new ArmyView(1087,672,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				// 	break;
+					
+				default:
+					exercitos = new ArmyView(0,0,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+			
+			}
+			
+			//Desenha o território
+            exercitos.drawPlayer(g2d);
+			//Adiciona exército na lista
+			armyList.add(exercitos);
+		}
+	}
 
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
         switch (playerColor) {
@@ -151,7 +340,7 @@ public class MapView extends JPanel implements Observer{
             case VERDE:
                 return Color.GREEN;
             default:
-                return Color.BLACK; // Cor padrão, caso a enumeração não seja reconhecida
+                return Color.BLACK; 
         }
     }
 

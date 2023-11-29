@@ -16,8 +16,16 @@ class Game implements Observed{
     // Cartas de objetivo
     private ObjectiveCardDeck objectiveCardDeck;
 
+    private Map map = Map.getMap();
+
     // Inicializa o jogo
     public boolean initiateGame(){
+
+        //Inicializa o tabuleiro
+    	map.Inicializa();
+
+        map.distribuiTerritorios(players);
+
         return true;
     }
     private Game() {}

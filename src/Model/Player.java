@@ -18,6 +18,8 @@ public class Player {
     private ObjectiveCard objective;
     private List<Continent> continents;
     protected List<Army> continentalArmies;
+    //Guarda a quantidade de territórios em sua posse
+	private int numTerritories = 0;  
     
     
     // Pegar número de cartas
@@ -315,6 +317,13 @@ public class Player {
         return false;
     }
 
+
+    //Adiciona um território ao jogador
+	public void addTerritorio(Territory t) {
+		territories.add(t);
+		// Aumenta em 1 a quantidade de territórios
+		this.numTerritories++;
+	}
 
     /**
      * Obtém o nome do jogador.

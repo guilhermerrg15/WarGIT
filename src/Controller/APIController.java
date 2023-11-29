@@ -51,6 +51,20 @@ public class APIController {
         return api.getNomesJogadores();
     }
 
+    // Método que retorna a lista de territórios do jogo
+    public String[] getTerritoriosLista(){
+        return api.getTerritoriosLista();
+    }
+
+    public Integer getQtdExercitos(String t){
+        return api.getQntExTerritorio(t);
+    }
+
+    // Método que retorna a cor de um território
+    public Color getCorTerritorio(String t){
+        return api.getCorTerritorio(t);
+    }
+
     // Singleton
     public static APIController getInstance(){
         if(controller == null){

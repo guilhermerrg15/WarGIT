@@ -2,6 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Color;
 
 import View.Observer;
 import View.Observed;
@@ -17,6 +18,7 @@ class Territory {
     // private List<Territory> neighbours;
     private List<String> neighbours;
     private List<Observer> lst = new ArrayList<Observer>();
+    private Color cor;
 
     private int i1, i2 = -1;
     /**
@@ -111,7 +113,7 @@ class Territory {
      * @param count O número de exércitos a serem adicionados.
      */
     public void addArmies(int count) {
-        armies += count;
+        this.armies += count;
     }
 
     /**
@@ -155,6 +157,12 @@ class Territory {
 //   public Coordinates[] getVertices() {
 //       return vertices;
 //   }
+
+    //Retorna a cor do territorio
+    public Color getCor() {
+        return cor;
+    }
+
 }
 
 

@@ -42,6 +42,51 @@ public class API {
         return this.game.getPlayers();
     }
 
+     // Retorna lista de nomes de territórios
+     public String[] getTerritoriosLista() {
+		String [] terr = new String[51]; 
+		int cont = 0;
+		for (Territory t: map.getTerritoriesList()) {
+            terr[cont] = t.getName();
+            cont ++;
+		}
+
+		return terr;
+	}
+
+    public Color getCorTerritorio(String t) {
+        // Obtém a lista de territórios do objeto Map
+        List<Territory> territories = map.getTerritoriesList();
+    
+        // Percorre a lista de territórios
+        for (Territory territory : territories) {
+            // Verifica se o nome do território é igual ao território desejado
+            if (territory.getName().equals(t)) {
+                // Retorna a cor do território encontrado
+                return territory.getCor();
+            }
+        }
+        // Retorna null se o território não for encontrado
+        return null;
+    }
+
+    // Retorna quantidade de exércitos que tem em um território
+    public Integer getQntExTerritorio(String territorio) {
+        // Obtém a lista de territórios do objeto Map
+        List<Territory> territories = map.getTerritoriesList();
+
+        // Percorre a lista de territórios
+        for (Territory territory : territories) {
+            // Verifica se o nome do território é igual ao território desejado
+            if (territory.getName().equals(territorio)) {
+                // Retorna a quantidade de exércitos do território encontrado
+                return territory.getArmies();
+            }
+        }
+        // Retorna null se o território não for encontrado
+        return null;
+    }
+
     public String[] getNomesJogadores() {
     	String[] nomes = new String[getAllPlayers().size()];
     	int cont = 0;
