@@ -74,6 +74,7 @@ class ArmyView extends JComponent {
 	public int getPosX() {
 		return posX;
 	}
+	
 
 	//Altera a coordenada x da bolinha
 	public void setPosX(int posX) {
