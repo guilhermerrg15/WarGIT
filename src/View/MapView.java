@@ -29,6 +29,7 @@ public class MapView extends JPanel implements Observer{
     JButton finishButton = new JButton("Finalizar Jogada");
     Image backgroundImage;
     Image territoriesImage;
+	Image objectiveCard;
 
     Graphics2D g;
 
@@ -40,6 +41,7 @@ public class MapView extends JPanel implements Observer{
 	JLabel objective = new JLabel();
 
     private PlayerColor corDoJogadorEscolhida;
+	private boolean showObjectiveCard = false;
 
     APIController controller = APIController.getInstance();
     API game = API.getInstance();
@@ -58,7 +60,8 @@ public class MapView extends JPanel implements Observer{
         setLayout(null);
     
         try {
-            backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
+			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
+			objectiveCard = ImageIO.read(new File ("resources/imagens/war_carta_" + descricaoObjetivo + ".png"));
             // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,11 +100,22 @@ public class MapView extends JPanel implements Observer{
             // Adicionar ação do botão de ver carta de objetivo do jogador da vez
             @Override
             public void actionPerformed(ActionEvent e) {
-                objective.setText(game.playerObjective());
-                objective.setFont(new Font("Arial", Font.BOLD, 50));
-                objective.setForeground(Color.BLACK);
+				descricaoObjetivo = game.playerObjective();
+                // objective.setText(game.playerObjective());
+                // objective.setFont(new Font("Arial", Font.BOLD, 50));
+                // objective.setForeground(Color.BLACK);
 
-                add(objective);
+                // add(objective);
+
+				try {
+                    objectiveCard = ImageIO.read(new File("resources/imagens/war_carta_" + descricaoObjetivo + ".png"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    // Handle the exception appropriately (e.g., load a default image)
+                }
+
+				showObjectiveCard = true;
+				repaint();
             }
         });
         
@@ -112,6 +126,9 @@ public class MapView extends JPanel implements Observer{
         this.g = (Graphics2D) graphic;
 
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
+		if(showObjectiveCard) {
+			this.g.drawImage(objectiveCard, 0, 0, 500, 700, null);
+		}
         jogadorDaVezLabel.setText(jogadorDaVez);
         if(ExercitosNaoCriados) {
 			criaExercitos(g);
