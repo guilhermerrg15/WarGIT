@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.imageio.ImageIO;
 
@@ -32,6 +34,7 @@ public class MapView extends JPanel implements Observer{
 	// Color corDoJogador;
 	String descricaoObjetivo;
 	JLabel jogadorDaVezLabel = new JLabel();
+	JLabel objective = new JLabel();
 
     private PlayerColor corDoJogadorEscolhida;
 
@@ -86,6 +89,18 @@ public class MapView extends JPanel implements Observer{
         jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
         jogadorDaVezLabel.setForeground(Color.BLACK);
         add(jogadorDaVezLabel);
+
+		checkObjectivesButton.addActionListener(new ActionListener() {
+            // Adicionar ação do botão de ver carta de objetivo do jogador da vez
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                objective.setText(game.playerObjective());
+                objective.setFont(new Font("Arial", Font.BOLD, 50));
+                objective.setForeground(Color.BLACK);
+
+                add(objective);
+            }
+        });
         
     }
 
