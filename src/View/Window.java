@@ -1,6 +1,8 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.APIController;
 public class Window extends JFrame {
     // Telas do jogo
     private static Window window = null;
@@ -8,6 +10,7 @@ public class Window extends JFrame {
     private PlayerConfig playerConfig = PlayerConfig.getPlayerConfig();
     private NumPlayersView numPlayersView = NumPlayersView.getNumPlayersView();
     private MapView mapView = MapView.getMapView();
+    APIController controller = APIController.getInstance();
 
     // Construtor
     private Window(){
@@ -43,6 +46,7 @@ public class Window extends JFrame {
 	}
 
     public void configureMap() {
+        APIController.getInstance().showObjCards();
         startView.setVisible(false);
         numPlayersView.setVisible(false);
         playerConfig.setVisible(false);
