@@ -219,7 +219,7 @@ public class MapView extends JPanel implements Observer{
 				
 				// //África
 				case "Egito":
-					exercitos = new ArmyView(800,426,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					exercitos = new ArmyView(800,446,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
 					break;
 				case "Argélia":
 					exercitos = new ArmyView(629,432,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
@@ -228,90 +228,90 @@ public class MapView extends JPanel implements Observer{
 					exercitos = new ArmyView(670,489,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
 					break;
 				case "Somália":
-					exercitos = new ArmyView(831,554,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					exercitos = new ArmyView(871,554,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
 					break;
 				case "Angola":
-					exercitos = new ArmyView(732,600,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					exercitos = new ArmyView(772,600,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
 					break;
-				case "Africa do Sul":
-					exercitos = new ArmyView(679,590,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+				case "África do Sul":
+					exercitos = new ArmyView(809,660,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
 					break;
 				
 				// //Ásia
-				// case "Estonia":
-				// 	exercitos = new ArmyView(784,150,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Letonia":
-				// 	exercitos = new ArmyView(770,199,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Russia":
-				// 	exercitos = new ArmyView(910,164,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Siberia":
-				// 	exercitos = new ArmyView(1032,157,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Turquia":
-				// 	exercitos = new ArmyView(860,255,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Cazaquistao":
-				// 	exercitos = new ArmyView(982,229,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Japao":
-				// 	exercitos = new ArmyView(1105,286,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Siria":
-				// 	exercitos = new ArmyView(776,298,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Paquistao":
-				// 	exercitos = new ArmyView(879,339,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "China":
-				// 	exercitos = new ArmyView(931,311,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Mongolia":
-				// 	exercitos = new ArmyView(1014,262,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Coreia do Norte":
-				// 	exercitos = new ArmyView(1012,315,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Coreia do Sul":
-				// 	exercitos = new ArmyView(1006,340,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Jordania":
-				// 	exercitos = new ArmyView(729,363,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Iraque":
-				// 	exercitos = new ArmyView(790,360,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Ira":
-				// 	exercitos = new ArmyView(846,358,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "India":
-				// 	exercitos = new ArmyView(936,401,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Bangladesh":
-				// 	exercitos = new ArmyView(984,392,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Tailandia":
-				// 	exercitos = new ArmyView(1048,386,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Arabia Saudita":
-				// 	exercitos = new ArmyView(796,426,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
+				case "Estônia":
+					exercitos = new ArmyView(944,150,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Letônia":
+					exercitos = new ArmyView(970,209,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Rússia":
+					exercitos = new ArmyView(1100,184,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Sibéria":
+					exercitos = new ArmyView(1252,157,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Turquia":
+					exercitos = new ArmyView(1000,285,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Cazaquistão":
+					exercitos = new ArmyView(1150,249,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Japão":
+					exercitos = new ArmyView(1315,306,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Síria":
+					exercitos = new ArmyView(906,328,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Paquistão":
+					exercitos = new ArmyView(1049,379,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "China":
+					exercitos = new ArmyView(1131,341,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Mongólia":
+					exercitos = new ArmyView(1234,292,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Coreia do Norte":
+					exercitos = new ArmyView(1182,353,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Coreia do Sul":
+					exercitos = new ArmyView(1256,380,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Jordânia":
+					exercitos = new ArmyView(869,403,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Iraque":
+					exercitos = new ArmyView(945,410,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Irã":
+					exercitos = new ArmyView(1006,398,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Índia":
+					exercitos = new ArmyView(1106,411,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Bangladesh":
+					exercitos = new ArmyView(1194,412,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Tailândia":
+					exercitos = new ArmyView(1225,466,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Arábia Saudita":
+					exercitos = new ArmyView(946,486,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
 				
 				// //Oceania
-				// case "Australia":
-				// 	exercitos = new ArmyView(1034,629,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Indonesia":
-				// 	exercitos = new ArmyView(1053,520,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Perth":
-				// 	exercitos = new ArmyView(951,616,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
-				// case "Nova Zelandia":
-				// 	exercitos = new ArmyView(1087,672,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
-				// 	break;
+				case "Austrália":
+					exercitos = new ArmyView(1234,669,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Indonésia":
+					exercitos = new ArmyView(1283,590,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Perth":
+					exercitos = new ArmyView(1141,666,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
+				case "Nova Zelândia":
+					exercitos = new ArmyView(1287,752,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
+					break;
 					
 				default:
 					exercitos = new ArmyView(0,0,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());

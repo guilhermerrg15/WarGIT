@@ -21,7 +21,7 @@ class ArmyView extends JComponent {
 	Graphics2D g2d;   
 
 	// Quantidade de exércitos "Default" das bolinhas
-	private String qntExercitos = "0"; 
+	private String qntExercitos = "1"; 
 	//OBS : Cor do jogador correspondente à cor do exército
 
 	//Construtor
