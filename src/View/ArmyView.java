@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 class ArmyView extends JComponent {
 
 	//Coordenada x da bolinha
@@ -18,7 +17,7 @@ class ArmyView extends JComponent {
 	// Cor da bolinha
 	private Color cor; 
 
-	//Componente gráfica para o desenho
+	//Componente gráfica para o desenho 
 	Graphics2D g2d;   
 
 	// Quantidade de exércitos "Default" das bolinhas
@@ -33,6 +32,7 @@ class ArmyView extends JComponent {
 		this.qntExercitos = qntExercitos;
 		setBounds(0,0, 660, 660);
 	}
+
 	
 	//Desenha a bolinha
 	void drawPlayer(Graphics g) {
@@ -75,7 +75,6 @@ class ArmyView extends JComponent {
 		return posX;
 	}
 	
-
 	//Altera a coordenada x da bolinha
 	public void setPosX(int posX) {
 		this.posX = posX;
