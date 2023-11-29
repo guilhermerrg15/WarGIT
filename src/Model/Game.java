@@ -22,7 +22,7 @@ class Game implements Observed{
     public boolean initiateGame(){
 
         //Inicializa o tabuleiro
-    	map.Inicializa();
+    	// map.Inicializa();
 
         map.distribuiTerritorios(players);
 

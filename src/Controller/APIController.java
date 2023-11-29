@@ -12,6 +12,12 @@ import java.awt.Color;
 public class APIController {
     public static APIController controller = null;
 
+    private boolean firstRound = true;
+    private int estado = 0;
+    private int continent;
+    private int turn = 0;
+    private boolean podeSalvar = true;
+
     // Instância de APIs
     private ViewAPI view = ViewAPI.getInstance();
     private API api = API.getInstance();
@@ -64,6 +70,46 @@ public class APIController {
     public PlayerColor getCorTerritorio(String t){
         return api.getCorTerritorio(t);
     }
+
+    public void verifyWin() {
+        if (api.verifica_vez_jogador_objetivo()) {
+            view.showWin(api.getNomeJogadorVez(turn));
+        }
+    }
+
+    public void clicouPosicionar(String territory, Integer qtd){
+        if (estado == 0) {
+            this.podeSalvar = true;
+
+            api.placeArmy(estado, territory); //verificar essa func
+            verifyWin();
+            Integer qtdExercitos = api.getQtdExercitosPosic(turn);
+            if(qtdExercitos == 0){
+                if (continent < 6) {
+                    // Atualiza a view para posicionar no próximo continente se for dominado
+                    return;
+                }
+                if (continent == 6) {
+                    // Se já posicionou em todos os continentes, posiciona no resto dos territórios
+                    return;
+                }
+                // Se não tiver mais exércitos para posicionar
+                // Zera contador de continentes
+                continent = 0;
+                if (firstRound) {
+                    // turn = (turn + 1) % api.getQtdPlayers(); 
+                    // Se for a primeira rodada, só pode posicionamento para todos
+                    return;
+                }
+                // Atualiza a view para ataque (implementar codigo embaixo)
+                return;
+            }
+            // Se ainda tiver exércitos para posicionar
+            // apiView.atualizaQtdPosic(qtdEx);
+            return;
+        }
+    }
+
 
     // Singleton
     public static APIController getInstance(){  

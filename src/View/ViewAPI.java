@@ -2,6 +2,9 @@ package View;
 
 import java.awt.Color;
 
+import javax.swing.JOptionPane;
+
+import Controller.APIController;
 import Model.PlayerColor;
 
 // import Controller.TabuleiroObservador;
@@ -38,6 +41,16 @@ public class ViewAPI {
 	public String[] getNomesJogadores(){
 		return nomesJogadores;
 	}
+
+    public void showWin(String nome) {
+
+        JOptionPane.showMessageDialog(null, nome + " ganhou o jogo!", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
+		if (JOptionPane.showConfirmDialog(null, "Deseja continuar jogando?", "Fim de jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			// APIController.getInstance().reiniciarJogo();
+		} else {
+			System.exit(0);
+		}
+    }
 
     // public void initGame() {
     //     new JanelaInicial();

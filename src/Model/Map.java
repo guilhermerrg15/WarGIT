@@ -13,14 +13,15 @@ import java.util.ArrayList;
 class Map {
 	
 	// private Continent[] continents;
-	private List<Continent> continents;
+	private List<Continent> continents = new ArrayList<>();
 	private static Map map = null;
 	private ArrayList<Territory> listaTerritorios = new ArrayList<Territory>();
 	
 	public Map() {
-		this.continents = new ArrayList<>();
+		
 		//nao sei se ta certo
 		initializeContinents();
+		initializeTerritories(continents);
 	}
 
 	//Retorna a instância do tabuleiro
@@ -32,12 +33,12 @@ class Map {
 	}
 
 	//Inicializando o tabuleiro
-	public void Inicializa() {
-		for (Territory t: listaTerritorios) {
-			t.getNeighbours();
-		}
-		initializeContinents();
-	}
+	// public void Inicializa() {
+	// 	for (Territory t: listaTerritorios) {
+	// 		t.getNeighbours();
+	// 	}
+	// 	initializeContinents();
+	// }
 
 	// Inicializando os continentes
     private void initializeContinents() {
@@ -48,6 +49,16 @@ class Map {
         continents.add(createNorthAmerica());
         continents.add(createAfrica());
     }
+
+	private void initializeTerritories(List<Continent> continents) {
+		for ( Continent c : continents) {
+			listaTerritorios.addAll(c.getTerritories());
+		}
+
+		for (Territory t: listaTerritorios) {
+			t.getNeighbours();
+		}
+	}
 
 
 		// Distribui os territórios entre os jogadores, colocando um exército em cada
@@ -177,11 +188,7 @@ class Map {
      */
 	//Retorna o array de territorios
 	public ArrayList<Territory> getTerritoriesList() {
-    ArrayList<Territory> territories = new ArrayList<>();
-    for (Continent continent : continents) {
-        territories.addAll(continent.getTerritories());
-    }
-    return territories;
+    	return listaTerritorios;
 }
 	
 	
