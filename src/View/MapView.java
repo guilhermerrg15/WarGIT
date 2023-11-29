@@ -60,13 +60,8 @@ public class MapView extends JPanel implements Observer{
 
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        setLayout(new FlowLayout(FlowLayout.RIGHT));
-
-        //Cria e adiciona o label do jogador da vez
-        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
-        jogadorDaVezLabel.setForeground(Color.WHITE);
-        // jogadorDaVezLabel.setBounds(640,660,200,30);
-        add(jogadorDaVezLabel);
+        setLayout(new FlowLayout(FlowLayout.LEFT));        
+        
 
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkObjectivesButton);
@@ -84,8 +79,13 @@ public class MapView extends JPanel implements Observer{
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         // buttonPanel.add(cancelButton);
 
+		add(Box.createHorizontalStrut(20));
         add(buttonPanel);
-
+		add(Box.createHorizontalStrut(50));
+        //Cria e adiciona o label do jogador da vez
+        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        jogadorDaVezLabel.setForeground(Color.BLACK);
+        add(jogadorDaVezLabel);
         
     }
 
@@ -124,12 +124,22 @@ public class MapView extends JPanel implements Observer{
         adicionarQuadradoCor();
 	}
 
-    private void adicionarQuadradoCor() {
+	private void adicionarQuadradoCor() {
         JLabel corLabel = new JLabel();
         corLabel.setOpaque(true);
         corLabel.setBackground(getColorFromPlayerColor(corDoJogadorEscolhida));
         corLabel.setPreferredSize(new Dimension(20, 20));
-        add(corLabel);
+    
+        // Adiciona o quadrado de cor à esquerda do jogadorDaVezLabel
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(corLabel, BorderLayout.WEST);
+        panel.add(jogadorDaVezLabel, BorderLayout.CENTER);
+    
+        // Define a posição e tamanho do painel combinado
+        panel.setBounds(10, 660, 300, 30); // Ajuste as coordenadas conforme necessário
+    
+        add(panel);
     }
 
     // Desenha cada bolinha nos territórios
