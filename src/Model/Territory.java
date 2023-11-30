@@ -2,10 +2,8 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Color;
 
 import View.Observer;
-import View.Observed;
 /**
  * Representa um território no jogo War.
  */

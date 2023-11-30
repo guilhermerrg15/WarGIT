@@ -1,12 +1,7 @@
 package Model;
 import View.ViewAPI;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.sql.Array;
 import java.util.*;
-
-import javax.swing.plaf.TreeUI;
 
 // //import Controller.TabuleiroObservador;
 

@@ -1,7 +1,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import View.Observed;
 import View.Observer;
 

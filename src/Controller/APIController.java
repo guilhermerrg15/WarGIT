@@ -1,13 +1,9 @@
 package Controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import Model.API;
 import Model.PlayerColor;
 import View.ViewAPI;
-import java.awt.Color;
 
 public class APIController {
     public static APIController controller = null;
