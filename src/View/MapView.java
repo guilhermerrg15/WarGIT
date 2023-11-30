@@ -122,20 +122,28 @@ public class MapView extends JPanel implements Observer{
         this.g = (Graphics2D) graphic;
 
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
-		if(showObjectiveCard) {
-			this.g.drawImage(objectiveCard, 0, 0, 500, 700, null);
-		}
         jogadorDaVezLabel.setText(jogadorDaVez);
         if(ExercitosNaoCriados) {
 			criaExercitos(g);
 			ExercitosNaoCriados = false;
 		}
 		desenhaExercitos(this.g);
+
+		if(showObjectiveCard) {
+			// Alterar tamanho da carta
+			int cardWidth = 350;
+			int cardHeight = 500;
+
+			// Posicionar carta de objetivo no centro da tela
+			int centerX = (getWidth() - cardWidth) / 2;
+        	int centerY = (getHeight() - cardHeight) / 2;
+			this.g.drawImage(objectiveCard, centerX, centerY, 350, 500, null);
+		}
     }
 
 
 
-    //singleton
+    // Singleton
     public static MapView getMapView() {
         if (MapView == null) {
             MapView = new MapView();
