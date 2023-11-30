@@ -396,16 +396,38 @@ public class MapView extends JPanel implements Observer{
 	}
 
 	// Método para lidar com o clique nas bolinhas
-    private void handleBolinhaClick(int mouseX, int mouseY) {
-        for (Map.Entry<Ellipse2D, String> entry : territoryMapping.entrySet()) {
-            Ellipse2D bolinha = entry.getKey();
-            if (bolinha.contains(mouseX, mouseY)) {
-                String territorioNome = entry.getValue();
-                ViewAPI.getInstance().exibirNomeTerritorio(territorioNome);
-                break;  // Se encontrar o território correspondente, sai do loop
-            }
-        }
-    }
+    // ...
+
+	private void handleBolinhaClick(int mouseX, int mouseY) {
+		for (ArmyView army : armyList) {
+			Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
+			if (bolinha.contains(mouseX, mouseY)) {
+				String territorioNome = territoryMapping.get(bolinha);
+				PlayerColor corDoTerritorio = controller.getCorTerritorio(territorioNome);
+	
+				// ViewAPI.getInstance().exibirNomeTerritorio(territorioNome, corDoTerritorio);
+	
+				// Incrementar o número de exércitos no território ao clicar na bolinha
+				int novoQtdExercitos = Integer.parseInt(army.getQntExercitos()) + 1;
+				controller.incrementarExercitos(territorioNome, 1);
+	
+				// Atualizar a quantidade de exércitos na bolinha
+				army.setQntExercitos(String.valueOf(novoQtdExercitos));
+	
+				// Atualizar a exibição
+				repaint();
+	
+				break;
+			}
+		}
+	}
+	
+	
+
+// ...
+
+
+	
 
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
         switch (playerColor) {

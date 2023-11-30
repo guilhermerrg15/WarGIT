@@ -58,6 +58,12 @@ public class APIController {
         return api.getTerritoriosLista();
     }
 
+    
+     // Método chamado quando ocorre o clique na bolinha
+     public void incrementarExercitos(String territorio, int count) {
+        api.incrementarQntExTerritorio(territorio, count);
+    }
+
     public Integer getQtdExercitos(String t){
         return api.getQntExTerritorio(t);
     }

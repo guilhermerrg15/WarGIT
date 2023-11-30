@@ -24,10 +24,14 @@ public class ViewAPI {
     private ViewAPI() {
     }
 
-    public void exibirNomeTerritorio(String territorioNome) {
-        // Exibe um JOptionPane com o nome do território
-        JOptionPane.showMessageDialog(null, "Território: " + territorioNome, "Informação do Território", JOptionPane.INFORMATION_MESSAGE);
+    public void exibirNomeTerritorio(String territorioNome, PlayerColor corDoTerritorio) {
+        // Converte a cor do território para um formato mais legível
+        String corFormatada = corDoTerritorio.toString().toLowerCase();
+    
+        // Exibe um JOptionPane com o nome e a cor do território
+        JOptionPane.showMessageDialog(null, "Território: " + territorioNome + "\nCor: " + corFormatada, "Informação do Território", JOptionPane.INFORMATION_MESSAGE);
     }
+    
 
     
 
