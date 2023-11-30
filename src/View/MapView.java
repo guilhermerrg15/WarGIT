@@ -61,7 +61,6 @@ public class MapView extends JPanel implements Observer{
     
         try {
 			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
-			objectiveCard = ImageIO.read(new File ("resources/imagens/war_carta_" + descricaoObjetivo + ".png"));
             // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,12 +100,8 @@ public class MapView extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
 				descricaoObjetivo = game.playerObjective();
-                // objective.setText(game.playerObjective());
-                // objective.setFont(new Font("Arial", Font.BOLD, 50));
-                // objective.setForeground(Color.BLACK);
 
-                // add(objective);
-
+				// Pegar imagem da carta de objetivo de acordo com o jogador da vez
 				try {
                     objectiveCard = ImageIO.read(new File("resources/imagens/war_carta_" + descricaoObjetivo + ".png"));
                 } catch (IOException ex) {
@@ -114,7 +109,8 @@ public class MapView extends JPanel implements Observer{
                     // Handle the exception appropriately (e.g., load a default image)
                 }
 
-				showObjectiveCard = true;
+				// Toggle da carta de objetivo
+				showObjectiveCard = !showObjectiveCard;
 				repaint();
             }
         });
