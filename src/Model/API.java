@@ -55,6 +55,7 @@ public class API {
 	}
 
 
+
     public PlayerColor getCorTerritorio(String t) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
@@ -203,6 +204,11 @@ public class API {
 	public boolean verifica_vez_jogador_objetivo() {
 		return game.getPlayers().get(this.turn).getObjective().checkStatus();
 	}
+
+    // public boolean verifyWin(int turn) {
+    //     Player player = game.getJogadorVez(turn);
+    //     return player.getObjective().checkStatus(player);
+    // }
 
     // public boolean verifyWin(int turn) {
     //     Player player = game.getJogadorVez(turn);
