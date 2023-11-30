@@ -404,3 +404,4 @@ public class MapView extends JPanel implements Observer{
     public void notify(Observed o){
     }
 }
+
