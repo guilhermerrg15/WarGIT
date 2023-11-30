@@ -9,8 +9,14 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+
 
 import javax.imageio.ImageIO;
 
@@ -22,7 +28,7 @@ public class MapView extends JPanel implements Observer{
 	JLabel moveTroopsLabel = new JLabel("Alocar Tropas");
 	JComboBox<String> territoryPlacementBox = new JComboBox<String>();
 	JComboBox<String> territoryNumberBox = new JComboBox<String>();
-
+	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
     JButton addArmy = new JButton("Adicionar Exército");
     JButton attackButton = new JButton("Atacar");
     JButton finishButton = new JButton("Finalizar Jogada");
@@ -111,6 +117,13 @@ public class MapView extends JPanel implements Observer{
 				// Toggle da carta de objetivo
 				showObjectiveCard = !showObjectiveCard;
 				repaint();
+            }
+        });
+		
+		addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                handleBolinhaClick(e.getX(), e.getY());
             }
         });
         
@@ -371,14 +384,28 @@ public class MapView extends JPanel implements Observer{
 				default:
 					exercitos = new ArmyView(0,0,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString());
 			
+				
 			}
 			
 			//Desenha o território
             exercitos.drawPlayer(g2d);
 			//Adiciona exército na lista
 			armyList.add(exercitos);
+			territoryMapping.put(new Ellipse2D.Float(exercitos.getPosX(), exercitos.getPosY(), 22, 22), t);
 		}
 	}
+
+	// Método para lidar com o clique nas bolinhas
+    private void handleBolinhaClick(int mouseX, int mouseY) {
+        for (Map.Entry<Ellipse2D, String> entry : territoryMapping.entrySet()) {
+            Ellipse2D bolinha = entry.getKey();
+            if (bolinha.contains(mouseX, mouseY)) {
+                String territorioNome = entry.getValue();
+                ViewAPI.getInstance().exibirNomeTerritorio(territorioNome);
+                break;  // Se encontrar o território correspondente, sai do loop
+            }
+        }
+    }
 
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
         switch (playerColor) {

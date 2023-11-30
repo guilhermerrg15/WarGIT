@@ -24,6 +24,13 @@ public class ViewAPI {
     private ViewAPI() {
     }
 
+    public void exibirNomeTerritorio(String territorioNome) {
+        // Exibe um JOptionPane com o nome do território
+        JOptionPane.showMessageDialog(null, "Território: " + territorioNome, "Informação do Território", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    
+
     public static ViewAPI getInstance() {
         if (apiInstance == null) {
             apiInstance = new ViewAPI();
