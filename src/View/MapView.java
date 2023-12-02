@@ -25,9 +25,7 @@ public class MapView extends JPanel implements Observer{
 
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
     JButton checkCardsButton = new JButton("Ver Cartas de Território");
-	JLabel moveTroopsLabel = new JLabel("Alocar Tropas");
-	JComboBox<String> territoryPlacementBox = new JComboBox<String>();
-	JComboBox<String> territoryNumberBox = new JComboBox<String>();
+	JButton moveTroopsButton = new JButton("Alocar Tropas");
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
     JButton addArmy = new JButton("Adicionar Exército");
     JButton attackButton = new JButton("Atacar");
@@ -35,7 +33,7 @@ public class MapView extends JPanel implements Observer{
     Image backgroundImage;
     Image territoriesImage;
 	Image objectiveCard;
-
+	private boolean modoAlocacaoTropas = false;
     Graphics2D g;
 
     //Jogador da vez e cor do jogador
@@ -76,9 +74,7 @@ public class MapView extends JPanel implements Observer{
         setLayout(new FlowLayout(FlowLayout.LEFT));        
         
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(moveTroopsLabel);
-		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-		buttonPanel.add(territoryPlacementBox);
+        buttonPanel.add(moveTroopsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkObjectivesButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -99,6 +95,17 @@ public class MapView extends JPanel implements Observer{
         jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
         jogadorDaVezLabel.setForeground(Color.BLACK);
         add(jogadorDaVezLabel);
+
+
+		moveTroopsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Trocar o estado do modo de alocação de tropas ao clicar no botão
+                modoAlocacaoTropas = !modoAlocacaoTropas;
+
+                // Lógica adicional, se necessário, quando o botão for clicado
+            }
+        });
 
 		checkObjectivesButton.addActionListener(new ActionListener() {
             // Adicionar ação do botão de ver carta de objetivo do jogador da vez
@@ -173,13 +180,6 @@ public class MapView extends JPanel implements Observer{
 		// this.updatePlacement(territorios);
         // Adiciona o quadrado de cor ao jogadorDaVezLabel
         adicionarQuadradoCor();
-	}
-
-	public void updatePlacement(String[] territories) {
-		territoryPlacementBox.removeAllItems();
-		for (String territory : territories) {
-			territoryPlacementBox.addItem(territory);
-		}
 	}
 
 	private void adicionarQuadradoCor() {
@@ -396,31 +396,46 @@ public class MapView extends JPanel implements Observer{
 	}
 
 	// Método para lidar com o clique nas bolinhas
-    // ...
-
 	private void handleBolinhaClick(int mouseX, int mouseY) {
-		for (ArmyView army : armyList) {
-			Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
-			if (bolinha.contains(mouseX, mouseY)) {
-				String territorioNome = territoryMapping.get(bolinha);
-				PlayerColor corDoTerritorio = controller.getCorTerritorio(territorioNome);
+		if (modoAlocacaoTropas) {
+			for (ArmyView army : armyList) {
+				Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
+				if (bolinha.contains(mouseX, mouseY)) {
+					String territorioNome = territoryMapping.get(bolinha);
+					PlayerColor corDoTerritorio = controller.getCorTerritorio(territorioNome);
 	
-				// ViewAPI.getInstance().exibirNomeTerritorio(territorioNome, corDoTerritorio);
+					// Verificar se a cor do território é igual à cor do jogador
+					if (corDoTerritorio == corDoJogadorEscolhida) {
+						// ViewAPI.getInstance().exibirNomeTerritorio(territorioNome, corDoTerritorio);
 	
-				// Incrementar o número de exércitos no território ao clicar na bolinha
-				int novoQtdExercitos = Integer.parseInt(army.getQntExercitos()) + 1;
-				controller.incrementarExercitos(territorioNome, 1);
+						// Limitar a quantidade de exércitos ao dividir pela metade da quantidade de territórios do jogador
+						int quantidadeMaximaExercitos = controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida) / 2;
 	
-				// Atualizar a quantidade de exércitos na bolinha
-				army.setQntExercitos(String.valueOf(novoQtdExercitos));
+						// Verificar se a quantidade atual não excede a quantidade máxima permitida
+						if (Integer.parseInt(army.getQntExercitos()) < quantidadeMaximaExercitos) {
+							// Incrementar o número de exércitos no território ao clicar na bolinha
+							int novoQtdExercitos = Integer.parseInt(army.getQntExercitos()) + 1;
+							controller.incrementarExercitos(territorioNome, 1);
+							
+							// Atualizar a quantidade de exércitos na bolinha
+							army.setQntExercitos(String.valueOf(novoQtdExercitos));
 	
-				// Atualizar a exibição
-				repaint();
+							// Atualizar a exibição
+							repaint();
+						} else {
+							JOptionPane.showMessageDialog(this, "Você atingiu o limite de exércitos permitidos.");
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Você só pode adicionar exércitos em territórios da sua cor.");
+					}
 	
-				break;
+					break;
+				}
 			}
 		}
 	}
+	
+	
 	
 	
 

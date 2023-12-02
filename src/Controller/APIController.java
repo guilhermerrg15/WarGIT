@@ -13,6 +13,7 @@ public class APIController {
     private int continent;
     private int turn = 0;
     private boolean podeSalvar = true;
+    
 
     // Instância de APIs
     private ViewAPI view = ViewAPI.getInstance();
@@ -47,6 +48,13 @@ public class APIController {
         System.out.println("CLICKED");
         
     }
+
+    // Dentro da classe APIController
+
+    public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
+        return API.getInstance().getQuantidadeTerritoriosJogador(corDoJogador);
+    }
+
 
     // Pegar o nome dos jogadores
     public String[] getNomesJogadores(){

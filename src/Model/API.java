@@ -12,6 +12,7 @@ public class API {
     private Map map;
     private Game game = Game.getInstance();
     private Dado dado;
+    private Player player;
     private ObjectiveCardDeck objectiveDeck;
     private ArrayList<Player> players;
     public int turn;
@@ -24,12 +25,35 @@ public class API {
         // players = new ArrayList<>();
     }
 
+    // Dentro da classe API ou APIController
+
+// Método para obter a quantidade de territórios de um jogador específico
+    public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
+        int quantidadeTerritorios = 0;
+
+        // Obtém a lista de territórios do objeto Map
+        List<Territory> territories = map.getTerritoriesList();
+
+        // Percorre a lista de territórios
+        for (Territory territory : territories) {
+            // Verifica se o território pertence ao jogador da cor específica
+            if (territory.getOwner().getColor() == corDoJogador) {
+                quantidadeTerritorios++;
+            }
+        }
+        return quantidadeTerritorios;
+    }
+
     // Singleton
     public static API getInstance() {
         if (apiInstance == null) {
             apiInstance = new API();
         }
         return apiInstance;
+    }
+
+    public int getPlayerTerritoryNumber() {
+        return player.getTerritoryNumber();
     }
 
     // Retornar todos os jogadores
