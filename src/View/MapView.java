@@ -25,15 +25,15 @@ public class MapView extends JPanel implements Observer{
 
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
     JButton checkCardsButton = new JButton("Ver Cartas de Território");
-	JButton moveTroopsButton = new JButton("Alocar Tropas");
+	JButton addArmyButton  = new JButton("Adicionar Tropas");
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
-    JButton addArmy = new JButton("Adicionar Exército");
     JButton attackButton = new JButton("Atacar");
+	JButton  moveArmyButton= new JButton("Realocar Tropas");
     JButton finishButton = new JButton("Finalizar Jogada");
     Image backgroundImage;
     Image territoriesImage;
 	Image objectiveCard;
-	private boolean modoAlocacaoTropas = false;
+	private boolean modoAddTropas = false;
     Graphics2D g;
 
     //Jogador da vez e cor do jogador
@@ -74,13 +74,13 @@ public class MapView extends JPanel implements Observer{
         setLayout(new FlowLayout(FlowLayout.LEFT));        
         
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(moveTroopsButton);
+        buttonPanel.add(addArmyButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkObjectivesButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(addArmy);
+        buttonPanel.add(moveArmyButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(attackButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -97,11 +97,11 @@ public class MapView extends JPanel implements Observer{
         add(jogadorDaVezLabel);
 
 
-		moveTroopsButton.addActionListener(new ActionListener() {
+		addArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Trocar o estado do modo de alocação de tropas ao clicar no botão
-                modoAlocacaoTropas = !modoAlocacaoTropas;
+                modoAddTropas = !modoAddTropas;
 
                 // Lógica adicional, se necessário, quando o botão for clicado
             }
@@ -395,53 +395,70 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-	// Método para lidar com o clique nas bolinhas
+
+	
 	private void handleBolinhaClick(int mouseX, int mouseY) {
-		if (modoAlocacaoTropas) {
+		if (modoAddTropas) {
+			// Restaurar quantidade original no início do loop
+			int quantidadeOriginal = 0;
+
+			// Calcular a quantidade máxima de exércitos permitidos
+			int quantidadeMaximaExercitos = controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida) / 2;
+
+				// Calcular a soma atual de exércitos em todos os territórios do jogador menos a quantidade de território pois todos os territórios começam com 1
+			int somaAtualExercitos = -controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida);
 			for (ArmyView army : armyList) {
-				Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
-				if (bolinha.contains(mouseX, mouseY)) {
-					String territorioNome = territoryMapping.get(bolinha);
-					PlayerColor corDoTerritorio = controller.getCorTerritorio(territorioNome);
-	
-					// Verificar se a cor do território é igual à cor do jogador
-					if (corDoTerritorio == corDoJogadorEscolhida) {
-						// ViewAPI.getInstance().exibirNomeTerritorio(territorioNome, corDoTerritorio);
-	
-						// Limitar a quantidade de exércitos ao dividir pela metade da quantidade de territórios do jogador
-						int quantidadeMaximaExercitos = controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida) / 2;
-	
-						// Verificar se a quantidade atual não excede a quantidade máxima permitida
-						if (Integer.parseInt(army.getQntExercitos()) < quantidadeMaximaExercitos) {
-							// Incrementar o número de exércitos no território ao clicar na bolinha
-							int novoQtdExercitos = Integer.parseInt(army.getQntExercitos()) + 1;
-							controller.incrementarExercitos(territorioNome, 1);
-							
-							// Atualizar a quantidade de exércitos na bolinha
-							army.setQntExercitos(String.valueOf(novoQtdExercitos));
-	
-							// Atualizar a exibição
-							repaint();
-						} else {
-							JOptionPane.showMessageDialog(this, "Você atingiu o limite de exércitos permitidos.");
-						}
-					} else {
-						JOptionPane.showMessageDialog(this, "Você só pode adicionar exércitos em territórios da sua cor.");
-					}
-	
-					break;
+				if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
+					somaAtualExercitos += Integer.parseInt(army.getQntExercitos());
 				}
 			}
+
+			// Verificar se a soma atual não excede a quantidade máxima permitida
+			if (somaAtualExercitos < quantidadeMaximaExercitos) {
+				for (ArmyView army : armyList) {
+					Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
+					if (bolinha.contains(mouseX, mouseY)) {
+						String territorioNome = territoryMapping.get(bolinha);
+						PlayerColor corDoTerritorio = controller.getCorTerritorio(territorioNome);
+
+						// Verificar se a cor do território é igual à cor do jogador
+						if (corDoTerritorio == corDoJogadorEscolhida) {
+							// Salvar a quantidade original antes de incrementar
+							quantidadeOriginal = Integer.parseInt(army.getQntExercitos());
+
+							// Incrementar o número de exércitos no território ao clicar na bolinha
+							int novoQtdExercitos = quantidadeOriginal + 1;
+							controller.incrementarExercitos(territorioNome, 1);
+
+							// Atualizar a quantidade de exércitos na bolinha
+							army.setQntExercitos(String.valueOf(novoQtdExercitos));
+
+							// Atualizar a exibição
+							repaint();
+							break;
+						} else {
+							JOptionPane.showMessageDialog(this, "Você só pode adicionar exércitos em territórios da sua cor.");
+							break;
+						}
+					}
+				}
+			} else {
+				for (ArmyView army : armyList) {
+					Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
+					if (bolinha.contains(mouseX, mouseY)) {
+						army.setQntExercitos(String.valueOf(quantidadeOriginal));
+						break;
+					}
+				}
+			}
+			// Imprimir a quantidade total de exércitos após adicionar em diferentes territórios
+			int quantidadeTotalExercitos = 0;
+			for (ArmyView army : armyList) {
+				quantidadeTotalExercitos += Integer.parseInt(army.getQntExercitos());
+			}
+			System.out.println("Quantidade total de exércitos: " + quantidadeTotalExercitos);
 		}
 	}
-	
-	
-	
-	
-
-// ...
-
-
 	
 
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
