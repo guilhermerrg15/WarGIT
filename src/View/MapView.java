@@ -112,7 +112,7 @@ public class MapView extends JPanel implements Observer{
             // Adicionar ação do botão de ver carta de objetivo do jogador da vez
             @Override
             public void actionPerformed(ActionEvent e) {
-				descricaoObjetivo = game.playerObjective();
+				descricaoObjetivo = game.playerObjective(jogadorDaVez);
 
 				// Pegar imagem da carta de objetivo de acordo com o jogador da vez
 				try {

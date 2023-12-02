@@ -164,7 +164,12 @@ public class API {
     }
 
     // Pegar carta de objetivo do jogador
-    public String playerObjective() {
+    public String playerObjective(String name) {
+        for(Player player : game.getPlayers()){
+            if(player.getName() == name) {
+                return player.getObjectiveName();
+            }
+        }
         return game.getPlayers().get(this.turn).getObjectiveName();
     }
 
