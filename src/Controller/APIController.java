@@ -118,6 +118,16 @@ public class APIController {
         }
     }
 
+    public void clicouFinalizarJogada() {
+        if (firstRound) {
+            turn = (turn + 1) % api.getNumPlayers();
+            view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+
+            if (turn == 0){
+                firstRound = false;
+            }
+        }
+    }
 
     // Singleton
     public static APIController getInstance(){  

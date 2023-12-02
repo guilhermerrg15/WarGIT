@@ -44,6 +44,8 @@ public class API {
         return quantidadeTerritorios;
     }
 
+
+
     // Singleton
     public static API getInstance() {
         if (apiInstance == null) {
@@ -59,6 +61,11 @@ public class API {
     // Retornar todos os jogadores
     public ArrayList<Player> getAllPlayers() {
         return this.game.getPlayers();
+    }
+
+    // Método que retorna a quantidade de jogadores
+    public int getNumPlayers(){
+        return game.getPlayers().size();
     }
 
      // Retorna lista de nomes de territórios
@@ -186,9 +193,9 @@ public class API {
     }
 
     // Pegar o nome do jogador
-    public String playerName() { 
-       return game.getPlayers().get(this.turn).getName();
-    }
+    // public String playerName() { 
+    //    return game.getPlayers().get(this.turn).getName();
+    // }
 
     // Pegar o nome do jogador da vez
     public String getNomeJogadorVez(int i){

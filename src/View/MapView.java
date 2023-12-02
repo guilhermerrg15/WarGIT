@@ -35,6 +35,7 @@ public class MapView extends JPanel implements Observer{
 	Image objectiveCard;
 	private boolean modoAddTropas = false;
     Graphics2D g;
+	JLabel corLabel = new JLabel();
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -126,6 +127,13 @@ public class MapView extends JPanel implements Observer{
 				repaint();
             }
         });
+
+		//Adiciona ação ao clicar no botão de finalizar jogada
+		finishButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.clicouFinalizarJogada();
+			}
+		});
 		
 		addMouseListener(new MouseAdapter() {
             @Override
@@ -172,8 +180,6 @@ public class MapView extends JPanel implements Observer{
 
     // Atualiza view no início da rodada de posicionamento para determinar o primeiro jogador
 	public void determinaPrimeiroJogador(String jogadorDaVez, PlayerColor corDoJogador){
-		// Adicionar frase "Primeiro jogador: NOME - COR"
-		// Adicionar descrição do objetivo em cima da carta
 		// NÃO IMPRIMIR AINDA, SÓ ADD PARA IMPRIMIR AO CHAMAR O DRAWCOMPONENT DO MAINFRAME
 		this.jogadorDaVez = jogadorDaVez;
         this.corDoJogadorEscolhida = corDoJogador;
@@ -182,8 +188,20 @@ public class MapView extends JPanel implements Observer{
         adicionarQuadradoCor();
 	}
 
+	// Muda o jogador da vez na view
+	public void mudaJogador(String nome, PlayerColor cor){
+		// Muda informações da view relacionadas ao jogador da vez
+		this.jogadorDaVez = nome;
+		this.corDoJogadorEscolhida = cor;
+		// this.descricaoObjetivo = descricaoObj;
+		// this.cartas = cartas;
+		
+		adicionarQuadradoCor();
+		repaint();
+	}
+
 	private void adicionarQuadradoCor() {
-        JLabel corLabel = new JLabel();
+        
         corLabel.setOpaque(true);
         corLabel.setBackground(getColorFromPlayerColor(corDoJogadorEscolhida));
         corLabel.setPreferredSize(new Dimension(20, 20));

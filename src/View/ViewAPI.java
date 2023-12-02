@@ -10,6 +10,7 @@ import Model.PlayerColor;
 public class ViewAPI {
     private static ViewAPI apiInstance = null;
     private String imagesPath = "resources/imagens";
+
     // Array de nomes dos jogadores
 	String[] nomesJogadores = new String[6];
 
@@ -19,6 +20,10 @@ public class ViewAPI {
     // Pegar primeiro jogador
     public void determinaPrimeiroJogador(String nome, PlayerColor cor){
 		MapView.getMapView().determinaPrimeiroJogador(nome, cor);
+	}
+    //Muda o jogador atual
+	public void mudaJogador(String jogador, PlayerColor cor){
+		MapView.getMapView().mudaJogador(jogador, cor);
 	}
 
     private ViewAPI() {
