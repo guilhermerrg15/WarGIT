@@ -49,8 +49,6 @@ public class APIController {
         
     }
 
-    // Dentro da classe APIController
-
     public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
         return API.getInstance().getQuantidadeTerritoriosJogador(corDoJogador);
     }

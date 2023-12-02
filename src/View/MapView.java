@@ -412,6 +412,7 @@ public class MapView extends JPanel implements Observer{
 					somaAtualExercitos += Integer.parseInt(army.getQntExercitos());
 				}
 			}
+			System.out.println("Quantidade soma: " + somaAtualExercitos);
 
 			// Verificar se a soma atual não excede a quantidade máxima permitida
 			if (somaAtualExercitos < quantidadeMaximaExercitos) {
