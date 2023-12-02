@@ -34,7 +34,7 @@ public class APIController {
             // cont++;
         }
         if(api.startGame()) {
-            view.determinaPrimeiroJogador(api.getNomeJogadorVez(0), api.playerColor());
+            view.determinaPrimeiroJogador(api.getNomeJogadorVez(0), api.getCorJogadorVez(0));
             return true;
         }
 
