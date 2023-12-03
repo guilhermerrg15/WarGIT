@@ -36,6 +36,7 @@ public class MapView extends JPanel implements Observer{
 	private boolean modoAddTropas = false;
     Graphics2D g;
 	JLabel corLabel = new JLabel();
+	
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -88,6 +89,7 @@ public class MapView extends JPanel implements Observer{
         buttonPanel.add(finishButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         // buttonPanel.add(cancelButton);
+
 
 		add(Box.createHorizontalStrut(20));
         add(buttonPanel);
@@ -470,14 +472,19 @@ public class MapView extends JPanel implements Observer{
 					}
 				}
 			}
+
+			
 			// Imprimir a quantidade total de exércitos após adicionar em diferentes territórios
 			int quantidadeTotalExercitos = 0;
 			for (ArmyView army : armyList) {
-				quantidadeTotalExercitos += Integer.parseInt(army.getQntExercitos());
+				if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
+					quantidadeTotalExercitos += Integer.parseInt(army.getQntExercitos());
+				}
 			}
 			System.out.println("Quantidade total de exércitos: " + quantidadeTotalExercitos);
 		}
 	}
+
 	
 
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
