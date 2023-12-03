@@ -110,6 +110,13 @@ public class MapView extends JPanel implements Observer{
             }
         });
 
+		addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                handleBolinhaClick(e.getX(), e.getY());
+            }
+        });
+
 		checkObjectivesButton.addActionListener(new ActionListener() {
             // Adicionar ação do botão de ver carta de objetivo do jogador da vez
             @Override
@@ -137,12 +144,7 @@ public class MapView extends JPanel implements Observer{
 			}
 		});
 		
-		addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                handleBolinhaClick(e.getX(), e.getY());
-            }
-        });
+		
         
     }
 
@@ -429,6 +431,7 @@ public class MapView extends JPanel implements Observer{
 			int somaAtualExercitos = -controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida);
 			for (ArmyView army : armyList) {
 				if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
+					// acho que o problema esta aqui de não conseguir adicionar exercito depois da primeira drodada 
 					somaAtualExercitos += Integer.parseInt(army.getQntExercitos());
 				}
 			}
