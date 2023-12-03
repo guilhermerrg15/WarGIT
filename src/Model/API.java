@@ -25,9 +25,16 @@ public class API {
         // players = new ArrayList<>();
     }
 
-    // Dentro da classe API ou APIController
+    // Singleton
+    public static API getInstance() {
+        if (apiInstance == null) {
+            apiInstance = new API();
+        }
+        return apiInstance;
+    }
 
-// Método para obter a quantidade de territórios de um jogador específico
+
+    // Método para obter a quantidade de territórios de um jogador específico
     public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
         int quantidadeTerritorios = 0;
 
@@ -44,19 +51,7 @@ public class API {
         return quantidadeTerritorios;
     }
 
-
-
-    // Singleton
-    public static API getInstance() {
-        if (apiInstance == null) {
-            apiInstance = new API();
-        }
-        return apiInstance;
-    }
-
-    public int getPlayerTerritoryNumber() {
-        return player.getTerritoryNumber();
-    }
+    
 
     // Retornar todos os jogadores
     public ArrayList<Player> getAllPlayers() {
@@ -80,8 +75,6 @@ public class API {
 		return terr;
 	}
 
-
-
     public PlayerColor getCorTerritorio(String t) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
@@ -97,8 +90,6 @@ public class API {
         // Retorna null se o território não for encontrado
         return null;
     }
-
-
 
     // Retorna quantidade de exércitos que tem em um território
     public Integer getQntExTerritorio(String territorio) {
@@ -133,8 +124,6 @@ public class API {
         }
     }
 
-
-
     public String[] getNomesJogadores() {
     	String[] nomes = new String[getAllPlayers().size()];
     	int cont = 0;
@@ -145,18 +134,11 @@ public class API {
     	return nomes;
     }
     
-    public Map getMap() {
-        return map;
-    }
-    
     public Map initMap() {
         Map map = Map.getMap();
         return map;
     }
-    // Iniciar jogo
-    // public boolean startGame() {
-    //     return game.initiateGame();
-    // }
+    
     public boolean startGame() {
         boolean r = game.initiateGame();
         game.add(viewInstance.getObserver());
@@ -187,20 +169,11 @@ public class API {
         return game.getPlayers().get(this.turn).getConqueredTerritories();
     }
 
-//    public void addObserver(TabuleiroObservador observer) {
-//        game.addObserver(observer);
-//    }
-
     // Adicionar jogadores
     public boolean addPlayer(String name, PlayerColor color) {
         Player player = new Player(name, color);
         return game.addPlayer(player);
     }
-
-    // Pegar o nome do jogador
-    // public String playerName() { 
-    //    return game.getPlayers().get(this.turn).getName();
-    // }
 
     // Pegar o nome do jogador da vez
     public String getNomeJogadorVez(int i){
@@ -212,15 +185,11 @@ public class API {
     }
 
 
-    // Pegar a cor do jogador
-    public PlayerColor playerColor() {
-		return game.getPlayers().get(this.turn).getColor();
-	}
 
-    // Pegar quantidade de exércitos de um território
-    public int retrieveTerritoryArmies(Territory territory) {
-        return territory.getArmies();
-    }
+    // // Pegar quantidade de exércitos de um território
+    // public int retrieveTerritoryArmies(Territory territory) {
+    //     return territory.getArmies();
+    // }
 
     // Pegar todos os territórios vizinhos de um dado território
     public List<String> retrieveNeighbours(Territory territory) {
@@ -274,14 +243,14 @@ public class API {
         return game.getPlayers().get(this.turn).verifyTerritory(territory);
     }
 
-    public void nextPlayer() {
-        this.turn++;
-        if(this.turn >= this.game.getPlayers().size())this.turn = 0;
-        while(game.getPlayers().get(this.turn).verifyDestroyed()) {
-            this.turn++;
-            if(this.turn >= this.game.getPlayers().size())this.turn = 0;
-        }
-    }
+    // public void nextPlayer() {
+    //     this.turn++;
+    //     if(this.turn >= this.game.getPlayers().size())this.turn = 0;
+    //     while(game.getPlayers().get(this.turn).verifyDestroyed()) {
+    //         this.turn++;
+    //         if(this.turn >= this.game.getPlayers().size())this.turn = 0;
+    //     }
+    // }
 
     public int getQtdExercitosPosic(int turn) {
         return game.getJogadorVez(turn).getArmies();
@@ -449,13 +418,34 @@ public class API {
     }
 
 
+// Pegar a cor do jogador
+// public PlayerColor playerColor() {
+// 	return game.getPlayers().get(this.turn).getColor();
+// }
+
+// Pegar o nome do jogador
+// public String playerName() { 
+//    return game.getPlayers().get(this.turn).getName();
+// }
+
+//    public void addObserver(TabuleiroObservador observer) {
+//        game.addObserver(observer);
+//    }
+
+// Iniciar jogo
+// public boolean startGame() {
+//     return game.initiateGame();
+// }
+
+    
+// public Map getMap() {
+//     return map;
+// }
 
 
-
-
-
-
-
+// public int getPlayerTerritoryNumber() {
+    //     return player.getTerritoryNumber();
+    // }
 
     
 //    public void reset_all() {
@@ -556,6 +546,7 @@ public class API {
 	// public static TerritoryCard[] getCartasTerritorio() {
 	// 	return cartasTerritorio;
 	// }
+
 
 
 }
