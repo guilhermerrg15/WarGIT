@@ -25,11 +25,12 @@ public class MapView extends JPanel implements Observer{
 
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
     JButton checkCardsButton = new JButton("Ver Cartas de Território");
-	JButton addArmyButton  = new JButton("Adicionar Tropas");
+	JButton placeArmyButton  = new JButton("Posicionar Tropas");
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
     JButton attackButton = new JButton("Atacar");
-	JButton  moveArmyButton= new JButton("Realocar Tropas");
+	JButton moveArmyButton= new JButton("Realocar Tropas");
     JButton finishButton = new JButton("Finalizar Jogada");
+	JButton saveButton = new JButton("Salvar Jogo");
     Image backgroundImage;
     Image territoriesImage;
 	Image objectiveCard;
@@ -75,8 +76,9 @@ public class MapView extends JPanel implements Observer{
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.LEFT));        
         
+		buttonPanel.add(saveButton);
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(addArmyButton);
+        buttonPanel.add(placeArmyButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkObjectivesButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -100,15 +102,16 @@ public class MapView extends JPanel implements Observer{
         add(jogadorDaVezLabel);
 
 
-		addArmyButton.addActionListener(new ActionListener() {
+		placeArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Trocar o estado do modo de alocação de tropas ao clicar no botão
                 modoAddTropas = !modoAddTropas;
-
+				
                 // Lógica adicional, se necessário, quando o botão for clicado
             }
         });
+
 
 		addMouseListener(new MouseAdapter() {
             @Override
@@ -418,7 +421,7 @@ public class MapView extends JPanel implements Observer{
 	}
 
 
-	
+	// fazer uma logica aqui para se o numero de exercitos chegar no máximo, trocar de jogador
 	private void handleBolinhaClick(int mouseX, int mouseY) {
 		if (modoAddTropas) {
 			// Restaurar quantidade original no início do loop

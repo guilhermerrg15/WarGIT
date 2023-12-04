@@ -37,7 +37,28 @@ public class ViewAPI {
         JOptionPane.showMessageDialog(null, "Território: " + territorioNome + "\nCor: " + corFormatada, "Informação do Território", JOptionPane.INFORMATION_MESSAGE);
     }
     
+    public void iniciaNovaRodada(int round) {
+        // Exibe uma mensagem informando o início de uma nova rodada
+        JOptionPane.showMessageDialog(null, "Início da Rodada " + round, "Nova Rodada", JOptionPane.INFORMATION_MESSAGE);
 
+        // Adicione aqui qualquer lógica específica que você deseja executar no início de uma nova rodada na interface gráfica.
+        // Isso pode incluir atualizações visuais, reinicialização de contadores, etc.
+    }
+    public void iniciaAtaque(int round) {
+        // Exibe uma mensagem informando o início de uma nova rodada
+        JOptionPane.showMessageDialog(null, "Ataque " + round, "Nova Rodada", JOptionPane.INFORMATION_MESSAGE);
+
+        // Adicione aqui qualquer lógica específica que você deseja executar no início de uma nova rodada na interface gráfica.
+        // Isso pode incluir atualizações visuais, reinicialização de contadores, etc.
+    }
+
+    public void iniciaRealocacao() {
+        // Exibe uma mensagem informando o início da fase de realocação
+        JOptionPane.showMessageDialog(null, "Início da Fase de Realocação", "Realocação", JOptionPane.INFORMATION_MESSAGE);
+
+        // Adicione aqui qualquer lógica específica que você deseja executar no início da fase de realocação na interface gráfica.
+        // Isso pode incluir atualizações visuais, instruções para o jogador, etc.
+    }
     
 
     public static ViewAPI getInstance() {
