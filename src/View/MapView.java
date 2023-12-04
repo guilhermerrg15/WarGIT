@@ -28,9 +28,6 @@ public class MapView extends JPanel implements Observer{
 	JButton placeArmyButton  = new JButton("Posicionar Tropas");
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
 	JButton continuarButton = new JButton("Continuar");
-    JButton attackButton = new JButton("Atacar");
-	JButton moveArmyButton= new JButton("Realocar Tropas");
-    JButton finishButton = new JButton("Finalizar Rodada");
 	JButton saveButton = new JButton("Salvar Jogo");
     Image backgroundImage;
     Image territoriesImage;
@@ -66,32 +63,20 @@ public class MapView extends JPanel implements Observer{
         // setLayout(new BorderLayout());
         setLayout(null);
     
-        try {
-			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
-            // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+      	continuarButton.setBounds(1250,535,200,30);
+		add(continuarButton);
 
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        setLayout(new FlowLayout(FlowLayout.LEFT));        
-        
+        setLayout(new FlowLayout(FlowLayout.LEFT));  
+		
 		buttonPanel.add(saveButton);
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(placeArmyButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-		buttonPanel.add(continuarButton);
-		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		buttonPanel.add(checkObjectivesButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(moveArmyButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(attackButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(finishButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         // buttonPanel.add(cancelButton);
 
@@ -104,14 +89,14 @@ public class MapView extends JPanel implements Observer{
         jogadorDaVezLabel.setForeground(Color.BLACK);
         add(jogadorDaVezLabel);
 
+		
+		
 
 		placeArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Trocar o estado do modo de alocação de tropas ao clicar no botão
                 modoAddTropas = true;
-				
-                // Lógica adicional, se necessário, quando o botão for clicado
             }
         });
 
@@ -159,6 +144,13 @@ public class MapView extends JPanel implements Observer{
 				
 		// 	}
 		// });
+
+		try {
+			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
+            // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 		
 		
