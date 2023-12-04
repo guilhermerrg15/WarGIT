@@ -27,9 +27,10 @@ public class MapView extends JPanel implements Observer{
     JButton checkCardsButton = new JButton("Ver Cartas de Território");
 	JButton placeArmyButton  = new JButton("Posicionar Tropas");
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
+	JButton continuarButton = new JButton("Continuar");
     JButton attackButton = new JButton("Atacar");
 	JButton moveArmyButton= new JButton("Realocar Tropas");
-    JButton finishButton = new JButton("Finalizar Jogada");
+    JButton finishButton = new JButton("Finalizar Rodada");
 	JButton saveButton = new JButton("Salvar Jogo");
     Image backgroundImage;
     Image territoriesImage;
@@ -80,7 +81,9 @@ public class MapView extends JPanel implements Observer{
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(placeArmyButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonPanel.add(checkObjectivesButton);
+		buttonPanel.add(continuarButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		buttonPanel.add(checkObjectivesButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -120,6 +123,14 @@ public class MapView extends JPanel implements Observer{
             }
         });
 
+		continuarButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.clicouContinuar();
+			}
+		});
+		
+
 		checkObjectivesButton.addActionListener(new ActionListener() {
             // Adicionar ação do botão de ver carta de objetivo do jogador da vez
             @Override
@@ -140,12 +151,14 @@ public class MapView extends JPanel implements Observer{
             }
         });
 
-		//Adiciona ação ao clicar no botão de finalizar jogada
-		finishButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.clicouFinalizarJogada();
-			}
-		});
+		//Adiciona ação ao clicar no botão de finalizar rodada
+		// finishButton.addActionListener(new ActionListener() {
+		// 	public void actionPerformed(ActionEvent e) {
+		// 		controller.clicouFinalizarJogada();
+				
+		// 	}
+		// });
+
 		
 		
         
@@ -162,6 +175,14 @@ public class MapView extends JPanel implements Observer{
 			ExercitosNaoCriados = false;
 		}
 		desenhaExercitos(this.g);
+
+		if (modoAddTropas) {
+			// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
+			continuarButton.setVisible(true);
+		} else {
+			// Se o modoAddTropas for falso, esconde o botão "Continuar"
+			continuarButton.setVisible(false);
+		}
 
 		if(showObjectiveCard) {
 			// Alterar tamanho da carta

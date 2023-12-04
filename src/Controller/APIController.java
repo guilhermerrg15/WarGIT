@@ -136,53 +136,64 @@ public class APIController {
     //     }
     // }
 
-    public void clicouFinalizarJogada() {
-        // Verifica se é a primeira rodada
+    public void clicouContinuar() {
         if (firstRound) {
-            // Muda para o próximo jogador na primeira rodada
             turn = (turn + 1) % api.getNumPlayers();
             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-    
-            // Se todos os jogadores já posicionaram na primeira rodada, inicia a segunda rodada
-            if (turn == 0) {
+
+            if (turn == 0){
                 firstRound = false;
-                state = STATE_POSICIONAMENTO;  // Inicia a segunda rodada de posicionamento
-                view.iniciaNovaRodada(turn + 1);
-            }
-        } else {
-            if (state == STATE_POSICIONAMENTO) {
-                // Muda para o próximo jogador na fase de posicionamento
-                turn = (turn + 1) % api.getNumPlayers();
-                view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-    
-                // Se todos os jogadores posicionaram na rodada atual, inicia o estado de ataque
-                if (turn == 0) {
-                    state = STATE_ATAQUE;
-                    view.iniciaAtaque(currentRound);  // Inicia a rodada de ataques
-                }
-            } else if (state == STATE_ATAQUE) {
-                // Muda para o próximo jogador na fase de ataque
-                turn = (turn + 1) % api.getNumPlayers();
-                view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-    
-                // Se todos os jogadores realizaram os ataques, inicia o estado de realocação
-                if (turn == 0) {
-                    state = STATE_REALOCACAO;
-                    view.iniciaRealocacao();
-                }
-            } else if (state == STATE_REALOCACAO) {
-                // Muda para o próximo jogador na fase de realocação
-                turn = (turn + 1) % api.getNumPlayers();
-                view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-    
-                // Se todos os jogadores realizaram a realocação, inicia uma nova rodada de posicionamento
-                if (turn == 0) {
-                    state = STATE_POSICIONAMENTO;
-                    view.iniciaNovaRodada(turn + 1);
-                }
             }
         }
     }
+
+    // public void clicouFinalizarJogada() {
+    //     // Verifica se é a primeira rodada
+    //     if (firstRound) {
+    //         // Muda para o próximo jogador na primeira rodada
+    //         turn = (turn + 1) % api.getNumPlayers();
+    //         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+    
+    //         // Se todos os jogadores já posicionaram na primeira rodada, inicia a segunda rodada
+    //         if (turn == 0) {
+    //             firstRound = false;
+    //             state = STATE_POSICIONAMENTO;  // Inicia a segunda rodada de posicionamento
+    //             view.iniciaNovaRodada(turn + 1);
+    //         }
+    //     } else {
+    //         if (state == STATE_POSICIONAMENTO) {
+    //             // Muda para o próximo jogador na fase de posicionamento
+    //             turn = (turn + 1) % api.getNumPlayers();
+    //             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+    
+    //             // Se todos os jogadores posicionaram na rodada atual, inicia o estado de ataque
+    //             if (turn == 0) {
+    //                 state = STATE_ATAQUE;
+    //                 view.iniciaAtaque(currentRound);  // Inicia a rodada de ataques
+    //             }
+    //         } else if (state == STATE_ATAQUE) {
+    //             // Muda para o próximo jogador na fase de ataque
+    //             turn = (turn + 1) % api.getNumPlayers();
+    //             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+    
+    //             // Se todos os jogadores realizaram os ataques, inicia o estado de realocação
+    //             if (turn == 0) {
+    //                 state = STATE_REALOCACAO;
+    //                 view.iniciaRealocacao();
+    //             }
+    //         } else if (state == STATE_REALOCACAO) {
+    //             // Muda para o próximo jogador na fase de realocação
+    //             turn = (turn + 1) % api.getNumPlayers();
+    //             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+    
+    //             // Se todos os jogadores realizaram a realocação, inicia uma nova rodada de posicionamento
+    //             if (turn == 0) {
+    //                 state = STATE_POSICIONAMENTO;
+    //                 view.iniciaNovaRodada(turn + 1);
+    //             }
+    //         }
+    //     }
+    // }
     
     
     
