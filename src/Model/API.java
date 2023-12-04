@@ -238,7 +238,7 @@ public class API {
     public boolean placeArmy(int army, String territory) {
         return game.getPlayers().get(this.turn).placeArmy(army, territory);
     }
-
+//
     // Adicionar exércitos em território da posse do jogador
     public void getPlayerAddArmy(String territory) {
         Player player = game.getPlayers().get(this.turn);
