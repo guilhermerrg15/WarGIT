@@ -109,7 +109,7 @@ public class MapView extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Trocar o estado do modo de alocação de tropas ao clicar no botão
-                modoAddTropas = !modoAddTropas;
+                modoAddTropas = true;
 				
                 // Lógica adicional, se necessário, quando o botão for clicado
             }
@@ -126,6 +126,7 @@ public class MapView extends JPanel implements Observer{
 		continuarButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				modoAddTropas = false;
 				controller.clicouContinuar();
 			}
 		});
