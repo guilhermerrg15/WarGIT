@@ -184,12 +184,10 @@ public class API {
         return game.getJogadorVez(i).getColor();
     }
 
-
-
-    // // Pegar quantidade de exércitos de um território
-    // public int retrieveTerritoryArmies(Territory territory) {
-    //     return territory.getArmies();
-    // }
+    // Pegar quantidade de exércitos de um território
+    public int retrieveTerritoryArmies(Territory territory) {
+        return territory.getArmies();
+    }
 
     // Pegar todos os territórios vizinhos de um dado território
     public List<String> retrieveNeighbours(Territory territory) {
@@ -225,16 +223,6 @@ public class API {
 		return game.getPlayers().get(this.turn).getObjective().checkStatus();
 	}
 
-    // public boolean verifyWin(int turn) {
-    //     Player player = game.getJogadorVez(turn);
-    //     return player.getObjective().checkStatus(player);
-    // }
-
-    // public boolean verifyWin(int turn) {
-    //     Player player = game.getJogadorVez(turn);
-    //     return player.getObjective().checkStatus(player);
-    // }
-
     public boolean checkPlayerTerritoryBorder(String territory, String border) {
         return game.getPlayers().get(this.turn).checkBorder(territory, border);
     }
@@ -242,15 +230,6 @@ public class API {
     public boolean checkPlayerTerritory(String territory) {
         return game.getPlayers().get(this.turn).verifyTerritory(territory);
     }
-
-    // public void nextPlayer() {
-    //     this.turn++;
-    //     if(this.turn >= this.game.getPlayers().size())this.turn = 0;
-    //     while(game.getPlayers().get(this.turn).verifyDestroyed()) {
-    //         this.turn++;
-    //         if(this.turn >= this.game.getPlayers().size())this.turn = 0;
-    //     }
-    // }
 
     public int getQtdExercitosPosic(int turn) {
         return game.getJogadorVez(turn).getArmies();
@@ -417,6 +396,26 @@ public class API {
         }
     }
 
+
+
+// public void nextPlayer() {
+//     this.turn++;
+//     if(this.turn >= this.game.getPlayers().size())this.turn = 0;
+//     while(game.getPlayers().get(this.turn).verifyDestroyed()) {
+//         this.turn++;
+//         if(this.turn >= this.game.getPlayers().size())this.turn = 0;
+//     }
+// }
+
+// public boolean verifyWin(int turn) {
+    //     Player player = game.getJogadorVez(turn);
+    //     return player.getObjective().checkStatus(player);
+    // }
+
+    // public boolean verifyWin(int turn) {
+    //     Player player = game.getJogadorVez(turn);
+    //     return player.getObjective().checkStatus(player);
+    // }
 
 // Pegar a cor do jogador
 // public PlayerColor playerColor() {

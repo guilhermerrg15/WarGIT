@@ -60,12 +60,5 @@ public class Dado {
     }
 }
 
-// public class Dado {
-//     int min = 1;
-//     int max = 6;
-//     public int jogaDado() {
-//         return (int)(Math.random() * (max - min + 1) + min);
-//     }
 
-// }
 

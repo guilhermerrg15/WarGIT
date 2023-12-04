@@ -28,14 +28,7 @@ class Territory {
      *
      * @param name O nome do território.
      */
-    // public Territory(String name) {
-    //     this.name = name;
-    //     this.owner = null;
-    //     this.armies = 0;
-    //     this.neighbours = new ArrayList<>();
-    // //    this.center = center;
-    // //    this.vertices = vertices;
-    // }
+
     public Territory(String name, String continent, List<String> neighbours) {
         this.name = name;
         this.neighbours = neighbours;
@@ -143,23 +136,6 @@ class Territory {
     public List<String> getNeighbours() {
         return neighbours;
     }
-
-    /**
-     * Adiciona um território à lista de territórios vizinhos.
-     *
-     * @param neighbour O território vizinho a ser adicionado.
-     */
-    // public void addNeighbour(Territory neighbour) {
-    //     neighbours.add(neighbour);
-    // }
-
-//   public Coordinates getCenter() {
-//       return center;
-//   }
-
-//   public Coordinates[] getVertices() {
-//       return vertices;
-//   }
 
     //Retorna a cor do territorio
     public PlayerColor getCor() {
