@@ -19,7 +19,7 @@ public class API {
     private int tradeCounter = 0;
 	private static final int[] tradeBonusAmount = new int[] { 4, 6, 8, 10, 12, 15 };
 
-    public API() {
+    private API() {
         map = this.initMap();
         dado = new Dado();
         // players = new ArrayList<>();
