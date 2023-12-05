@@ -39,7 +39,6 @@ public class MapView extends JPanel implements Observer{
 	int somaAtualExercitos = 0;
 	int somaExInicio = 0;
 	private boolean firstRound = true;
-	private boolean clickToRoll = false;
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -148,12 +147,6 @@ public class MapView extends JPanel implements Observer{
 	        }
 		}); 
 
-		// Adiciona ação ao selecionar um atacante
-		territoriosDefesa.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				clickToRoll = true;
-	        }
-		}); 
 		
 
 		checkObjectivesButton.addActionListener(new ActionListener() {
@@ -176,13 +169,6 @@ public class MapView extends JPanel implements Observer{
             }
         });
 
-		//Adiciona ação ao clicar no botão de finalizar rodada
-		// finishButton.addActionListener(new ActionListener() {
-		// 	public void actionPerformed(ActionEvent e) {
-		// 		controller.clicouFinalizarJogada();
-				
-		// 	}
-		// });
 
 		try {
 			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
@@ -216,20 +202,14 @@ public class MapView extends JPanel implements Observer{
 			continuarButton.setVisible(false);
 		}
 
-		if (clickToRoll) {
-			// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
-			playDicesButton.setVisible(true);
-		} else {
-			// Se o modoAddTropas for falso, esconde o botão "Continuar"
-			playDicesButton.setVisible(false);
-		}
-
 		if(firstRound) {
 			territoriosAtacante.setVisible(false);
 			territoriosDefesa.setVisible(false);
+			playDicesButton.setVisible(false);
 		} else {
 			territoriosAtacante.setVisible(true);
 			territoriosDefesa.setVisible(true);
+			playDicesButton.setVisible(true);
 		}
 
 		if(showObjectiveCard) {
@@ -259,21 +239,15 @@ public class MapView extends JPanel implements Observer{
 
     // Atualiza view no início da rodada de posicionamento para determinar o primeiro jogador
 	public void determinaPrimeiroJogador(String jogadorDaVez, PlayerColor corDoJogador){
-		// NÃO IMPRIMIR AINDA, SÓ ADD PARA IMPRIMIR AO CHAMAR O DRAWCOMPONENT DO MAINFRAME
 		this.jogadorDaVez = jogadorDaVez;
         this.corDoJogadorEscolhida = corDoJogador;
-		// this.updatePlacement(territorios);
-        // Adiciona o quadrado de cor ao jogadorDaVezLabel
         adicionarQuadradoCor();
 	}
 
 	// Muda o jogador da vez na view
 	public void mudaJogador(String nome, PlayerColor cor){
-		// Muda informações da view relacionadas ao jogador da vez
 		this.jogadorDaVez = nome;
 		this.corDoJogadorEscolhida = cor;
-		// this.descricaoObjetivo = descricaoObj;
-		// this.cartas = cartas;
 		
 		adicionarQuadradoCor();
 		repaint();
@@ -284,7 +258,8 @@ public class MapView extends JPanel implements Observer{
 	public void atualizaAtacantes(String[] atacantes){
 		// Esvazia a comboBox de atacantes e adiciona os novos territórios
 		territoriosAtacante.removeAllItems();
-		
+	
+
 		for (String s: atacantes){
 			territoriosAtacante.addItem(s);
 		}
@@ -294,6 +269,7 @@ public class MapView extends JPanel implements Observer{
 	public void atualizaDefensores(String[] defensores){
 		// Esvazia a comboBox de defensores e adiciona os novos territórios
 		territoriosDefesa.removeAllItems();
+
 		for (String s: defensores){
 			territoriosDefesa.addItem(s);
 		}
