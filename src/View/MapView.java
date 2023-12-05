@@ -127,12 +127,8 @@ public class MapView extends JPanel implements Observer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				modoAddTropas = false;
-<<<<<<< HEAD
 				controller.clicouContinuar();
 				// System.out.println(firstRound);
-=======
-				firstRound = controller.clicouContinuar();
->>>>>>> c5da529a399c38429d5263ab4a96dbbd5beec1dc
 				somaAtualExercitos = 0;
 				
 			}
