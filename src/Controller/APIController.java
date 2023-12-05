@@ -82,49 +82,6 @@ public class APIController {
         }
     }
 
-    // public void clicouPosicionar(String territory, Integer qtd){
-    //     if (state == 0) {
-    //         this.podeSalvar = true;
-
-    //         api.placeArmy(state, territory); //verificar essa func
-    //         verifyWin();
-    //         Integer qtdExercitos = api.getQtdExercitosPosic(turn);
-    //         if(qtdExercitos == 0){
-    //             if (continent < 6) {
-    //                 // Atualiza a view para posicionar no próximo continente se for dominado
-    //                 return;
-    //             }
-    //             if (continent == 6) {
-    //                 // Se já posicionou em todos os continentes, posiciona no resto dos territórios
-    //                 return;
-    //             }
-    //             // Se não tiver mais exércitos para posicionar
-    //             // Zera contador de continentes
-    //             continent = 0;
-    //             if (firstRound) {
-    //                 // turn = (turn + 1) % api.getQtdPlayers(); 
-    //                 // Se for a primeira rodada, só pode posicionamento para todos
-    //                 return;
-    //             }
-    //             // Atualiza a view para ataque (implementar codigo embaixo)
-    //             return;
-    //         }
-    //         // Se ainda tiver exércitos para posicionar
-    //         // apiView.atualizaQtdPosic(qtdEx);
-    //         return;
-    //     }
-    // }
-
-    // public void clicouFinalizarJogada() {
-    //     if (firstRound) {
-    //         turn = (turn + 1) % api.getNumPlayers();
-    //         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-
-    //         if (turn == 0){
-    //             firstRound = false;
-    //         }
-    //     }
-    // }
 
     public void clicouContinuar() {
         if (firstRound) {
@@ -137,6 +94,7 @@ public class APIController {
         }
     }
 
+    
     
     
 

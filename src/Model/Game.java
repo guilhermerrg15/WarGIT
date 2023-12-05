@@ -71,7 +71,7 @@ class Game implements Observed{
             if (j.getName().equals(jogador.getName()) || j.getColor() == jogador.getColor())
                 return false;
         }
-        players.add(jogador);
+        players.add(0, jogador);
         return true;
     }
 }

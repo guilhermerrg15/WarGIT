@@ -124,6 +124,13 @@ public class API {
         }
     }
 
+
+
+    
+
+
+
+
     public String[] getNomesJogadores() {
     	String[] nomes = new String[getAllPlayers().size()];
     	int cont = 0;

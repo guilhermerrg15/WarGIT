@@ -35,7 +35,8 @@ public class MapView extends JPanel implements Observer{
 	private boolean modoAddTropas = false;
     Graphics2D g;
 	JLabel corLabel = new JLabel();
-	
+	int somaAtualExercitos = 0;
+	int somaExInicio = 0;
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -70,6 +71,8 @@ public class MapView extends JPanel implements Observer{
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.LEFT));  
 		
+		
+        
 		buttonPanel.add(saveButton);
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(placeArmyButton);
@@ -113,6 +116,8 @@ public class MapView extends JPanel implements Observer{
 			public void actionPerformed(ActionEvent e) {
 				modoAddTropas = false;
 				controller.clicouContinuar();
+				somaAtualExercitos = 0;
+				
 			}
 		});
 		
@@ -435,27 +440,38 @@ public class MapView extends JPanel implements Observer{
 	}
 
 
+
+    // Retorna quantidade de exércitos que tem em um território
+    public Integer getQntExTotal(ArrayList<ArmyView> armyList) {
+		int somaTotalEx = 0;
+		for (ArmyView army : armyList) {
+			if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
+				somaTotalEx += Integer.parseInt(army.getQntExercitos());
+			}
+		}
+		return somaTotalEx;
+    }
+
 	// fazer uma logica aqui para se o numero de exercitos chegar no máximo, trocar de jogador
 	private void handleBolinhaClick(int mouseX, int mouseY) {
 		if (modoAddTropas) {
 			// Restaurar quantidade original no início do loop
 			int quantidadeOriginal = 0;
 
+			// Atualizar o número total de exercítos antes do incremento da rodada
+			if (somaAtualExercitos==0) {
+				//vai ter que zerar somaAtualExercitos quando mudar para proxima rodada
+				somaExInicio = getQntExTotal(armyList);
+			}
+			int somaExAtual = getQntExTotal(armyList);
+
+			somaAtualExercitos = somaExAtual - somaExInicio;
+
 			// Calcular a quantidade máxima de exércitos permitidos
 			int quantidadeMaximaExercitos = controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida) / 2;
-
-				// Calcular a soma atual de exércitos em todos os territórios do jogador menos a quantidade de território pois todos os territórios começam com 1
-			int somaAtualExercitos = -controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida);
-			for (ArmyView army : armyList) {
-				if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
-					// acho que o problema esta aqui de não conseguir adicionar exercito depois da primeira drodada 
-					somaAtualExercitos += Integer.parseInt(army.getQntExercitos());
-				}
-			}
-			System.out.println("Quantidade soma: " + somaAtualExercitos);
-
+			
 			// Verificar se a soma atual não excede a quantidade máxima permitida
-			if (somaAtualExercitos < quantidadeMaximaExercitos) {
+			if (somaAtualExercitos <  quantidadeMaximaExercitos) {
 				for (ArmyView army : armyList) {
 					Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
 					if (bolinha.contains(mouseX, mouseY)) {
@@ -483,6 +499,7 @@ public class MapView extends JPanel implements Observer{
 						}
 					}
 				}
+				somaAtualExercitos++;
 			} else {
 				for (ArmyView army : armyList) {
 					Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
@@ -491,17 +508,18 @@ public class MapView extends JPanel implements Observer{
 						break;
 					}
 				}
+				// somaAtualExercitos=0;
 			}
 
 			
-			// Imprimir a quantidade total de exércitos após adicionar em diferentes territórios
-			int quantidadeTotalExercitos = 0;
-			for (ArmyView army : armyList) {
-				if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
-					quantidadeTotalExercitos += Integer.parseInt(army.getQntExercitos());
-				}
-			}
-			System.out.println("Quantidade total de exércitos: " + quantidadeTotalExercitos);
+			// // Imprimir a quantidade total de exércitos após adicionar em diferentes territórios
+			// int quantidadeTotalExercitos = 0;
+			// for (ArmyView army : armyList) {
+			// 	if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
+			// 		quantidadeTotalExercitos += Integer.parseInt(army.getQntExercitos());
+			// 	}
+			// }
+			// System.out.println("Quantidade total de exércitos: " + quantidadeTotalExercitos);
 		}
 	}
 
