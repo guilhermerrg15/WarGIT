@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Representa um jogador no jogo.
  */
-public class Player {
+public class Player  {
 
     private String name;
     private PlayerColor color;
@@ -15,12 +15,15 @@ public class Player {
     private int armies;
     private boolean conqueredTerritory;
     private Player enemy;
+    private static int cont = 0;
+    private int index;
     private ObjectiveCard objective;
     private List<Continent> continents;
     protected List<Army> continentalArmies;
     //Guarda a quantidade de territórios em sua posse
 	private int numTerritories = 0;  
     
+
     
     // Pegar número de cartas
     public int getCards () {
@@ -44,6 +47,7 @@ public class Player {
         this.color = color;
         this.territories = new ArrayList<>();
         this.armies = 0;
+        this.index = cont++;
         this.enemy = null;
         this.territoryCards = new ArrayList<TerritoryCard>();
         this.continentalArmies = new ArrayList<Army>();

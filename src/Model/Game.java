@@ -50,7 +50,12 @@ class Game implements Observed{
 
     // Pegar o jogador da vez
     public Player getJogadorVez(int i){
+        for (Player player : players) {
+            System.out.println(player.getName());
+        }
+        System.out.println("-----------------");
 		return players.get(i);
+        
 	}
 
     //implementar 
@@ -71,7 +76,10 @@ class Game implements Observed{
             if (j.getName().equals(jogador.getName()) || j.getColor() == jogador.getColor())
                 return false;
         }
-        players.add(0, jogador);
+        players.add(jogador);
+        for (Player player : players) {
+            System.out.println(player.getName());
+        }
         return true;
     }
 }
