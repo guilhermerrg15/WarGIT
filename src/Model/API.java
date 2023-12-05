@@ -51,6 +51,46 @@ public class API {
         return quantidadeTerritorios;
     }
 
+    public String[] getTerritoriosDoJogador (PlayerColor corDoJogador){
+        int quant = 0;
+
+        // Obtém a lista de territórios do objeto Map
+        ArrayList<Territory> territories = map.getTerritoriesList();
+        String[] territoryList = new String[getQuantidadeTerritoriosJogador(corDoJogador)];
+
+        // Adiciona na lista os nomes dos territórios
+    	for (Territory t: territories) {
+            if (t.getOwner().getColor() == corDoJogador) {
+                territoryList[quant] = t.getName();
+                quant++;
+            }
+    		
+    	}
+    	return territoryList;
+
+
+    }
+
+    // Método que retorna adjacentes não dominados de um território por string
+    public String[] getNeiboursNotDominated(String t, int turn) {
+        List<Territory> listaTerritorios = map.getTerritoriesList();
+        List<String> territoriosNaoDominados = new ArrayList<>();
+    	// String[] listaTerritorios = new String[neighbours.size()];
+
+        for (Territory ter : listaTerritorios) {
+            // Verifica se o território é vizinho e não é dominado pelo jogador
+            if (ter.isNeighbor(t) && !ter.getOwner().getName().equals(game.getJogadorVez(turn).getName())) {
+                territoriosNaoDominados.add(ter.getName());
+            }
+        }
+
+        // Se não houver territórios não dominados, retorna null
+        if (territoriosNaoDominados.isEmpty()) {
+            return null;
+        }
+
+        return territoriosNaoDominados.toArray(new String[0]);
+    }
     
 
     // Retornar todos os jogadores
@@ -123,11 +163,6 @@ public class API {
             }
         }
     }
-
-
-
-    
-
 
 
 
@@ -402,6 +437,9 @@ public class API {
             }
         }
     }
+
+
+   
 
 
 

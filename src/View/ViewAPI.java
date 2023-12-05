@@ -26,6 +26,17 @@ public class ViewAPI {
 		MapView.getMapView().mudaJogador(jogador, cor);
 	}
 
+    //Atalixa os territorios atancantes no painel de ataque
+	public void atualizaAtacantes(String[] atacantes){
+		// MapView.getMapView().mudaParaAtaque();
+		MapView.getMapView().atualizaAtacantes(atacantes);
+	}
+
+    //Atualiza os territorios defensores no painel de ataque
+	public void atualizaDefensores(String[] defensores){
+		MapView.getMapView().atualizaDefensores(defensores);
+	}
+
     private ViewAPI() {
     }
 

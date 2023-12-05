@@ -61,8 +61,8 @@ public class MapView extends JPanel implements Observer{
     //Lista de territórios no jogo
 	String[] territorios;
 
-	JComboBox<String> territoriosAtacante = new JComboBox<>(game.getTerritoriosLista());
-	JComboBox<String> territoriosDefesa = new JComboBox<>(game.getTerritoriosLista());
+	JComboBox<String> territoriosAtacante;
+	JComboBox<String> territoriosDefesa;
 
     public MapView() {
         // setLayout(new BorderLayout());
@@ -70,6 +70,9 @@ public class MapView extends JPanel implements Observer{
     
       	continuarButton.setBounds(1250,535,200,30);
 		add(continuarButton);
+
+		territoriosAtacante = new JComboBox<String>();
+		territoriosDefesa = new JComboBox<String>();
 
 		// Configurar a posição e tamanho dos JComboBox
         territoriosAtacante.setBounds(1250, 200, 200, 30);
@@ -132,6 +135,14 @@ public class MapView extends JPanel implements Observer{
 				
 			}
 		});
+
+		// Adiciona ação ao selecionar um atacante
+		territoriosAtacante.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				controller.selecionouAtacante((String) territoriosAtacante.getSelectedItem());
+	        }
+		}
+		); 
 		
 
 		checkObjectivesButton.addActionListener(new ActionListener() {
@@ -216,6 +227,9 @@ public class MapView extends JPanel implements Observer{
 
 
 
+
+
+
     // Singleton
     public static MapView getMapView() {
         if (MapView == null) {
@@ -245,6 +259,27 @@ public class MapView extends JPanel implements Observer{
 		adicionarQuadradoCor();
 		repaint();
 	}
+
+
+	// Atualiza view no início da rodada de posicionamento para atualizar os jogadores atacantes
+	public void atualizaAtacantes(String[] atacantes){
+		// Esvazia a comboBox de atacantes e adiciona os novos territórios
+		territoriosAtacante.removeAllItems();
+		
+		for (String s: atacantes){
+			territoriosAtacante.addItem(s);
+		}
+	}
+	
+	// Atualiza os territórios a serem atacados a partir do território selecionado
+	public void atualizaDefensores(String[] defensores){
+		// Esvazia a comboBox de defensores e adiciona os novos territórios
+		territoriosDefesa.removeAllItems();
+		for (String s: defensores){
+			territoriosDefesa.addItem(s);
+		}
+	}
+
 
 	private void adicionarQuadradoCor() {
         

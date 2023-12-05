@@ -10,7 +10,7 @@ public class Player {
 
     private String name;
     private PlayerColor color;
-    protected List <Territory> territories;
+    protected ArrayList <Territory> territories;
     private List<TerritoryCard> territoryCards; // cartas para troca
     private int armies;
     private boolean conqueredTerritory;
@@ -28,9 +28,10 @@ public class Player {
     }
 
     // Pegar lista de territórios conquistados
-    public List<Territory> getConqueredTerritories() {
-        return this.territories;
+    public ArrayList<Territory> getConqueredTerritories() {
+        return territories;
     }
+
      /**
      * Construtor da classe Player.
     *
@@ -97,7 +98,7 @@ public class Player {
         return territories.stream()
                 .filter(territory -> territory.getName().equals(pais))
                 .findFirst()
-                .map(territory -> territory.faz_fronteira(border))
+                .map(territory -> territory.isNeighbor(border))
                 .orElse(false);
     }
     
@@ -324,6 +325,8 @@ public class Player {
 		// Aumenta em 1 a quantidade de territórios
 		this.numTerritories++;
 	}
+
+    
 
     /**
      * Obtém o nome do jogador.

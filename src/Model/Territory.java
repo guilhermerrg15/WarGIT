@@ -62,13 +62,8 @@ class Territory {
 	}
 
 
-    public boolean faz_fronteira(String territory) {
-		for (String border : this.neighbours) {
-			if (border.equals(territory)) {
-				return true;
-			}
-		}
-		return false;
+    public boolean isNeighbor(String territory) {
+		return getNeighbours().contains(territory);
 	}
 
     public String getContinent() {

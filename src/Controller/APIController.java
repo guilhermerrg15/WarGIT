@@ -94,8 +94,19 @@ public class APIController {
 
             return true;
         } else {
+            view.atualizaAtacantes(api.getTerritoriosDoJogador(api.getCorJogadorVez(turn)));
             return false;
         }
+    }
+
+    // Método chamado quando o jogador seleciona um território para atacar
+    public void selecionouAtacante(String atacante){
+        // Se estiver na etapa de ataque
+            if(atacante != null){
+            // Atualiza comboBox dos defensores com os adjacentes 
+            view.atualizaDefensores(api.getNeiboursNotDominated(atacante, turn));
+            }
+
     }
 
     
