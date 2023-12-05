@@ -33,12 +33,10 @@ public class MapView extends JPanel implements Observer{
     Image territoriesImage;
 	Image objectiveCard;
 	private boolean modoAddTropas = false;
-	private boolean modoAtaque = false;
     Graphics2D g;
 	JLabel corLabel = new JLabel();
 	int somaAtualExercitos = 0;
 	int somaExInicio = 0;
-	int count = 0;
 	private boolean firstRound = true;
 
     //Jogador da vez e cor do jogador
@@ -63,8 +61,8 @@ public class MapView extends JPanel implements Observer{
     //Lista de territórios no jogo
 	String[] territorios;
 
-	JComboBox<String> territoriosAtacante = new JComboBox<>(game.getTerritoriosLista()); // pegar do jogador da vez
-	JComboBox<String> territoriosDefesa = new JComboBox<>(game.getTerritoriosLista()); 
+	JComboBox<String> territoriosAtacante = new JComboBox<>(game.getTerritoriosLista());
+	JComboBox<String> territoriosDefesa = new JComboBox<>(game.getTerritoriosLista());
 
     public MapView() {
         // setLayout(new BorderLayout());
@@ -77,9 +75,9 @@ public class MapView extends JPanel implements Observer{
         territoriosAtacante.setBounds(1250, 200, 200, 30);
         territoriosDefesa.setBounds(1250, 250, 200, 30);
 
-		// Adicionar JComboBox ao painel
-		add(territoriosAtacante);
-		add(territoriosDefesa);
+        // Adicionar JComboBox ao painel
+        add(territoriosAtacante);
+        add(territoriosDefesa);
 
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -105,6 +103,7 @@ public class MapView extends JPanel implements Observer{
         jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
         jogadorDaVezLabel.setForeground(Color.BLACK);
         add(jogadorDaVezLabel);
+
 		
 		
 
@@ -128,9 +127,14 @@ public class MapView extends JPanel implements Observer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				modoAddTropas = false;
+<<<<<<< HEAD
 				controller.clicouContinuar();
 				// System.out.println(firstRound);
+=======
+				firstRound = controller.clicouContinuar();
+>>>>>>> c5da529a399c38429d5263ab4a96dbbd5beec1dc
 				somaAtualExercitos = 0;
+				
 			}
 		});
 		
@@ -169,6 +173,10 @@ public class MapView extends JPanel implements Observer{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+		
+		
+        
     }
 
     public void paintComponent(Graphics graphic) {
@@ -191,7 +199,6 @@ public class MapView extends JPanel implements Observer{
 			continuarButton.setVisible(false);
 		}
 
-		// Exibir Combo Box na tela de jogo
 		if(firstRound) {
 			territoriosAtacante.setVisible(false);
 			territoriosDefesa.setVisible(false);
@@ -229,7 +236,6 @@ public class MapView extends JPanel implements Observer{
         this.corDoJogadorEscolhida = corDoJogador;
 		// this.updatePlacement(territorios);
         // Adiciona o quadrado de cor ao jogadorDaVezLabel
-		count = 1;
         adicionarQuadradoCor();
 	}
 
@@ -240,7 +246,6 @@ public class MapView extends JPanel implements Observer{
 		this.corDoJogadorEscolhida = cor;
 		// this.descricaoObjetivo = descricaoObj;
 		// this.cartas = cartas;
-		count++;
 		
 		adicionarQuadradoCor();
 		repaint();
