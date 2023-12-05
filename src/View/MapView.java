@@ -26,18 +26,20 @@ public class MapView extends JPanel implements Observer{
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
     JButton checkCardsButton = new JButton("Ver Cartas de Território");
 	JButton placeArmyButton  = new JButton("Posicionar Tropas");
-	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
 	JButton continuarButton = new JButton("Continuar");
 	JButton saveButton = new JButton("Salvar Jogo");
+	JButton playDicesButton = new JButton( "Atacar");
     Image backgroundImage;
     Image territoriesImage;
 	Image objectiveCard;
+	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
 	private boolean modoAddTropas = false;
     Graphics2D g;
 	JLabel corLabel = new JLabel();
 	int somaAtualExercitos = 0;
 	int somaExInicio = 0;
 	private boolean firstRound = true;
+	private boolean clickToRoll = false;
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -82,6 +84,9 @@ public class MapView extends JPanel implements Observer{
         add(territoriosAtacante);
         add(territoriosDefesa);
 
+		playDicesButton.setBounds(1250,200,200,30);
+		add(playDicesButton);
+
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.LEFT));  
@@ -103,7 +108,7 @@ public class MapView extends JPanel implements Observer{
         add(buttonPanel);
 		add(Box.createHorizontalStrut(50));
         //Cria e adiciona o label do jogador da vez
-        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 25));
         jogadorDaVezLabel.setForeground(Color.BLACK);
         add(jogadorDaVezLabel);
 
@@ -141,8 +146,14 @@ public class MapView extends JPanel implements Observer{
 			public void actionPerformed(ActionEvent e) {
 				controller.selecionouAtacante((String) territoriosAtacante.getSelectedItem());
 	        }
-		}
-		); 
+		}); 
+
+		// Adiciona ação ao selecionar um atacante
+		territoriosDefesa.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				clickToRoll = true;
+	        }
+		}); 
 		
 
 		checkObjectivesButton.addActionListener(new ActionListener() {
@@ -203,6 +214,14 @@ public class MapView extends JPanel implements Observer{
 		} else {
 			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continuarButton.setVisible(false);
+		}
+
+		if (clickToRoll) {
+			// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
+			playDicesButton.setVisible(true);
+		} else {
+			// Se o modoAddTropas for falso, esconde o botão "Continuar"
+			playDicesButton.setVisible(false);
 		}
 
 		if(firstRound) {
