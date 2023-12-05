@@ -83,7 +83,7 @@ public class APIController {
     }
 
 
-    public void clicouContinuar() {
+    public boolean clicouContinuar() {
         if (firstRound) {
             turn = (turn + 1) % api.getNumPlayers();
             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
@@ -91,6 +91,10 @@ public class APIController {
             if (turn == 0){
                 firstRound = false;
             }
+
+            return true;
+        } else {
+            return false;
         }
     }
 
