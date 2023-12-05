@@ -90,8 +90,8 @@ public class APIController {
             System.out.println("turn antes:" + turn);
             turn += 1;
             System.out.println("turn depois:" + turn);
-            turn = (turn + 1) % api.getNumPlayers();
-            view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+            // turn = (turn + 1) % api.getNumPlayers();
+            view.mudaJogador(api.getNomeJogadorVez(turn % api.getNumPlayers()), api.getCorJogadorVez(turn % api.getNumPlayers()));
 
             if (turn == 0){
                 firstRound = false;
