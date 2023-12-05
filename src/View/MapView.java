@@ -37,6 +37,7 @@ public class MapView extends JPanel implements Observer{
 	JLabel corLabel = new JLabel();
 	int somaAtualExercitos = 0;
 	int somaExInicio = 0;
+	private boolean firstRound = true;
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -60,12 +61,23 @@ public class MapView extends JPanel implements Observer{
     //Lista de territórios no jogo
 	String[] territorios;
 
+	JComboBox<String> territoriosAtacante = new JComboBox<>(game.getTerritoriosLista());
+	JComboBox<String> territoriosDefesa = new JComboBox<>(game.getTerritoriosLista());
+
     public MapView() {
         // setLayout(new BorderLayout());
         setLayout(null);
     
       	continuarButton.setBounds(1250,535,200,30);
 		add(continuarButton);
+
+		// Configurar a posição e tamanho dos JComboBox
+        territoriosAtacante.setBounds(1250, 200, 200, 30);
+        territoriosDefesa.setBounds(1250, 250, 200, 30);
+
+        // Adicionar JComboBox ao painel
+        add(territoriosAtacante);
+        add(territoriosDefesa);
 
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -115,7 +127,7 @@ public class MapView extends JPanel implements Observer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				modoAddTropas = false;
-				controller.clicouContinuar();
+				firstRound = controller.clicouContinuar();
 				somaAtualExercitos = 0;
 				
 			}
@@ -180,6 +192,14 @@ public class MapView extends JPanel implements Observer{
 		} else {
 			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continuarButton.setVisible(false);
+		}
+
+		if(firstRound) {
+			territoriosAtacante.setVisible(false);
+			territoriosDefesa.setVisible(false);
+		} else {
+			territoriosAtacante.setVisible(true);
+			territoriosDefesa.setVisible(true);
 		}
 
 		if(showObjectiveCard) {
