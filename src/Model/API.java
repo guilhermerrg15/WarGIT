@@ -71,25 +71,53 @@ public class API {
 
     }
 
-    // Método que retorna adjacentes não dominados de um território por string
-    public String[] getNeiboursNotDominated(String t, int turn) {
+    //pega vizinhos que não são do jogador
+    public String[] getNeiboursNotDominated(String t, int vez) {
         List<Territory> listaTerritorios = map.getTerritoriesList();
         List<String> territoriosNaoDominados = new ArrayList<>();
-    	// String[] listaTerritorios = new String[neighbours.size()];
-
+    
         for (Territory ter : listaTerritorios) {
             // Verifica se o território é vizinho e não é dominado pelo jogador
-            if (ter.isNeighbor(t) && !ter.getOwner().getName().equals(game.getJogadorVez(turn).getName())) {
+            if (ter.isNeighbor(t) && !ter.getOwner().getName().equals(game.getJogadorVez(vez).getName())) {
                 territoriosNaoDominados.add(ter.getName());
             }
         }
-
+    
         // Se não houver territórios não dominados, retorna null
         if (territoriosNaoDominados.isEmpty()) {
             return null;
         }
-
+    
+        // Converte a lista para um array
         return territoriosNaoDominados.toArray(new String[0]);
+    }
+
+    //pega territorios vizinhos que tem mais de um exercito
+   public String[] getTerritoryMoreOne(PlayerColor corDoJogador) {
+        int quant = 0;
+    
+        // Obtém a lista de territórios do objeto Map
+        ArrayList<Territory> territories = map.getTerritoriesList();
+        List<String> territoriosComMaisDeUmExercito = new ArrayList<>();
+    
+        // Adiciona na lista os nomes dos territórios com mais de um exército
+        for (Territory t : territories) {
+            if (t.getOwner().getColor() == corDoJogador && t.getArmies() > 1) {
+                territoriosComMaisDeUmExercito.add(t.getName());
+                quant++;
+            }
+        }
+    
+        // Se não houver territórios com mais de um exército, retorna null
+        if (territoriosComMaisDeUmExercito.isEmpty()) {
+            return null;
+        }
+    
+        // Copia a lista para uma lista final, removendo espaços vazios
+        String[] territoriosFinal = new String[quant];
+        territoriosComMaisDeUmExercito.toArray(territoriosFinal);
+    
+        return territoriosFinal;
     }
     
 

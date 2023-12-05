@@ -18,14 +18,12 @@ public class APIController {
 
     public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
         int numPlayers = nomes.size();
-        System.out.println("Array de nomes:" + nomes);
         for(int i = 0; i < numPlayers; i++){
             // Verificar se há um nome igual a null
             if(nomes.get(i) == null || nomes.get(i).equals("")) {
                 api.resetPlayers();
                 return false;
             }
-            System.out.println("Nome: " + nomes.get(i));
             if(api.addPlayer(nomes.get(i), cores.get(i)) == false){
                 api.resetPlayers();
                 return false;
@@ -87,11 +85,8 @@ public class APIController {
 
     public boolean clicouContinuar() {
         if (firstRound) {
-            System.out.println("turn antes:" + turn);
-            turn += 1;
-            System.out.println("turn depois:" + turn);
-            // turn = (turn + 1) % api.getNumPlayers();
-            view.mudaJogador(api.getNomeJogadorVez(turn % api.getNumPlayers()), api.getCorJogadorVez(turn % api.getNumPlayers()));
+            turn = (turn + 1) % api.getNumPlayers();
+            view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
 
             if (turn == 0){
                 firstRound = false;
@@ -99,7 +94,7 @@ public class APIController {
 
             return true;
         } else {
-            view.atualizaAtacantes(api.getTerritoriosDoJogador(api.getCorJogadorVez(turn)));
+            view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
             return false;
         }
     }
