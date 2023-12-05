@@ -33,13 +33,10 @@ public class MapView extends JPanel implements Observer{
     Image territoriesImage;
 	Image objectiveCard;
 	private boolean modoAddTropas = false;
-	private boolean modoAtaque = false;
     Graphics2D g;
 	JLabel corLabel = new JLabel();
 	int somaAtualExercitos = 0;
 	int somaExInicio = 0;
-	int count = 0;
-	private boolean firstRound = true;
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -63,23 +60,12 @@ public class MapView extends JPanel implements Observer{
     //Lista de territórios no jogo
 	String[] territorios;
 
-	JComboBox<String> territoriosAtacante = new JComboBox<>(game.getTerritoriosLista()); // pegar do jogador da vez
-	JComboBox<String> territoriosDefesa = new JComboBox<>(game.getTerritoriosLista()); 
-
     public MapView() {
         // setLayout(new BorderLayout());
         setLayout(null);
     
       	continuarButton.setBounds(1250,535,200,30);
 		add(continuarButton);
-
-		// Configurar a posição e tamanho dos JComboBox
-        territoriosAtacante.setBounds(1250, 200, 200, 30);
-        territoriosDefesa.setBounds(1250, 250, 200, 30);
-
-		// Adicionar JComboBox ao painel
-		add(territoriosAtacante);
-		add(territoriosDefesa);
 
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -105,6 +91,7 @@ public class MapView extends JPanel implements Observer{
         jogadorDaVezLabel.setFont(new Font("Arial", Font.BOLD, 50));
         jogadorDaVezLabel.setForeground(Color.BLACK);
         add(jogadorDaVezLabel);
+
 		
 		
 
@@ -128,9 +115,9 @@ public class MapView extends JPanel implements Observer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				modoAddTropas = false;
-				firstRound = controller.clicouContinuar();
-				System.out.println(firstRound);
+				controller.clicouContinuar();
 				somaAtualExercitos = 0;
+				
 			}
 		});
 		
@@ -169,6 +156,10 @@ public class MapView extends JPanel implements Observer{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+		
+		
+        
     }
 
     public void paintComponent(Graphics graphic) {
@@ -189,15 +180,6 @@ public class MapView extends JPanel implements Observer{
 		} else {
 			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continuarButton.setVisible(false);
-		}
-
-		// Exibir Combo Box na tela de jogo
-		if(firstRound) {
-			territoriosAtacante.setVisible(false);
-			territoriosDefesa.setVisible(false);
-		} else {
-			territoriosAtacante.setVisible(true);
-			territoriosDefesa.setVisible(true);
 		}
 
 		if(showObjectiveCard) {
@@ -229,7 +211,6 @@ public class MapView extends JPanel implements Observer{
         this.corDoJogadorEscolhida = corDoJogador;
 		// this.updatePlacement(territorios);
         // Adiciona o quadrado de cor ao jogadorDaVezLabel
-		count = 1;
         adicionarQuadradoCor();
 	}
 
@@ -240,7 +221,6 @@ public class MapView extends JPanel implements Observer{
 		this.corDoJogadorEscolhida = cor;
 		// this.descricaoObjetivo = descricaoObj;
 		// this.cartas = cartas;
-		count++;
 		
 		adicionarQuadradoCor();
 		repaint();
