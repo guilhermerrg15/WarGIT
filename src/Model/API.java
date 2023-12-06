@@ -240,13 +240,14 @@ public class API {
     }
 
     // Adicionar jogadores
-    public boolean addPlayer(String name, PlayerColor color) {
-        Player player = new Player(name, color);
+    public boolean addPlayer(String name, PlayerColor color, int index) {
+        Player player = new Player(name, color, index);
         return game.addPlayer(player);
     }
 
     // Pegar o nome do jogador da vez
     public String getNomeJogadorVez(int i){
+        
         return game.getJogadorVez(i).getName();
     }
     // Método que retorna a cor do jogador da vez

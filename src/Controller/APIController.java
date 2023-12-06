@@ -24,7 +24,7 @@ public class APIController {
                 api.resetPlayers();
                 return false;
             }
-            if(api.addPlayer(nomes.get(i), cores.get(i)) == false){
+            if(api.addPlayer(nomes.get(i), cores.get(i), i) == false){
                 api.resetPlayers();
                 return false;
             };
@@ -86,6 +86,7 @@ public class APIController {
     public boolean clicouContinuar() {
         if (firstRound) {
             turn = (turn + 1) % api.getNumPlayers();
+
             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
 
             if (turn == 0){

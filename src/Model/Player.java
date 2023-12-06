@@ -35,6 +35,15 @@ public class Player  {
         return territories;
     }
 
+    public int getIndex(){
+        return this.index;
+    }
+
+    public int setIndex(int index){
+        return this.index = index;
+
+    }
+
      /**
      * Construtor da classe Player.
     *
@@ -43,12 +52,12 @@ public class Player  {
     */
 
     
-    public Player(String name, PlayerColor color) {
+    public Player(String name, PlayerColor color, int index) {
         this.name = name;
         this.color = color;
         this.territories = new ArrayList<>();
         this.armies = 0;
-        this.index = cont++;
+        this.index = index;
         this.enemy = null;
         this.territoryCards = new ArrayList<TerritoryCard>();
         this.continentalArmies = new ArrayList<Army>();

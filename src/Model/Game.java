@@ -49,12 +49,18 @@ class Game implements Observed{
     }
 
     // Pegar o jogador da vez
-    public Player getJogadorVez(int i){
+    public Player getJogadorVez(int turn){
         for (Player player : players) {
             System.out.println(player.getName());
         }
         System.out.println("-----------------");
-		return players.get(i);
+        
+        for (int i = 0; i < players.size(); i++) {
+            if(players.get(i).getIndex() == turn) {
+                return players.get(i);
+            }
+        }
+		return players.get(turn);
         
 	}
 
