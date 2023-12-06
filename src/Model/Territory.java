@@ -98,6 +98,11 @@ class Territory {
         return armies;
     }
 
+    //Altera a quantidade de exércitos
+    public void setArmies(int armies) {
+        this.armies = armies;
+    }
+
     /**
      * Adiciona exércitos ao território.
      *
@@ -106,6 +111,19 @@ class Territory {
     public void addArmies(int count) {
         this.armies += count;
     }
+
+
+		// Int positivo add exercitos e negativo subtrai 
+		protected boolean alterarQndExercitos (int qnd) {
+			// se tentar subtrair mais exércitos do que tem (sem poder zerar)
+			if (qnd < 0)
+				if ((qnd * (-1)) >= this.armies)
+					return false;
+			this.armies += qnd;
+			return true;
+		}
+
+
 
     /**
      * Remove exércitos do território.

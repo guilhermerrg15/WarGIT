@@ -16,6 +16,9 @@ public class APIController {
     private ViewAPI view = ViewAPI.getInstance();
     private API api = API.getInstance();
 
+    // Guarda os nomes dos jogadores eliminados nessa rodada
+    ArrayList<String> eliminadosNessaRodada = new ArrayList<String>();
+
     public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
         int numPlayers = nomes.size();
         for(int i = 0; i < numPlayers; i++){
@@ -50,6 +53,15 @@ public class APIController {
         return API.getInstance().getQuantidadeTerritoriosJogador(corDoJogador);
     }
 
+     //get vez do jogador
+     public int getTurn(){
+        return turn;
+    }
+
+    //set vez do jogador
+    public void setTurn(int i){
+        this.turn = i;
+    }
 
     // Pegar o nome dos jogadores
     public String[] getNomesJogadores(){
@@ -74,12 +86,6 @@ public class APIController {
     // Método que retorna a cor de um território
     public PlayerColor getCorTerritorio(String t){
         return api.getCorTerritorio(t);
-    }
-
-    public void verifyWin() {
-        if (api.verifica_vez_jogador_objetivo()) {
-            view.showWin(api.getNomeJogadorVez(turn));
-        }
     }
 
 
@@ -110,8 +116,34 @@ public class APIController {
 
     }
 
+    // Método que verifica se jogador ganhou e lida com o resultado
+    public void verificaGanhou(int pos){
+        // Se vez = -1, verifica todos os jogadores
+        if (api.verificaGanhou(pos)){
+            view.jogadorGanhou(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        }
+    }
+
+     // Adiciona um nome à lista de eliminados nessa rodada
+     public void addEliminado(String nome){
+        eliminadosNessaRodada.add(nome);
+    }
     
     
+    public void reiniciarJogo(){
+        // Reinicia dados de model
+        api.reiniciarJogo();
+        
+        // Reinicia dados do controller
+        this.turn = 0;
+        this.firstRound = true;
+
+        // Reinicia dados da view
+        api.notificaObsJogo();
+
+        view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        // primeiroPosicionamento();
+    }
     
 
     // Singleton

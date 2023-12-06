@@ -3,6 +3,8 @@ import View.ViewAPI;
 
 import java.util.*;
 
+import Controller.APIController;
+
 // //import Controller.TabuleiroObservador;
 
 public class API {
@@ -31,6 +33,13 @@ public class API {
             apiInstance = new API();
         }
         return apiInstance;
+    }
+
+    // Método para reiniciar o jogo
+    public void reiniciarJogo(){
+        game.reiniciarJogo();
+        game.setMod1(null);
+        game.setMod2(null);
     }
 
 
@@ -143,6 +152,9 @@ public class API {
 		return terr;
 	}
 
+
+
+
     public PlayerColor getCorTerritorio(String t) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
@@ -192,6 +204,40 @@ public class API {
         }
     }
 
+
+    //Método de realizar ataque
+    public int[] realizaAtaque(String atacante,String defensor) {
+        Integer numAtaque = 0;
+        Integer numDefesa = 0;
+    	Territory Tatacante = map.findTerritory(atacante);
+    	Territory Tdefensor = map.findTerritory(defensor);
+
+        // Realiza ataque e retorna array com os resultados
+        int[] array = game.RealizaAtaque(Tatacante, Tdefensor, numAtaque, numDefesa);
+
+        // Verifica se jogador ganhou após essa rodada
+		APIController.getInstance().verificaGanhou(APIController.getInstance().getTurn());
+        return array;
+    }
+
+
+    //Verifica se o jogador da vez ganhou o jogo
+    public boolean verificaGanhou(int vez){
+        // Se a vez for -1, verifica todos os jogadores
+        if (vez == -1){
+            for (Player j: game.getPlayers()) {
+                if (j.getObjective().checkStatus()){
+                    // Se algum jogador ganhou, atualiza a vez
+                    APIController.getInstance().setTurn(game.getPlayers().indexOf(j));
+                    return true;
+                }
+            }
+            return false;
+        }
+        // Se não, verifica se o jogador da vez cumpriu seu objetivo, condicao para ganhar o jogo
+        Player j = game.getJogadorVez(vez);
+        return j.getObjective().checkStatus();
+    }
 
 
     public String[] getNomesJogadores() {
@@ -247,7 +293,7 @@ public class API {
 
     // Pegar o nome do jogador da vez
     public String getNomeJogadorVez(int i){
-        
+
         return game.getJogadorVez(i).getName();
     }
     // Método que retorna a cor do jogador da vez
@@ -265,16 +311,6 @@ public class API {
         return territory.getNeighbours();
     }
 
-    // Verificar se jogador está dentro das regras de ataque
-    public boolean verifyAttack(Territory target, Territory origin) {
-        for(String neighbour : origin.getNeighbours()) {
-            if(neighbour == target.getName() && target.getOwner() != origin.getOwner() && origin.getArmies() > 1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     public ObjectiveCardDeck getDeckCardObjective(){
 		return this.objectiveDeck;
@@ -467,159 +503,9 @@ public class API {
         }
     }
 
-
-   
-
-
-
-// public void nextPlayer() {
-//     this.turn++;
-//     if(this.turn >= this.game.getPlayers().size())this.turn = 0;
-//     while(game.getPlayers().get(this.turn).verifyDestroyed()) {
-//         this.turn++;
-//         if(this.turn >= this.game.getPlayers().size())this.turn = 0;
-//     }
-// }
-
-// public boolean verifyWin(int turn) {
-    //     Player player = game.getJogadorVez(turn);
-    //     return player.getObjective().checkStatus(player);
-    // }
-
-    // public boolean verifyWin(int turn) {
-    //     Player player = game.getJogadorVez(turn);
-    //     return player.getObjective().checkStatus(player);
-    // }
-
-// Pegar a cor do jogador
-// public PlayerColor playerColor() {
-// 	return game.getPlayers().get(this.turn).getColor();
-// }
-
-// Pegar o nome do jogador
-// public String playerName() { 
-//    return game.getPlayers().get(this.turn).getName();
-// }
-
-//    public void addObserver(TabuleiroObservador observer) {
-//        game.addObserver(observer);
-//    }
-
-// Iniciar jogo
-// public boolean startGame() {
-//     return game.initiateGame();
-// }
-
-    
-// public Map getMap() {
-//     return map;
-// }
-
-
-// public int getPlayerTerritoryNumber() {
-    //     return player.getTerritoryNumber();
-    // }
-
-    
-//    public void reset_all() {
-//		for(Map map: map) {
-//			for(Territory terr: map.get_paises()) {
-//				terr.reset();
-//			}
-//		}
-//		for(Player players : players) {
-//			game.getPlayers().reset(deck, objectiveDeck);
-//		}
-//		this.vez = 0;
-//	}
-    
-
-    // static ObjectiveCard[] cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
-    // static Player[] jogadores;
-
-    // static TerritoryCard[] cartasTerritorio = TerritoryCardDeck.getInstance().setCartasEmbaralhadas();
-    
-
-    // private static int numJogadores = 0;
-
-    // public static void setDono(String carta, Player jog) {
-    //     for (ObjectiveCard cart:cartas) {
-    //         if (cart.description.equals(carta))
-    //             cart.dono = jog;
-    //     }
-    // }
-
-
-
-    // public static ArrayList<String> getCartasDono(String dono) {
-    //     ArrayList<String> retorno = new ArrayList<String>();
-    //     Player jog;
-    //     for(int i=0;i<21;i++) {
-    //         jog = getDono(cartas[i].description);
-    //         if (jog != null && jog.name.equals(dono)) {
-    //             retorno.add(cartas[i].description);
-    //         }
-    //     }
-    //     return retorno;
-    // }
-
-    // public static Player getDono(String carta) {
-    //     return ObjectiveCard.retornaDono(cartas, carta);
-    // }
-
-    // public static void setNumJogadores(int i) {
-    //     numJogadores = i;
-    //     return;
-    // }
-
-    // public static void restartCartas() {
-    //     ObjectiveCardDeck.getInstance().nullCartas();
-    //     cartas = ObjectiveCardDeck.getInstance().setCartasEmbaralhadas();
-    // }
-
-    // public static ObjectiveCard getCarta(String nome) {
-    //     for (ObjectiveCard cart:API.cartas) {
-    //         if (cart.description.equals(nome))
-    //             return cart;
-    //     }
-    //     return null;
-    // }
-    
-    // public static ArrayList<String> getDescricoesCartas() {
-    // 	ArrayList<String> descricoes = new ArrayList<>();
-    //     for (ObjectiveCard cart : cartas) {
-    //         descricoes.add(cart.getDescription());
-    //     }
-    //     return descricoes;
-    // }
-
-    // public static int getQtdJogadores() {
-    //     return numJogadores;
-    // }
-
-    // public static void setQtdJogadores(int qtdJogadores) {
-    //     API.numJogadores = qtdJogadores;
-    // }
-
-    // public static void incQtdJogadores(boolean bool) {
-    //     if (bool) {numJogadores++;return;}
-    //     numJogadores--;
-        
-    // }
-
-    // public static int jogaDado() {
-    //     Dado.jogaDado();
-    //     return Dado.dado;
-    // }
-    
-    // public static Integer idCarta(String carta) {
-    //     return ObjectiveCard.idCarta(carta);
-    // }
-
-	// public static TerritoryCard[] getCartasTerritorio() {
-	// 	return cartasTerritorio;
-	// }
-
-
+    // Notifica observadores de jogo
+    public void notificaObsJogo(){
+        game.notifyObservers();
+    }
 
 }
