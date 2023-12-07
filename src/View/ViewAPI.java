@@ -47,21 +47,21 @@ public class ViewAPI {
 
 		//Verifica a cor do jogador
 		switch (cor) {
-			case AMARELO:
+			case YELLOW:
                 nomeCor = "Amarelo";
                 break;
-            case AZUL:
+            case BLUE:
                 nomeCor = "Azul";
                 break;
-            case BRANCO:
+            case WHITE:
                 nomeCor = "Branco";
                 break;               
-            case PRETO:
+            case BLACK:
                 nomeCor = "Preto";
                 break;
-            case VERMELHO:
-                
-            case VERDE:
+            case RED:
+                nomeCor = "Vermelho";
+            case GREEN:
                 nomeCor = "Verde";
                 break;
             default:
