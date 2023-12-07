@@ -164,7 +164,7 @@ public class MapView extends JPanel implements Observer{
 				int [] dadosDefesa = new int [3];
 
 				//Chama a função de jogar os dados
-				int[] valoresDado = api.realizaAtaque(territoriosAtacante.getSelectedItem().toString(), territoriosDefesa.getSelectedItem().toString(),Integer.valueOf((String)dadosAtacante.getSelectedItem()), Integer.valueOf((String)dadosDefensor.getSelectedItem()));
+				int[] valoresDado = api.realizaAtaque(territoriosAtacante.getSelectedItem().toString(), territoriosDefesa.getSelectedItem().toString());
 				dadosAtaque[0] = valoresDado[0];
 				dadosAtaque[1] = valoresDado[1];
 				dadosAtaque[2] = valoresDado[2];
@@ -623,6 +623,7 @@ public class MapView extends JPanel implements Observer{
         }
     }
 
+	//precisa ser feito
     @Override
     public void notify(Observed o){
     }
