@@ -155,7 +155,7 @@ public class API {
 
 
 
-    public PlayerColor getCorTerritorio(String t) {
+    public PlayerColor getTerritoryColor(String t) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
     
@@ -172,7 +172,7 @@ public class API {
     }
 
     // Retorna quantidade de exércitos que tem em um território
-    public Integer getQntExTerritorio(String territorio) {
+    public Integer getNumArmiesTerritory(String territorio) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
 
@@ -206,7 +206,7 @@ public class API {
 
 
     //Método de realizar ataque
-    public int[] realizaAtaque(String atacante,String defensor) {
+    public int[] makeAttack(String atacante,String defensor) {
         Integer numAtaque = 0;
         Integer numDefesa = 0;
     	Territory Tatacante = map.findTerritory(atacante);

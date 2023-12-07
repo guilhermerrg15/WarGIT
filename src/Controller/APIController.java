@@ -34,7 +34,7 @@ public class APIController {
             // cont++;
         }
         if(api.startGame()) {
-            view.determinaPrimeiroJogador(api.getNomeJogadorVez(0), api.getCorJogadorVez(0));
+            view.determineFirstPlayer(api.getNomeJogadorVez(0), api.getCorJogadorVez(0));
             return true;
         }
 
@@ -79,17 +79,17 @@ public class APIController {
         api.incrementarQntExTerritorio(territorio, count);
     }
 
-    public Integer getQtdExercitos(String t){
-        return api.getQntExTerritorio(t);
+    public Integer getNumArmiesTerritory(String t){
+        return api.getNumArmiesTerritory(t);
     }
 
     // Método que retorna a cor de um território
-    public PlayerColor getCorTerritorio(String t){
-        return api.getCorTerritorio(t);
+    public PlayerColor getTerritoryColor(String t){
+        return api.getTerritoryColor(t);
     }
 
 
-    public boolean clicouContinuar() {
+    public boolean clickedContinue() {
         if (firstRound) {
             turn = (turn + 1) % api.getNumPlayers();
 

@@ -20,23 +20,23 @@ public class ViewAPI {
     StartView start = StartView.getStartView();
 
     // Pegar primeiro jogador
-    public void determinaPrimeiroJogador(String nome, PlayerColor cor){
-		MapView.getMapView().determinaPrimeiroJogador(nome, cor);
+    public void determineFirstPlayer(String nome, PlayerColor cor){
+		MapView.getMapView().determineFirstPlayer(nome, cor);
 	}
     //Muda o jogador atual
-	public void mudaJogador(String jogador, PlayerColor cor){
-		MapView.getMapView().mudaJogador(jogador, cor);
+	public void mudaJogador(String player, PlayerColor color){
+		MapView.getMapView().changePlayer(player, color);
 	}
 
     //Atalixa os territorios atancantes no painel de ataque
 	public void atualizaAtacantes(String[] atacantes){
 		// MapView.getMapView().mudaParaAtaque();
-		MapView.getMapView().atualizaAtacantes(atacantes);
+		MapView.getMapView().updateAttackers(atacantes);
 	}
 
     //Atualiza os territorios defensores no painel de ataque
 	public void atualizaDefensores(String[] defensores){
-		MapView.getMapView().atualizaDefensores(defensores);
+		MapView.getMapView().updateDefenders(defensores);
 	}
 
     private ViewAPI() {
