@@ -56,7 +56,7 @@ public class MapView extends JPanel implements Observer{
 
     //Array list de exércitos
 	ArrayList<ArmyView> armyList = new ArrayList<ArmyView>();
-	ArmyView armie;
+	ArmyView army;
 
     //Boolean para saber se os exércitos já foram criados
 	Boolean armyCreation = true;
@@ -141,9 +141,9 @@ public class MapView extends JPanel implements Observer{
 		continueButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				modoAddTropas = false;
-				firstRound = controller.clicouContinuar();
-				somaAtualExercitos = 0;
+				addTroopsMode = false;
+				firstRound = controller.clickedContinue();
+				currentArmySum = 0;
 				salvaArmyAntigo();
 			}
 		});
@@ -256,8 +256,8 @@ public class MapView extends JPanel implements Observer{
 
 	public void salvaArmyAntigo(){
 		for (ArmyView army : armyList) {
-			if (controller.getCorTerritorio(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == corDoJogadorEscolhida) {
-				army.setQntExercitosAntigo(army.getQntExercitos());
+			if (controller.getTerritoryColor(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == playerSelectedColor) {
+				army.setQntExercitosAntigo(army.getNumArmies());
 			}
 
 		}
@@ -346,171 +346,171 @@ public class MapView extends JPanel implements Observer{
 			switch(t){
 				//América do Sul
 				case "Brasil":
-					exercitos = new ArmyView(425,540,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(425,540,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Argentina":
-					exercitos = new ArmyView(405,600,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(405,600,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Peru":
-					exercitos = new ArmyView(345,580,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(345,580,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Venezuela":
-					exercitos = new ArmyView(272,500,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(272,500,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 
 				// //América do Norte
 				case "Nova York":
-					exercitos = new ArmyView(282,308,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(282,308,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "México":
-					exercitos = new ArmyView(188,401,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(188,401,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Califórnia":
-					exercitos = new ArmyView(145,306,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(145,306,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Groelândia":
-					exercitos = new ArmyView(425,135,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(425,135,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Alasca":
-					exercitos = new ArmyView(124,165,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(124,165,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Vancouver":
-					exercitos = new ArmyView(184,221,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(184,221,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Calgary":
-					exercitos = new ArmyView(216,165,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(216,165,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Quebec":
-					exercitos = new ArmyView(425,195,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(425,195,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Texas":
-					exercitos = new ArmyView(245,285,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(245,285,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 
 				// //Europa
 				case "Polônia":
-					exercitos = new ArmyView(796,239,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(796,239,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "França":
-					exercitos = new ArmyView(670,292,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(670,292,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Suécia":
-					exercitos = new ArmyView(745,162,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(745,162,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Espanha":
-					exercitos = new ArmyView(621,315,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(621,315,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Reino Unido":
-					exercitos = new ArmyView(645,215,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(645,215,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Romênia":
-					exercitos = new ArmyView(805,298,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(805,298,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Ucrânia":
-					exercitos = new ArmyView(835,284,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(835,284,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Itália":
-					exercitos = new ArmyView(732,285,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(732,285,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 
 				// //África
 				case "Egito":
-					exercitos = new ArmyView(800,446,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(800,446,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Argélia":
-					exercitos = new ArmyView(629,432,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(629,432,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Nigéria":
-					exercitos = new ArmyView(670,489,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(670,489,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Somália":
-					exercitos = new ArmyView(871,554,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(871,554,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Angola":
-					exercitos = new ArmyView(772,600,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(772,600,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "África do Sul":
-					exercitos = new ArmyView(809,660,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(809,660,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 
 				// //Ásia
 				case "Estônia":
-					exercitos = new ArmyView(944,150,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(944,150,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Letônia":
-					exercitos = new ArmyView(970,209,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(970,209,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Rússia":
-					exercitos = new ArmyView(1100,184,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1100,184,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Sibéria":
-					exercitos = new ArmyView(1252,157,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1252,157,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Turquia":
-					exercitos = new ArmyView(1000,285,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1000,285,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Cazaquistão":
-					exercitos = new ArmyView(1150,249,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1150,249,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Japão":
-					exercitos = new ArmyView(1315,306,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1315,306,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Síria":
-					exercitos = new ArmyView(906,328,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(906,328,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Paquistão":
-					exercitos = new ArmyView(1049,379,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1049,379,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "China":
-					exercitos = new ArmyView(1131,341,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1131,341,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Mongólia":
-					exercitos = new ArmyView(1234,292,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1234,292,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Coreia do Norte":
-					exercitos = new ArmyView(1182,353,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1182,353,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Coreia do Sul":
-					exercitos = new ArmyView(1256,380,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1256,380,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Jordânia":
-					exercitos = new ArmyView(869,403,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(869,403,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Iraque":
-					exercitos = new ArmyView(945,410,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(945,410,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Irã":
-					exercitos = new ArmyView(1006,398,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1006,398,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Índia":
-					exercitos = new ArmyView(1106,411,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1106,411,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Bangladesh":
-					exercitos = new ArmyView(1194,412,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1194,412,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Tailândia":
-					exercitos = new ArmyView(1225,466,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1225,466,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Arábia Saudita":
-					exercitos = new ArmyView(946,486,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(946,486,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 
 				// //Oceania
 				case "Austrália":
-					exercitos = new ArmyView(1234,669,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1234,669,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Indonésia":
-					exercitos = new ArmyView(1283,590,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1283,590,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Perth":
-					exercitos = new ArmyView(1141,666,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1141,666,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 				case "Nova Zelândia":
-					exercitos = new ArmyView(1287,752,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(1287,752,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 					break;
 
 				default:
-					exercitos = new ArmyView(0,0,controller.getCorTerritorio(t), controller.getQtdExercitos(t).toString(), controller.getQtdExercitosAntigos(t).toString());
+					armies = new ArmyView(0,0,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getQtdExercitosAntigos(t).toString());
 
 
 			}
@@ -542,39 +542,39 @@ public class MapView extends JPanel implements Observer{
 			// Restaurar quantidade original no início do loop
 
 			// Atualizar o número total de exercítos antes do incremento da rodada
-			if (somaAtualExercitos==0) {
-				somaExInicio = getQntExTotal(armyList); //17
+			if (currentArmySum==0) {
+				firstArmySum = getNumArmiesTotal(armyList); //17
 			}
-			int somaExAtual = getQntExTotal(armyList);//17
+			int somaExAtual = getNumArmiesTotal(armyList);//17
 
-			somaAtualExercitos = somaExAtual - somaExInicio;//0
+			currentArmySum = somaExAtual - firstArmySum;//0
 
 			// Calcular a quantidade máxima de exércitos permitidos
-			int quantidadeMaximaExercitos = controller.getQuantidadeTerritoriosJogador(corDoJogadorEscolhida) / 2;
+			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2;
 
 			// Verificar se a soma atual não excede a quantidade máxima permitida
 			for (ArmyView army : armyList) {
 				Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
 						// Salvar a quantidade original antes de incrementar
 				int quantidadeOriginal = Integer.parseInt(army.getQntExercitosAntigo());
-				int quantidadeAtualizada = Integer.parseInt(army.getQntExercitos());
+				int quantidadeAtualizada = Integer.parseInt(army.getNumArmies());
 
 				if (bolinha.contains(mouseX, mouseY)) {
-					if (somaAtualExercitos <  quantidadeMaximaExercitos) {
+					if (currentArmySum <  quantidadeMaximaExercitos) {
 
 						String territorioNome = territoryMapping.get(bolinha);
-						PlayerColor corDoTerritorio = controller.getCorTerritorio(territorioNome);
+						PlayerColor corDoTerritorio = controller.getTerritoryColor(territorioNome);
 
 						// Verificar se a cor do território é igual à cor do jogador
-						if (corDoTerritorio == corDoJogadorEscolhida) {
+						if (corDoTerritorio == playerSelectedColor) {
 
-							somaAtualExercitos++;
+							currentArmySum++;
 
 							// Incrementar o número de exércitos no território ao clicar na bolinha
-							int novoQtdExercitos = quantidadeAtualizada + 1;
+							int newArmies = quantidadeAtualizada + 1;
 							System.out.println("quant atual " + quantidadeAtualizada);
 
-							controller.incrementarExercitos(territorioNome, 1);
+							controller.incrementArmies(territorioNome, 1);
 
 							// Atualizar a quantidade de exércitos na bolinha
 							army.setNumArmies(String.valueOf(newArmies));
@@ -588,7 +588,7 @@ public class MapView extends JPanel implements Observer{
 						}
 					}
 					else {
-						army.setQntExercitos(String.valueOf(quantidadeOriginal));
+						army.setNumArmies(String.valueOf(quantidadeOriginal));
 						System.out.println("quantidade original" + quantidadeOriginal);
 						repaint();
 						break;
