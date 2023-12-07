@@ -188,6 +188,24 @@ public class API {
         return null;
     }
 
+    // Retorna quantidade de exércitos que tem em um território
+        public Integer getQntExTerritorioAntigos(String territorio) {
+            // Obtém a lista de territórios do objeto Map
+            List<Territory> territories = map.getTerritoriesList();
+
+            // Percorre a lista de territórios
+            for (Territory territory : territories) {
+                // Verifica se o nome do território é igual ao território desejado
+                if (territory.getName().equals(territorio)) {
+                    // Retorna a quantidade de exércitos do território encontrado
+                    return territory.getInicialArmie();
+                }
+            }
+            // Retorna null se o território não for encontrado
+            return null;
+        }
+
+
      // Atualiza a quantidade de exércitos em um território
      public void incrementarQntExTerritorio(String territorio, int count) {
         // Obtém a lista de territórios do objeto Map

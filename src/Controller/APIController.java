@@ -83,6 +83,11 @@ public class APIController {
         return api.getQntExTerritorio(t);
     }
 
+    public Integer getQtdExercitosAntigos(String t){
+        return api.getQntExTerritorioAntigos(t);
+    }
+
+
     // Método que retorna a cor de um território
     public PlayerColor getCorTerritorio(String t){
         return api.getCorTerritorio(t);
