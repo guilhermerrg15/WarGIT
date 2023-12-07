@@ -49,8 +49,8 @@ public class APIController {
         
     }
 
-    public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
-        return API.getInstance().getQuantidadeTerritoriosJogador(corDoJogador);
+    public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
+        return API.getInstance().getNumTerritoryPlayer(corDoJogador);
     }
 
      //get vez do jogador
@@ -69,14 +69,14 @@ public class APIController {
     }
 
     // Método que retorna a lista de territórios do jogo
-    public String[] getTerritoriosLista(){
-        return api.getTerritoriosLista();
+    public String[] getTerritoriesList(){
+        return api.getTerritoriesList();
     }
 
     
      // Método chamado quando ocorre o clique na bolinha
-     public void incrementarExercitos(String territorio, int count) {
-        api.incrementarQntExTerritorio(territorio, count);
+     public void incrementArmies(String territorio, int count) {
+        api.incrementarNumArmiesTerritory(territorio, count);
     }
 
     public Integer getNumArmiesTerritory(String t){

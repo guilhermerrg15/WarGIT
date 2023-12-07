@@ -106,17 +106,17 @@ class ArmyView extends JComponent {
 
 	private Color getColorFromPlayerColor(PlayerColor playerColor) {
 		switch (playerColor) {
-			case AMARELO: 
+			case YELLOW: 
 				return Color.YELLOW;
-			case AZUL: 
+			case BLUE: 
 				return Color.BLUE;
-			case BRANCO:
+			case WHITE:
 				return Color.WHITE;
-			case PRETO: 
+			case BLACK: 
 				return Color.BLACK;
-			case VERMELHO: 
+			case RED: 
 				return Color.RED;
-			case VERDE:
+			case GREEN:
 				return Color.GREEN;
 			default: 
 			return Color.BLACK;
@@ -129,12 +129,12 @@ class ArmyView extends JComponent {
 	}
 
 	//Retorna a quantidade de exércitos
-	public String getQntExercitos() {
+	public String getNumArmies() {
 		return qntExercitos;
 	}
 
 	//Altera a quantidade de exércitos
-	public void setQntExercitos(String qntExercitos) {
+	public void setNumArmies(String qntExercitos) {
 		this.qntExercitos = qntExercitos;
 	}	
 }

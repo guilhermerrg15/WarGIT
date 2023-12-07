@@ -44,7 +44,7 @@ public class API {
 
 
     // Método para obter a quantidade de territórios de um jogador específico
-    public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
+    public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
         int quantidadeTerritorios = 0;
 
         // Obtém a lista de territórios do objeto Map
@@ -65,7 +65,7 @@ public class API {
 
         // Obtém a lista de territórios do objeto Map
         ArrayList<Territory> territories = map.getTerritoriesList();
-        String[] territoryList = new String[getQuantidadeTerritoriosJogador(corDoJogador)];
+        String[] territoryList = new String[getNumTerritoryPlayer(corDoJogador)];
 
         // Adiciona na lista os nomes dos territórios
     	for (Territory t: territories) {
@@ -141,7 +141,7 @@ public class API {
     }
 
      // Retorna lista de nomes de territórios
-     public String[] getTerritoriosLista() {
+     public String[] getTerritoriesList() {
 		String [] terr = new String[51]; 
 		int cont = 0;
 		for (Territory t: map.getTerritoriesList()) {
@@ -189,7 +189,7 @@ public class API {
     }
 
      // Atualiza a quantidade de exércitos em um território
-     public void incrementarQntExTerritorio(String territorio, int count) {
+     public void incrementarNumArmiesTerritory(String territorio, int count) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
 

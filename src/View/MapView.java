@@ -277,21 +277,21 @@ public class MapView extends JPanel implements Observer{
 
 
 	// Atualiza view no início da rodada de posicionamento para atualizar os jogadores atacantes
-	public void updateAttackers(String[] atacantes){
+	public void updateAttackers(String[] attackers){
 		// Esvazia a comboBox de atacantes e adiciona os novos territórios
 		attackingTerritories.removeAllItems();
 
-		for (String s: atacantes){
+		for (String s: attackers){
 			attackingTerritories.addItem(s);
 		}
 	}
 	
 	// Atualiza os territórios a serem atacados a partir do território selecionado
-	public void updateDefenders(String[] defensores){
+	public void updateDefenders(String[] defenders){
 		// Esvazia a comboBox de defensores e adiciona os novos territórios
 		defendingTerritories.removeAllItems();
 
-		for (String s: defensores){
+		for (String s: defenders){
 			defendingTerritories.addItem(s);
 		}
 	}
@@ -325,7 +325,7 @@ public class MapView extends JPanel implements Observer{
     // Instancia os objetos dos exércitos
 	void createArmies(Graphics2D g2d) {
 		//Pega a lista de territórios
-		this.territories = controller.getTerritoriosLista();
+		this.territories = controller.getTerritoriesList();
 		ArmyView armies;
 		
 		//Verifica qual o território e desenha o exército na posição correta
@@ -514,20 +514,20 @@ public class MapView extends JPanel implements Observer{
 
     // Retorna quantidade de exércitos que tem em um território
     public Integer getNumArmiesTotal(ArrayList<ArmyView> armyList) {
-		int somaTotalEx = 0;
+		int sumArmies = 0;
 		for (ArmyView army : armyList) {
 			if (controller.getTerritoryColor(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == playerSelectedColor) {
-				somaTotalEx += Integer.parseInt(army.getQntExercitos());
+				sumArmies += Integer.parseInt(army.getNumArmies());
 			}
 		}
-		return somaTotalEx;
+		return sumArmies;
     }
 
 	// fazer uma logica aqui para se o numero de exercitos chegar no máximo, trocar de jogador
 	private void handleBallClick(int mouseX, int mouseY) {
 		if (addTroopsMode) {
 			// Restaurar quantidade original no início do loop
-			int quantidadeOriginal = 0;
+			int originalNum = 0;
 
 			// Atualizar o número total de exercítos antes do incremento da rodada
 			if (currentArmySum == 0) {
@@ -539,27 +539,27 @@ public class MapView extends JPanel implements Observer{
 			currentArmySum = currentArmySum - firstArmySum;
 
 			// Calcular a quantidade máxima de exércitos permitidos
-			int quantidadeMaximaExercitos = controller.getQuantidadeTerritoriosJogador(playerSelectedColor) / 2;
+			int maxArmies = controller.getNumTerritoryPlayer(playerSelectedColor) / 2;
 			
 			// Verificar se a soma atual não excede a quantidade máxima permitida
-			if (currentArmySum <  quantidadeMaximaExercitos) {
+			if (currentArmySum <  maxArmies) {
 				for (ArmyView army : armyList) {
-					Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
-					if (bolinha.contains(mouseX, mouseY)) {
-						String territorioNome = territoryMapping.get(bolinha);
-						PlayerColor corDoTerritorio = controller.getTerritoryColor(territorioNome);
+					Ellipse2D ball = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
+					if (ball.contains(mouseX, mouseY)) {
+						String territoryName = territoryMapping.get(ball);
+						PlayerColor territoryColor = controller.getTerritoryColor(territoryName);
 
 						// Verificar se a cor do território é igual à cor do jogador
-						if (corDoTerritorio == playerSelectedColor) {
+						if (territoryColor == playerSelectedColor) {
 							// Salvar a quantidade original antes de incrementar
-							quantidadeOriginal = Integer.parseInt(army.getQntExercitos());
+							originalNum = Integer.parseInt(army.getNumArmies());
 
 							// Incrementar o número de exércitos no território ao clicar na bolinha
-							int novoQtdExercitos = quantidadeOriginal + 1;
-							controller.incrementarExercitos(territorioNome, 1);
+							int newArmies = originalNum + 1;
+							controller.incrementArmies(territoryName, 1);
 
 							// Atualizar a quantidade de exércitos na bolinha
-							army.setQntExercitos(String.valueOf(novoQtdExercitos));
+							army.setNumArmies(String.valueOf(newArmies));
 
 							// Atualizar a exibição
 							repaint();
@@ -573,9 +573,9 @@ public class MapView extends JPanel implements Observer{
 				currentArmySum++;
 			} else {
 				for (ArmyView army : armyList) {
-					Ellipse2D bolinha = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
-					if (bolinha.contains(mouseX, mouseY)) {
-						army.setQntExercitos(String.valueOf(quantidadeOriginal));
+					Ellipse2D ball = new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22);
+					if (ball.contains(mouseX, mouseY)) {
+						army.setNumArmies(String.valueOf(originalNum));
 						break;
 					}
 				}
@@ -598,17 +598,17 @@ public class MapView extends JPanel implements Observer{
 
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
         switch (playerColor) {
-            case AMARELO:
+            case YELLOW:
                 return Color.YELLOW;
-            case AZUL:
+            case BLUE:
                 return Color.BLUE;
-            case BRANCO:
+            case WHITE:
                 return Color.WHITE;
-            case PRETO:
+            case BLACK:
                 return Color.BLACK;
-            case VERMELHO:
+            case RED:
                 return Color.RED;
-            case VERDE:
+            case GREEN:
                 return Color.GREEN;
             default:
                 return Color.BLACK; 
