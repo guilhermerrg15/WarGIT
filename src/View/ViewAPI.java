@@ -3,6 +3,7 @@ package View;
 
 import javax.swing.JOptionPane;
 
+import Controller.APIController;
 import Model.PlayerColor;
 
 // import Controller.TabuleiroObservador;
@@ -16,6 +17,9 @@ public class ViewAPI {
 
     // Singleton
     StartView start = StartView.getStartView();
+
+    // Singleton
+    APIController controller = APIController.getInstance();
 
     // Pegar primeiro jogador
     public void determinaPrimeiroJogador(String nome, PlayerColor cor){
@@ -88,11 +92,12 @@ public class ViewAPI {
 		return nomesJogadores;
 	}
 
+    // Fim de jogo
     public void showWin(String nome) {
 
         JOptionPane.showMessageDialog(null, nome + " ganhou o jogo!", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
 		if (JOptionPane.showConfirmDialog(null, "Deseja continuar jogando?", "Fim de jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			// APIController.getInstance().reiniciarJogo();
+			APIController.getInstance().reiniciarJogo();
 		} else {
 			System.exit(0);
 		}
