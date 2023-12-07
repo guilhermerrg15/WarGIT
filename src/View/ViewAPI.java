@@ -20,23 +20,23 @@ public class ViewAPI {
     StartView start = StartView.getStartView();
 
     // Pegar primeiro jogador
-    public void determinaPrimeiroJogador(String nome, PlayerColor cor){
-		MapView.getMapView().determinaPrimeiroJogador(nome, cor);
+    public void determineFirstPlayer(String nome, PlayerColor cor){
+		MapView.getMapView().determineFirstPlayer(nome, cor);
 	}
     //Muda o jogador atual
-	public void mudaJogador(String jogador, PlayerColor cor){
-		MapView.getMapView().mudaJogador(jogador, cor);
+	public void mudaJogador(String player, PlayerColor color){
+		MapView.getMapView().changePlayer(player, color);
 	}
 
     //Atalixa os territorios atancantes no painel de ataque
 	public void atualizaAtacantes(String[] atacantes){
 		// MapView.getMapView().mudaParaAtaque();
-		MapView.getMapView().atualizaAtacantes(atacantes);
+		MapView.getMapView().updateAttackers(atacantes);
 	}
 
     //Atualiza os territorios defensores no painel de ataque
 	public void atualizaDefensores(String[] defensores){
-		MapView.getMapView().atualizaDefensores(defensores);
+		MapView.getMapView().updateDefenders(defensores);
 	}
 
     private ViewAPI() {
@@ -47,21 +47,21 @@ public class ViewAPI {
 
 		//Verifica a cor do jogador
 		switch (cor) {
-			case AMARELO:
+			case YELLOW:
                 nomeCor = "Amarelo";
                 break;
-            case AZUL:
+            case BLUE:
                 nomeCor = "Azul";
                 break;
-            case BRANCO:
+            case WHITE:
                 nomeCor = "Branco";
                 break;               
-            case PRETO:
+            case BLACK:
                 nomeCor = "Preto";
                 break;
-            case VERMELHO:
-                
-            case VERDE:
+            case RED:
+                nomeCor = "Vermelho";
+            case GREEN:
                 nomeCor = "Verde";
                 break;
             default:

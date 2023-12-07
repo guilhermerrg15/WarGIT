@@ -66,7 +66,7 @@ class DiceView extends JPanel{
 	}
 
 	//Mostra os dados de ataque e defesa na tela
-	public void mostrarDados(int[] dadosAtaque, int[] dadosDefesa) {
+	public void showDices(int[] dadosAtaque, int[] dadosDefesa) {
 		ataque1 = dadoAtacante[dadosAtaque[0]];
 		ataque2 = dadoAtacante[dadosAtaque[1]];
 		ataque3 = dadoAtacante[dadosAtaque[2]];
