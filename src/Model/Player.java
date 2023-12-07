@@ -22,6 +22,11 @@ public class Player  {
     protected List<Army> continentalArmies;
     //Guarda a quantidade de territórios em sua posse
 	private int numTerritories = 0;  
+    //Guarda se o jogador foi eliminado nessa rodada
+	private boolean eliminadoNessaRodada = false; 
+	private Player jMatou;
+    //Guarda se o jogador conquistou um território nessa rodada
+	private boolean conquistouNessaRodada = false; 
     
 
     
@@ -67,17 +72,21 @@ public class Player  {
     }
 
     // Resetar o jogador
-    public void reset(TerritoryCardDeck territoryCardDeck, ObjectiveCardDeck objectiveCardDeck) {
-        this.conqueredTerritory = false;
+    public void reset() {
+		this.territories.clear();
+		this.objective = null;
+		this.eliminadoNessaRodada = false;
+		this.conquistouNessaRodada = false;
         this.enemy = null;
+        this.conqueredTerritory = false;
+        
         this.armies = 0;
+        this.eliminadoNessaRodada = false;
+		this.conquistouNessaRodada = false;
 
-        for(TerritoryCard territoryCard : this.territoryCards) {
-            territoryCardDeck.returnCard(territoryCard);
-        }
-
-        objectiveCardDeck.returnObjectiveCard(objective); // verificar se é objective
-        this.objective = null;
+        // for(TerritoryCard territoryCard : this.territoryCards) {
+        //     territoryCardDeck.returnCard(territoryCard);
+        // }
         this.territoryCards.clear();
         this.territories.clear();
     }
@@ -159,6 +168,25 @@ public class Player  {
         territories.add(territory);
     }
 
+
+    //Altera se o jogador foi eliminado nessa rodada para verificação de objetivos
+    public void setEliminadoNessaRodada(boolean eliminadoNessaRodada) {
+        this.eliminadoNessaRodada = eliminadoNessaRodada;
+    }
+
+    //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
+	public void setConquistouNessaRodada(boolean conquistouNessaRodada) {
+		this.conquistouNessaRodada = conquistouNessaRodada;
+	}
+
+    public Player getJMatou() {
+		return jMatou;
+	}
+
+	public void setJMatou(Player jMatou) {
+		this.jMatou = jMatou;
+	}
+
     public boolean verifyDestroyed() {
         if (territories.isEmpty()) {
             return false;
@@ -227,26 +255,6 @@ public class Player  {
             this.armies = 1;
         }
     }
-
-    ////metodos que precisam da classe exercitoRegiao
-    
-    // public int getArmyRegion(String continent) {
-        //precisa da classe exercitoRegiao
-    // }
-
-    /////
-
-    // public void switchTerritoryArmies(List<String> territories, TerritoryCardDeck territoryCardDeck) {
-    //     List<TerritoryCard> cards = new ArrayList<TerritoryCard>();
-    //     for(String territory: territories) {
-    //         for(TerritoryCard card: territoryCards) {
-    //             if(card.getTerritory().getName().equals(territory)) {
-    //                 cards.add(card);
-    //             }
-    //         }
-    //     }
-    // }
-
 
 
     // Posicionar exércitos ao final de uma conquista

@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * A classe Dado representa um dado utilizado no jogo.
  * Este dado é usado para simular lançamentos de dados para ataques e defesas.
  */
-public class Dado {
+class Dado {
     private static int valor;
 
     Dado() {} // Construtor privado para impedir a criação de instâncias
@@ -21,7 +21,7 @@ public class Dado {
      *
      * @return O valor do dado após o lançamento.
      */
-    public static int jogaDado() {
+    public int jogaDado() {
         valor = Math.abs((ThreadLocalRandom.current().nextInt()) % 6) + 1;
         return valor;
     }
@@ -35,29 +35,29 @@ public class Dado {
         return valor;
     }
 
-    // Lançamento de dados de ataque
-    protected List<Integer> rollDiceAttack(int attackDiceNumber) {
-        List<Integer> diceValuesAttack = new ArrayList<>();
+    // // Lançamento de dados de ataque
+    // protected List<Integer> rollDiceAttack(int attackDiceNumber) {
+    //     List<Integer> diceValuesAttack = new ArrayList<>();
         
-        for(int i = 0; i < attackDiceNumber; i++) {
-            int random = jogaDado();
-            diceValuesAttack.add(random);
-        }
+    //     for(int i = 0; i < attackDiceNumber; i++) {
+    //         int random = jogaDado();
+    //         diceValuesAttack.add(random);
+    //     }
 
-        return diceValuesAttack;
-    }
+    //     return diceValuesAttack;
+    // }
 
-    // Lançamento de dados de defesa
-    protected List<Integer> rollDiceDefense(int defenseDiceNumber) {
-        List<Integer> diceValuesDefense = new ArrayList<>();
+    // // Lançamento de dados de defesa
+    // protected List<Integer> rollDiceDefense(int defenseDiceNumber) {
+    //     List<Integer> diceValuesDefense = new ArrayList<>();
 
-        for(int i = 0; i < defenseDiceNumber; i++) {
-            int random = jogaDado();
-            diceValuesDefense.add(random);
-        }
+    //     for(int i = 0; i < defenseDiceNumber; i++) {
+    //         int random = jogaDado();
+    //         diceValuesDefense.add(random);
+    //     }
 
-        return diceValuesDefense;
-    }
+    //     return diceValuesDefense;
+    // }
 }
 
 

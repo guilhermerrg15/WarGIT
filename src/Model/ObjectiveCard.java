@@ -1,6 +1,6 @@
 package Model;
 
-public abstract class ObjectiveCard {
+abstract class ObjectiveCard {
     protected String description;
     protected Player owner;
     protected String image; 
@@ -22,7 +22,5 @@ public abstract class ObjectiveCard {
     	return this.name;
     }
 
-    //ele cria um baralho de Objetivos
-
-    abstract public boolean checkStatus();
+    public abstract boolean checkStatus();
 }

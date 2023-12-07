@@ -39,6 +39,8 @@ public class MapView extends JPanel implements Observer{
 	int somaAtualExercitos = 0;
 	int somaExInicio = 0;
 	private boolean firstRound = true;
+	API api = API.getInstance();
+
 
     //Jogador da vez e cor do jogador
 	String jogadorDaVez;
@@ -62,6 +64,9 @@ public class MapView extends JPanel implements Observer{
     //Lista de territórios no jogo
 	String[] territorios;
 
+	//Painel dos dados
+	DiceView diceView = new DiceView();
+
 	JComboBox<String> territoriosAtacante;
 	JComboBox<String> territoriosDefesa;
 
@@ -78,7 +83,8 @@ public class MapView extends JPanel implements Observer{
 		// Configurar a posição e tamanho dos JComboBox
         territoriosAtacante.setBounds(1250, 200, 200, 30);
         territoriosDefesa.setBounds(1250, 250, 200, 30);
-
+		 
+		
         // Adicionar JComboBox ao painel
         add(territoriosAtacante);
         add(territoriosDefesa);
@@ -89,6 +95,7 @@ public class MapView extends JPanel implements Observer{
         JPanel buttonPanel = new JPanel();
         // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.LEFT));  
+		
 		
 		
         
@@ -112,6 +119,9 @@ public class MapView extends JPanel implements Observer{
         add(jogadorDaVezLabel);
 
 		
+		//Cria e adiciona o painel dos dados
+		diceView.setBounds(1250,350,200,200);
+		add(diceView);
 		
 
 		placeArmyButton.addActionListener(new ActionListener() {
@@ -146,6 +156,26 @@ public class MapView extends JPanel implements Observer{
 				controller.selecionouAtacante((String) territoriosAtacante.getSelectedItem());
 	        }
 		}); 
+
+		//Adiciona ação ao clicar no botão de jogar os dados
+		playDicesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int [] dadosAtaque = new int [3];
+				int [] dadosDefesa = new int [3];
+
+				//Chama a função de jogar os dados
+				int[] valoresDado = api.realizaAtaque(territoriosAtacante.getSelectedItem().toString(), territoriosDefesa.getSelectedItem().toString());
+				dadosAtaque[0] = valoresDado[0];
+				dadosAtaque[1] = valoresDado[1];
+				dadosAtaque[2] = valoresDado[2];
+				dadosDefesa[0] = valoresDado[3];
+				dadosDefesa[1] = valoresDado[4];
+				dadosDefesa[2] = valoresDado[5];
+				
+				//Mostra os dados na tela
+				diceView.mostrarDados(dadosAtaque, dadosDefesa);
+			}
+		});
 
 		
 
@@ -258,7 +288,6 @@ public class MapView extends JPanel implements Observer{
 	public void atualizaAtacantes(String[] atacantes){
 		// Esvazia a comboBox de atacantes e adiciona os novos territórios
 		territoriosAtacante.removeAllItems();
-	
 
 		for (String s: atacantes){
 			territoriosAtacante.addItem(s);
@@ -594,6 +623,7 @@ public class MapView extends JPanel implements Observer{
         }
     }
 
+	//precisa ser feito
     @Override
     public void notify(Observed o){
     }

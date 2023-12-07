@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 
 import Controller.APIController;
 import Model.PlayerColor;
+import java.awt.Color;
 
 // import Controller.TabuleiroObservador;
 
@@ -43,38 +44,37 @@ public class ViewAPI {
 
     private ViewAPI() {
     }
+	//Verifica se o jogador ganhou a partida
+	public void jogadorGanhou(String nome, PlayerColor cor){
+		String nomeCor;
 
-    public void exibirNomeTerritorio(String territorioNome, PlayerColor corDoTerritorio) {
-        // Converte a cor do território para um formato mais legível
-        String corFormatada = corDoTerritorio.toString().toLowerCase();
-    
-        // Exibe um JOptionPane com o nome e a cor do território
-        JOptionPane.showMessageDialog(null, "Território: " + territorioNome + "\nCor: " + corFormatada, "Informação do Território", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    public void iniciaNovaRodada(int round) {
-        // Exibe uma mensagem informando o início de uma nova rodada
-        JOptionPane.showMessageDialog(null, "Início da Rodada " + round, "Nova Rodada", JOptionPane.INFORMATION_MESSAGE);
+		//Verifica a cor do jogador
+		switch (cor) {
+			case AMARELO:
+                nomeCor = "Amarelo";
+                break;
+            case AZUL:
+                nomeCor = "Azul";
+                break;
+            case BRANCO:
+                nomeCor = "Branco";
+                break;
+            case PRETO:
+                nomeCor = "Preto";
+                break;
+            case VERMELHO:
 
-        // Adicione aqui qualquer lógica específica que você deseja executar no início de uma nova rodada na interface gráfica.
-        // Isso pode incluir atualizações visuais, reinicialização de contadores, etc.
-    }
-    public void iniciaAtaque(int round) {
-        // Exibe uma mensagem informando o início de uma nova rodada
-        JOptionPane.showMessageDialog(null, "Ataque " + round, "Nova Rodada", JOptionPane.INFORMATION_MESSAGE);
+            case VERDE:
+                nomeCor = "Verde";
+                break;
+            default:
+                nomeCor = "Preto";
+                break;
 
-        // Adicione aqui qualquer lógica específica que você deseja executar no início de uma nova rodada na interface gráfica.
-        // Isso pode incluir atualizações visuais, reinicialização de contadores, etc.
-    }
+        }
+		showWin(nome, nomeCor);
+	}
 
-    public void iniciaRealocacao() {
-        // Exibe uma mensagem informando o início da fase de realocação
-        JOptionPane.showMessageDialog(null, "Início da Fase de Realocação", "Realocação", JOptionPane.INFORMATION_MESSAGE);
-
-        // Adicione aqui qualquer lógica específica que você deseja executar no início da fase de realocação na interface gráfica.
-        // Isso pode incluir atualizações visuais, instruções para o jogador, etc.
-    }
-    
 
     public static ViewAPI getInstance() {
         if (apiInstance == null) {
@@ -92,10 +92,9 @@ public class ViewAPI {
 		return nomesJogadores;
 	}
 
-    // Fim de jogo
-    public void showWin(String nome) {
+    public void showWin(String nome, String cor) {
 
-        JOptionPane.showMessageDialog(null, nome + " ganhou o jogo!", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, nome + "de cor" + cor + "ganhou o jogo!", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
 		if (JOptionPane.showConfirmDialog(null, "Deseja continuar jogando?", "Fim de jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			APIController.getInstance().reiniciarJogo();
 		} else {
@@ -103,17 +102,4 @@ public class ViewAPI {
 		}
     }
 
-    // public void initGame() {
-    //     new JanelaInicial();
-    // }
-
-    // public String getImagesPath() {
-    //     return this.imagesPath;
-    // }
-
-    // public void redraw() {
-    //     // TODO
-    // }
-    // public TabuleiroObservador getTabuleiroObservador() {
-    //     return null;
-    }
+}
