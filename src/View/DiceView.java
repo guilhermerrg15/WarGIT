@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-class DiceView extends JPanel{
-    
-    Image[] dadoAtacante = new Image[7];
+class DiceView {
+
+	Image[] dadoAtacante = new Image[7];
 
 	//Array de imagens dos dados de defesa
 	Image[] dadoDefensor = new Image[7];
@@ -55,14 +55,20 @@ class DiceView extends JPanel{
 	}
 	
 	//Desenha as imagens dos dados
-	public void paintComponent(Graphics g) {
+	public void drawDices(Graphics g) {
+		System.out.println("--------------------Entrou no PaintComponent--------------------");
 		g2d = (Graphics2D) g;
-		g2d.drawImage(ataque1,0,10,50,50,null);
-		g2d.drawImage(ataque2,0,60,50,50,null);
-		g2d.drawImage(ataque3,0,110,50,50,null);
-		g2d.drawImage(defesa1,50,10,50,50,null);
-		g2d.drawImage(defesa2,50,60,50,50,null);
-		g2d.drawImage(defesa3,50,110,50,50,null);
+
+		int dimension = 50;
+		int diceSpacing = 10;
+
+		// showDices(null, null);
+		g2d.drawImage(ataque1,20,40,dimension,dimension,null);
+		g2d.drawImage(ataque2,20 + dimension + diceSpacing,40,dimension,dimension,null);
+		g2d.drawImage(ataque3,20 + (dimension + diceSpacing)*2,40,dimension,dimension,null);
+		g2d.drawImage(defesa1,20,40+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa2,20 + dimension + diceSpacing,40+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa3,20 + (dimension + diceSpacing)*2,40+dimension+diceSpacing,dimension,dimension,null);
 	}
 
 	//Mostra os dados de ataque e defesa na tela

@@ -117,11 +117,6 @@ public class MapView extends JPanel implements Observer{
         add(currentPlayerLabel);
 
 
-		//Cria e adiciona o painel dos dados
-		diceView.setBounds(1250,350,200,200);
-		add(diceView);
-
-
 		placeArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,16 +157,17 @@ public class MapView extends JPanel implements Observer{
 				int [] dicesDefense = new int [3];
 
 				//Chama a função de jogar os dados
-				int[] diceValues= api.makeAttack(attackingTerritories.getSelectedItem().toString(), defendingTerritories.getSelectedItem().toString());
-				dicesAttack[0] = diceValues[0];
-				dicesAttack[1] = diceValues[1];
-				dicesAttack[2] = diceValues[2];
-				dicesDefense[0] = diceValues[3];
-				dicesDefense[1] = diceValues[4];
-				dicesDefense[2] = diceValues[5];
+				// int[] diceValues= api.makeAttack(attackingTerritories.getSelectedItem().toString(), defendingTerritories.getSelectedItem().toString());
+				dicesAttack[0] = 1;
+				dicesAttack[1] = 2;
+				dicesAttack[2] = 3;
+				dicesDefense[0] = 4;
+				dicesDefense[1] = 5;
+				dicesDefense[2] = 6;
 
-				//Mostra os dados na tela
+				// Mostra os dados na tela
 				diceView.showDices(dicesAttack, dicesDefense);
+				repaint();
 			}
 		});
 
@@ -197,17 +193,12 @@ public class MapView extends JPanel implements Observer{
             }
         });
 
-
 		try {
 			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
             // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 
     public void paintComponent(Graphics graphic) {
@@ -250,6 +241,9 @@ public class MapView extends JPanel implements Observer{
         	int centerY = (getHeight() - cardHeight) / 2;
 			this.g.drawImage(objectiveCard, centerX, centerY, 350, 500, null);
 		}
+
+		// Desenhar imagem dos dados
+		diceView.drawDices(graphic);
     }
 
 
