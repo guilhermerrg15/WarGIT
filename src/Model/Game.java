@@ -112,15 +112,17 @@ class Game implements Observed{
 		return false;
 	}
 
-    //Realiza um ataque -> colocar na API jogo (ou classe jogo)
-	public int[] RealizaAtaque(Territory atacante,Territory defensor, Integer numAtaque, Integer numDefesa) {
-		
+	//olhar de novo essa classe até a 191 ta certa acho que não está passando certo para a view
+    //Realiza um ataque 
+	public int[] RealizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
+		System.out.println("entrei no ataque");
 		if(VerificarAtaque(atacante, defensor)){
 			//Verifica se o atacante tem mais de 3 exércitos
 			int qtdAtaque = atacante.getArmies() - 1;
 			if  (qtdAtaque > 3) {qtdAtaque = 3;}
 
 			//Verifica se o defensor tem mais de 3 exércitos
+			//ta dando 17 exercitos sendo que tem 9
 			int qtdDefesa = defensor.getArmies();
 			if  (qtdDefesa > 3) {qtdDefesa = 3;}
 
@@ -135,6 +137,7 @@ class Game implements Observed{
 			
 			int i;
 			//Verifica se o jogador escolheu um número forçado
+			//acho que não precisa desse if -> tirei esse forçado
 			if (numAtaque != 0){
 				for (i = 0;i < 3;i++) {
 					if (i < qtdAtaque)
@@ -153,6 +156,8 @@ class Game implements Observed{
 				//Ordena os dados se for aleatório
 				Arrays.sort(dadosAtaque);
 			}
+
+			//debugar essa parte de novo
 			if (numDefesa != 0){
 				for (i = 0;i < 3;i++) {
 					if (i < qtdDefesa)
