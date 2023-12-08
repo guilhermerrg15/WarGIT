@@ -63,6 +63,7 @@ class DiceView extends JPanel{
 		g2d.drawImage(defesa1,50,10,50,50,null);
 		g2d.drawImage(defesa2,50,60,50,50,null);
 		g2d.drawImage(defesa3,50,110,50,50,null);
+		System.out.println("dados");
 	}
 
 	//Mostra os dados de ataque e defesa na tela
