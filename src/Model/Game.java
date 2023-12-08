@@ -112,7 +112,7 @@ class Game implements Observed{
 		return false;
 	}
 
-	//olhar de novo essa classe até a 191 ta certa acho que não está passando certo para a view
+	//olhar de novo essa classe, até a 191 ta certa acho que não está passando certo para a view
     //Realiza um ataque 
 	public int[] RealizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
 		System.out.println("entrei no ataque");

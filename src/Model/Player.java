@@ -76,7 +76,7 @@ public class Player  {
 		this.eliminadoNessaRodada = false;
 		this.conquistouNessaRodada = false;
         this.conqueredTerritory = false;
-        
+        this.numTerritories =0;
         this.armies = 0;
         this.eliminadoNessaRodada = false;
 		this.conquistouNessaRodada = false;
@@ -152,12 +152,14 @@ public class Player  {
     }
 
     public int getTerritoryNumber() {
-        return territories.size();
+        return numTerritories;
     }
     
     
     public void loseTerritory(Territory territory) {
         territories.remove(territory);
+
+        this.numTerritories--;
     }
 
     public void winTerritory(Territory territory) {
