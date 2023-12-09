@@ -109,7 +109,7 @@ public class APIController {
         } else {
             // view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
             territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-            if (numArmiesReplacement != null) {
+            if (territoriesReplacementName != null) {
                 numArmiesReplacement = new Integer[territoriesReplacementName.length];
             }
             for (int i = 0; i < territoriesReplacementName.length; i++){
