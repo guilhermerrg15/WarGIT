@@ -265,13 +265,13 @@ public class MapView extends JPanel implements Observer{
 			reposicionarButton.setVisible(false);
 
 		} else {
-			attackingTerritories.setVisible(true);
-			defendingTerritories.setVisible(true);
-			// originTerritories.setVisible(true);
-			// numReplacementBox.setVisible(true);
-			// destinyTerritories.setVisible(true);
-			// reposicionarButton.setVisible(true);
-			playDicesButton.setVisible(true);
+			// attackingTerritories.setVisible(true);
+			// defendingTerritories.setVisible(true);
+			originTerritories.setVisible(true);
+			numReplacementBox.setVisible(true);
+			destinyTerritories.setVisible(true);
+			reposicionarButton.setVisible(true);
+			// playDicesButton.setVisible(true);
 		}
 
 		if(showObjectiveCard) {
@@ -684,7 +684,7 @@ public class MapView extends JPanel implements Observer{
 	// Conferindo se o objeto recebido é do tipo esperado, podemos converter os tipos
 	if (infos[0] instanceof ArrayList<?> && infos[1] instanceof ArrayList<?> && infos[2] instanceof Integer && infos[3] instanceof Integer){
 		ArrayList<String> qtds = (ArrayList<String>) infos[0];
-		ArrayList<Color> cores = (ArrayList<Color>) infos[1];
+		ArrayList<PlayerColor> cores = (ArrayList<PlayerColor>) infos[1];
 		Integer mod1 = (Integer) infos[2];
 		Integer mod2 = (Integer) infos[3];
 
@@ -693,7 +693,7 @@ public class MapView extends JPanel implements Observer{
 			int cont = 0;
 			for(ArmyView e: armyList){
 				e.setNumArmies(qtds.get(cont));
-				e.setCor(cores.get(cont));
+				e.setCor(getColorFromPlayerColor(cores.get(cont)));
 				cont++;
 				//redesenhar todos os exércitos
 				e.repaint();
@@ -706,7 +706,7 @@ public class MapView extends JPanel implements Observer{
 			// Redesenha o primeiro modificado
 			ArmyView e = armyList.get(mod1);
 			e.setNumArmies(qtds.get(mod1));
-			e.setCor(cores.get(mod1));
+			e.setCor(getColorFromPlayerColor(cores.get(mod1)));
 			e.repaint();
 			e.drawPlayer(g);
 			repaint();
@@ -715,7 +715,7 @@ public class MapView extends JPanel implements Observer{
 			if (mod2 != -1){
 				e = armyList.get(mod2);
 				e.setNumArmies(qtds.get(mod2));
-				e.setCor(cores.get(mod2));
+				e.setCor(getColorFromPlayerColor(cores.get(mod2)));
 				e.repaint();
 				e.drawPlayer(g);
 			}

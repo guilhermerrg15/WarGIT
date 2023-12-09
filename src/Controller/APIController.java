@@ -104,20 +104,20 @@ public class APIController {
 
             return true;
         } else {
-            view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+            // view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
 
-            // territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-            // // Se tiver algum território com mais de 1 exército para reposicionar
-            // if (territoriesReplacementName != null) {
-            //     numArmiesReplacement = new Integer[territoriesReplacementName.length];
-            // }
-            // // Pega a quantidade de exércitos que pode reposicionar em cada território
-            // for (int i = 0; i < territoriesReplacementName.length; i++){
-            //     numArmiesReplacement[i] = (api.getNumArmiesTerritory(territoriesReplacementName[i]) - 1);
-            // }
+            territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+            // Se tiver algum território com mais de 1 exército para reposicionar
+            if (territoriesReplacementName != null) {
+                numArmiesReplacement = new Integer[territoriesReplacementName.length];
+            }
+            // Pega a quantidade de exércitos que pode reposicionar em cada território
+            for (int i = 0; i < territoriesReplacementName.length; i++){
+                numArmiesReplacement[i] = (api.getNumArmiesTerritory(territoriesReplacementName[i]) - 1);
+            }
 
-            // // Atualiza a view para reposicionamento
-            // view.updateReplacement(territoriesReplacementName);
+            // Atualiza a view para reposicionamento
+            view.updateReplacement(territoriesReplacementName);
             return false;
         }
     }
