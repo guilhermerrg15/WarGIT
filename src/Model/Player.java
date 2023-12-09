@@ -247,22 +247,6 @@ public class Player  {
         }
     }
 
-
-    // Posicionar exércitos ao final de uma conquista
-    public boolean placeArmy(int army, String destiny) {
-        if(army > this.armies) {
-            return false;
-        }
-        for (Territory territory : this.territories) {
-            if(territory.getName() == destiny) {
-                territory.addArmies(army);
-                this.armies -= army;
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void showTerritories() {
         for (Territory territory : this.territories) {
             System.out.println(territory.getName());
@@ -307,23 +291,6 @@ public class Player  {
                 territory.addArmies(num);
                 this.addContinentalArmy(continent, -num);
                 return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    // Posicionar exércitos em um território
-    public boolean placeArmy(Territory territory, int count) {
-        if(count > this.armies) {
-            return false;
-        }
-
-        for(Territory territory2 : this.territories) {
-            if(territory2.equals(territory)) {
-                territory.addArmies(count);
-                this.armies -= count;
             }
         }
 

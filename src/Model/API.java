@@ -251,7 +251,7 @@ public class API {
 
 
      // Atualiza a quantidade de exércitos em um território
-     public void incrementarNumArmiesTerritory(String territorio, int count) {
+     public void setNumArmiesTerritory(String territorio, int count) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
 
@@ -260,7 +260,7 @@ public class API {
             // Verifica se o nome do território é igual ao território desejado
             if (territory.getName().equals(territorio)) {
                 // Usa o método addArmies para incrementar a quantidade de exércitos
-                territory.addArmies(count);
+                territory.setArmies(count);
                 return;
             }
         }
@@ -409,9 +409,6 @@ public class API {
 
 
 
-    public boolean placeArmy(int army, String territory) {
-        return game.getPlayers().get(this.turn).placeArmy(army, territory);
-    }
 //
     // Adicionar exércitos em território da posse do jogador
     public void getPlayerAddArmy(String territory) {

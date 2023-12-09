@@ -97,8 +97,8 @@ public class APIController {
     // }
 
      // Método chamado quando ocorre o clique na bolinha
-     public void incrementArmies(String territorio, int count) {
-        api.incrementarNumArmiesTerritory(territorio, count);
+     public void setNumArmiesTerritory(String territorio, int count) {
+        api.setNumArmiesTerritory(territorio, count);
     }
 
     public Integer getNumArmiesTerritory(String t){
