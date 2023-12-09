@@ -242,6 +242,15 @@ class Game implements Observed{
 		return new int [] {0,0,0,0,0,0};
 	}
 
+	// Método para reposicionar exércitos
+	public void reposicionarExercitos(Territory origem, Territory destino, Integer qtd){
+		origem.alterarQndExercitos(-qtd);
+		destino.alterarQndExercitos(qtd);
+		mod1 = origem;
+		mod2 = destino;
+		this.notifyObservers();
+	}
+
     // Método para reiniciar o jogo
 	public void reiniciarJogo(){
 

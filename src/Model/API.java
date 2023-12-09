@@ -124,7 +124,7 @@ public class API {
     
         // Copia a lista para uma lista final, removendo espaços vazios
         String[] territoriosFinal = new String[quant];
-        territoriosComMaisDeUmExercito.toArray(territoriosFinal);
+        territoriosComMaisDeUmExercito.toArray(territoriosFinal);//
     
         return territoriosFinal;
     }
@@ -151,8 +151,6 @@ public class API {
 
 		return terr;
 	}
-
-
 
 
     public PlayerColor getTerritoryColor(String t) {
@@ -186,6 +184,36 @@ public class API {
         }
         // Retorna null se o território não for encontrado
         return null;
+    }
+
+
+    // Chama reposicionarExercitos de Jogo
+    public void reposicionarExercitos(String origem, String destino, Integer qtd){
+        // Obtém a lista de territórios do objeto Map
+        List<Territory> territories = map.getTerritoriesList();
+        Territory TOrigem = null;
+        Territory TDestino = null;
+
+        // Percorre a lista de territórios
+        for (Territory territory : territories) {
+            // Verifica se o nome do território é igual ao território desejado
+            if (territory.getName().equals(origem)) {
+                // Retorna a quantidade de exércitos do território encontrado
+                TOrigem = territory;
+            }
+            if (territory.getName().equals(destino)) {
+                // Retorna a quantidade de exércitos do território encontrado
+                TDestino = territory;
+            }
+        }
+
+        // Verifica se encontrou os territórios de origem e destino
+        if (TOrigem != null && TDestino != null) {
+            // Chama o método de reposicionarExercitos
+            game.reposicionarExercitos(TOrigem, TDestino, qtd);
+        } else {
+            System.out.println("Territórios de origem ou destino não encontrados.");
+        }
     }
 
     // Retorna quantidade de exércitos que tem em um território
@@ -330,6 +358,7 @@ public class API {
 
         return game.getJogadorVez(i).getName();
     }
+    
     // Método que retorna a cor do jogador da vez
     public PlayerColor getCorJogadorVez(int i){
         return game.getJogadorVez(i).getColor();
@@ -375,6 +404,10 @@ public class API {
     public int getQtdExercitosPosic(int turn) {
         return game.getJogadorVez(turn).getArmies();
     }
+
+
+
+
 
     public boolean placeArmy(int army, String territory) {
         return game.getPlayers().get(this.turn).placeArmy(army, territory);
@@ -452,7 +485,6 @@ public class API {
         return battle;
     }
 
-
     /**
 	 * Calcula o bônus de troca com base no contador de trocas.
 	 *
@@ -511,7 +543,6 @@ public class API {
 		}
 		return false;
 	}
-
 
     // Troca de cartas e adição de soldados após validação de troca
     public void exchangeCards(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3, List<TerritoryCard> cards, List <Territory> territories){
