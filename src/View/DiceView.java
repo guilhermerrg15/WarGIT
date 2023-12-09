@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-class DiceView extends JPanel{
-    
-    Image[] dadoAtacante = new Image[7];
+class DiceView {
+
+	Image[] dadoAtacante = new Image[7];
 
 	//Array de imagens dos dados de defesa
 	Image[] dadoDefensor = new Image[7];
@@ -26,7 +26,7 @@ class DiceView extends JPanel{
 
 	//Construtor
 	public DiceView(){
-		
+
 		//Carrega as imagens dos dados
 		try {
 			dadoAtacante[0] = (ImageIO.read(new File("resources/imagens/dado_desativado.png")));
@@ -36,7 +36,7 @@ class DiceView extends JPanel{
 			dadoAtacante[4] =(ImageIO.read(new File("resources/imagens/dado_ataque_4.png")));
 			dadoAtacante[5] =(ImageIO.read(new File("resources/imagens/dado_ataque_5.png")));
 			dadoAtacante[6] =(ImageIO.read(new File("resources/imagens/dado_ataque_6.png")));
-			
+
 			dadoDefensor[0] = (ImageIO.read(new File("resources/imagens/dado_desativado.png")));
 			dadoDefensor[1] =(ImageIO.read(new File("resources/imagens/dado_defesa_1.png")));
 			dadoDefensor[2] =(ImageIO.read(new File("resources/imagens/dado_defesa_2.png")));
@@ -44,26 +44,31 @@ class DiceView extends JPanel{
 			dadoDefensor[4] =(ImageIO.read(new File("resources/imagens/dado_defesa_4.png")));
 			dadoDefensor[5] =(ImageIO.read(new File("resources/imagens/dado_defesa_5.png")));
 			dadoDefensor[6] =(ImageIO.read(new File("resources/imagens/dado_defesa_6.png")));
-				
+
 		}
-		
+
 		//Caso não consiga carregar as imagens, mostra uma mensagem de erro
 		catch (IOException e) {
 			System.out.println("Nao foi possivel carregar a imagem dos dados");
-				
+
 		}
 	}
-	
+
 	//Desenha as imagens dos dados
-	public void paintComponent(Graphics g) {
+	public void drawDices(Graphics g) {
+		System.out.println("--------------------Entrou no PaintComponent--------------------");
 		g2d = (Graphics2D) g;
-		g2d.drawImage(ataque1,0,10,50,50,null);
-		g2d.drawImage(ataque2,0,60,50,50,null);
-		g2d.drawImage(ataque3,0,110,50,50,null);
-		g2d.drawImage(defesa1,50,10,50,50,null);
-		g2d.drawImage(defesa2,50,60,50,50,null);
-		g2d.drawImage(defesa3,50,110,50,50,null);
-		// System.out.println("dados");
+
+		int dimension = 50;
+		int diceSpacing = 10;
+
+		// showDices(null, null);
+		g2d.drawImage(ataque1,20,40,dimension,dimension,null);
+		g2d.drawImage(ataque2,20 + dimension + diceSpacing,40,dimension,dimension,null);
+		g2d.drawImage(ataque3,20 + (dimension + diceSpacing)*2,40,dimension,dimension,null);
+		g2d.drawImage(defesa1,20,40+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa2,20 + dimension + diceSpacing,40+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa3,20 + (dimension + diceSpacing)*2,40+dimension+diceSpacing,dimension,dimension,null);
 	}
 
 	//Mostra os dados de ataque e defesa na tela
