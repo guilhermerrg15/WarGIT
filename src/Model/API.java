@@ -205,6 +205,22 @@ public class API {
             return null;
         }
 
+        public String[] getNeiboursDominated(String t, int turn) {
+            List<Territory> listaTerritorios = map.getTerritoriesList();
+            List<String> territoriosDominados = new ArrayList<>();
+    
+            for (Territory ter: listaTerritorios) {
+                if (ter.isNeighbor(t) && ter.getOwner().getName().equals(game.getJogadorVez(turn).getName())) {
+                    territoriosDominados.add(ter.getName());
+                }
+            }
+            if (territoriosDominados.isEmpty()) {
+                return null;
+            }
+            return territoriosDominados.toArray(new String[0]);
+    
+        }
+
 
      // Atualiza a quantidade de exércitos em um território
      public void incrementarNumArmiesTerritory(String territorio, int count) {

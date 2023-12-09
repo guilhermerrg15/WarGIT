@@ -69,6 +69,9 @@ public class MapView extends JPanel implements Observer{
 
 	JComboBox<String> attackingTerritories;
 	JComboBox<String> defendingTerritories;
+	JComboBox<String> originTerritories;
+	JComboBox<String> destinyTerritories;
+	JComboBox<Integer> numReplacementBox;
 
     public MapView() {
         // setLayout(new BorderLayout());
@@ -79,15 +82,23 @@ public class MapView extends JPanel implements Observer{
 
 		attackingTerritories = new JComboBox<String>();
 		defendingTerritories = new JComboBox<String>();
+		originTerritories = new JComboBox<String>();
+		destinyTerritories = new JComboBox<String>();
+		numReplacementBox = new JComboBox<Integer>();
 
 		// Configurar a posição e tamanho dos JComboBox
         attackingTerritories.setBounds(1250, 200, 200, 30);
         defendingTerritories.setBounds(1250, 250, 200, 30);
-
+		originTerritories.setBounds(600, 300, 200, 30);
+		numReplacementBox.setBounds(600, 350, 200, 30);
+		destinyTerritories.setBounds(600, 400, 200, 30);
 
         // Adicionar JComboBox ao painel
         add(attackingTerritories);
         add(defendingTerritories);
+		add(originTerritories);
+		add(numReplacementBox);
+		add(destinyTerritories);
 
 		playDicesButton.setBounds(1250,200,200,30);
 		add(playDicesButton);
@@ -116,6 +127,12 @@ public class MapView extends JPanel implements Observer{
         currentPlayerLabel.setForeground(Color.BLACK);
         add(currentPlayerLabel);
 
+		originTerritories.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.selectedOrigin((String) originTerritories.getSelectedItem());
+			}
+		});
 
 		placeArmyButton.addActionListener(new ActionListener() {
             @Override
@@ -224,11 +241,18 @@ public class MapView extends JPanel implements Observer{
 		if(firstRound) {
 			attackingTerritories.setVisible(false);
 			defendingTerritories.setVisible(false);
+			originTerritories.setVisible(false);
+			numReplacementBox.setVisible(false);
+			destinyTerritories.setVisible(false);
 			playDicesButton.setVisible(false);
+
 		} else {
-			attackingTerritories.setVisible(true);
-			defendingTerritories.setVisible(true);
-			playDicesButton.setVisible(true);
+			// attackingTerritories.setVisible(true);
+			// defendingTerritories.setVisible(true);
+			originTerritories.setVisible(true);
+			numReplacementBox.setVisible(true);
+			destinyTerritories.setVisible(true);
+			// playDicesButton.setVisible(true);
 		}
 
 		if(showObjectiveCard) {
@@ -321,6 +345,32 @@ public class MapView extends JPanel implements Observer{
 
         add(panel);
     }
+
+	public void updateReplacement(String[] territories) {
+		originTerritories.removeAllItems();
+
+		originTerritories.addItem(null);
+
+		for (String s: territories){
+			originTerritories.addItem(s);
+		}
+	}
+
+	public void updateNumReplacement(Integer qtd){
+		numReplacementBox.removeAllItems();
+		for (Integer i = 0; i <= qtd; i++){
+			numReplacementBox.addItem(i);
+		}
+	}
+
+	public void updateDestiny(String[] destinies){
+		destinyTerritories.removeAllItems();
+		for (String s: destinies){
+			destinyTerritories.addItem(s);
+		}
+	}
+
+	
 
     // Desenha cada bolinha nos territórios
 	void drawArmies(Graphics2D graphic) {
@@ -600,20 +650,20 @@ public class MapView extends JPanel implements Observer{
 
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
         switch (playerColor) {
-            case YELLOW:
+            case AMARELO:
                 return Color.YELLOW;
-            case BLUE:
+            case AZUL:
                 return Color.BLUE;
-            case WHITE:
+            case BRANCO:
                 return Color.WHITE;
-            case BLACK:
+            case PRETO:
                 return Color.BLACK;
-            case RED:
+            case VERMELHO:
                 return Color.RED;
-            case GREEN:
+            case VERDE:
                 return Color.GREEN;
             default:
-                return Color.BLACK;
+                return Color.BLACK; 
         }
     }
 

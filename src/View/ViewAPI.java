@@ -38,6 +38,21 @@ public class ViewAPI {
 		MapView.getMapView().updateDefenders(defensores);
 	}
 
+    public void updateReplacement(String[] territories) {
+        //
+        //colocar metodo aqui se quiser remover combo boxes de ataque ->>
+        //
+        MapView.getMapView().updateReplacement(territories);
+    }
+
+    public void updateNumReplacement(Integer num){
+		MapView.getMapView().updateNumReplacement(num);
+	}
+
+    public void updateDestiny(String[] destinies){
+		MapView.getMapView().updateDestiny(destinies);
+	}
+
     private ViewAPI() {
     }
 	//Verifica se o jogador ganhou a partida
@@ -46,21 +61,21 @@ public class ViewAPI {
 
 		//Verifica a cor do jogador
 		switch (cor) {
-			case YELLOW:
+			case AMARELO:
                 nomeCor = "Amarelo";
                 break;
-            case BLUE:
+            case AZUL:
                 nomeCor = "Azul";
                 break;
-            case WHITE:
+            case BRANCO:
                 nomeCor = "Branco";
                 break;               
-            case BLACK:
+            case PRETO:
                 nomeCor = "Preto";
                 break;
-            case RED:
+            case VERMELHO:
                 nomeCor = "Vermelho";
-            case GREEN:
+            case VERDE:
                 nomeCor = "Verde";
                 break;
             default:

@@ -109,17 +109,17 @@ class ArmyView extends JComponent {
 
 	private Color getColorFromPlayerColor(PlayerColor playerColor) {
 		switch (playerColor) {
-			case YELLOW: 
+			case AMARELO: 
 				return Color.YELLOW;
-			case BLUE: 
+			case AZUL: 
 				return Color.BLUE;
-			case WHITE:
+			case BRANCO:
 				return Color.WHITE;
-			case BLACK: 
+			case PRETO: 
 				return Color.BLACK;
-			case RED: 
+			case VERMELHO: 
 				return Color.RED;
-			case GREEN:
+			case VERDE:
 				return Color.GREEN;
 			default: 
 			return Color.BLACK;

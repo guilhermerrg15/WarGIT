@@ -10,7 +10,8 @@ public class APIController {
 
     private boolean firstRound = true;
     private int turn = 0;
-    
+    private String[] territoriesReplacementName;
+    private Integer[] numArmiesReplacement;
 
     // Instância de APIs
     private ViewAPI view = ViewAPI.getInstance();
@@ -106,9 +107,31 @@ public class APIController {
 
             return true;
         } else {
-            view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+            // view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+            territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+            if (numArmiesReplacement != null) {
+                numArmiesReplacement = new Integer[territoriesReplacementName.length];
+            }
+            for (int i = 0; i < territoriesReplacementName.length; i++){
+                numArmiesReplacement[i] = (api.getNumArmiesTerritory(territoriesReplacementName[i]) - 1);
+            }
+            view.updateReplacement(territoriesReplacementName);
             return false;
         }
+    }
+
+    public void selectedOrigin(String origin) {
+        if (origin == null) {
+            return;
+        }
+        view.updateDestiny(api.getNeiboursDominated(origin, turn));
+        int i = 0;
+        for(; i < territoriesReplacementName.length; i++) {
+            if (territoriesReplacementName[i].equals(origin)) {
+                break;
+            }
+        }
+        view.updateNumReplacement(numArmiesReplacement[i]);
     }
 
     // Método chamado quando o jogador seleciona um território para atacar
