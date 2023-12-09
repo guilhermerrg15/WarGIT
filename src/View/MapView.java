@@ -29,21 +29,28 @@ public class MapView extends JPanel implements Observer{
 	JButton continueButton = new JButton("Continuar");
 	JButton saveButton = new JButton("Salvar Jogo");
 	JButton playDicesButton = new JButton( "Atacar");
+	JButton reposicionarButton = new JButton("Reposicionar");
+	
     Image backgroundImage;
     Image territoriesImage;
 	Image objectiveCard;
+
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
 	private boolean addTroopsMode = false;
     Graphics2D g;
 	JLabel labelColor = new JLabel();
+
 	int currentArmySum = 0;
 	int firstArmySum = 0;
+
 	private boolean firstRound = true;
 	API api = API.getInstance();
 
     //Jogador da vez e cor do jogador
 	String currentPlayer;
+
 	// Color corDoJogador;
+
 	String objectiveDescription;
 	JLabel currentPlayerLabel = new JLabel();
 	JLabel objective = new JLabel();
@@ -80,6 +87,7 @@ public class MapView extends JPanel implements Observer{
       	continueButton.setBounds(1250,535,200,30);
 		add(continueButton);
 
+
 		attackingTerritories = new JComboBox<String>();
 		defendingTerritories = new JComboBox<String>();
 		originTerritories = new JComboBox<String>();
@@ -99,6 +107,9 @@ public class MapView extends JPanel implements Observer{
 		add(originTerritories);
 		add(numReplacementBox);
 		add(destinyTerritories);
+
+		reposicionarButton.setBounds(1250,200,200,30);
+		add(reposicionarButton);
 
 		playDicesButton.setBounds(1250,200,200,30);
 		add(playDicesButton);
@@ -134,6 +145,15 @@ public class MapView extends JPanel implements Observer{
 			}
 		});
 
+		// Adiciona ação ao clicar no botão de reposicionar
+		reposicionarButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(originTerritories.getSelectedItem() != null && destinyTerritories.getSelectedItem() != null){
+					controller.clicouReposicionar(originTerritories.getSelectedItem().toString(), destinyTerritories.getSelectedItem().toString(), (Integer) numReplacementBox.getSelectedItem());
+				}
+			}
+		});
+
 		placeArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -141,7 +161,6 @@ public class MapView extends JPanel implements Observer{
                 addTroopsMode = true;
             }
         });
-
 
 		addMouseListener(new MouseAdapter() {
             @Override
@@ -187,8 +206,6 @@ public class MapView extends JPanel implements Observer{
 				repaint();
 			}
 		});
-
-
 
 		checkObjectivesButton.addActionListener(new ActionListener() {
             // Adicionar ação do botão de ver carta de objetivo do jogador da vez
@@ -245,14 +262,16 @@ public class MapView extends JPanel implements Observer{
 			numReplacementBox.setVisible(false);
 			destinyTerritories.setVisible(false);
 			playDicesButton.setVisible(false);
+			reposicionarButton.setVisible(false);
 
 		} else {
-			// attackingTerritories.setVisible(true);
-			// defendingTerritories.setVisible(true);
-			originTerritories.setVisible(true);
-			numReplacementBox.setVisible(true);
-			destinyTerritories.setVisible(true);
-			// playDicesButton.setVisible(true);
+			attackingTerritories.setVisible(true);
+			defendingTerritories.setVisible(true);
+			// originTerritories.setVisible(true);
+			// numReplacementBox.setVisible(true);
+			// destinyTerritories.setVisible(true);
+			// reposicionarButton.setVisible(true);
+			playDicesButton.setVisible(true);
 		}
 
 		if(showObjectiveCard) {
@@ -270,8 +289,6 @@ public class MapView extends JPanel implements Observer{
 		diceView.drawDices(graphic);
     }
 
-
-
 	public void salvaArmyAntigo(){
 		for (ArmyView army : armyList) {
 			if (controller.getTerritoryColor(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == playerSelectedColor) {
@@ -280,7 +297,6 @@ public class MapView extends JPanel implements Observer{
 
 		}
 	}
-
 
     // Singleton
     public static MapView getMapView() {
@@ -306,7 +322,6 @@ public class MapView extends JPanel implements Observer{
 		repaint();
 	}
 
-
 	// Atualiza view no início da rodada de posicionamento para atualizar os jogadores atacantes
 	public void updateAttackers(String[] attackers){
 		// Esvazia a comboBox de atacantes e adiciona os novos territórios
@@ -326,7 +341,6 @@ public class MapView extends JPanel implements Observer{
 			defendingTerritories.addItem(s);
 		}
 	}
-
 
 	private void addSquareColor() {
 
@@ -369,8 +383,6 @@ public class MapView extends JPanel implements Observer{
 			destinyTerritories.addItem(s);
 		}
 	}
-
-	
 
     // Desenha cada bolinha nos territórios
 	void drawArmies(Graphics2D graphic) {
@@ -567,8 +579,6 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-
-
     // Retorna quantidade de exércitos que tem em um território
     public Integer getNumArmiesTotal(ArrayList<ArmyView> armyList) {
 		int sumArmies = 0;
@@ -646,8 +656,6 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-
-
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
         switch (playerColor) {
             case AMARELO:
@@ -667,7 +675,6 @@ public class MapView extends JPanel implements Observer{
         }
     }
 
-	
     @Override
     public void notify(Observed o){
 
