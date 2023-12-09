@@ -50,9 +50,9 @@ public class APIController {
     }
 
     // Reiniciar jogo
-    public void reiniciarJogo(){
-        api.reiniciarJogo(api.getAllPlayers(), api.getDeckCardObjective());
-    }
+    // public void reiniciarJogo(){
+    //     api.reiniciarJogo(api.getAllPlayers(), api.getDeckCardObjective());
+    // }
 
     public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
         return API.getInstance().getQuantidadeTerritoriosJogador(corDoJogador);
