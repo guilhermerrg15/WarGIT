@@ -10,7 +10,7 @@ public class APIController {
 
     private boolean firstRound = true;
     private int turn = 0;
-
+    
 
     // Instância de APIs
     private ViewAPI view = ViewAPI.getInstance();
@@ -46,12 +46,7 @@ public class APIController {
         api.initDeckObjective();
         api.shuffleObjectives(api.getAllPlayers(), api.getDeckCardObjective());
         System.out.println("CLICKED");
-
-    }
-
-    // Reiniciar jogo
-    public void reiniciarJogo(){
-        api.reiniciarJogo(api.getAllPlayers(), api.getDeckCardObjective());
+        
     }
 
     public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
@@ -78,7 +73,7 @@ public class APIController {
         return api.getTerritoriesList();
     }
 
-
+    
      // Método chamado quando ocorre o clique na bolinha
      public void incrementArmies(String territorio, int count) {
         api.incrementarNumArmiesTerritory(territorio, count);
@@ -136,12 +131,12 @@ public class APIController {
      public void addEliminado(String nome){
         eliminadosNessaRodada.add(nome);
     }
-
-
+    
+    
     public void reiniciarJogo(){
         // Reinicia dados de model
         api.reiniciarJogo();
-
+        
         // Reinicia dados do controller
         this.turn = 0;
         this.firstRound = true;
@@ -152,13 +147,13 @@ public class APIController {
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
         // primeiroPosicionamento();
     }
-
+    
 
     // Singleton
-    public static APIController getInstance(){
+    public static APIController getInstance(){  
         if(controller == null){
             controller = new APIController();
         }
         return controller;
-    }
+    }   
 }

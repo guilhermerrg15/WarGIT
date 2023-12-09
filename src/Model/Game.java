@@ -5,14 +5,12 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import Controller.APIController;
-import java.util.List;
-
 import View.Observed;
 import View.Observer;
 
 class Game implements Observed{
     private static Game game = null;
-
+    
     // Lista de jogadores
     private ArrayList<Player> players = new ArrayList<Player>();
 
@@ -57,13 +55,14 @@ class Game implements Observed{
 
     // Pegar o jogador da vez
     public Player getJogadorVez(int turn){
+        
         for (int i = 0; i < players.size(); i++) {
             if(players.get(i).getIndex() == turn) {
                 return players.get(i);
             }
         }
 		return players.get(turn);
-
+        
 	}
 
     //Altera o mod1 e o mod2
@@ -75,7 +74,7 @@ class Game implements Observed{
 		mod2 = t;
 	}
 
-    //implementar
+    //implementar 
     public Object get() {
         return this;
     }
@@ -100,26 +99,26 @@ class Game implements Observed{
         return true;
     }
 
-
+    
     //Valida um ataque
 	public boolean VerificarAtaque(Territory tAtacante, Territory tDefensor) {
 		// Verifica se o atacante tem mais de um exército e se o defensor não é dele
 		if(tAtacante.getArmies() > 1 && tAtacante.getOwner() != tDefensor.getOwner())
-			return true;
+			return true;	
 		return false;
 	}
 
-
+	//olhar de novo essa classe, até a 191 ta certa acho que não está passando certo para a view
     //Realiza um ataque 
 	public int[] RealizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
 		System.out.println("entrei no ataque");
-
 		if(VerificarAtaque(atacante, defensor)){
 			//Verifica se o atacante tem mais de 3 exércitos
 			int qtdAtaque = atacante.getArmies() - 1;
 			if  (qtdAtaque > 3) {qtdAtaque = 3;}
 
 			//Verifica se o defensor tem mais de 3 exércitos
+			//ta dando 17 exercitos sendo que tem 9
 			int qtdDefesa = defensor.getArmies();
 			if  (qtdDefesa > 3) {qtdDefesa = 3;}
 
@@ -131,7 +130,7 @@ class Game implements Observed{
 			//Variáveis para contar quantos exércitos foram perdidos
 			int qtdAtaquePerdidos = 0;
 			int qtdDefesaPerdidos = 0;
-
+			
 			int i;
 			//Verifica se o jogador escolheu um número forçado
 			//acho que não precisa desse if -> tirei esse forçado
@@ -173,7 +172,7 @@ class Game implements Observed{
 				//Ordena os dados se for aleatório
 				Arrays.sort(dadosDefesa);
 			}
-
+			
 			//Compara os dados
 			for (i = 0;i < 3;i++) {
 				if (dadosAtaque[i] != 0 && dadosDefesa[i] != 0){
@@ -185,7 +184,7 @@ class Game implements Observed{
 					}
 				}
 			}
-
+			
 			//Atualiza os exércitos
 			atacante.setArmies(atacante.getArmies() - qtdAtaquePerdidos);
 			defensor.setArmies(defensor.getArmies() - qtdDefesaPerdidos);
@@ -224,8 +223,8 @@ class Game implements Observed{
 			//Notifica os observadores
 			this.notifyObservers();
 
-
-			// Retorna os dados em um array único
+			
+			// Retorna os dados em um array único 
 
 			int[] dados = new int[6];
 			for (i = 0;i < 3;i++) {
@@ -238,7 +237,7 @@ class Game implements Observed{
 
 			return dados;
 		}
-
+	
 		System.out.println("Nao foi possivel realizar o ataque");
 		return new int [] {0,0,0,0,0,0};
 	}
@@ -256,7 +255,7 @@ class Game implements Observed{
 			// }
 			player.reset();
 		}
-
+		
 
 		// Redistribui territórios
 		map.distribuiTerritorios(players);
