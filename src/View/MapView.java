@@ -370,20 +370,6 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-	// public void updateReplacement(String[] territories, ArrayList<String> availableTerritories) {
-	// 	originTerritories.removeAllItems();
-	
-	// 	originTerritories.addItem(null);
-	
-	// 	for (String s : territories) {
-	// 		originTerritories.addItem(s);
-	// 	}
-	
-	// 	// Adiciona os territórios disponíveis para reposicionamento
-	// 	for (String availableTerritory : availableTerritories) {
-	// 		originTerritories.addItem(availableTerritory);
-	// 	}
-	// }
 
 	public void updateNumReplacement(Integer qtd){
 		numReplacementBox.removeAllItems();
