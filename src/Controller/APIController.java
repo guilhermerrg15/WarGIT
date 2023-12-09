@@ -1,6 +1,8 @@
 package Controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import Model.API;
 import Model.PlayerColor;
 import View.ViewAPI;
@@ -19,6 +21,9 @@ public class APIController {
 
     // Guarda os nomes dos jogadores eliminados nessa rodada
     ArrayList<String> eliminadosNessaRodada = new ArrayList<String>();
+
+    // Lista dinâmica de territórios disponíveis para reposicionamento
+    // private ArrayList<String> availableTerritories = new ArrayList<>();
 
     public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
         int numPlayers = nomes.size();
@@ -73,6 +78,23 @@ public class APIController {
     public String[] getTerritoriesList(){
         return api.getTerritoriesList();
     }
+
+    // Método para obter territórios disponíveis
+    // public ArrayList<String> getAvailableTerritories() {
+    //     return availableTerritories;
+    // }
+
+    //  // Método para atualizar a lista de territórios disponíveis
+    //  public void updateAvailableTerritories() {
+    //     // Lógica para atualizar a lista com territórios que têm mais de 1 exército
+    //     availableTerritories.clear();
+
+    //     for (int i = 0; i < territoriesReplacementName.length; i++) {
+    //         if (numArmiesReplacement[i] > 1) {
+    //             availableTerritories.add(territoriesReplacementName[i]);
+    //         }
+    //     }
+    // }
 
      // Método chamado quando ocorre o clique na bolinha
      public void incrementArmies(String territorio, int count) {
@@ -131,7 +153,7 @@ public class APIController {
             // Verifica se ganhou após reposicionar
             verificaGanhou(turn);
 
-                // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
+            // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
             int i = 0;
 
             for (; i < territoriesReplacementName.length; i++) {
@@ -143,9 +165,21 @@ public class APIController {
             // Diminui a quantidade que ainda pode reposicionar
             numArmiesReplacement[i] -= qtd;
 
+            // Atualiza a lista de territórios disponíveis
+            // updateAvailableTerritories();
+
             // Se tiver exércitos para reposicionar continua na etapa de reposicionamento
             for (int j = 0; j < territoriesReplacementName.length; j++){
                 if (numArmiesReplacement[j] > 0){
+                     territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+                    // Se tiver algum território com mais de 1 exército para reposicionar
+                    if (territoriesReplacementName != null) {
+                        numArmiesReplacement = new Integer[territoriesReplacementName.length];
+                    }
+                    // Pega a quantidade de exércitos que pode reposicionar em cada território
+                    for (int k = 0; k < territoriesReplacementName.length; k++){
+                        numArmiesReplacement[k] = (api.getNumArmiesTerritory(territoriesReplacementName[k]) - 1);
+                    }
                     view.updateReplacement(territoriesReplacementName);
                     view.updateNumReplacement(0);
                     return;

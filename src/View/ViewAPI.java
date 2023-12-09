@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import Controller.APIController;
 import Model.PlayerColor;
 import java.awt.Color;
+import java.util.ArrayList;
 
 // import Controller.TabuleiroObservador;
 
