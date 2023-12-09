@@ -23,23 +23,22 @@ public class ViewAPI {
     APIController controller = APIController.getInstance();
 
     // Pegar primeiro jogador
-    public void determinaPrimeiroJogador(String nome, PlayerColor cor){
-		MapView.getMapView().determinaPrimeiroJogador(nome, cor);
+    public void determineFirstPlayer(String nome, PlayerColor cor){
+		MapView.getMapView().determineFirstPlayer(nome, cor);
 	}
     //Muda o jogador atual
-	public void mudaJogador(String jogador, PlayerColor cor){
-		MapView.getMapView().mudaJogador(jogador, cor);
+	public void mudaJogador(String player, PlayerColor color){
+		MapView.getMapView().changePlayer(player, color);
 	}
 
     //Atalixa os territorios atancantes no painel de ataque
 	public void atualizaAtacantes(String[] atacantes){
-		// MapView.getMapView().mudaParaAtaque();
-		MapView.getMapView().atualizaAtacantes(atacantes);
+		MapView.getMapView().updateAttackers(atacantes);
 	}
 
     //Atualiza os territorios defensores no painel de ataque
 	public void atualizaDefensores(String[] defensores){
-		MapView.getMapView().atualizaDefensores(defensores);
+		MapView.getMapView().updateDefenders(defensores);
 	}
 
     private ViewAPI() {
@@ -50,26 +49,26 @@ public class ViewAPI {
 
 		//Verifica a cor do jogador
 		switch (cor) {
-			case AMARELO:
-                nomeCor = "Amarelo";
-                break;
-            case AZUL:
-                nomeCor = "Azul";
-                break;
-            case BRANCO:
-                nomeCor = "Branco";
-                break;
-            case PRETO:
-                nomeCor = "Preto";
-                break;
-            case VERMELHO:
-
-            case VERDE:
-                nomeCor = "Verde";
-                break;
-            default:
-                nomeCor = "Preto";
-                break;
+			case YELLOW:
+          nomeCor = "Amarelo";
+          break;
+      case BLUE:
+          nomeCor = "Azul";
+          break;
+      case WHITE:
+          nomeCor = "Branco";
+          break;               
+      case BLACK:
+          nomeCor = "Preto";
+          break;
+      case RED:
+          nomeCor = "Vermelho";
+      case GREEN:
+          nomeCor = "Verde";
+          break;
+      default:
+          nomeCor = "Preto";
+          break;
 
         }
 		showWin(nome, nomeCor);
