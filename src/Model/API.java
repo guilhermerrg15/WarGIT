@@ -44,7 +44,7 @@ public class API {
 
 
     // Método para obter a quantidade de territórios de um jogador específico
-    public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
+    public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
         int quantidadeTerritorios = 0;
 
         // Obtém a lista de territórios do objeto Map
@@ -65,7 +65,7 @@ public class API {
 
         // Obtém a lista de territórios do objeto Map
         ArrayList<Territory> territories = map.getTerritoriesList();
-        String[] territoryList = new String[getNumTerritoryPlayer(corDoJogador)];
+        String[] territoryList = new String[getQuantidadeTerritoriosJogador(corDoJogador)];
 
         // Adiciona na lista os nomes dos territórios
     	for (Territory t: territories) {
@@ -141,7 +141,7 @@ public class API {
     }
 
      // Retorna lista de nomes de territórios
-     public String[] getTerritoriesList() {
+     public String[] getTerritoriosLista() {
 		String [] terr = new String[51]; 
 		int cont = 0;
 		for (Territory t: map.getTerritoriesList()) {
@@ -155,7 +155,7 @@ public class API {
 
 
 
-    public PlayerColor getTerritoryColor(String t) {
+    public PlayerColor getCorTerritorio(String t) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
     
@@ -172,7 +172,7 @@ public class API {
     }
 
     // Retorna quantidade de exércitos que tem em um território
-    public Integer getNumArmiesTerritory(String territorio) {
+    public Integer getQntExTerritorio(String territorio) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
 
@@ -188,26 +188,8 @@ public class API {
         return null;
     }
 
-    // Retorna quantidade de exércitos que tem em um território
-        public Integer getQntExTerritorioAntigos(String territorio) {
-            // Obtém a lista de territórios do objeto Map
-            List<Territory> territories = map.getTerritoriesList();
-
-            // Percorre a lista de territórios
-            for (Territory territory : territories) {
-                // Verifica se o nome do território é igual ao território desejado
-                if (territory.getName().equals(territorio)) {
-                    // Retorna a quantidade de exércitos do território encontrado
-                    return territory.getInicialArmie();
-                }
-            }
-            // Retorna null se o território não for encontrado
-            return null;
-        }
-
-
      // Atualiza a quantidade de exércitos em um território
-     public void incrementarNumArmiesTerritory(String territorio, int count) {
+     public void incrementarQntExTerritorio(String territorio, int count) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
 
@@ -224,7 +206,7 @@ public class API {
 
 
     //Método de realizar ataque
-    public int[] makeAttack(String atacante,String defensor) {
+    public int[] realizaAtaque(String atacante,String defensor) {
         Integer numAtaque = 0;
         Integer numDefesa = 0;
     	Territory Tatacante = map.findTerritory(atacante);

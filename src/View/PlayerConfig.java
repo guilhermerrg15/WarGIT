@@ -103,11 +103,11 @@ public class PlayerConfig extends JPanel {
         add(startGameButton);
         add(Box.createVerticalGlue()); 
         add(Box.createVerticalStrut(250));
-        // System.out.println("HELLOO");
+        System.out.println("HELLOO");
 
         try {
 			background = ImageIO.read(new File ("resources/imagens/war_tabuleiro_fundo.png"));
-            // System.out.println("HELLOO TRY");
+            System.out.println("HELLOO TRY");
 		}
 		catch (IOException e) {
 			System.out.println("Erro na leitura do plano de fundo\n");

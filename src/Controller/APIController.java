@@ -34,7 +34,7 @@ public class APIController {
             // cont++;
         }
         if(api.startGame()) {
-            view.determineFirstPlayer(api.getNomeJogadorVez(0), api.getCorJogadorVez(0));
+            view.determinaPrimeiroJogador(api.getNomeJogadorVez(0), api.getCorJogadorVez(0));
             return true;
         }
 
@@ -54,8 +54,8 @@ public class APIController {
     //     api.reiniciarJogo(api.getAllPlayers(), api.getDeckCardObjective());
     // }
 
-    public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
-        return API.getInstance().getNumTerritoryPlayer(corDoJogador);
+    public int getQuantidadeTerritoriosJogador(PlayerColor corDoJogador) {
+        return API.getInstance().getQuantidadeTerritoriosJogador(corDoJogador);
     }
 
      //get vez do jogador
@@ -74,32 +74,27 @@ public class APIController {
     }
 
     // Método que retorna a lista de territórios do jogo
-    public String[] getTerritoriesList(){
-        return api.getTerritoriesList();
+    public String[] getTerritoriosLista(){
+        return api.getTerritoriosLista();
     }
 
 
      // Método chamado quando ocorre o clique na bolinha
-     public void incrementArmies(String territorio, int count) {
-        api.incrementarNumArmiesTerritory(territorio, count);
+     public void incrementarExercitos(String territorio, int count) {
+        api.incrementarQntExTerritorio(territorio, count);
     }
 
-    public Integer getNumArmiesTerritory(String t){
-        return api.getNumArmiesTerritory(t);
+    public Integer getQtdExercitos(String t){
+        return api.getQntExTerritorio(t);
     }
-
-    public Integer getQtdExercitosAntigos(String t){
-        return api.getQntExTerritorioAntigos(t);
-    }
-
 
     // Método que retorna a cor de um território
-    public PlayerColor getTerritoryColor(String t){
-        return api.getTerritoryColor(t);
+    public PlayerColor getCorTerritorio(String t){
+        return api.getCorTerritorio(t);
     }
 
 
-    public boolean clickedContinue() {
+    public boolean clicouContinuar() {
         if (firstRound) {
             turn = (turn + 1) % api.getNumPlayers();
 
@@ -118,10 +113,12 @@ public class APIController {
 
     // Método chamado quando o jogador seleciona um território para atacar
     public void selecionouAtacante(String atacante){
-        if(atacante != null){
-            // Atualiza comboBox dos defensores com os adjacentes 
+        // Se estiver na etapa de ataque
+            if(atacante != null){
+            // Atualiza comboBox dos defensores com os adjacentes
             view.atualizaDefensores(api.getNeiboursNotDominated(atacante, turn));
-        }
+            }
+
     }
 
     // Método que verifica se jogador ganhou e lida com o resultado

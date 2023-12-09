@@ -25,15 +25,12 @@ class ArmyView extends JComponent {
 	private String qntExercitos = "0"; 
 	//OBS : Cor do jogador correspondente à cor do exército
 
-	private String qtdExercitosAntigo = "1";
-
 	//Construtor
-	public ArmyView(int x, int y,PlayerColor color, String qntExercitos, String qtdExercitosAntigo) {
+	public ArmyView(int x, int y,PlayerColor color, String qntExercitos) {
 		this.posX = x;
 		this.posY = y;
 		this.cor = getColorFromPlayerColor(color);
 		this.qntExercitos = qntExercitos;
-		this.qtdExercitosAntigo = qtdExercitosAntigo;
 		setBounds(0,0, 660, 660);
 	}
 
@@ -109,17 +106,17 @@ class ArmyView extends JComponent {
 
 	private Color getColorFromPlayerColor(PlayerColor playerColor) {
 		switch (playerColor) {
-			case YELLOW: 
+			case AMARELO: 
 				return Color.YELLOW;
-			case BLUE: 
+			case AZUL: 
 				return Color.BLUE;
-			case WHITE:
+			case BRANCO:
 				return Color.WHITE;
-			case BLACK: 
+			case PRETO: 
 				return Color.BLACK;
-			case RED: 
+			case VERMELHO: 
 				return Color.RED;
-			case GREEN:
+			case VERDE:
 				return Color.GREEN;
 			default: 
 			return Color.BLACK;
@@ -132,22 +129,12 @@ class ArmyView extends JComponent {
 	}
 
 	//Retorna a quantidade de exércitos
-	public String getNumArmies() {
+	public String getQntExercitos() {
 		return qntExercitos;
 	}
 
-	//Retorna a quantidade de exércitos
-	public String getQntExercitosAntigo() {
-		return qtdExercitosAntigo;
-	}
-
 	//Altera a quantidade de exércitos
-	public void setNumArmies(String qntExercitos) {
+	public void setQntExercitos(String qntExercitos) {
 		this.qntExercitos = qntExercitos;
-	}	
-
-	//Altera a quantidade de exércitos
-	public void setQntExercitosAntigo(String qntExercitosAntigo) {
-		this.qtdExercitosAntigo = qntExercitosAntigo;
 	}	
 }

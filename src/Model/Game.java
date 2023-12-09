@@ -57,6 +57,11 @@ class Game implements Observed{
 
     // Pegar o jogador da vez
     public Player getJogadorVez(int turn){
+        for (Player player : players) {
+            System.out.println(player.getName());
+        }
+        System.out.println("-----------------");
+
         for (int i = 0; i < players.size(); i++) {
             if(players.get(i).getIndex() == turn) {
                 return players.get(i);
@@ -109,10 +114,8 @@ class Game implements Observed{
 		return false;
 	}
 
-
-    //Realiza um ataque 
-	public int[] RealizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
-		System.out.println("entrei no ataque");
+    //Realiza um ataque -> colocar na API jogo (ou classe jogo)
+	public int[] RealizaAtaque(Territory atacante,Territory defensor, Integer numAtaque, Integer numDefesa) {
 
 		if(VerificarAtaque(atacante, defensor)){
 			//Verifica se o atacante tem mais de 3 exércitos
@@ -134,7 +137,6 @@ class Game implements Observed{
 
 			int i;
 			//Verifica se o jogador escolheu um número forçado
-			//acho que não precisa desse if -> tirei esse forçado
 			if (numAtaque != 0){
 				for (i = 0;i < 3;i++) {
 					if (i < qtdAtaque)
@@ -153,8 +155,6 @@ class Game implements Observed{
 				//Ordena os dados se for aleatório
 				Arrays.sort(dadosAtaque);
 			}
-
-			//debugar essa parte de novo
 			if (numDefesa != 0){
 				for (i = 0;i < 3;i++) {
 					if (i < qtdDefesa)
