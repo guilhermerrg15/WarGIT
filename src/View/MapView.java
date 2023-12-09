@@ -157,13 +157,13 @@ public class MapView extends JPanel implements Observer{
 				int [] dicesDefense = new int [3];
 
 				//Chama a função de jogar os dados
-				// int[] diceValues= api.makeAttack(attackingTerritories.getSelectedItem().toString(), defendingTerritories.getSelectedItem().toString());
-				dicesAttack[0] = 1;
-				dicesAttack[1] = 2;
-				dicesAttack[2] = 3;
-				dicesDefense[0] = 4;
-				dicesDefense[1] = 5;
-				dicesDefense[2] = 6;
+				int[] diceValues= api.makeAttack(attackingTerritories.getSelectedItem().toString(), defendingTerritories.getSelectedItem().toString());
+				dicesAttack[0] = diceValues[0];
+				dicesAttack[1] = diceValues[1];
+				dicesAttack[2] = diceValues[2];
+				dicesDefense[0] = diceValues[3];
+				dicesDefense[1] = diceValues[4];
+				dicesDefense[2] = diceValues[5];
 
 				// Mostra os dados na tela
 				diceView.showDices(dicesAttack, dicesDefense);
