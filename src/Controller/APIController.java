@@ -113,12 +113,10 @@ public class APIController {
 
     // Método chamado quando o jogador seleciona um território para atacar
     public void selecionouAtacante(String atacante){
-        // Se estiver na etapa de ataque
-            if(atacante != null){
+        if(atacante != null){
             // Atualiza comboBox dos defensores com os adjacentes 
             view.atualizaDefensores(api.getNeiboursNotDominated(atacante, turn));
-            }
-
+        }
     }
 
     // Método que verifica se jogador ganhou e lida com o resultado

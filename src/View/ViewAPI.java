@@ -30,7 +30,6 @@ public class ViewAPI {
 
     //Atalixa os territorios atancantes no painel de ataque
 	public void atualizaAtacantes(String[] atacantes){
-		// MapView.getMapView().mudaParaAtaque();
 		MapView.getMapView().updateAttackers(atacantes);
 	}
 
