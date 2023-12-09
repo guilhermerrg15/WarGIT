@@ -56,7 +56,7 @@ class DiceView {
 
 	//Desenha as imagens dos dados
 	public void drawDices(Graphics g) {
-		System.out.println("--------------------Entrou no PaintComponent--------------------");
+		// System.out.println("--------------------Entrou no PaintComponent--------------------");
 		g2d = (Graphics2D) g;
 
 		int dimension = 50;
