@@ -1,7 +1,8 @@
 package Controller;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import Model.API;
 import Model.PlayerColor;
@@ -21,9 +22,6 @@ public class APIController {
 
     // Guarda os nomes dos jogadores eliminados nessa rodada
     ArrayList<String> eliminadosNessaRodada = new ArrayList<String>();
-
-    // Lista dinâmica de territórios disponíveis para reposicionamento
-    // private ArrayList<String> availableTerritories = new ArrayList<>();
 
     public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
         int numPlayers = nomes.size();
@@ -47,12 +45,30 @@ public class APIController {
         return false;
     }
 
+    public boolean getFirstRound() {
+        return firstRound;
+    }
+
+    public void setFirstRound(boolean firstRound) {
+        this.firstRound = firstRound;
+    }
+
+    public void clickedSave() {
+        api.saveGame();
+        JOptionPane.showMessageDialog(null, "Jogo salvo com sucesso!");
+    }
+
+    public void clickedLoad() {
+        api.loadGame();
+        JOptionPane.showMessageDialog(null, "Jogo carregado com sucesso!");
+    }
+
     //init deck cartas obj(chamar na view do map)
     public void showObjCards() {
         api.initDeckObjective();
         api.shuffleObjectives(api.getAllPlayers(), api.getDeckCardObjective());
         System.out.println("CLICKED");
-
+        
     }
 
     public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
@@ -79,26 +95,9 @@ public class APIController {
         return api.getTerritoriesList();
     }
 
-    // Método para obter territórios disponíveis
-    // public ArrayList<String> getAvailableTerritories() {
-    //     return availableTerritories;
-    // }
-
-    //  // Método para atualizar a lista de territórios disponíveis
-    //  public void updateAvailableTerritories() {
-    //     // Lógica para atualizar a lista com territórios que têm mais de 1 exército
-    //     availableTerritories.clear();
-
-    //     for (int i = 0; i < territoriesReplacementName.length; i++) {
-    //         if (numArmiesReplacement[i] > 1) {
-    //             availableTerritories.add(territoriesReplacementName[i]);
-    //         }
-    //     }
-    // }
-
      // Método chamado quando ocorre o clique na bolinha
-     public void setNumArmiesTerritory(String territorio, int count) {
-        api.setNumArmiesTerritory(territorio, count);
+     public void incrementArmies(String territorio, int count) {
+        api.incrementarNumArmiesTerritory(territorio, count);
     }
 
     public Integer getNumArmiesTerritory(String t){
@@ -126,34 +125,34 @@ public class APIController {
 
             return true;
         } else {
-            // view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+            view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
 
-            territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-            // Se tiver algum território com mais de 1 exército para reposicionar
-            if (territoriesReplacementName != null) {
-                numArmiesReplacement = new Integer[territoriesReplacementName.length];
-            }
-            // Pega a quantidade de exércitos que pode reposicionar em cada território
-            for (int i = 0; i < territoriesReplacementName.length; i++){
-                numArmiesReplacement[i] = (api.getNumArmiesTerritory(territoriesReplacementName[i]) - 1);
-            }
+            // territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+            // // Se tiver algum território com mais de 1 exército para reposicionar
+            // if (territoriesReplacementName != null) {
+            //     numArmiesReplacement = new Integer[territoriesReplacementName.length];
+            // }
+            // // Pega a quantidade de exércitos que pode reposicionar em cada território
+            // for (int i = 0; i < territoriesReplacementName.length; i++){
+            //     numArmiesReplacement[i] = (api.getNumArmiesTerritory(territoriesReplacementName[i]) - 1);
+            // }
 
-            // Atualiza a view para reposicionamento
-            view.updateReplacement(territoriesReplacementName);
+            // // Atualiza a view para reposicionamento
+            // view.updateReplacement(territoriesReplacementName);
             return false;
         }
     }
 
     // Método chamado quando o jogador seleciona um território para reposicionar
     public void clicouReposicionar(String origem, String destino, Integer qtd){
-
+        
             // Reposiciona os exércitos
             api.reposicionarExercitos(origem, destino, qtd);
 
             // Verifica se ganhou após reposicionar
             verificaGanhou(turn);
 
-            // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
+                // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
             int i = 0;
 
             for (; i < territoriesReplacementName.length; i++) {
@@ -165,21 +164,9 @@ public class APIController {
             // Diminui a quantidade que ainda pode reposicionar
             numArmiesReplacement[i] -= qtd;
 
-            // Atualiza a lista de territórios disponíveis
-            // updateAvailableTerritories();
-
             // Se tiver exércitos para reposicionar continua na etapa de reposicionamento
             for (int j = 0; j < territoriesReplacementName.length; j++){
                 if (numArmiesReplacement[j] > 0){
-                     territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-                    // Se tiver algum território com mais de 1 exército para reposicionar
-                    if (territoriesReplacementName != null) {
-                        numArmiesReplacement = new Integer[territoriesReplacementName.length];
-                    }
-                    // Pega a quantidade de exércitos que pode reposicionar em cada território
-                    for (int k = 0; k < territoriesReplacementName.length; k++){
-                        numArmiesReplacement[k] = (api.getNumArmiesTerritory(territoriesReplacementName[k]) - 1);
-                    }
                     view.updateReplacement(territoriesReplacementName);
                     view.updateNumReplacement(0);
                     return;
@@ -215,7 +202,7 @@ public class APIController {
     // Método chamado quando o jogador seleciona um território para atacar
     public void selecionouAtacante(String atacante){
         if(atacante != null){
-            // Atualiza comboBox dos defensores com os adjacentes
+            // Atualiza comboBox dos defensores com os adjacentes 
             view.atualizaDefensores(api.getNeiboursNotDominated(atacante, turn));
         }
     }
@@ -232,11 +219,11 @@ public class APIController {
      public void addEliminado(String nome){
         eliminadosNessaRodada.add(nome);
     }
-
+    
     public void reiniciarJogo(){
         // Reinicia dados de model
         api.reiniciarJogo();
-
+        
         // Reinicia dados do controller
         this.turn = 0;
         this.firstRound = true;
@@ -247,12 +234,12 @@ public class APIController {
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
         // primeiroPosicionamento();
     }
-
+    
     // Singleton
-    public static APIController getInstance(){
+    public static APIController getInstance(){  
         if(controller == null){
             controller = new APIController();
         }
         return controller;
-    }
+    }   
 }

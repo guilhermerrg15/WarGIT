@@ -145,6 +145,12 @@ public class MapView extends JPanel implements Observer{
 			}
 		});
 
+		saveButton.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				controller.clickedSave();
+			}
+		});
+
 		// Adiciona ação ao clicar no botão de reposicionar
 		reposicionarButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -265,13 +271,13 @@ public class MapView extends JPanel implements Observer{
 			reposicionarButton.setVisible(false);
 
 		} else {
-			// attackingTerritories.setVisible(true);
-			// defendingTerritories.setVisible(true);
-			originTerritories.setVisible(true);
-			numReplacementBox.setVisible(true);
-			destinyTerritories.setVisible(true);
-			reposicionarButton.setVisible(true);
-			// playDicesButton.setVisible(true);
+			attackingTerritories.setVisible(true);
+			defendingTerritories.setVisible(true);
+			// originTerritories.setVisible(true);
+			// numReplacementBox.setVisible(true);
+			// destinyTerritories.setVisible(true);
+			// reposicionarButton.setVisible(true);
+			playDicesButton.setVisible(true);
 		}
 
 		if(showObjectiveCard) {
@@ -369,7 +375,6 @@ public class MapView extends JPanel implements Observer{
 			originTerritories.addItem(s);
 		}
 	}
-
 
 	public void updateNumReplacement(Integer qtd){
 		numReplacementBox.removeAllItems();
@@ -627,11 +632,13 @@ public class MapView extends JPanel implements Observer{
 
 							// Incrementar o número de exércitos no território ao clicar na bolinha
 							int newArmies = quantidadeAtualizada + 1;
+							// System.out.println("quant atual " + quantidadeAtualizada);
 
-							controller.setNumArmiesTerritory(territorioNome, newArmies);
+							controller.incrementArmies(territorioNome, 1);
 
 							// Atualizar a quantidade de exércitos na bolinha
 							army.setNumArmies(String.valueOf(newArmies));
+
 							// Atualizar a exibição
 							repaint();
 							break;
@@ -642,6 +649,7 @@ public class MapView extends JPanel implements Observer{
 					}
 					else {
 						army.setNumArmies(String.valueOf(quantidadeOriginal));
+						// System.out.println("quantidade original" + quantidadeOriginal);
 						repaint();
 						break;
 
@@ -676,49 +684,54 @@ public class MapView extends JPanel implements Observer{
     @Override
     public void notify(Observed o){
 
-	// Ao ser notificado, o observador recebe um objeto do tipo Object
-	Object[] infos = (Object[]) o.get();
+	// // Ao ser notificado, o observador recebe um objeto do tipo Object
+	// Object[] infos = (Object[]) o.get();
 
-		// Conferindo se o objeto recebido é do tipo esperado, podemos converter os tipos
-		if (infos[0] instanceof ArrayList<?> && infos[1] instanceof ArrayList<?> && infos[2] instanceof Integer && infos[3] instanceof Integer){
-			ArrayList<String> qtds = (ArrayList<String>) infos[0];
-			ArrayList<PlayerColor> cores = (ArrayList<PlayerColor>) infos[1];
-			Integer mod1 = (Integer) infos[2];
-			Integer mod2 = (Integer) infos[3];
+	// // Conferindo se o objeto recebido é do tipo esperado, podemos converter os tipos
+	// if (infos[0] instanceof ArrayList<?> && infos[1] instanceof ArrayList<?> && infos[2] instanceof Integer && infos[3] instanceof Integer){
+	// 	ArrayList<String> qtds = (ArrayList<String>) infos[0];
+	// 	ArrayList<Color> cores = (ArrayList<Color>) infos[1];
+	// 	Integer mod1 = (Integer) infos[2];
+	// 	Integer mod2 = (Integer) infos[3];
 
-			// Se nenhum território em específico foi modificado, então redesenha todos
-			if (mod1 == -1 && mod2 == -1){
-				int cont = 0;
-				for(ArmyView e: armyList){
-					e.setNumArmies(qtds.get(cont));
-					e.setCor(getColorFromPlayerColor(cores.get(cont)));
-					cont++;
-					//redesenhar todos os exércitos
-					e.repaint();
-					e.drawPlayer(g);
-					e.repaint();
-				}
-			}
-			// Se tiver específicos, redesenha apenas eles
-			else{
-				// Redesenha o primeiro modificado
-				ArmyView e = armyList.get(mod1);
-				e.setNumArmies(qtds.get(mod1));
-				e.setCor(getColorFromPlayerColor(cores.get(mod1)));
-				e.repaint();
-				e.drawPlayer(g);
-				repaint();
+	// 	// Se nenhum território em específico foi modificado, então redesenha todos
+	// 	if (mod1 == -1 && mod2 == -1){
+	// 		int cont = 0;
+	// 		for(ArmyView e: armyList){
+	// 			e.setNumArmies(qtds.get(cont));
+	// 			e.setCor(cores.get(cont));
+	// 			cont++;
+	// 			//redesenhar todos os exércitos
+	// 			e.repaint();
+	// 			e.drawPlayer(g);
+	// 			e.repaint();
+	// 		}
+	// 	}
+	// 	// Se tiver específicos, redesenha apenas eles
+	// 	else{
+	// 		// Redesenha o primeiro modificado
+	// 		ArmyView e = armyList.get(mod1);
+	// 		e.setNumArmies(qtds.get(mod1));
+	// 		e.setCor(cores.get(mod1));
+	// 		e.repaint();
+	// 		e.drawPlayer(g);
+	// 		repaint();
 
-				// Se tiver um segundo modificado, redesenha ele também
-				if (mod2 != -1){
-					e = armyList.get(mod2);
-					e.setNumArmies(qtds.get(mod2));
-					e.setCor(getColorFromPlayerColor(cores.get(mod2)));
-					e.repaint();
-					e.drawPlayer(g);
-				}
-			}
-		}
+	// 		// Se tiver um segundo modificado, redesenha ele também
+	// 		if (mod2 != -1){
+	// 			e = armyList.get(mod2);
+	// 			e.setNumArmies(qtds.get(mod2));
+	// 			e.setCor(cores.get(mod2));
+	// 			e.repaint();
+	// 			e.drawPlayer(g);
+	// 		}
+	// 	}
+	// }
+
+
+
+
+
 
     }
 }

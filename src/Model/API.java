@@ -1,7 +1,13 @@
 package Model;
 import View.ViewAPI;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+
+import javax.swing.JFileChooser;
 
 import Controller.APIController;
 
@@ -20,6 +26,13 @@ public class API {
     public int turn;
     private int tradeCounter = 0;
 	private static final int[] tradeBonusAmount = new int[] { 4, 6, 8, 10, 12, 15 };
+
+    // JFileChooser para salvar e carregar jogo
+    private JFileChooser chooser = new JFileChooser();
+
+    //Arquivo para salvar o jogo
+    FileReader outputStream = null;
+    FileWriter inputStream = null;
 
     private API() {
         map = this.initMap();
@@ -40,6 +53,296 @@ public class API {
         game.reiniciarJogo();
         game.setMod1(null);
         game.setMod2(null);
+    }
+
+    public void saveGame(){
+        
+        int retrival = chooser.showSaveDialog(null);
+        if (retrival == JFileChooser.APPROVE_OPTION) {
+            try {
+                inputStream = new FileWriter(chooser.getSelectedFile(),false);
+                //Escreve se está na primeira rodada
+                inputStream.write(String.valueOf(APIController.getInstance().getFirstRound()));
+                inputStream.write("\n");
+
+                //Escreve qtd de jogadores e vez do jogador
+                inputStream.write(String.valueOf(game.getPlayers().size()));
+                inputStream.write("\n");
+                inputStream.write(String.valueOf(APIController.getInstance().getTurn()));
+                inputStream.write("\n");
+                
+                //Escreve o nome dos jogadores
+                for (Player j: game.getPlayers()) {
+                    inputStream.write(j.getName());
+                    //Se não for o último jogador, escreve um espaço
+                    if (j != game.getPlayers().get(game.getPlayers().size()-1))
+                        inputStream.write(";");
+                }
+                
+                inputStream.write("\n");
+                
+                //Escreve as cores dos jogadores
+                for (Player j: game.getPlayers()) {
+                    // inputStream.write(String.valueOf(j.getCor().getRGB()));
+                    // Se não for o último jogador, escreve um espaço
+                    if (j != game.getPlayers().get(game.getPlayers().size()-1))
+                        inputStream.write(";");
+                }
+                inputStream.write("\n");
+
+                //Escreve a qtd de exercitos em cada territorio e o nome do jogador que o domina
+                for (Territory t: tabuleiro.mapTerritorios.values()) {
+                    inputStream.write(t.getName() + ";");
+                    inputStream.write(String.valueOf(t.getArmies()) + ";" + t.getOwner().getName());
+                    inputStream.write("\n");
+                }
+
+                //Escreve os objetivos dos jogadores
+                for (Player j: game.getPlayers()) {
+                    switch(j.getObjective().getClass().getName()){
+                        case "Model.ObjetivoContinentes":
+                            inputStream.write("1;");
+                            // inputStream.write(((ObjetivoContinentes)j.getObj()).getCont1().getNome() + ";");
+                            // inputStream.write(((ObjetivoContinentes)j.getObj()).getCont2().getNome() + ";");
+                            // inputStream.write(String.valueOf(((ObjetivoContinentes)j.getObj()).getQtdContinentes()));
+                            break;
+
+                        case "Model.ObjetivoDestruir":
+                        inputStream.write("2;");
+                        // inputStream.write(((ObjetivoDestruir)j.getObj()).getJAlvo().getNome());
+                        break;
+
+                        case "Model.ObjetivoTerritorios":
+                        inputStream.write("3;");
+                        // inputStream.write(String.valueOf(((ObjetivoTerritorios)j.getObj()).getQtdTerritorios()));
+                        break;
+                    }
+                    inputStream.write("\n");
+                }
+
+                //Escreve as cartas dos jogadores
+                for (Player j: game.getPlayers()) {
+
+                    if(j.getCards() == 0) {
+                        inputStream.write("0");
+                        inputStream.write("\n");
+                        continue;
+                    }
+
+                    inputStream.write(String.valueOf(j.getCards()) + ";");
+
+
+                    // for (Carta c: j.getCartas()) {
+                    //     // Carta de coringa
+                    //     if(c.getTerritorio() == null){
+                    //         inputStream.write("Coringa");
+                    //     }
+
+                    //     // Carta de território
+                    //     else{
+                    //         inputStream.write(c.getTerritorio().getNome());
+                    //     }
+
+                    //     // Se não for a última carta, escreve um ;
+                    //     if( c != j.getCartas().get(j.getCartas().size()-1)){
+                    //         inputStream.write(";");
+                    //     }
+            
+                    // }
+		    inputStream.write("\n");
+                    
+                }
+                //Escreve a quantidade de trocas de cartas que o jogador fez
+                // inputStream.write(APIController.getInstance().getNumDeTrocas().toString());
+                    
+            } 
+
+            //Caso ocorra algum erro
+            catch (IOException ex) {
+                System.out.println("Erro ao abrir arquivo para salvar jogo");
+            }
+
+            //No fim da leitura, fecha o arquivo
+            finally {
+                if (inputStream != null) {
+
+                    try {
+                        inputStream.close();
+                    } 
+
+                    //Caso ocorra algum erro
+                    catch (IOException ex) {
+                        System.out.println("Erro ao fechar arquivo para salvar jogo");
+                    }
+                }
+            }
+        }
+    }
+
+    // Método que carrega jogo de arquivo
+    public boolean loadGame(){
+        int option = chooser.showOpenDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            try {
+                outputStream = new FileReader(chooser.getSelectedFile());
+                BufferedReader br = new BufferedReader(outputStream);
+
+                //Lê se está na primeira rodada
+                String linha = br.readLine();
+                APIController.getInstance().setFirstRound(Boolean.parseBoolean(linha));
+
+                //Lê a qtd de jogadores
+                linha = br.readLine();
+                int qtdJogadores = Integer.parseInt(linha);
+
+                //Lê a vez do jogador
+                linha = br.readLine();
+                APIController.getInstance().setTurn(Integer.parseInt(linha));
+
+                //Lê os nomes e cores dos jogadores
+                String[] nomes;
+                linha = br.readLine();
+                nomes = linha.split(";");
+
+                String[] cores;
+                linha = br.readLine();
+                cores = linha.split(";");
+
+                //Adiciona os jogadores
+                resetPlayers();
+
+                for (int i = 0; i < qtdJogadores; i++) {
+                    Color cor;
+                    switch(Integer.parseInt(cores[i])){
+                        case -16777216:
+                            cor = Color.BLACK;
+                            break;
+                        case -16776961:
+                            cor = Color.BLUE;
+                            break;
+                        case -16711681:
+                            cor = Color.CYAN;
+                            break;
+                        case -16711936:
+                            cor = Color.GREEN;
+                            break;
+                        case -65536:
+                            cor = Color.RED;
+                            break;
+                        case -256:
+                            cor = Color.YELLOW;
+                            break;
+                        default:
+                            cor = Color.WHITE;
+                            break;
+                    }
+                    addJogador(nomes[i], cor);
+                    ;
+                }
+
+                // Inicializar objetos necessários para carregar o jogo
+                // this.comecaJogoCarregado();
+
+                //Lê os territórios, a quantidade de exércitos e o jogador que domina
+                for (int i = 0; i < 51; i++) {
+                    linha = br.readLine();
+                    String[] dados = linha.split(";");
+                    int qtdEx = Integer.parseInt(dados[1]);
+                    Player j = game.getPlayer(dados[2]);
+                    // tabuleiro.mapTerritorios.get(dados[0]).setQntExercitos(qtdEx);
+                    // tabuleiro.mapTerritorios.get(dados[0]).setJogador(j);
+                    // j.addTerritorio(tabuleiro.mapTerritorios.get(dados[0]));
+                }
+
+                //Lê os objetivos dos jogadores
+                game.InstanciaObjetivos();
+                for (Player j: game.getPlayers()) {
+                    linha = br.readLine();
+                    String[] dados = linha.split(";");
+                    Objetivo obj;
+                    switch(Integer.parseInt(dados[0])){
+                        case 1:
+                            if(Integer.parseInt(dados[3]) == 3){
+                                obj = new ObjetivoContinentes(tabuleiro.getMapContinentes().get(dados[1]), tabuleiro.getMapContinentes().get(dados[2]), true);
+                                j.setObj(obj);
+                            }
+
+                            else{
+                                obj = new ObjetivoContinentes(tabuleiro.getMapContinentes().get(dados[1]), tabuleiro.getMapContinentes().get(dados[2]), false);
+                                j.setObj(obj);
+                            }
+
+                            break;
+                        
+                        case 2:
+                            obj = new ObjetivoDestruir(jogo.getJogador(dados[1]));
+                            j.setObj(obj);
+                            break;
+
+                        case 3:
+                            obj = new ObjetivoTerritorios(Integer.parseInt(dados[1]));
+                            j.setObj(obj);
+                            break;
+
+                        default:
+                            obj = null;
+                    }
+
+                    // Substitui o objetivo do jogador pelo objetivo lido
+                    for (Objetivo o: game.getObjetivos()){
+                        if (obj.getDescricao().equals(o.getDescricao())){
+                            game.getObjetivos().remove(o);
+                            game.getObjetivos().add(obj);
+                            break;
+                        }
+                    }
+                }
+
+                //Lê as cartas dos jogadores
+                for (Player j: game.getPlayers()) {
+                    linha = br.readLine();
+
+                    String[] infos = linha.split(";");
+
+                    int qtdCartas = Integer.parseInt(infos[0]);
+
+                    if(qtdCartas == 0){
+                        continue;
+                    }
+
+                    for (int i = 1; i < qtdCartas + 1; i++) {
+                        Carta c;
+                        if(infos[i].equals("Coringa")){
+                            c = game.getCartaNome(null);
+                        }
+                        else{
+                           c = game.getCartaNome(infos[i]);
+                        }
+
+                        j.addCarta(c);
+                        game.getListaCartas().remove(c);
+                    }
+
+                }
+
+                //Lê a quantidade de trocas de cartas do jogo
+                linha = br.readLine();
+                API.getInstance().setNumDeTrocas(Integer.parseInt(linha));
+                // Indica que todos os exércitos foram modificados
+                game.setMod1(null);
+                game.setMod2(null);
+                
+                return true;
+            } 
+
+            //Caso ocorra algum erro ao abrir o arquivo
+            catch (IOException e) {
+                System.out.println("Erro ao abrir arquivo para carregar jogo");
+                return false;
+            }
+        }
+        
+        return false;
     }
 
 
@@ -251,7 +554,7 @@ public class API {
 
 
      // Atualiza a quantidade de exércitos em um território
-     public void setNumArmiesTerritory(String territorio, int count) {
+     public void incrementarNumArmiesTerritory(String territorio, int count) {
         // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
 
@@ -260,7 +563,7 @@ public class API {
             // Verifica se o nome do território é igual ao território desejado
             if (territory.getName().equals(territorio)) {
                 // Usa o método addArmies para incrementar a quantidade de exércitos
-                territory.setArmies(count);
+                territory.addArmies(count);
                 return;
             }
         }
@@ -409,6 +712,9 @@ public class API {
 
 
 
+    public boolean placeArmy(int army, String territory) {
+        return game.getPlayers().get(this.turn).placeArmy(army, territory);
+    }
 //
     // Adicionar exércitos em território da posse do jogador
     public void getPlayerAddArmy(String territory) {

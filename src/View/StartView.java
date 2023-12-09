@@ -8,6 +8,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import Controller.APIController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +20,7 @@ class StartView extends JPanel {
     JButton start = new JButton("Iniciar novo jogo");
     JButton continueGame = new JButton("Continuar jogo");
 
+    APIController controller = APIController.getInstance();
     // Adicionar fundo da tela inicial
 	Image i;
 
@@ -36,6 +40,13 @@ class StartView extends JPanel {
         start.setAlignmentX(CENTER_ALIGNMENT);
         continueGame.setAlignmentX(CENTER_ALIGNMENT);
 
+        continueGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.clickedContinue();
+                
+            }
+        });
 
         start.addActionListener(new ActionListener() {
             // Implementar ação do botão de iniciar jogo

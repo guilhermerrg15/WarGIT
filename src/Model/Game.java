@@ -3,7 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.awt.Color;
 
 import Controller.APIController;
 import View.Observed;
@@ -50,43 +49,6 @@ class Game implements Observed{
     public void remove(Observer o){
         lst.remove(o);
     }
-
-	// Método para passar informações observadores
-    public Object get(){
-        // Array de informações
-        Object infos[] = new Object[4];
-
-        // Array de quantidade de exércitos
-        ArrayList<String> qtdExercitos = new ArrayList<String>();
-
-        // Array de cores
-        ArrayList<PlayerColor> cores = new ArrayList<PlayerColor>();
-
-        // Preenche arrays com informações atuais do model
-        for (Territory t: map.getTerritoriesList()){
-            qtdExercitos.add(((Integer)t.getArmies()).toString());
-            cores.add(t.getCor());
-        }
-        infos[0] = qtdExercitos;
-        infos[1] = cores;
-
-        // Preenche no array qual o índice dos territórios que foram modificados
-        if (mod1 == null){
-            infos[2] = -1;
-        }
-        else{
-            infos[2] = map.getTerritoriesList().indexOf(mod1);
-        }
-        if (mod2 == null){
-            infos[3] = -1;
-        }
-        else{
-            infos[3] = map.getTerritoriesList().indexOf(mod2);
-        }
-        return infos;
-    }
-
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -103,6 +65,14 @@ class Game implements Observed{
         
 	}
 
+	public Player getPlayer(String name) {
+		for (Player player : players) {
+			if(player.getName().equals(name))
+				return player;
+		}
+		return null;
+	}
+
     //Altera o mod1 e o mod2
 	public void setMod1(Territory t){
 		mod1 = t;
@@ -111,6 +81,11 @@ class Game implements Observed{
 	public void setMod2(Territory t){
 		mod2 = t;
 	}
+
+    //implementar 
+    public Object get() {
+        return this;
+    }
 
     public void notifyObservers() {
         for (Observer o : lst) {
