@@ -78,6 +78,8 @@ class Map {
 			// Define 1 para a quantidade de exércitos do território
 			t.addArmies(1);
 
+			t.addArmiesInicial(1);
+
 			// Adiciona o território na lista de territórios do jogador
 			j.addTerritorio(t);
 

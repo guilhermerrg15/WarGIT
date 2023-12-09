@@ -14,7 +14,6 @@ public class Player  {
     private List<TerritoryCard> territoryCards; // cartas para troca
     private int armies;
     private boolean conqueredTerritory;
-    private Player enemy;
     private static int cont = 0;
     private int index;
     private ObjectiveCard objective;
@@ -63,7 +62,6 @@ public class Player  {
         this.territories = new ArrayList<>();
         this.armies = 0;
         this.index = index;
-        this.enemy = null;
         this.territoryCards = new ArrayList<TerritoryCard>();
         this.continentalArmies = new ArrayList<Army>();
         // for(Continent continent : continents){
@@ -77,9 +75,8 @@ public class Player  {
 		this.objective = null;
 		this.eliminadoNessaRodada = false;
 		this.conquistouNessaRodada = false;
-        this.enemy = null;
         this.conqueredTerritory = false;
-        
+        this.numTerritories =0;
         this.armies = 0;
         this.eliminadoNessaRodada = false;
 		this.conquistouNessaRodada = false;
@@ -155,12 +152,14 @@ public class Player  {
     }
 
     public int getTerritoryNumber() {
-        return territories.size();
+        return numTerritories;
     }
     
     
     public void loseTerritory(Territory territory) {
         territories.remove(territory);
+
+        this.numTerritories--;
     }
 
     public void winTerritory(Territory territory) {
@@ -192,14 +191,6 @@ public class Player  {
             return false;
         }
         return true;
-    }
-
-    public void destroyedPlayer(Player player) {
-        this.enemy = player;
-    }
-
-    public Player getEnemy() {
-        return this.enemy;
     }
     
     public void receiveObjective(ObjectiveCard objetivo) {

@@ -5,9 +5,10 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
     private String name;
     private String color;
 
-    public DestroyOpponentObjectiveCard( String name, String color) {
+    public DestroyOpponentObjectiveCard( String name, String color, Player enemy) {
         this.name = name;
         this.color = color;
+        this.enemy = enemy;
         this.image = "war_carta_" + name + ".png";
         this.description = "Destruir todos os exércitos"+ color +". Se você é quem possui os exércitos " + color + "ou se esses exércitos já foram destruídos por outro jogador, o seu objetivo passa a ser conquistar 24 territorios a sua escolha.";
     }
@@ -16,18 +17,23 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
         return this.name;
     } 
 
+    //Retorna o jogador que deve ser destruído
+    public Player getJAlvo(){
+        return this.enemy;
+    }
+
     public boolean checkStatus() {
 
-        if (enemy.getEnemy().getColor().equals(color)) {
+        if (enemy.getColor().equals(color)) {
             if (owner.getTerritoryNumber() >= 24){
                 return true;
             }
             return false;
         }
-        if (enemy.getEnemy() == null){
+        if (enemy == null){
             return false;
         }
-        else if (enemy.getEnemy().equals(owner)){
+        else if (enemy.equals(owner)){
             return true;
         }
         else if (owner.getTerritoryNumber() >= 24){

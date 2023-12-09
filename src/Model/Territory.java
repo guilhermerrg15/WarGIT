@@ -16,6 +16,7 @@ class Territory {
     // private List<Territory> neighbours;
     private List<String> neighbours;
     private List<Observer> lst = new ArrayList<Observer>();
+    private int inicialArmie;
 
     //Guarda a cor do território 
 	private PlayerColor cor;
@@ -33,6 +34,7 @@ class Territory {
         this.name = name;
         this.neighbours = neighbours;
         this.continent = continent;
+   
     }
 
     
@@ -101,6 +103,19 @@ class Territory {
     //Altera a quantidade de exércitos
     public void setArmies(int armies) {
         this.armies = armies;
+    }
+
+    public int getInicialArmie(){
+        return inicialArmie;
+    }
+
+    //Altera a quantidade de exércitos
+    public void setInicialArmies(int armies) {
+        this.inicialArmie = armies;
+    }
+
+    public void addArmiesInicial(int count) {
+        this.inicialArmie += count;
     }
 
     /**
