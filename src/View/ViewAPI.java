@@ -19,6 +19,9 @@ public class ViewAPI {
     // Singleton
     StartView start = StartView.getStartView();
 
+    // Singleton
+    APIController controller = APIController.getInstance();
+
     // Pegar primeiro jogador
     public void determineFirstPlayer(String nome, PlayerColor cor){
 		MapView.getMapView().determineFirstPlayer(nome, cor);
@@ -47,30 +50,30 @@ public class ViewAPI {
 		//Verifica a cor do jogador
 		switch (cor) {
 			case YELLOW:
-                nomeCor = "Amarelo";
-                break;
-            case BLUE:
-                nomeCor = "Azul";
-                break;
-            case WHITE:
-                nomeCor = "Branco";
-                break;               
-            case BLACK:
-                nomeCor = "Preto";
-                break;
-            case RED:
-                nomeCor = "Vermelho";
-            case GREEN:
-                nomeCor = "Verde";
-                break;
-            default:
-                nomeCor = "Preto";
-                break;
-		
+          nomeCor = "Amarelo";
+          break;
+      case BLUE:
+          nomeCor = "Azul";
+          break;
+      case WHITE:
+          nomeCor = "Branco";
+          break;               
+      case BLACK:
+          nomeCor = "Preto";
+          break;
+      case RED:
+          nomeCor = "Vermelho";
+      case GREEN:
+          nomeCor = "Verde";
+          break;
+      default:
+          nomeCor = "Preto";
+          break;
+
         }
 		showWin(nome, nomeCor);
 	}
-    
+
 
     public static ViewAPI getInstance() {
         if (apiInstance == null) {

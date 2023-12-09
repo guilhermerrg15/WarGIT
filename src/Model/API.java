@@ -389,6 +389,13 @@ public class API {
 		}
 	}
 
+    // Reiniciar jogo
+    public void reiniciarJogo(List<Player> players, ObjectiveCardDeck objectiveDeck){
+        for(Player player : players){
+            objectiveDeck.returnObjectiveCard(player.getObjective());;
+        }
+    }
+
     // Conferir vencedor da batalha
     public Integer[] battleWinner(List<Integer> diceAttack, List<Integer> diceDefense) {
         // Criar lista de quantidade de derrotas
