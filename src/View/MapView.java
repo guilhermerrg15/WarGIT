@@ -567,8 +567,6 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-
-
     // Retorna quantidade de exércitos que tem em um território
     public Integer getNumArmiesTotal(ArrayList<ArmyView> armyList) {
 		int sumArmies = 0;

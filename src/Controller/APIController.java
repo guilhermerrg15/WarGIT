@@ -109,28 +109,38 @@ public class APIController {
         } else {
             // view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
             territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-            if (numArmiesReplacement != null) {
+            // Se tiver algum território com mais de 1 exército para reposicionar
+            if (territoriesReplacementName != null) {
                 numArmiesReplacement = new Integer[territoriesReplacementName.length];
             }
+            // Pega a quantidade de exércitos que pode reposicionar em cada território
             for (int i = 0; i < territoriesReplacementName.length; i++){
                 numArmiesReplacement[i] = (api.getNumArmiesTerritory(territoriesReplacementName[i]) - 1);
             }
+
+            // Atualiza a view para reposicionamento
             view.updateReplacement(territoriesReplacementName);
             return false;
         }
     }
 
+    // Método chamado quando o jogador seleciona um território para defender
     public void selectedOrigin(String origin) {
+         // Se selecionado for nulo não faz nada
         if (origin == null) {
             return;
         }
+        // Atualiza comboBox do destino com adjacentes
         view.updateDestiny(api.getNeiboursDominated(origin, turn));
+
+        // Pega o index do território selecionado para ver quantidade que ainda pode reposicionar
         int i = 0;
         for(; i < territoriesReplacementName.length; i++) {
             if (territoriesReplacementName[i].equals(origin)) {
                 break;
             }
         }
+        // Atualiza a quantidade de exércitos que ainda pode reposicionar
         view.updateNumReplacement(numArmiesReplacement[i]);
     }
 

@@ -124,7 +124,7 @@ public class API {
     
         // Copia a lista para uma lista final, removendo espaços vazios
         String[] territoriosFinal = new String[quant];
-        territoriosComMaisDeUmExercito.toArray(territoriosFinal);
+        territoriosComMaisDeUmExercito.toArray(territoriosFinal);//
     
         return territoriosFinal;
     }
