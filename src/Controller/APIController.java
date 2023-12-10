@@ -114,6 +114,10 @@ public class APIController {
         }
     }
 
+    public void clickedAttack() {
+        view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+    }
+
     public void clickedEndAtack(){
         territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
             // Se tiver algum território com mais de 1 exército para reposicionar

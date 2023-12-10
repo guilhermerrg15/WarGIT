@@ -233,9 +233,8 @@ public class MapView extends JPanel implements Observer{
 				dicesDefense[2] = diceValues[5];
 
 				// Mostra os dados na tela
-				if (endPosic){
-					diceView.showDices(dicesAttack, dicesDefense);
-				}
+				diceView.showDices(dicesAttack, dicesDefense);
+				controller.clickedAttack();
 				repaint();
 			}
 		});
