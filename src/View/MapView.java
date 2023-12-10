@@ -163,8 +163,9 @@ public class MapView extends JPanel implements Observer{
 
 		changePlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.clickedChangePlayer();
 				canChange = false;
+				controller.clickedChangePlayer();
+				// canChange = false;
 			}
 		});
 
@@ -285,7 +286,7 @@ public class MapView extends JPanel implements Observer{
 			// defendingTerritories.setVisible(true);
 			// playDicesButton.setVisible(true);
 				
-			if (canChange = true) {
+			if (canChange) {
 				originTerritories.setVisible(true);
 				numReplacementBox.setVisible(true);
 				destinyTerritories.setVisible(true);
