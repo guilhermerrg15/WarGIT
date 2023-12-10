@@ -79,23 +79,6 @@ public class APIController {
         return api.getTerritoriesList();
     }
 
-    // Método para obter territórios disponíveis
-    // public ArrayList<String> getAvailableTerritories() {
-    //     return availableTerritories;
-    // }
-
-    //  // Método para atualizar a lista de territórios disponíveis
-    //  public void updateAvailableTerritories() {
-    //     // Lógica para atualizar a lista com territórios que têm mais de 1 exército
-    //     availableTerritories.clear();
-
-    //     for (int i = 0; i < territoriesReplacementName.length; i++) {
-    //         if (numArmiesReplacement[i] > 1) {
-    //             availableTerritories.add(territoriesReplacementName[i]);
-    //         }
-    //     }
-    // }
-
      // Método chamado quando ocorre o clique na bolinha
      public void setNumArmiesTerritory(String territorio, int count) {
         api.setNumArmiesTerritory(territorio, count);
@@ -144,6 +127,12 @@ public class APIController {
         }
     }
 
+    public void clickedChangePlayer(){
+        turn = (turn + 1) % api.getNumPlayers();
+        //colocar parte da carta, ver se conquistou allgum territorio se sim da uma carta
+        view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+    }
+
     // Método chamado quando o jogador seleciona um território para reposicionar
     public void clicouReposicionar(String origem, String destino, Integer qtd){
 
@@ -164,9 +153,6 @@ public class APIController {
 
             // Diminui a quantidade que ainda pode reposicionar
             numArmiesReplacement[i] -= qtd;
-
-            // Atualiza a lista de territórios disponíveis
-            // updateAvailableTerritories();
 
             // Se tiver exércitos para reposicionar continua na etapa de reposicionamento
             for (int j = 0; j < territoriesReplacementName.length; j++){
@@ -191,6 +177,8 @@ public class APIController {
             // turn = (turn + 1) % api.getNumPlayers();
             // view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
     }
+
+    
 
     // Método chamado quando o jogador seleciona um território para defender
     public void selectedOrigin(String origin) {
