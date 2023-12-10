@@ -80,4 +80,14 @@ class DiceView {
 		defesa2 = dadoDefensor[dadosDefesa[1]];
 		defesa3 = dadoDefensor[dadosDefesa[2]];
 	}
+
+	// Resetar valores dos dados como null para não aparecem
+	public void clearDices() {
+		ataque1 = null;
+		ataque2 = null;
+		ataque3 = null;
+		defesa1 = null;
+		defesa2 = null;
+		defesa3 = null;
+	}
 }
