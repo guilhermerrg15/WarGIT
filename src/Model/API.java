@@ -16,6 +16,7 @@ public class API {
     private Dado dado;
     private Player player;
     private ObjectiveCardDeck objectiveDeck;
+    private TerritoryCardDeck territoryCardDeck;
     private ArrayList<Player> players;
     public int turn;
     private int tradeCounter = 0;
@@ -42,6 +43,15 @@ public class API {
         game.setMod2(null);
     }
 
+    public void giveTerritoryCard(){
+        if(game.getPlayers().get(this.turn).getConquistouNessaRodada()){
+            territoryCardDeck.pickRandomCard(game.getPlayers().get(this.turn));
+        }
+    }
+
+    public void resetConquista(){
+        game.getPlayers().get(this.turn).setConquistouNessaRodada(false);
+    }
 
     // Método para obter a quantidade de territórios de um jogador específico
     public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
@@ -381,6 +391,10 @@ public class API {
     
     public void initDeckObjective() {
     	objectiveDeck = new ObjectiveCardDeck(this.map,this.game.getPlayers());
+	} 
+
+    public void initDeckTerritory() {
+    	territoryCardDeck = new TerritoryCardDeck();
 	} 
 
     // Pegar o número de cartas de um jogador

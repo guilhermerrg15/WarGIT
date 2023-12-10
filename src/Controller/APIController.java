@@ -55,6 +55,10 @@ public class APIController {
 
     }
 
+    public void initTerritoryDeck(){
+        api.initDeckTerritory();
+    }
+
     public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
         return API.getInstance().getNumTerritoryPlayer(corDoJogador);
     }
@@ -134,6 +138,9 @@ public class APIController {
     }
 
     public void clickedChangePlayer(){
+        System.err.println("------------------------------Inside clickedChangePlayer--------------------");
+        api.giveTerritoryCard();
+        api.resetConquista();
         turn = (turn + 1) % api.getNumPlayers();
         //colocar parte da carta, ver se conquistou allgum territorio se sim da uma carta
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));

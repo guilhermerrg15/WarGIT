@@ -12,7 +12,7 @@ class TerritoryCardDeck {
 	private int maximumCards;
 
 	
-	private TerritoryCardDeck() {
+	public TerritoryCardDeck() {
 		setShuffleCards();
 		maximumCards = 5;
 	}
@@ -123,13 +123,15 @@ class TerritoryCardDeck {
 
 	// Pegar uma carta após o fim de jogada com conquista
 	public void pickRandomCard(Player player) {
-		int count = 0;
+		shuffleCards();
+		TerritoryCard pickedCard = cards.get(0);
 
-		while (cards.get(count) == null) {
-			count++;
+		if (pickedCard != null){
+			player.addCard(pickedCard);
+			cards.remove(0);
 		}
-		player.addCard(cards.get(count));
-		cards.set(count, null);
+
+		System.err.println(pickedCard);
 	}
 
 	// Retorna uma carta ao deck

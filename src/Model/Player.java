@@ -178,6 +178,11 @@ public class Player  {
 		this.conquistouNessaRodada = conquistouNessaRodada;
 	}
 
+    //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
+	public boolean getConquistouNessaRodada() {
+		return conquistouNessaRodada;
+	}
+
     public Player getJMatou() {
 		return jMatou;
 	}

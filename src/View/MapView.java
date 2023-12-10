@@ -321,6 +321,7 @@ public class MapView extends JPanel implements Observer{
 				destinyTerritories.setVisible(true);
 				reposicionarButton.setVisible(true);
 				changePlayer.setVisible(true);
+				System.err.println("-------------------------End of Attack----------------------");
 
 				// Retirar dados da tela
 				diceView.clearDices();
