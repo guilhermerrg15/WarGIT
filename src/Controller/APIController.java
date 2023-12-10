@@ -109,9 +109,13 @@ public class APIController {
 
             return true;
         } else {
-            // view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+            view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+            return false;
+        }
+    }
 
-            territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+    public void clickedEndAtack(){
+        territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
             // Se tiver algum território com mais de 1 exército para reposicionar
             if (territoriesReplacementName != null) {
                 numArmiesReplacement = new Integer[territoriesReplacementName.length];
@@ -123,8 +127,6 @@ public class APIController {
 
             // Atualiza a view para reposicionamento
             view.updateReplacement(territoriesReplacementName);
-            return false;
-        }
     }
 
     public void clickedChangePlayer(){
@@ -177,8 +179,6 @@ public class APIController {
             // turn = (turn + 1) % api.getNumPlayers();
             // view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
     }
-
-    
 
     // Método chamado quando o jogador seleciona um território para defender
     public void selectedOrigin(String origin) {

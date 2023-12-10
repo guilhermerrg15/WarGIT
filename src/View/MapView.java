@@ -29,6 +29,7 @@ public class MapView extends JPanel implements Observer{
 	JButton continueButton = new JButton("Continuar");
 	JButton saveButton = new JButton("Salvar Jogo");
 	JButton playDicesButton = new JButton( "Atacar");
+	JButton endAtackButton = new JButton("Terminar Ataque");
 	JButton reposicionarButton = new JButton("Reposicionar");
 	JButton changePlayer = new JButton("Finalizar");
 	
@@ -38,7 +39,9 @@ public class MapView extends JPanel implements Observer{
 
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
 	private boolean addTroopsMode = false;
-	private boolean canChange = false;
+	private boolean endPosic = false;
+	private boolean endAtack = false;
+
     Graphics2D g;
 	JLabel labelColor = new JLabel();
 
@@ -110,6 +113,8 @@ public class MapView extends JPanel implements Observer{
 		add(numReplacementBox);
 		add(destinyTerritories);
 
+		
+
 		reposicionarButton.setBounds(1250,200,200,30);
 		add(reposicionarButton);
 
@@ -119,8 +124,10 @@ public class MapView extends JPanel implements Observer{
 		playDicesButton.setBounds(1250,200,200,30);
 		add(playDicesButton);
 
+		endAtackButton.setBounds(1250,200,200,30);
+		add(endAtackButton);
+
         JPanel buttonPanel = new JPanel();
-        // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
 
@@ -140,7 +147,7 @@ public class MapView extends JPanel implements Observer{
 		add(Box.createHorizontalStrut(50));
 
         //Cria e adiciona o label do jogador da vez
-        currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 22));
         currentPlayerLabel.setForeground(Color.BLACK);
         add(currentPlayerLabel);
 
@@ -157,15 +164,14 @@ public class MapView extends JPanel implements Observer{
 				if(originTerritories.getSelectedItem() != null && destinyTerritories.getSelectedItem() != null){
 					controller.clicouReposicionar(originTerritories.getSelectedItem().toString(), destinyTerritories.getSelectedItem().toString(), (Integer) numReplacementBox.getSelectedItem());
 				}
-				// canChange = true;
+				
 			}
 		});
 
 		changePlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				canChange = false;
+				endAtack = false;
 				controller.clickedChangePlayer();
-				// canChange = false;
 			}
 		});
 
@@ -191,7 +197,16 @@ public class MapView extends JPanel implements Observer{
 				firstRound = controller.clickedContinue();
 				currentArmySum = 0;
 				salvaArmyAntigo();
-				canChange = true;
+				endPosic = true;
+			}
+		});
+
+		endAtackButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.clickedEndAtack();
+				endAtack = true;
+				endPosic =  false;
 			}
 		});
 
@@ -218,7 +233,9 @@ public class MapView extends JPanel implements Observer{
 				dicesDefense[2] = diceValues[5];
 
 				// Mostra os dados na tela
-				diceView.showDices(dicesAttack, dicesDefense);
+				if (endPosic){
+					diceView.showDices(dicesAttack, dicesDefense);
+				}
 				repaint();
 			}
 		});
@@ -257,6 +274,10 @@ public class MapView extends JPanel implements Observer{
 
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
         currentPlayerLabel.setText(currentPlayer);
+
+		// Desenhar imagem dos dados
+		diceView.drawDices(graphic);
+
         if(armyCreation) {
 			createArmies(g);
 			armyCreation = false;
@@ -280,13 +301,22 @@ public class MapView extends JPanel implements Observer{
 			playDicesButton.setVisible(false);
 			reposicionarButton.setVisible(false);
 			changePlayer.setVisible(false);
+			endAtackButton.setVisible(false);
 
 		} else {
-			// attackingTerritories.setVisible(true);
-			// defendingTerritories.setVisible(true);
-			// playDicesButton.setVisible(true);
+			if (endPosic) {
+				attackingTerritories.setVisible(true);
+				defendingTerritories.setVisible(true);
+				playDicesButton.setVisible(true);
+				endAtackButton.setVisible(true);
 				
-			if (canChange) {
+			} else{
+				attackingTerritories.setVisible(false);
+				defendingTerritories.setVisible(false);
+				playDicesButton.setVisible(false);
+				endAtackButton.setVisible(false);
+			}
+			if (endAtack) {
 				originTerritories.setVisible(true);
 				numReplacementBox.setVisible(true);
 				destinyTerritories.setVisible(true);
@@ -316,8 +346,7 @@ public class MapView extends JPanel implements Observer{
 			this.g.drawImage(objectiveCard, centerX, centerY, 350, 500, null);
 		}
 
-		// Desenhar imagem dos dados
-		diceView.drawDices(graphic);
+		
     }
 
 	public void salvaArmyAntigo(){
@@ -386,7 +415,7 @@ public class MapView extends JPanel implements Observer{
         panel.add(currentPlayerLabel, BorderLayout.CENTER);
 
         // Define a posição e tamanho do painel combinado
-        panel.setBounds(10, 660, 300, 30); // Ajuste as coordenadas conforme necessário
+        panel.setBounds(0, 660, 280, 32); // Ajuste as coordenadas conforme necessário
 
         add(panel);
     }
