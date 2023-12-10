@@ -215,7 +215,11 @@ public class APIController {
     public void selecionouAtacante(String atacante){
         if(atacante != null){
             // Atualiza comboBox dos defensores com os adjacentes
-            view.atualizaDefensores(api.getNeiboursNotDominated(atacante, turn));
+            if(api.getNeiboursNotDominated(atacante, turn) != null){
+                view.atualizaDefensores(api.getNeiboursNotDominated(atacante, turn));
+            } else {
+                view.atualizaDefensores(new String[0]);
+            }
         }
     }
 

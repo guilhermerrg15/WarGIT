@@ -352,6 +352,11 @@ public class API {
         return game.getPlayers().get(this.turn).getAllCards();
     }
 
+    // Pegar todas as cartas de território do jogador
+    public List<TerritoryCard> getTerritoryCards() {
+        return game.getPlayers().get(this.turn).getCard();
+    }
+
     // Pegar lista de territórios em posse do jogador
     public List<Territory> retrieveTerritories() {
         return game.getPlayers().get(this.turn).getConqueredTerritories();

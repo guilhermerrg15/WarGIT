@@ -73,6 +73,8 @@ public class MapView extends JPanel implements Observer{
     //Boolean para saber se os exércitos já foram criados
 	Boolean armyCreation = true;
 
+	Boolean showTerritoryCards = false;
+
     //Lista de territórios no jogo
 	String[] territories;
 
@@ -259,6 +261,15 @@ public class MapView extends JPanel implements Observer{
             }
         });
 
+		checkCardsButton.addActionListener(new ActionListener() {
+            // Adicionar ação do botão de ver carta de objetivo do jogador da vez
+            @Override
+            public void actionPerformed(ActionEvent e) {
+				showTerritoryCards = !showTerritoryCards;
+				repaint();
+            }
+        });
+
 		try {
 			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
             // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
@@ -321,7 +332,6 @@ public class MapView extends JPanel implements Observer{
 				destinyTerritories.setVisible(true);
 				reposicionarButton.setVisible(true);
 				changePlayer.setVisible(true);
-				System.err.println("-------------------------End of Attack----------------------");
 
 				// Retirar dados da tela
 				diceView.clearDices();
@@ -351,6 +361,10 @@ public class MapView extends JPanel implements Observer{
 		}
 
 		
+		if(showTerritoryCards){
+			System.err.println(api.getTerritoryCards());
+			TerritoryCardView.drawTerritoryCard(g, api.getTerritoryCards());
+		}
     }
 
 	public void salvaArmyAntigo(){

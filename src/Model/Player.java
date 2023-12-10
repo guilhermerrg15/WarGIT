@@ -218,15 +218,11 @@ public class Player  {
     }
 
     public boolean addCard(TerritoryCard card) {
-        if(this.conqueredTerritory
-) {
-            this.conqueredTerritory
-     = false;
+            this.conqueredTerritory = false;
             if(this.territoryCards.size() < 5) {
                 this.territoryCards.add(card);
                 return true;
             }
-        }
         return false;
     }
 
