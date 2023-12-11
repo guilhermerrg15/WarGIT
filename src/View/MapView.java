@@ -262,7 +262,7 @@ public class MapView extends JPanel implements Observer{
         });
 
 		checkCardsButton.addActionListener(new ActionListener() {
-            // Adicionar ação do botão de ver carta de objetivo do jogador da vez
+            // Adicionar ação do botão de ver carta de territorio do jogador da vez
             @Override
             public void actionPerformed(ActionEvent e) {
 				showTerritoryCards = !showTerritoryCards;
@@ -345,9 +345,6 @@ public class MapView extends JPanel implements Observer{
 			}
 			
 		}
-		
-
-		
 
 		if(showObjectiveCard) {
 			// Alterar tamanho da carta
@@ -362,8 +359,8 @@ public class MapView extends JPanel implements Observer{
 
 		
 		if(showTerritoryCards){
-			System.err.println(api.getTerritoryCards());
-			TerritoryCardView.drawTerritoryCard(g, api.getTerritoryCards());
+			System.err.println(controller.getTerritoryCards());
+			TerritoryCardView.drawTerritoryCard(g, controller.getTerritoryCards());
 		}
     }
 
@@ -676,11 +673,11 @@ public class MapView extends JPanel implements Observer{
 
 			// Atualizar o número total de exercítos antes do incremento da rodada
 			if (currentArmySum==0) {
-				firstArmySum = getNumArmiesTotal(armyList); //17
+				firstArmySum = getNumArmiesTotal(armyList); 
 			}
-			int somaExAtual = getNumArmiesTotal(armyList);//17
+			int somaExAtual = getNumArmiesTotal(armyList);
 
-			currentArmySum = somaExAtual - firstArmySum;//0
+			currentArmySum = somaExAtual - firstArmySum;
 
 			// Calcular a quantidade máxima de exércitos permitidos
 			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2;

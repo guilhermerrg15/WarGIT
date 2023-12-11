@@ -5,6 +5,7 @@ import java.util.List;
 
 import Model.API;
 import Model.PlayerColor;
+import Model.TerritoryCard;
 import View.ViewAPI;
 
 public class APIController {
@@ -83,6 +84,17 @@ public class APIController {
         return api.getTerritoriesList();
     }
 
+    public void  giveTerritoryCard(){
+        api.giveTerritoryCard(turn);
+    }
+
+    public List<TerritoryCard> getTerritoryCards(){
+        return api.getTerritoryCards(turn);
+    }
+
+     public void resetConquista(){
+        api.resetConquista(turn);
+     }
      // Método chamado quando ocorre o clique na bolinha
      public void setNumArmiesTerritory(String territorio, int count) {
         api.setNumArmiesTerritory(territorio, count);
@@ -139,8 +151,8 @@ public class APIController {
 
     public void clickedChangePlayer(){
         System.err.println("------------------------------Inside clickedChangePlayer--------------------");
-        api.giveTerritoryCard();
-        api.resetConquista();
+        giveTerritoryCard();
+        resetConquista();
         turn = (turn + 1) % api.getNumPlayers();
         //colocar parte da carta, ver se conquistou allgum territorio se sim da uma carta
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));

@@ -43,14 +43,17 @@ public class API {
         game.setMod2(null);
     }
 
-    public void giveTerritoryCard(){
-        if(game.getPlayers().get(this.turn).getConquistouNessaRodada()){
-            territoryCardDeck.pickRandomCard(game.getPlayers().get(this.turn));
+    public void giveTerritoryCard(int t){
+        System.err.println("jogador " + t);
+        System.err.println("conquistou? " + game.getJogadorVez(t).getConquistouNessaRodada());
+        if(game.getJogadorVez(t).getConquistouNessaRodada()){
+            
+            territoryCardDeck.pickRandomCard(game.getJogadorVez(t));
         }
     }
 
-    public void resetConquista(){
-        game.getPlayers().get(this.turn).setConquistouNessaRodada(false);
+    public void resetConquista(int t){
+        game.getJogadorVez(t).setConquistouNessaRodada(false);
     }
 
     // Método para obter a quantidade de territórios de um jogador específico
@@ -288,7 +291,7 @@ public class API {
         int[] array = game.RealizaAtaque(Tatacante, Tdefensor, numAtaque, numDefesa);
 
         // Verifica se jogador ganhou após essa rodada
-		APIController.getInstance().verificaGanhou(APIController.getInstance().getTurn());
+		// APIController.getInstance().verificaGanhou(APIController.getInstance().getTurn());
         return array;
     }
 
@@ -353,8 +356,8 @@ public class API {
     }
 
     // Pegar todas as cartas de território do jogador
-    public List<TerritoryCard> getTerritoryCards() {
-        return game.getPlayers().get(this.turn).getCard();
+    public List<TerritoryCard> getTerritoryCards(int t) {
+        return game.getJogadorVez(t).getCard();
     }
 
     // Pegar lista de territórios em posse do jogador

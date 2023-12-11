@@ -15,8 +15,7 @@ class TerritoryCardView {
 
 		
 	}
-
-	//Desenha as imagens dos dados
+	//Desenha as imagens das cartas
 	static public void drawTerritoryCard(Graphics2D g2d, List<TerritoryCard> cards) {
 
 		int dimensionWidth = 150;
