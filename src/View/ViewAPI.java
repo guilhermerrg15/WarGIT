@@ -5,14 +5,11 @@ import javax.swing.JOptionPane;
 
 import Controller.APIController;
 import Model.PlayerColor;
-import java.awt.Color;
-import java.util.ArrayList;
 
 // import Controller.TabuleiroObservador;
 
 public class ViewAPI {
     private static ViewAPI apiInstance = null;
-    private String imagesPath = "resources/imagens";
 
     // Array de nomes dos jogadores
 	String[] nomesJogadores = new String[6];
@@ -56,6 +53,7 @@ public class ViewAPI {
 
     private ViewAPI() {
     }
+
 	//Verifica se o jogador ganhou a partida
 	public void jogadorGanhou(String nome, PlayerColor cor){
 		String nomeCor;
@@ -106,7 +104,7 @@ public class ViewAPI {
 
     public void showWin(String nome, String cor) {
 
-        JOptionPane.showMessageDialog(null, nome + "de cor" + cor + "ganhou o jogo!", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, nome + " de cor " + cor + " ganhou o jogo! ", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
 		if (JOptionPane.showConfirmDialog(null, "Deseja continuar jogando?", "Fim de jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			APIController.getInstance().reiniciarJogo();
 		} else {

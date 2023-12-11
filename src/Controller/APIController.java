@@ -146,7 +146,8 @@ public class APIController {
             api.reposicionarExercitos(origem, destino, qtd);
 
             // Verifica se ganhou após reposicionar
-            verificaGanhou(turn);
+            //esta com bug
+            // verificaGanhou(turn);
 
             // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
             int i = 0;
