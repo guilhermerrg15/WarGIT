@@ -178,6 +178,11 @@ public class Player  {
 		this.conquistouNessaRodada = conquistouNessaRodada;
 	}
 
+    //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
+	public boolean getConquistouNessaRodada() {
+		return conquistouNessaRodada;
+	}
+
     public Player getJMatou() {
 		return jMatou;
 	}
@@ -213,15 +218,11 @@ public class Player  {
     }
 
     public boolean addCard(TerritoryCard card) {
-        if(this.conqueredTerritory
-) {
-            this.conqueredTerritory
-     = false;
+            this.conqueredTerritory = false;
             if(this.territoryCards.size() < 5) {
                 this.territoryCards.add(card);
                 return true;
             }
-        }
         return false;
     }
 

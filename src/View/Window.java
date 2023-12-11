@@ -47,6 +47,7 @@ public class Window extends JFrame {
 
     public void configureMap() {
         APIController.getInstance().showObjCards();
+        APIController.getInstance().initTerritoryDeck();
         startView.setVisible(false);
         numPlayersView.setVisible(false);
         playerConfig.setVisible(false);
