@@ -32,6 +32,7 @@ public class MapView extends JPanel implements Observer{
 	JButton endAtackButton = new JButton("Terminar Ataque");
 	JButton reposicionarButton = new JButton("Reposicionar");
 	JButton changePlayer = new JButton("Finalizar");
+	JButton cardsTradeButton = new JButton("Trocar Cartas");
 	
     Image backgroundImage;
     Image territoriesImage;
@@ -94,6 +95,9 @@ public class MapView extends JPanel implements Observer{
       	continueButton.setBounds(1250,535,200,30);
 		add(continueButton);
 
+		cardsTradeButton.setBounds(1250,535,200,30);
+		add(cardsTradeButton);
+
 
 		attackingTerritories = new JComboBox<String>();
 		defendingTerritories = new JComboBox<String>();
@@ -115,7 +119,6 @@ public class MapView extends JPanel implements Observer{
 		add(numReplacementBox);
 		add(destinyTerritories);
 
-		
 
 		reposicionarButton.setBounds(1250,200,200,30);
 		add(reposicionarButton);
@@ -167,6 +170,13 @@ public class MapView extends JPanel implements Observer{
 					controller.clicouReposicionar(originTerritories.getSelectedItem().toString(), destinyTerritories.getSelectedItem().toString(), (Integer) numReplacementBox.getSelectedItem());
 				}
 				
+			}
+		});
+
+		//Adiciona ação ao clicar no botão de trocar cartas
+		cardsTradeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.clicouTrocar();
 			}
 		});
 

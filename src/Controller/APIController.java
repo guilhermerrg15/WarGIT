@@ -15,6 +15,13 @@ public class APIController {
     private int turn = 0;
     private String[] territoriesReplacementName;
     private Integer[] numArmiesReplacement;
+    private boolean canTrade = false;
+
+    // Guarda o bônus de troca de cartas
+    private Integer bonusTroca = 0;
+    // Guarda o número de trocas de cartas
+    private Integer numDeTrocas = 0;
+
 
     // Instância de APIs
     private ViewAPI view = ViewAPI.getInstance();
@@ -95,6 +102,7 @@ public class APIController {
      public void resetConquista(){
         api.resetConquista(turn);
      }
+     
      // Método chamado quando ocorre o clique na bolinha
      public void setNumArmiesTerritory(String territorio, int count) {
         api.setNumArmiesTerritory(territorio, count);
@@ -112,6 +120,26 @@ public class APIController {
     public PlayerColor getTerritoryColor(String t){
         return api.getTerritoryColor(t);
     }
+
+    // Método para trocar cartas
+    public void clicouTrocar(){
+        // Só pode trocar antes de posicionar algo
+        if (canTrade){
+            // Guarda bonus na variável para adicionar só no posicionamento geral e não no momento de posicionar em continentes dominados
+            this.bonusTroca = api.trocarCartas(turn, numDeTrocas);
+            if (bonusTroca != 0){
+                numDeTrocas++;
+                view.atualizaCartas(api.getNomesCartasJogador(turn));
+                if (continente == 7){
+                api.atualizaQtdExPosicGeral(turn, bonusTroca); 
+                this.bonusTroca = 0;
+                view.atualizaQtdPosic(api.getQtdExercitosPosic(turn));
+                return;
+            }
+            }
+        }
+    }
+
 
     public boolean clickedContinue() {
         if (firstRound) {
@@ -150,7 +178,6 @@ public class APIController {
     }
 
     public void clickedChangePlayer(){
-        System.err.println("------------------------------Inside clickedChangePlayer--------------------");
         giveTerritoryCard();
         resetConquista();
         turn = (turn + 1) % api.getNumPlayers();

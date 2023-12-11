@@ -54,8 +54,6 @@ public class Player  {
     * @param name  O nome do jogador.
     * @param color A cor do jogador.
     */
-
-    
     public Player(String name, PlayerColor color, int index) {
         this.name = name;
         this.color = color;
@@ -88,60 +86,12 @@ public class Player  {
         this.territories.clear();
     }
 
-    //nao entendi objetivo desse metodo
-     public void backToDeckPlayerDestroyed(List<TerritoryCard> cards ,TerritoryCardDeck territoryDeck){
-     	this.territoryCards.addAll(cards);
-	 	Random rand = new Random();
-     	while(this.territoryCards.size() > 5) {
-     		TerritoryCard card = this.territoryCards.remove(rand.nextInt(this.territoryCards.size()));
-     		territoryDeck.returnCard(card);
-     	}
-     }
-
     public List<TerritoryCard> getAllCards() {
         List<TerritoryCard> cards = this.getCard();
         territoryCards.clear();
         return cards;
     }
 
-    public String getTerritoryRegion(String territory) {
-        return territories.stream()
-                .filter(terr -> terr.getName().equals(territory))
-                .map(Territory::getContinent)
-                .findFirst()
-                .orElse(null);
-    }
-    
-
-    public boolean checkBorder(String pais, String border) {
-        return territories.stream()
-                .filter(territory -> territory.getName().equals(pais))
-                .findFirst()
-                .map(territory -> territory.isNeighbor(border))
-                .orElse(false);
-    }
-    
-    public boolean verifyTerritory(String country) {
-        return territories.stream()
-                .anyMatch(territory -> territory.getName().equals(country));
-    }
-    
-
-    public boolean verifyContinentTerritory(String region) {
-        for(Territory territory : this.territories) {
-            if(territory.getName() == region) {
-                for(Army army : this.continentalArmies) {
-                    if(territory.getContinent() == army.retrieveContinent().getName() && army.retrieveArmyCount() > 0) {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        return false;
-    }
 
     public void setArmies(int armies) {
         this.armies = armies;
@@ -155,18 +105,11 @@ public class Player  {
         return numTerritories;
     }
     
-    
     public void loseTerritory(Territory territory) {
         territories.remove(territory);
 
         this.numTerritories--;
     }
-
-    public void winTerritory(Territory territory) {
-    	territory.setOwner(this);
-        territories.add(territory);
-    }
-
 
     //Altera se o jogador foi eliminado nessa rodada para verificação de objetivos
     public void setEliminadoNessaRodada(boolean eliminadoNessaRodada) {
@@ -190,13 +133,6 @@ public class Player  {
 	public void setJMatou(Player jMatou) {
 		this.jMatou = jMatou;
 	}
-
-    public boolean verifyDestroyed() {
-        if (territories.isEmpty()) {
-            return false;
-        }
-        return true;
-    }
     
     public void receiveObjective(ObjectiveCard objetivo) {
         if (objetivo != null) {
@@ -226,78 +162,174 @@ public class Player  {
         return false;
     }
 
-    public boolean getConquered() {
-        return this.conqueredTerritory
-;
-    }
 
-    // Adicionar exércitos conquistados por troca de cartas
-    public void addArmyTraded(int army) {
-        this.armies += army;
-    }
+    //Verifica se o jogador pode trocar cartas
+	public boolean temTroca(){
+		int circulos = 0, quadrados = 0, triangulos = 0;
 
-    // Adicionar exércitos
-    public void addArmy() { 
-        
-        if(this.armies > 1) {
-            // Adicionar a metade da quantidade de territórios em posse do jogador
-            this.armies += this.territories.size()/2;
-        } else {
-            // Caso em que o jogador tenha apenas um terriório
-            this.armies = 1;
+		// Conta quantas cartas de cada formato o jogador possui
+		for (TerritoryCard cards: territoryCards){
+			if (cards.getShape().equals(Shape.Circle))
+				circulos++;
+			else if (cards.getShape().equals(Shape.Square))
+				quadrados++;
+			else if (cards.getShape().equals(Shape.Triangle))
+				triangulos++;
+            //se for jocker adiciona 1 em todos pois o jocker entra em qualquer caso
+			else{
+				circulos++;
+				quadrados++;
+				triangulos++;
+			}
+		}
+
+		// Se o jogador possui 3 cartas de um formato ou 1 de cada formato, pode trocar
+		if (circulos >= 3 || quadrados >= 3 || triangulos >= 3 || (circulos >= 1 && quadrados >= 1 && triangulos >= 1)){
+			return true;
         }
-    }
+		
+		return false;
+	}
 
-    public void showTerritories() {
-        for (Territory territory : this.territories) {
-            System.out.println(territory.getName());
-        }
-    }
+    //Retorna a quantidade de bonus de exércitos que o jogador recebe de bonus na troca
+	public Integer trocarCartas (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map) {
+		
+		ArrayList<TerritoryCard> circulos = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> quadrados = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> triangulos = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> coringas = new ArrayList<TerritoryCard>();
 
-    // Pegar quantidade de exércitos em um continente
-    public int countContinentalArmy(Continent continent) {
-        for(Army continentalArmy : this.continentalArmies) {
-            if(continentalArmy.retrieveContinent() == continent) {
-                return continentalArmy.retrieveArmyCount();
+		// Separa as cartas por formato
+		for (TerritoryCard carta: territoryCards){
+			if (carta.getShape().equals(Shape.Circle))
+				circulos.add(carta);
+			else if (carta.getShape().equals(Shape.Square))
+				quadrados.add(carta);
+			else if (carta.getShape().equals(Shape.Triangle))
+				triangulos.add(carta);
+			else
+				coringas.add(carta);
+		}
+		
+
+		if (circulos.size() >= 3){
+			// Troca três cartas de círculo e devolve elas para o baralho
+			for (int i = 0; i < 3; i++){
+				usaCarta(circulos, territoryCardDeck, map);
+			}
+		}
+
+		else if (quadrados.size() >= 3){
+			// Troca três cartas de quadrado e devolve elas para o baralho
+			for (int i = 0; i < 3; i++){
+				usaCarta(quadrados, territoryCardDeck, map);
+			}
+		}
+
+		else if (triangulos.size() >= 3){
+			// Troca três cartas de triângulo e devolve elas para o baralho
+			for (int i = 0; i < 3; i++){
+				usaCarta(triangulos, territoryCardDeck, map);
+			}
+		}
+
+		else {
+			int cont = coringas.size();
+			switch (cont){
+				case 0:
+					// Troca uma de cada e devolve elas para o baralho
+					usaCarta(circulos, territoryCardDeck, map);
+					usaCarta(quadrados, territoryCardDeck, map);
+					usaCarta(triangulos, territoryCardDeck, map);
+					break;
+				case 1:
+					usaCarta(coringas, territoryCardDeck, map);
+					if (circulos.size() == 0){
+						// Remove um coringa, um quadrado e um triângulo
+						usaCarta(quadrados, territoryCardDeck, map);
+						usaCarta(triangulos, territoryCardDeck, map);
+					}
+
+					else if (quadrados.size() == 0){
+						// Remove um coringa, um círculo e um triângulo
+						usaCarta(circulos, territoryCardDeck, map);
+						usaCarta(triangulos, territoryCardDeck, map);
+					}
+
+					else{
+						// Remove um coringa, um círculo e um quadrado
+						usaCarta(circulos, territoryCardDeck, map);
+						usaCarta(quadrados, territoryCardDeck, map);
+					}
+
+					break;
+
+				case 2:
+					// Remove dois coringas e uma carta de qualquer formato
+					usaCarta(coringas, territoryCardDeck, map);
+					usaCarta(coringas, territoryCardDeck, map);
+					if (circulos.size() == 0 && quadrados.size() == 0){
+						usaCarta(triangulos, territoryCardDeck, map);
+					}
+
+					else if (quadrados.size() == 0 && triangulos.size() == 0){
+						usaCarta(circulos, territoryCardDeck, map);
+					}
+
+					else if (circulos.size() == 0 && triangulos.size() == 0){
+						usaCarta(quadrados, territoryCardDeck, map);
+					}
+
+					else if (circulos.size() == 1){
+						usaCarta(circulos, territoryCardDeck, map);
+					}
+
+					else if (quadrados.size() == 1){
+						usaCarta(quadrados, territoryCardDeck, map);
+					}
+
+					else{
+						usaCarta(triangulos, territoryCardDeck, map);
+					}
+			}
+		}
+
+		Integer qtd;
+		//Quando temos até 5 trocas já efetuadas
+		if (numDeTrocas <= 5) {
+			qtd = 4 + (2 * (numDeTrocas));
+		}
+
+		else if (numDeTrocas == 6) {
+			qtd = 15;
+		}
+
+		//Temos mais de 6 trocas já efetuadas
+		else {
+			int diferenca = numDeTrocas - 6;
+			qtd = 15 + (diferenca * 5);
+		}
+
+		return qtd;
+	}
+
+    // Remove a carta do topo do baralho e adiciona ao jogador
+	private void usaCarta(ArrayList<TerritoryCard> lista, TerritoryCardDeck territoryCardDeck, Map map){
+		TerritoryCard terrCard = lista.get(0);
+		territoryCards.remove(terrCard);
+
+		territoryCardDeck.returnCard(terrCard);
+
+		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
+		if (terrCard.getName() != null){
+            Territory territory = terrCard.toTerritory(map);
+			if (territory != null && territory.getOwner() == this) {
+                territory.alterarQndExercitos(2);
             }
-        }
+		}
+	}
 
-        return 0;
-    }
-
-    // Adicionar exércitos em um continente
-    public void addContinentalArmy(Continent continent, int num){
-        for(Army army : this.continentalArmies) {
-            if(army.retrieveContinent() == continent) {
-                army.addArmy(num);
-            }
-        }
-    }
-
-    // Posicionar exércitos no continente
-    public boolean positionContinentalArmies(Continent continent, Territory territory, int num) {
-        int countArmies = 0;
-        for(Army army : this.continentalArmies) {
-            if(army.retrieveContinent() == continent) {
-                countArmies = army.retrieveArmyCount();
-            }
-        }
-
-        if(num > countArmies) {
-            return false;
-        }
-
-        for(Territory region : this.territories) {
-            if(region.getName().equals(territory.getName()) && territory.getContinent().equals(region.getName())) {
-                territory.addArmies(num);
-                this.addContinentalArmy(continent, -num);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    
 
     //Adiciona um território ao jogador
 	public void addTerritorio(Territory t) {
@@ -305,9 +337,6 @@ public class Player  {
 		// Aumenta em 1 a quantidade de territórios
 		this.numTerritories++;
 	}
-
-    
-
     /**
      * Obtém o nome do jogador.
      *
