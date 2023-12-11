@@ -2,8 +2,6 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.awt.Color;
 
 import Controller.APIController;
 import View.Observed;
@@ -17,8 +15,6 @@ class Game implements Observed{
 
     private ArrayList<Observer> lst = new ArrayList<Observer>();
 
-    // Cartas de objetivo
-    private ObjectiveCardDeck objectiveCardDeck;
 
     private Map map = Map.getMap();
 

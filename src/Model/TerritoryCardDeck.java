@@ -37,7 +37,7 @@ class TerritoryCardDeck {
 		cardList.add(new TerritoryCard("California", Shape.Square, "an", "california"));
 		cardList.add(new TerritoryCard("Groenlandia", Shape.Circle, "an", "groenlandia"));
 		cardList.add(new TerritoryCard("Mexico", Shape.Square, "an", "mexico"));
-		cardList.add(new TerritoryCard("Nova Iorque", Shape.Square, "an", "novaiorque"));
+		cardList.add(new TerritoryCard("Nova Iorque", Shape.Square, "an", "novayork"));
 		cardList.add(new TerritoryCard("Quebec", Shape.Circle, "an", "quebec"));
 		cardList.add(new TerritoryCard("Texas", Shape.Triangle, "an", "texas"));
 		cardList.add(new TerritoryCard("Vancouver", Shape.Triangle, "an", "vancouver"));
@@ -83,8 +83,8 @@ class TerritoryCardDeck {
 		cardList.add(new TerritoryCard("Perth", Shape.Circle, "oc", "perth"));
 
 		// Cartas coringa
-		cardList.add(new TerritoryCard("Coringa 1", Shape.Joker, null, "coringa"));
-		cardList.add(new TerritoryCard("Coringa 2", Shape.Joker, null, "coringa"));
+		cardList.add(new TerritoryCard("Coringa 1", Shape.Jocker, null, "coringa"));
+		cardList.add(new TerritoryCard("Coringa 2", Shape.Jocker, null, "coringa"));
 		return cardList;
 	}
 
@@ -136,12 +136,7 @@ class TerritoryCardDeck {
 
 	// Retorna uma carta ao deck
 	public void returnCard(TerritoryCard card) {
-		for (int i = 0; i < cards.size(); i++) {
-			if (cards.get(i) == null) {
-				cards.set(i, card);
-				return; // Se encontrou uma posição nula, adicionou e saiu do método
-			}
-		}
+		cards.add(card);
 	}
 
 	// maximo de cartas por jogador

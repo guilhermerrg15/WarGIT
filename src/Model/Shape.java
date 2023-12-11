@@ -4,6 +4,6 @@ enum Shape {
 	Circle,
 	Square,
 	Triangle,
-	Joker;
+	Jocker;
 }
 

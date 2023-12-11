@@ -15,7 +15,7 @@ public class APIController {
     private int turn = 0;
     private String[] territoriesReplacementName;
     private Integer[] numArmiesReplacement;
-    private boolean canTrade = false;
+    private boolean canTrade = true;
 
     // Guarda o bônus de troca de cartas
     private Integer bonusTroca = 0;
@@ -123,21 +123,23 @@ public class APIController {
 
     // Método para trocar cartas
     public void clicouTrocar(){
+        System.out.println("bonus");
         // Só pode trocar antes de posicionar algo
-        if (canTrade){
+        // if (canTrade){
             // Guarda bonus na variável para adicionar só no posicionamento geral e não no momento de posicionar em continentes dominados
             this.bonusTroca = api.trocarCartas(turn, numDeTrocas);
+            System.out.println("bonus" + bonusTroca);
             if (bonusTroca != 0){
                 numDeTrocas++;
-                view.atualizaCartas(api.getNomesCartasJogador(turn));
-                if (continente == 7){
-                api.atualizaQtdExPosicGeral(turn, bonusTroca); 
-                this.bonusTroca = 0;
-                view.atualizaQtdPosic(api.getQtdExercitosPosic(turn));
-                return;
+                //acho que não precisa pois ja chamanos o controller na view
+                // view.atualizaCartas(api.getNomesCartasJogador(turn));
+                // if (continente == 7){
+                    view.updateBonusTroca(bonusTroca);
+                    this.bonusTroca = 0;
+                    return;
+                // }
             }
-            }
-        }
+        // }
     }
 
 

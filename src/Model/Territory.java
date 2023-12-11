@@ -118,6 +118,8 @@ class Territory {
         this.inicialArmie += count;
     }
 
+    
+
     /**
      * Adiciona exércitos ao território.
      *

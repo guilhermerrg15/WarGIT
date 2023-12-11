@@ -51,6 +51,10 @@ public class ViewAPI {
 		MapView.getMapView().updateDestiny(destinies);
 	}
 
+    public void updateBonusTroca(int bonus) {
+        MapView.getMapView().updateBonusTroca(bonus);
+    }
+
     private ViewAPI() {
     }
 

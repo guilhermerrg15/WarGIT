@@ -101,6 +101,7 @@ public class Player  {
         return this.armies;
     }
 
+
     public int getTerritoryNumber() {
         return numTerritories;
     }
@@ -194,6 +195,7 @@ public class Player  {
     //Retorna a quantidade de bonus de exércitos que o jogador recebe de bonus na troca
 	public Integer trocarCartas (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map) {
 		
+  
 		ArrayList<TerritoryCard> circulos = new ArrayList<TerritoryCard>();
 		ArrayList<TerritoryCard> quadrados = new ArrayList<TerritoryCard>();
 		ArrayList<TerritoryCard> triangulos = new ArrayList<TerritoryCard>();
@@ -293,6 +295,7 @@ public class Player  {
 					}
 			}
 		}
+         System.out.println("aaaaa");
 
 		Integer qtd;
 		//Quando temos até 5 trocas já efetuadas
@@ -310,16 +313,24 @@ public class Player  {
 			qtd = 15 + (diferenca * 5);
 		}
 
+         System.out.println("aaaaaa");
 		return qtd;
 	}
 
     // Remove a carta do topo do baralho e adiciona ao jogador
 	private void usaCarta(ArrayList<TerritoryCard> lista, TerritoryCardDeck territoryCardDeck, Map map){
+        System.out.println("1");
+
 		TerritoryCard terrCard = lista.get(0);
+        System.out.println("2:" + terrCard);
+
 		territoryCards.remove(terrCard);
+        System.out.println("3");
 
 		territoryCardDeck.returnCard(terrCard);
+        System.out.println("4");
 
+        System.out.println("nome carta de territorio: " + terrCard.getName());
 		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
 		if (terrCard.getName() != null){
             Territory territory = terrCard.toTerritory(map);

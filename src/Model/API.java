@@ -28,6 +28,8 @@ public class API {
         // players = new ArrayList<>();
     }
 
+    
+
     // Singleton
     public static API getInstance() {
         if (apiInstance == null) {
@@ -44,10 +46,7 @@ public class API {
     }
 
     public void giveTerritoryCard(int t){
-        System.err.println("jogador " + t);
-        System.err.println("conquistou? " + game.getJogadorVez(t).getConquistouNessaRodada());
         if(game.getJogadorVez(t).getConquistouNessaRodada()){
-            
             territoryCardDeck.pickRandomCard(game.getJogadorVez(t));
         }
     }
@@ -142,7 +141,6 @@ public class API {
         return territoriosFinal;
     }
     
-
     // Retornar todos os jogadores
     public ArrayList<Player> getAllPlayers() {
         return this.game.getPlayers();
@@ -164,7 +162,6 @@ public class API {
 
 		return terr;
 	}
-
 
     public PlayerColor getTerritoryColor(String t) {
         // Obtém a lista de territórios do objeto Map
@@ -230,21 +227,21 @@ public class API {
     }
 
     // Retorna quantidade de exércitos que tem em um território
-        public Integer getQntExTerritorioAntigos(String territorio) {
-            // Obtém a lista de territórios do objeto Map
-            List<Territory> territories = map.getTerritoriesList();
+    public Integer getQntExTerritorioAntigos(String territorio) {
+        // Obtém a lista de territórios do objeto Map
+        List<Territory> territories = map.getTerritoriesList();
 
-            // Percorre a lista de territórios
-            for (Territory territory : territories) {
-                // Verifica se o nome do território é igual ao território desejado
-                if (territory.getName().equals(territorio)) {
-                    // Retorna a quantidade de exércitos do território encontrado
-                    return territory.getInicialArmie();
-                }
+        // Percorre a lista de territórios
+        for (Territory territory : territories) {
+            // Verifica se o nome do território é igual ao território desejado
+            if (territory.getName().equals(territorio)) {
+                // Retorna a quantidade de exércitos do território encontrado
+                return territory.getInicialArmie();
             }
-            // Retorna null se o território não for encontrado
-            return null;
         }
+        // Retorna null se o território não for encontrado
+        return null;
+    }
 
         public String[] getNeiboursDominated(String t, int turn) {
             List<Territory> listaTerritorios = map.getTerritoriesList();
@@ -293,6 +290,21 @@ public class API {
         // Verifica se jogador ganhou após essa rodada
 		// APIController.getInstance().verificaGanhou(APIController.getInstance().getTurn());
         return array;
+    }
+
+    // Retorna array com os nomes dos territórios das cartas do jogador
+    public String[] getNomesCartasJogador(int vez){
+        List<TerritoryCard> cartas = game.getJogadorVez(vez).getCard();
+        String[] arrayCartas = new String[cartas.size()];
+        int cont = 0;
+
+        // Adiciona na lista os nomes dos territórios das cartas
+        for (TerritoryCard c: cartas) {
+            arrayCartas[cont] = c.getName();
+            cont++;
+        }
+
+        return arrayCartas;
     }
 
 
@@ -382,17 +394,6 @@ public class API {
         return game.getJogadorVez(i).getColor();
     }
 
-    // Pegar quantidade de exércitos de um território
-    public int retrieveTerritoryArmies(Territory territory) {
-        return territory.getArmies();
-    }
-
-    // Pegar todos os territórios vizinhos de um dado território
-    public List<String> retrieveNeighbours(Territory territory) {
-        return territory.getNeighbours();
-    }
-
-
     public ObjectiveCardDeck getDeckCardObjective(){
 		return this.objectiveDeck;
 	}
@@ -405,28 +406,14 @@ public class API {
     	territoryCardDeck = new TerritoryCardDeck();
 	} 
 
-    // Pegar o número de cartas de um jogador
-    public int getPlayerNumberCards() {
-        return game.getPlayers().get(this.turn).getCards();
-    }
-
-    // Verificar status de objetivo do jogador
-	public boolean verifica_vez_jogador_objetivo() {
-		return game.getPlayers().get(this.turn).getObjective().checkStatus();
-	}
-
-    // public boolean checkPlayerTerritoryBorder(String territory, String border) {
-    //     return game.getPlayers().get(this.turn).checkBorder(territory, border);
+    // public int getQtdExercitosPosic(int turn) {
+    //     return game.getJogadorVez(turn).getArmies();
     // }
 
-    // public boolean checkPlayerTerritory(String territory) {
-    //     return game.getPlayers().get(this.turn).verifyTerritory(territory);
+    // // Atualiza a variável de exércitos a posicionar no jogador
+    // public void atualizaQtdExPosicGeral(int turn, Integer bonusTroca){
+    //     game.getJogadorVez(turn).atualizaQtdExPosicGeral(bonusTroca);
     // }
-
-    public int getQtdExercitosPosic(int turn) {
-        return game.getJogadorVez(turn).getArmies();
-    }
-
 
     public void resetPlayers() {
         game.getPlayers().clear();
@@ -489,85 +476,16 @@ public class API {
 
     // Troca cartas do jogador da vez
     public Integer trocarCartas(int turn, int numDeTrocas){
-        // Player palyer = game.getJogadorVez(turn);
-
-        // // Se o jogador puder trocar cartas, chama o método de trocar cartas de Jogo
-        // if (palyer.temTroca()){
-        //     return player.trocarCartas(numDeTrocas);
-        // }
+        Player player = game.getJogadorVez(turn);
+        
+        
+        // Se o jogador puder trocar cartas, chama o método de trocar cartas de Jogo
+        if (player.temTroca()){
+            return player.trocarCartas(numDeTrocas, territoryCardDeck, map);
+        }
 
         return 0;
     }
-
-
-
-	// Verifica troca de cartas
-	public boolean evaluateCardTrade(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3) {
-		// Caso em que as 3 cartas possuem símbolos disintos
-		if (card1.getShape() != card2.getShape() && card1.getShape() != card3.getShape()
-				&& card2.getShape() != card3.getShape()) {
-			return true;
-		}
-
-		// Caso de uma ou mais cartas serem coringas
-		if (card1.getShape() == Shape.Joker) {
-			// Caso em que as duas cartas restantes possuem o mesmo símbolo
-			if (card2.getShape() == card3.getShape()) {
-				return true;
-			}
-
-			// Caso em que a segunda ou a terceira carta seja Coringa
-			if (card2.getShape() == Shape.Joker || card3.getShape() == Shape.Joker) {
-				return true;
-			}
-		} else if (card2.getShape() == Shape.Joker) {
-			if (card1.getShape() == card3.getShape()) {
-				return true;
-			}
-
-			if (card1.getShape() == Shape.Joker || card3.getShape() == Shape.Joker) {
-				return true;
-			}
-		} else if (card1.getShape() == Shape.Joker) {
-			if (card2.getShape() == card3.getShape()) {
-				return true;
-			}
-
-			if (card2.getShape() == Shape.Joker || card3.getShape() == Shape.Joker) {
-				return true;
-			}
-		}
-
-		// Caso em que as 3 cartas possuem o mesmo símbolo
-		if (card1.getShape() == card2.getShape() && card2.getShape() == card3.getShape()) {
-			return true;
-		}
-		return false;
-	}
-
-    // Troca de cartas e adição de soldados após validação de troca
-    // public void exchangeCards(TerritoryCard card1, TerritoryCard card2, TerritoryCard card3, List<TerritoryCard> cards, List <Territory> territories){
-    //     // Verificação de troca
-    //     if(evaluateCardTrade(card1, card2, card3)) {
-    //         // Adicionar exércitos com base na troca realizada
-    //         game.getPlayers().get(this.turn).addArmyTraded(calculateTradeBonus());
-
-    //         // Remover cartas trocadas da lista
-    //         cards.removeAll(Arrays.asList(card1, card2, card3));
-
-    //         // Iterar sobre as cartas trocadas
-    //         for(TerritoryCard cardTraded : Arrays.asList(card1, card2, card3)) {
-    //             // Iterar sobre os territórios
-    //             for(Territory territory : territories) {
-    //                 // Verificar se a carta trocada é um território do jogador
-    //                 if(territory.getName() == cardTraded.getName()) {
-    //                     // Adicionar dois exércitos ao território
-    //                     territory.addArmies(2);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
     // Notifica observadores de jogo
     public void notificaObsJogo(){

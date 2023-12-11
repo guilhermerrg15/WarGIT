@@ -21,6 +21,7 @@ import java.awt.geom.Ellipse2D;
 import javax.imageio.ImageIO;
 
 public class MapView extends JPanel implements Observer{
+
     public static MapView MapView = null;
 
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
@@ -35,7 +36,6 @@ public class MapView extends JPanel implements Observer{
 	JButton cardsTradeButton = new JButton("Trocar Cartas");
 	
     Image backgroundImage;
-    Image territoriesImage;
 	Image objectiveCard;
 
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
@@ -48,6 +48,7 @@ public class MapView extends JPanel implements Observer{
 
 	int currentArmySum = 0;
 	int firstArmySum = 0;
+	int bonusTradeSum = 0;
 
 	private boolean firstRound = true;
 	API api = API.getInstance();
@@ -78,6 +79,7 @@ public class MapView extends JPanel implements Observer{
 
     //Lista de territórios no jogo
 	String[] territories;
+	// TerritoryCardView territoryCardView = new TerritoryCardView();
 
 	//Painel dos dados
 	DiceView diceView = new DiceView();
@@ -369,7 +371,7 @@ public class MapView extends JPanel implements Observer{
 
 		
 		if(showTerritoryCards){
-			System.err.println(controller.getTerritoryCards());
+			// System.err.println(controller.getTerritoryCards());
 			TerritoryCardView.drawTerritoryCard(g, controller.getTerritoryCards());
 		}
     }
@@ -665,6 +667,12 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
+	public Integer updateBonusTroca (int bonus){
+		// this.bonusTradeSum = bonus;
+		System.out.println("bonus" + bonus);
+		return bonusTradeSum;
+	}
+
     // Retorna quantidade de exércitos que tem em um território
     public Integer getNumArmiesTotal(ArrayList<ArmyView> armyList) {
 		int sumArmies = 0;
@@ -690,7 +698,7 @@ public class MapView extends JPanel implements Observer{
 			currentArmySum = somaExAtual - firstArmySum;
 
 			// Calcular a quantidade máxima de exércitos permitidos
-			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2;
+			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2 + bonusTradeSum;
 
 			// Verificar se a soma atual não excede a quantidade máxima permitida
 			for (ArmyView army : armyList) {
