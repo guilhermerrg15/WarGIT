@@ -174,7 +174,9 @@ public class MapView extends JPanel implements Observer{
 		placeArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+				if (!addTroopsMode){
 				controller.clickedPlaceArmy();
+				}
                 // Trocar o estado do modo de alocação de tropas ao clicar no botão
                 addTroopsMode = true;
             }
@@ -318,6 +320,7 @@ public class MapView extends JPanel implements Observer{
 			reposicionarButton.setVisible(false);
 			changePlayer.setVisible(false);
 			endAtackButton.setVisible(false);
+			cardsTradeButton.setVisible(false);
 
 		} else {
 			if (endPosic) {
@@ -325,12 +328,14 @@ public class MapView extends JPanel implements Observer{
 				defendingTerritories.setVisible(true);
 				playDicesButton.setVisible(true);
 				endAtackButton.setVisible(true);
+				cardsTradeButton.setVisible(false);
 				
 			} else{
 				attackingTerritories.setVisible(false);
 				defendingTerritories.setVisible(false);
 				playDicesButton.setVisible(false);
 				endAtackButton.setVisible(false);
+				cardsTradeButton.setVisible(false);
 			}
 			if (endAtack) {
 				originTerritories.setVisible(true);
@@ -338,6 +343,7 @@ public class MapView extends JPanel implements Observer{
 				destinyTerritories.setVisible(true);
 				reposicionarButton.setVisible(true);
 				changePlayer.setVisible(true);
+				cardsTradeButton.setVisible(false);
 
 				// Retirar dados da tela
 				diceView.clearDices();
@@ -348,6 +354,7 @@ public class MapView extends JPanel implements Observer{
 				destinyTerritories.setVisible(false);
 				reposicionarButton.setVisible(false);
 				changePlayer.setVisible(false);
+				cardsTradeButton.setVisible(false);
 			}
 			
 		}

@@ -204,15 +204,8 @@ class Game implements Observed{
 					usaCarta(quadrados, territoryCardDeck, map, player);
 					usaCarta(triangulos, territoryCardDeck, map, player);
 					// break;
-			}
-			if (coringas.size() == 1 ){
-				usaCarta(coringas, territoryCardDeck, map, player);
-					if (circulos.size() == 0){
-						// Remove um coringa, um quadrado e um triângulo
-						usaCarta(quadrados, territoryCardDeck, map, player);
-						usaCarta(triangulos, territoryCardDeck, map, player);
-					}
-
+				}
+			
 				else if (quadrados.size() == 0){
 					// Remove um coringa, um círculo e um triângulo
 					usaCarta(circulos, territoryCardDeck, map, player);
@@ -295,14 +288,22 @@ class Game implements Observed{
 			}
 		}
 	}
+	
 	public void continentDomain(Integer turn){
         List<Territory> territorios;
         Integer qtd;
+		int cont = 0;
+		String[] continents = new String[map.getContinents().size()];
+
+		for (Continent c: map.getContinents()) {
+            continents[cont] = c.getName();
+            cont++;
+        }
 
         for (numContinent = 0; numContinent < 6; numContinent++){
-            if (dominaCont(turn, getContinentesLista()[numContinent])){
-                territorios = getTerritoriosCont(getContinentesLista()[numContinent]);
-                qtd = getExCont(turn, getContinentesLista()[numContinent]);
+            if (dominaCont(turn, continents[numContinent])){
+                territorios = getTerritoriosCont(continents[numContinent]);
+                qtd = getExCont(turn, continents[numContinent]);
 
 				for (Territory territory: territorios){
 					territory.alterarQndExercitos(qtd);
@@ -315,21 +316,6 @@ class Game implements Observed{
                 return;
             }
         }
-    }
-
-
-    // Retorna lista de nomes dos continentes
-    public String[] getContinentesLista(){
-        String[] listaContinentes = new String[map.getContinents().size()];
-        int cont = 0;
-
-        // Adiciona na lista os nomes dos continentes
-        for (Continent c: map.getContinents()) {
-            listaContinentes[cont] = c.getName();
-            cont++;
-        }
-
-        return listaContinentes;
     }
 
     // Retorna se o jogador domina o continente
