@@ -2,6 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import Controller.APIController;
 import View.Observed;
@@ -305,15 +306,17 @@ class Game implements Observed{
                 territorios = getTerritoriosCont(continents[numContinent]);
                 qtd = getExCont(turn, continents[numContinent]);
 
-				for (Territory territory: territorios){
-					territory.alterarQndExercitos(qtd);
-					//Atualiza os territórios modificados
-					mod1 = territory;
-					mod2 = null;
-					this.notifyObservers();
-				}
-                numContinent++;
-                return;
+				 // Embaralha a lista de territórios
+				Collections.shuffle(territorios);
+
+				// Pega apenas o primeiro território da lista (aleatório)
+				Territory territorioAleatorio = territorios.get(0);
+
+				territorioAleatorio.alterarQndExercitos(qtd);
+				// Atualiza os territórios modificados
+				mod1 = territorioAleatorio;
+				mod2 = null;
+				this.notifyObservers();
             }
         }
     }
