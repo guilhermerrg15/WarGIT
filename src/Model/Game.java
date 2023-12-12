@@ -190,16 +190,14 @@ class Game implements Observed{
 		}
 
 		else {
-			int cont = coringas.size();
-			switch (cont){
-				case 0:
-					// Troca uma de cada e devolve elas para o baralho
+			if(coringas.size() == 0 );{
+				// Troca uma de cada e devolve elas para o baralho
 					usaCarta(circulos, territoryCardDeck, map, player);
 					usaCarta(quadrados, territoryCardDeck, map, player);
 					usaCarta(triangulos, territoryCardDeck, map, player);
-					break;
-				case 1:
-					usaCarta(coringas, territoryCardDeck, map, player);
+					// break;
+			} else if (coringas.size() == 1 ){
+				usaCarta(coringas, territoryCardDeck, map, player);
 					if (circulos.size() == 0){
 						// Remove um coringa, um quadrado e um triângulo
 						usaCarta(quadrados, territoryCardDeck, map, player);
@@ -220,34 +218,35 @@ class Game implements Observed{
 
 					break;
 
-				case 2:
-					// Remove dois coringas e uma carta de qualquer formato
-					usaCarta(coringas, territoryCardDeck, map, player);
-					usaCarta(coringas, territoryCardDeck, map, player);
-					if (circulos.size() == 0 && quadrados.size() == 0){
-						usaCarta(triangulos, territoryCardDeck, map, player);
-					}
+			} else if (coringas.size() == 2){
+				// Remove dois coringas e uma carta de qualquer formato
+				usaCarta(coringas, territoryCardDeck, map, player);
+				usaCarta(coringas, territoryCardDeck, map, player);
+				if (circulos.size() == 0 && quadrados.size() == 0){
+					usaCarta(triangulos, territoryCardDeck, map, player);
+				}
 
-					else if (quadrados.size() == 0 && triangulos.size() == 0){
-						usaCarta(circulos, territoryCardDeck, map, player);
-					}
+				else if (quadrados.size() == 0 && triangulos.size() == 0){
+					usaCarta(circulos, territoryCardDeck, map, player);
+				}
 
-					else if (circulos.size() == 0 && triangulos.size() == 0){
-						usaCarta(quadrados, territoryCardDeck, map, player);
-					}
+				else if (circulos.size() == 0 && triangulos.size() == 0){
+					usaCarta(quadrados, territoryCardDeck, map, player);
+				}
 
-					else if (circulos.size() == 1){
-						usaCarta(circulos, territoryCardDeck, map, player);
-					}
+				else if (circulos.size() == 1){
+					usaCarta(circulos, territoryCardDeck, map, player);
+				}
 
-					else if (quadrados.size() == 1){
-						usaCarta(quadrados, territoryCardDeck, map, player);
-					}
+				else if (quadrados.size() == 1){
+					usaCarta(quadrados, territoryCardDeck, map, player);
+				}
 
-					else{
-						usaCarta(triangulos, territoryCardDeck, map, player);
-					}
+				else{
+					usaCarta(triangulos, territoryCardDeck, map, player);
+				}
 			}
+			
 		}
 
 
