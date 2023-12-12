@@ -20,7 +20,7 @@ public class GameTest {
         game = Game.getInstance();
         player1 = new Player("Player1", PlayerColor.VERMELHO, 1);
         player2 = new Player("Player2", PlayerColor.AZUL, 2);
-        player3 = new Player("Player 3", PlayerColor.VERDE, 3);
+        player3 = new Player("Player3", PlayerColor.VERDE, 3);
     }
 
     @Test
