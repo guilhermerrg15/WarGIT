@@ -2,9 +2,6 @@ package Model;
 
 //import java.util.concurrent.ThreadLocalRandom;
 import java.lang.Math;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -34,30 +31,6 @@ class Dado {
     public static int getDado() {
         return valor;
     }
-
-    // // Lançamento de dados de ataque
-    // protected List<Integer> rollDiceAttack(int attackDiceNumber) {
-    //     List<Integer> diceValuesAttack = new ArrayList<>();
-        
-    //     for(int i = 0; i < attackDiceNumber; i++) {
-    //         int random = jogaDado();
-    //         diceValuesAttack.add(random);
-    //     }
-
-    //     return diceValuesAttack;
-    // }
-
-    // // Lançamento de dados de defesa
-    // protected List<Integer> rollDiceDefense(int defenseDiceNumber) {
-    //     List<Integer> diceValuesDefense = new ArrayList<>();
-
-    //     for(int i = 0; i < defenseDiceNumber; i++) {
-    //         int random = jogaDado();
-    //         diceValuesDefense.add(random);
-    //     }
-
-    //     return diceValuesDefense;
-    // }
 }
 
 

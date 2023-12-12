@@ -31,7 +31,6 @@ public class APIController {
     ArrayList<String> eliminadosNessaRodada = new ArrayList<String>();
 
     // Lista dinâmica de territórios disponíveis para reposicionamento
-    // private ArrayList<String> availableTerritories = new ArrayList<>();
 
     public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
         int numPlayers = nomes.size();

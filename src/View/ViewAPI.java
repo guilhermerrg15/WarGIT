@@ -37,9 +37,6 @@ public class ViewAPI {
 	}
 
     public void updateReplacement(String[] territories) {
-        //
-        //colocar metodo aqui se quiser remover combo boxes de ataque ->>
-        //
         MapView.getMapView().updateReplacement(territories);
     }
 

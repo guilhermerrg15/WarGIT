@@ -37,8 +37,6 @@ class Territory {
    
     }
 
-    
-
     /**
      * Obtém o nome do território.
      * @return O nome do território.
@@ -118,8 +116,6 @@ class Territory {
         this.inicialArmie += count;
     }
 
-    
-
     /**
      * Adiciona exércitos ao território.
      *
@@ -139,8 +135,6 @@ class Territory {
         this.armies += qnd;
         return true;
     }
-
-
 
     /**
      * Remove exércitos do território.

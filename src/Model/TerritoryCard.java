@@ -45,13 +45,5 @@ public class TerritoryCard {
     public String getImageName() {
         return imageName;
     }
-    
-    /**
-     * Retorna um objeto Territory correspondente ao nome da carta de território.
-     * @param map O mapa do jogo.
-     * @return O objeto Territory correspondente ao nome, ou null se não for encontrado.
-     */
-    // public Territory toTerritory(Map map) {
-    //     return map.findTerritory(name);
-    // }
+
 }

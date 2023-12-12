@@ -83,8 +83,8 @@ class TerritoryCardDeck {
 		cardList.add(new TerritoryCard("Perth", Shape.Circle, "oc", "perth"));
 
 		// Cartas coringa
-		// cardList.add(new TerritoryCard("Coringa 1", Shape.Jocker, null, "coringa"));
-		// cardList.add(new TerritoryCard("Coringa 2", Shape.Jocker, null, "coringa"));
+		cardList.add(new TerritoryCard("Coringa 1", Shape.Coringa, null, "coringa"));
+		cardList.add(new TerritoryCard("Coringa 2", Shape.Coringa, null, "coringa"));
 		return cardList;
 	}
 

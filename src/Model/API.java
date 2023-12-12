@@ -406,15 +406,6 @@ public class API {
     	territoryCardDeck = new TerritoryCardDeck();
 	} 
 
-    // public int getQtdExercitosPosic(int turn) {
-    //     return game.getJogadorVez(turn).getArmies();
-    // }
-
-    // // Atualiza a variável de exércitos a posicionar no jogador
-    // public void atualizaQtdExPosicGeral(int turn, Integer bonusTroca){
-    //     game.getJogadorVez(turn).atualizaQtdExPosicGeral(bonusTroca);
-    // }
-
     public void resetPlayers() {
         game.getPlayers().clear();
     }
