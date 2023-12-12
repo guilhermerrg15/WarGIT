@@ -10,7 +10,7 @@ import java.util.List;
 
 class Game implements Observed{
     private static Game game = null;
-    
+
     // Lista de jogadores
     private ArrayList<Player> players = new ArrayList<Player>();
 
@@ -93,14 +93,14 @@ class Game implements Observed{
 
     // Pegar o jogador da vez
     public Player getJogadorVez(int turn){
-        
+
         for (int i = 0; i < players.size(); i++) {
             if(players.get(i).getIndex() == turn) {
                 return players.get(i);
             }
         }
 		return players.get(turn);
-        
+
 	}
 
     //Altera o mod1 e o mod2
@@ -143,14 +143,14 @@ class Game implements Observed{
 		if (circulos >= 3 || quadrados >= 3 || triangulos >= 3 || (circulos >= 1 && quadrados >= 1 && triangulos >= 1)){
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	//Retorna a quantidade de bonus de exércitos que o jogador recebe de bonus na troca
 	public Integer trocarCartas (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map, Player player) {
-		
-	
+
+
 		ArrayList<TerritoryCard> circulos = new ArrayList<TerritoryCard>();
 		ArrayList<TerritoryCard> quadrados = new ArrayList<TerritoryCard>();
 		ArrayList<TerritoryCard> triangulos = new ArrayList<TerritoryCard>();
@@ -167,7 +167,7 @@ class Game implements Observed{
 			else
 				coringas.add(carta);
 		}
-		
+
 
 		if (circulos.size() >= 3){
 			// Troca três cartas de círculo e devolve elas para o baralho
@@ -196,14 +196,22 @@ class Game implements Observed{
 				usaCarta(circulos, territoryCardDeck, map, player);
 				usaCarta(quadrados, territoryCardDeck, map, player);
 				usaCarta(triangulos, territoryCardDeck, map, player);
-			} 
+			}
 			if (coringas.size() == 1 ){
 				usaCarta(coringas, territoryCardDeck, map, player);
 				if (circulos.size() == 0){
 					// Remove um coringa, um quadrado e um triângulo
 					usaCarta(quadrados, territoryCardDeck, map, player);
 					usaCarta(triangulos, territoryCardDeck, map, player);
-				}
+					// break;
+			}
+			if (coringas.size() == 1 ){
+				usaCarta(coringas, territoryCardDeck, map, player);
+					if (circulos.size() == 0){
+						// Remove um coringa, um quadrado e um triângulo
+						usaCarta(quadrados, territoryCardDeck, map, player);
+						usaCarta(triangulos, territoryCardDeck, map, player);
+					}
 
 				else if (quadrados.size() == 0){
 					// Remove um coringa, um círculo e um triângulo
@@ -217,7 +225,7 @@ class Game implements Observed{
 					usaCarta(quadrados, territoryCardDeck, map, player);
 				}
 
-			} 
+			}
 			if (coringas.size() == 2){
 				// Remove dois coringas e uma carta de qualquer formato
 				usaCarta(coringas, territoryCardDeck, map, player);
@@ -246,7 +254,7 @@ class Game implements Observed{
 					usaCarta(triangulos, territoryCardDeck, map, player);
 				}
 			}
-			
+
 		}
 
 		Integer qtd;
@@ -274,7 +282,7 @@ class Game implements Observed{
 		lista.remove(terrCard);
 
 		territoryCardDeck.returnCard(terrCard);
-		
+
 		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
 		if (terrCard.getName() != null){
 			Territory territory = map.findTerritory(terrCard.getName());
@@ -335,7 +343,7 @@ class Game implements Observed{
         return listaTerritorios;
     }
 
-     // Retorna quantidade de exércitos a posicionar no continente 
+     // Retorna quantidade de exércitos a posicionar no continente
      public Integer getExCont(int vez, String c){
         Integer qtd = map.findContinent(c).getBonusArmies();
         return qtd;
@@ -353,16 +361,16 @@ class Game implements Observed{
         }
         return true;
     }
- 
+
     //Valida um ataque
 	public boolean VerificarAtaque(Territory tAtacante, Territory tDefensor) {
 		// Verifica se o atacante tem mais de um exército e se o defensor não é dele
 		if(tAtacante.getArmies() > 1 && tAtacante.getOwner() != tDefensor.getOwner())
-			return true;	
+			return true;
 		return false;
 	}
 
-    //Realiza um ataque 
+    //Realiza um ataque
 	public int[] RealizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
 		if(VerificarAtaque(atacante, defensor)){
 			//Verifica se o atacante tem mais de 3 exércitos
@@ -382,7 +390,7 @@ class Game implements Observed{
 			//Variáveis para contar quantos exércitos foram perdidos
 			int qtdAtaquePerdidos = 0;
 			int qtdDefesaPerdidos = 0;
-			
+
 			int i;
 			//Verifica se o jogador escolheu um número forçado
 			//acho que não precisa desse if -> tirei esse forçado
@@ -424,7 +432,7 @@ class Game implements Observed{
 				//Ordena os dados se for aleatório
 				Arrays.sort(dadosDefesa);
 			}
-			
+
 			//Compara os dados
 			for (i = 0;i < 3;i++) {
 				if (dadosAtaque[i] != 0 && dadosDefesa[i] != 0){
@@ -436,7 +444,7 @@ class Game implements Observed{
 					}
 				}
 			}
-			
+
 			//Atualiza os exércitos
 			atacante.setArmies(atacante.getArmies() - qtdAtaquePerdidos);
 			defensor.setArmies(defensor.getArmies() - qtdDefesaPerdidos);
@@ -456,7 +464,7 @@ class Game implements Observed{
 					defensor.getOwner().setJMatou(atacante.getOwner());
 					APIController.getInstance().addEliminado(defensor.getOwner().getName());
 				}
-				
+
 				defensor.setOwner(atacante.getOwner());
 
 				// Adiciona território conquistado ao jogador que conquistou
@@ -478,8 +486,8 @@ class Game implements Observed{
 			//Notifica os observadores
 			this.notifyObservers();
 
-			
-			// Retorna os dados em um array único 
+
+			// Retorna os dados em um array único
 
 			int[] dados = new int[6];
 			for (i = 0;i < 3;i++) {
@@ -492,7 +500,7 @@ class Game implements Observed{
 
 			return dados;
 		}
-	
+
 		System.out.println("Nao foi possivel realizar o ataque");
 		return new int [] {0,0,0,0,0,0};
 	}
@@ -519,7 +527,7 @@ class Game implements Observed{
 			// }
 			player.reset();
 		}
-		
+
 
 		// Redistribui territórios
 		map.distribuiTerritorios(players);
