@@ -473,17 +473,19 @@ public class API {
 
         return battle;
     }
+    
+    public boolean canTradeCards(int turn){
+        Player player = game.getJogadorVez(turn);
+        return game.temTroca(player);
+    }
 
     // Troca cartas do jogador da vez
     public Integer trocarCartas(int turn, int numDeTrocas){
         Player player = game.getJogadorVez(turn);
         
-        
         // Se o jogador puder trocar cartas, chama o método de trocar cartas de Jogo
         if (game.temTroca(player)){
-            Integer la = game.trocarCartas(numDeTrocas, territoryCardDeck, map, player);
-            // this.notificaObsJogo();
-            return la;
+            return game.trocarCartas(numDeTrocas, territoryCardDeck, map, player);
         }
 
         return 0;

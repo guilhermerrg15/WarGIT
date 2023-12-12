@@ -121,14 +121,15 @@ public class APIController {
         return api.getTerritoryColor(t);
     }
 
+    public Boolean canTradeCards(){
+        return api.canTradeCards(turn);
+    }
+
     // Método para trocar cartas
     public void clicouTrocar(){
-        System.out.println("bonus");
         // Só pode trocar antes de posicionar algo
         // if (canTrade){
-            // Guarda bonus na variável para adicionar só no posicionamento geral e não no momento de posicionar em continentes dominados
             this.bonusTroca = api.trocarCartas(turn, numDeTrocas);
-            System.out.println("bonus" + bonusTroca);
             if (bonusTroca != 0){
                 numDeTrocas++;
                 // if (continente == 7){
@@ -163,6 +164,8 @@ public class APIController {
     }
 
     public void clickedEndAtack(){
+        giveTerritoryCard();
+        resetConquista();
         territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
             // Se tiver algum território com mais de 1 exército para reposicionar
             if (territoriesReplacementName != null) {
@@ -178,8 +181,6 @@ public class APIController {
     }
 
     public void clickedChangePlayer(){
-        giveTerritoryCard();
-        resetConquista();
         turn = (turn + 1) % api.getNumPlayers();
         //colocar parte da carta, ver se conquistou allgum territorio se sim da uma carta
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));

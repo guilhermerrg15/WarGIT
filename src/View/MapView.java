@@ -92,51 +92,21 @@ public class MapView extends JPanel implements Observer{
 
     public MapView() {
         // setLayout(new BorderLayout());
-        setLayout(null);
-
-      	continueButton.setBounds(1250,535,200,30);
-		add(continueButton);
-
-		cardsTradeButton.setBounds(1250,535,200,30);
-		add(cardsTradeButton);
-
-
-		attackingTerritories = new JComboBox<String>();
-		defendingTerritories = new JComboBox<String>();
-		originTerritories = new JComboBox<String>();
-		destinyTerritories = new JComboBox<String>();
-		numReplacementBox = new JComboBox<Integer>();
-
-		// Configurar a posição e tamanho dos JComboBox
-        attackingTerritories.setBounds(1250, 200, 200, 30);
-        defendingTerritories.setBounds(1250, 250, 200, 30);
-		originTerritories.setBounds(600, 300, 200, 30);
-		numReplacementBox.setBounds(600, 350, 200, 30);
-		destinyTerritories.setBounds(600, 400, 200, 30);
-
-        // Adicionar JComboBox ao painel
-        add(attackingTerritories);
-        add(defendingTerritories);
-		add(originTerritories);
-		add(numReplacementBox);
-		add(destinyTerritories);
-
-
-		reposicionarButton.setBounds(1250,200,200,30);
-		add(reposicionarButton);
-
-		changePlayer.setBounds(1250,200,200,30);
-		add(changePlayer);
-
-		playDicesButton.setBounds(1250,200,200,30);
-		add(playDicesButton);
-
-		endAtackButton.setBounds(1250,200,200,30);
-		add(endAtackButton);
-
-        JPanel buttonPanel = new JPanel();
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
+
+		//Cria e adiciona o label do jogador da vez
+        currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        currentPlayerLabel.setForeground(Color.BLACK);
+        add(currentPlayerLabel);
+        JPanel panel = new JPanel();
+        // panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel.add(labelColor);
+        panel.add(currentPlayerLabel);
+
+        add(panel);
+		
+		JPanel buttonPanel = new JPanel();
 
 		buttonPanel.add(saveButton);
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -146,17 +116,49 @@ public class MapView extends JPanel implements Observer{
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        // buttonPanel.add(cancelButton);
 
-
-		add(Box.createHorizontalStrut(20));
         add(buttonPanel);
-		add(Box.createHorizontalStrut(50));
 
-        //Cria e adiciona o label do jogador da vez
-        currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 22));
-        currentPlayerLabel.setForeground(Color.BLACK);
-        add(currentPlayerLabel);
+        
+		add(continueButton);
+
+		// cardsTradeButton.setBounds(1250,535,200,30);
+		add(cardsTradeButton);
+
+
+		attackingTerritories = new JComboBox<String>();
+		defendingTerritories = new JComboBox<String>();
+
+		// attackingTerritories.setBounds(1250, 200, 200, 30);
+        // defendingTerritories.setBounds(1250, 250, 200, 30);
+
+		add(attackingTerritories);
+        add(defendingTerritories);
+
+		// playDicesButton.setBounds(1250,200,200,30);
+		add(playDicesButton);
+
+		// endAtackButton.setBounds(1250,200,200,30);
+		add(endAtackButton);
+
+		originTerritories = new JComboBox<String>();
+		destinyTerritories = new JComboBox<String>();
+		numReplacementBox = new JComboBox<Integer>();
+
+		// originTerritories.setBounds(600, 300, 200, 30);
+		// numReplacementBox.setBounds(600, 350, 200, 30);
+		// destinyTerritories.setBounds(600, 400, 200, 30);
+
+		add(originTerritories);
+		add(numReplacementBox);
+		add(destinyTerritories);
+
+
+		// reposicionarButton.setBounds(1250,200,200,30);
+		add(reposicionarButton);
+
+		// changePlayer.setBounds(1250,200,200,30);
+		add(changePlayer);
 
 		originTerritories.addActionListener(new ActionListener() {
 			@Override
@@ -212,6 +214,7 @@ public class MapView extends JPanel implements Observer{
 				currentArmySum = 0;
 				salvaArmyAntigo();
 				endPosic = true;
+				bonusTradeSum = 0;
 			}
 		});
 
@@ -295,6 +298,7 @@ public class MapView extends JPanel implements Observer{
         this.g = (Graphics2D) graphic;
 
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
+
         currentPlayerLabel.setText(currentPlayer);
 
 		// Desenhar imagem dos dados
@@ -310,9 +314,16 @@ public class MapView extends JPanel implements Observer{
 			// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
 			continueButton.setVisible(true);
 		} else {
+			if (controller.canTradeCards()){
+				cardsTradeButton.setVisible(true);
+			}else{
+				cardsTradeButton.setVisible(false);
+			}
 			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continueButton.setVisible(false);
 		}
+
+		
 
 		if(firstRound) {
 			attackingTerritories.setVisible(false);
@@ -397,7 +408,7 @@ public class MapView extends JPanel implements Observer{
 	public void determineFirstPlayer(String currentPlayer, PlayerColor playerColor){
 		this.currentPlayer = currentPlayer;
         this.playerSelectedColor = playerColor;
-        addSquareColor();
+        addSquareColor(); 
 	}
 
 	// Muda o jogador da vez na view
@@ -435,16 +446,6 @@ public class MapView extends JPanel implements Observer{
         labelColor.setBackground(getColorFromPlayerColor(playerSelectedColor));
         labelColor.setPreferredSize(new Dimension(20, 20));
 
-        // Adiciona o quadrado de cor à esquerda do jogadorDaVezLabel
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.add(labelColor, BorderLayout.WEST);
-        panel.add(currentPlayerLabel, BorderLayout.CENTER);
-
-        // Define a posição e tamanho do painel combinado
-        panel.setBounds(0, 660, 280, 32); // Ajuste as coordenadas conforme necessário
-
-        add(panel);
     }
 
 	public void updateReplacement(String[] territories) {
@@ -456,7 +457,6 @@ public class MapView extends JPanel implements Observer{
 			originTerritories.addItem(s);
 		}
 	}
-
 
 	public void updateNumReplacement(Integer qtd){
 		numReplacementBox.removeAllItems();

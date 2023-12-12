@@ -279,20 +279,15 @@ class Game implements Observed{
 		lista.remove(terrCard);
 
 		territoryCardDeck.returnCard(terrCard);
-
-		System.out.println("nome carta de territorio: " + terrCard.getName());
-		System.out.println("lista restante carta de territorio: " + territoryCards);
 		
 		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
 		if (terrCard.getName() != null){
 			Territory territory = map.findTerritory(terrCard.getName());
 			if (territory != null && territory.getOwner() == player) {
-				System.out.println("exercitos antes: " + territory.getArmies());
 				territory.alterarQndExercitos(2);
 				//Atualiza os territórios modificados
 				mod1 = territory;
 				mod2 = null;
-				System.out.println("exercitos depois: " + territory.getArmies());
 				this.notifyObservers();
 			}
 		}
@@ -319,7 +314,6 @@ class Game implements Observed{
 		return false;
 	}
 
-	//olhar de novo essa classe, até a 191 ta certa acho que não está passando certo para a view
     //Realiza um ataque 
 	public int[] RealizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
 		if(VerificarAtaque(atacante, defensor)){

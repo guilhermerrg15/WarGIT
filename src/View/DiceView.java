@@ -63,12 +63,12 @@ class DiceView {
 		int diceSpacing = 10;
 
 		// showDices(null, null);
-		g2d.drawImage(ataque1,20,40,dimension,dimension,null);
-		g2d.drawImage(ataque2,20 + dimension + diceSpacing,40,dimension,dimension,null);
-		g2d.drawImage(ataque3,20 + (dimension + diceSpacing)*2,40,dimension,dimension,null);
-		g2d.drawImage(defesa1,20,40+dimension+diceSpacing,dimension,dimension,null);
-		g2d.drawImage(defesa2,20 + dimension + diceSpacing,40+dimension+diceSpacing,dimension,dimension,null);
-		g2d.drawImage(defesa3,20 + (dimension + diceSpacing)*2,40+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(ataque1,20,60,dimension,dimension,null);
+		g2d.drawImage(ataque2,20 + dimension + diceSpacing,60,dimension,dimension,null);
+		g2d.drawImage(ataque3,20 + (dimension + diceSpacing)*2,60,dimension,dimension,null);
+		g2d.drawImage(defesa1,20,60+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa2,20 + dimension + diceSpacing,60+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa3,20 + (dimension + diceSpacing)*2,60+dimension+diceSpacing,dimension,dimension,null);
 	}
 
 	//Mostra os dados de ataque e defesa na tela
