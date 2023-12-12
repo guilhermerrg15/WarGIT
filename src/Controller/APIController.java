@@ -131,8 +131,6 @@ public class APIController {
             System.out.println("bonus" + bonusTroca);
             if (bonusTroca != 0){
                 numDeTrocas++;
-                //acho que não precisa pois ja chamanos o controller na view
-                // view.atualizaCartas(api.getNomesCartasJogador(turn));
                 // if (continente == 7){
                     view.updateBonusTroca(bonusTroca);
                     this.bonusTroca = 0;

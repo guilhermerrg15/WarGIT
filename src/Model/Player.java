@@ -322,6 +322,7 @@ public class Player  {
 		TerritoryCard terrCard = lista.get(0);
 
 		territoryCards.remove(terrCard);
+		lista.remove(terrCard);
 
 		territoryCardDeck.returnCard(terrCard);
 
@@ -329,15 +330,13 @@ public class Player  {
 		System.out.println("lista restante carta de territorio: " + territoryCards);
 		
 		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
-		// if (terrCard.getName() != null){
-        //     Territory territory = terrCard.toTerritory(map); 
-		// 	if (territory != null && territory.getOwner() == this) {
-        //         territory.alterarQndExercitos(2);
-        //     }
-		// }
+		if (terrCard.getName() != null){
+            Territory territory = map.findTerritory(terrCard.getName());
+			if (territory != null && territory.getOwner() == this) {
+                territory.alterarQndExercitos(2);
+            }
+		}
 	}
-
-    
 
     //Adiciona um território ao jogador
 	public void addTerritorio(Territory t) {
@@ -345,20 +344,11 @@ public class Player  {
 		// Aumenta em 1 a quantidade de territórios
 		this.numTerritories++;
 	}
-    /**
-     * Obtém o nome do jogador.
-     *
-     * @return O nome do jogador.
-     */
+
     public String getName() {
         return name;
     }
 
-    /**
-     * Obtém a cor do jogador.
-     *
-     * @return A cor do jogador.
-     */
     public PlayerColor getColor() {
         return color;
     }

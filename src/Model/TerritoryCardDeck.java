@@ -35,7 +35,7 @@ class TerritoryCardDeck {
 		cardList.add(new TerritoryCard("Alasca", Shape.Triangle, "an", "alasca"));
 		cardList.add(new TerritoryCard("Calgary", Shape.Circle, "an", "calgary"));
 		cardList.add(new TerritoryCard("Califórnia", Shape.Square, "an", "california"));
-		cardList.add(new TerritoryCard("Groelândia", Shape.Circle, "an", "groenlandia"));
+		cardList.add(new TerritoryCard("Groelândia", Shape.Circle, "an", "groelandia"));
 		cardList.add(new TerritoryCard("México", Shape.Square, "an", "mexico"));
 		cardList.add(new TerritoryCard("Nova York", Shape.Square, "an", "novayork"));
 		cardList.add(new TerritoryCard("Quebec", Shape.Circle, "an", "quebec"));

@@ -51,7 +51,7 @@ public class TerritoryCard {
      * @param map O mapa do jogo.
      * @return O objeto Territory correspondente ao nome, ou null se não for encontrado.
      */
-    public Territory toTerritory(Map map) {
-        return map.findTerritory(name);
-    }
+    // public Territory toTerritory(Map map) {
+    //     return map.findTerritory(name);
+    // }
 }

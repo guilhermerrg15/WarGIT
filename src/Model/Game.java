@@ -220,6 +220,7 @@ class Game implements Observed{
 			//Atualiza os territórios modificados
 			mod1 = atacante;
 			mod2 = defensor;
+			
 			// Se conquistou
 			if (defensor.getArmies()==0) {
 				// Atualiza defensor
