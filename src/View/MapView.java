@@ -668,8 +668,8 @@ public class MapView extends JPanel implements Observer{
 	}
 
 	public Integer updateBonusTroca (int bonus){
-		// this.bonusTradeSum = bonus;
-		System.out.println("bonus" + bonus);
+		this.bonusTradeSum = bonus;
+		System.out.println("bonus view " + bonus);
 		return bonusTradeSum;
 	}
 
@@ -735,6 +735,7 @@ public class MapView extends JPanel implements Observer{
 					}
 					else {
 						army.setNumArmies(String.valueOf(quantidadeOriginal));
+						controller.setNumArmiesTerritory(territoryMapping.get(bolinha), quantidadeOriginal);
 						repaint();
 						break;
 

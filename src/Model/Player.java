@@ -295,7 +295,7 @@ public class Player  {
 					}
 			}
 		}
-         System.out.println("aaaaa");
+
 
 		Integer qtd;
 		//Quando temos até 5 trocas já efetuadas
@@ -313,31 +313,28 @@ public class Player  {
 			qtd = 15 + (diferenca * 5);
 		}
 
-         System.out.println("aaaaaa");
 		return qtd;
 	}
 
     // Remove a carta do topo do baralho e adiciona ao jogador
 	private void usaCarta(ArrayList<TerritoryCard> lista, TerritoryCardDeck territoryCardDeck, Map map){
-        System.out.println("1");
 
 		TerritoryCard terrCard = lista.get(0);
-        System.out.println("2:" + terrCard);
 
 		territoryCards.remove(terrCard);
-        System.out.println("3");
 
 		territoryCardDeck.returnCard(terrCard);
-        System.out.println("4");
 
         System.out.println("nome carta de territorio: " + terrCard.getName());
+		System.out.println("lista restante carta de territorio: " + territoryCards);
+		
 		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
-		if (terrCard.getName() != null){
-            Territory territory = terrCard.toTerritory(map);
-			if (territory != null && territory.getOwner() == this) {
-                territory.alterarQndExercitos(2);
-            }
-		}
+		// if (terrCard.getName() != null){
+        //     Territory territory = terrCard.toTerritory(map); 
+		// 	if (territory != null && territory.getOwner() == this) {
+        //         territory.alterarQndExercitos(2);
+        //     }
+		// }
 	}
 
     
