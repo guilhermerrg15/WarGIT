@@ -231,6 +231,9 @@ class Map {
 	    return null;
 	}
 	
+	public List<Continent> getContinents() {
+		return continents;
+	}
 	
 }
 	

@@ -19,8 +19,7 @@ public class API {
     private TerritoryCardDeck territoryCardDeck;
     private ArrayList<Player> players;
     public int turn;
-    private int tradeCounter = 0;
-	private static final int[] tradeBonusAmount = new int[] { 4, 6, 8, 10, 12, 15 };
+ 
 
     private API() {
         map = this.initMap();
@@ -196,7 +195,6 @@ public class API {
         return null;
     }
 
-
     // Chama reposicionarExercitos de Jogo
     public void reposicionarExercitos(String origem, String destino, Integer qtd){
         // Obtém a lista de territórios do objeto Map
@@ -325,7 +323,6 @@ public class API {
         Player j = game.getJogadorVez(vez);
         return j.getObjective().checkStatus();
     }
-
 
     public String[] getNomesJogadores() {
     	String[] nomes = new String[getAllPlayers().size()];
@@ -482,9 +479,14 @@ public class API {
         return 0;
     }
 
+    public void continentDomain(Integer turn){
+        game.continentDomain(turn);
+    }
+
     // Notifica observadores de jogo
     public void notificaObsJogo(){
         game.notifyObservers();
     }
+
 
 }

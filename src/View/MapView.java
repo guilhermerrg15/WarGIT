@@ -174,6 +174,7 @@ public class MapView extends JPanel implements Observer{
 		placeArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+				controller.clickedPlaceArmy();
                 // Trocar o estado do modo de alocação de tropas ao clicar no botão
                 addTroopsMode = true;
             }
@@ -306,8 +307,6 @@ public class MapView extends JPanel implements Observer{
 			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continueButton.setVisible(false);
 		}
-
-		
 
 		if(firstRound) {
 			attackingTerritories.setVisible(false);

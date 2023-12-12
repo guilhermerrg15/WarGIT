@@ -18,6 +18,7 @@ class Game implements Observed{
 
 	private List<TerritoryCard> territoryCards;
 
+	private Integer numContinent = 0;
 
     private Map map = Map.getMap();
 
@@ -192,33 +193,32 @@ class Game implements Observed{
 		else {
 			if(coringas.size() == 0 );{
 				// Troca uma de cada e devolve elas para o baralho
-					usaCarta(circulos, territoryCardDeck, map, player);
+				usaCarta(circulos, territoryCardDeck, map, player);
+				usaCarta(quadrados, territoryCardDeck, map, player);
+				usaCarta(triangulos, territoryCardDeck, map, player);
+			} 
+			if (coringas.size() == 1 ){
+				usaCarta(coringas, territoryCardDeck, map, player);
+				if (circulos.size() == 0){
+					// Remove um coringa, um quadrado e um triângulo
 					usaCarta(quadrados, territoryCardDeck, map, player);
 					usaCarta(triangulos, territoryCardDeck, map, player);
-					// break;
-			} else if (coringas.size() == 1 ){
-				usaCarta(coringas, territoryCardDeck, map, player);
-					if (circulos.size() == 0){
-						// Remove um coringa, um quadrado e um triângulo
-						usaCarta(quadrados, territoryCardDeck, map, player);
-						usaCarta(triangulos, territoryCardDeck, map, player);
-					}
+				}
 
-					else if (quadrados.size() == 0){
-						// Remove um coringa, um círculo e um triângulo
-						usaCarta(circulos, territoryCardDeck, map, player);
-						usaCarta(triangulos, territoryCardDeck, map, player);
-					}
+				else if (quadrados.size() == 0){
+					// Remove um coringa, um círculo e um triângulo
+					usaCarta(circulos, territoryCardDeck, map, player);
+					usaCarta(triangulos, territoryCardDeck, map, player);
+				}
 
-					else{
-						// Remove um coringa, um círculo e um quadrado
-						usaCarta(circulos, territoryCardDeck, map, player);
-						usaCarta(quadrados, territoryCardDeck, map, player);
-					}
+				else{
+					// Remove um coringa, um círculo e um quadrado
+					usaCarta(circulos, territoryCardDeck, map, player);
+					usaCarta(quadrados, territoryCardDeck, map, player);
+				}
 
-					break;
-
-			} else if (coringas.size() == 2){
+			} 
+			if (coringas.size() == 2){
 				// Remove dois coringas e uma carta de qualquer formato
 				usaCarta(coringas, territoryCardDeck, map, player);
 				usaCarta(coringas, territoryCardDeck, map, player);
@@ -249,9 +249,7 @@ class Game implements Observed{
 			
 		}
 
-
 		Integer qtd;
-		//Quando temos até 5 trocas já efetuadas
 		if (numDeTrocas <= 5) {
 			qtd = 4 + (2 * (numDeTrocas));
 		}
@@ -259,8 +257,6 @@ class Game implements Observed{
 		else if (numDeTrocas == 6) {
 			qtd = 15;
 		}
-
-		//Temos mais de 6 trocas já efetuadas
 		else {
 			int diferenca = numDeTrocas - 6;
 			qtd = 15 + (diferenca * 5);
@@ -291,6 +287,59 @@ class Game implements Observed{
 			}
 		}
 	}
+	public void continentDomain(Integer turn){
+        List<Territory> territorios;
+        Integer qtd;
+
+        for (numContinent = 0; numContinent < 6; numContinent++){
+            if (dominaCont(turn, getContinentesLista()[numContinent])){
+                territorios = getTerritoriosCont(getContinentesLista()[numContinent]);
+                qtd = getExCont(turn, getContinentesLista()[numContinent]);
+
+				for (Territory territory: territorios){
+					territory.alterarQndExercitos(qtd);
+					//Atualiza os territórios modificados
+					mod1 = territory;
+					mod2 = null;
+					this.notifyObservers();
+				}
+                numContinent++;
+                return;
+            }
+        }
+    }
+
+
+    // Retorna lista de nomes dos continentes
+    public String[] getContinentesLista(){
+        String[] listaContinentes = new String[map.getContinents().size()];
+        int cont = 0;
+
+        // Adiciona na lista os nomes dos continentes
+        for (Continent c: map.getContinents()) {
+            listaContinentes[cont] = c.getName();
+            cont++;
+        }
+
+        return listaContinentes;
+    }
+
+    // Retorna se o jogador domina o continente
+    public boolean dominaCont(int turn, String continent){
+        return map.findContinent(continent).checkContinentDomain(game.getJogadorVez(turn));
+    }
+
+    // Retorna lista de nomes dos territórios de um continente
+    public List<Territory> getTerritoriosCont(String c){
+        List<Territory> listaTerritorios = map.findContinent(c).getTerritories();
+        return listaTerritorios;
+    }
+
+     // Retorna quantidade de exércitos a posicionar no continente 
+     public Integer getExCont(int vez, String c){
+        Integer qtd = map.findContinent(c).getBonusArmies();
+        return qtd;
+    }
 
     // Adiciona jogador na partida
     public boolean addPlayer(Player jogador){

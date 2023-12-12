@@ -16,6 +16,7 @@ public class APIController {
     private String[] territoriesReplacementName;
     private Integer[] numArmiesReplacement;
     private boolean canTrade = true;
+    
 
     // Guarda o bônus de troca de cartas
     private Integer bonusTroca = 0;
@@ -126,20 +127,19 @@ public class APIController {
 
     // Método para trocar cartas
     public void clicouTrocar(){
-        // Só pode trocar antes de posicionar algo
-        // if (canTrade){
-            this.bonusTroca = api.trocarCartas(turn, numDeTrocas);
-            if (bonusTroca != 0){
-                numDeTrocas++;
-                // if (continente == 7){
-                    view.updateBonusTroca(bonusTroca);
-                    this.bonusTroca = 0;
-                    return;
-                // }
-            }
-        // }
-    }
+        this.bonusTroca = api.trocarCartas(turn, numDeTrocas);
+        if (bonusTroca != 0){
+            numDeTrocas++;
+            view.updateBonusTroca(bonusTroca);
+            this.bonusTroca = 0;
+            return;
+        }
+}
 
+    //Metodo chamado qaundo o jogador clica em posicionar tropa para aicionar territorios se tiver continente dominado
+    public void clickedPlaceArmy(){
+        api.continentDomain(turn);
+    }
 
     public boolean clickedContinue() {
         if (firstRound) {
