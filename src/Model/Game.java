@@ -196,7 +196,8 @@ class Game implements Observed{
 					usaCarta(quadrados, territoryCardDeck, map, player);
 					usaCarta(triangulos, territoryCardDeck, map, player);
 					// break;
-			} else if (coringas.size() == 1 ){
+			}
+			if (coringas.size() == 1 ){
 				usaCarta(coringas, territoryCardDeck, map, player);
 					if (circulos.size() == 0){
 						// Remove um coringa, um quadrado e um triângulo
@@ -215,8 +216,6 @@ class Game implements Observed{
 						usaCarta(circulos, territoryCardDeck, map, player);
 						usaCarta(quadrados, territoryCardDeck, map, player);
 					}
-
-					break;
 
 			} else if (coringas.size() == 2){
 				// Remove dois coringas e uma carta de qualquer formato
