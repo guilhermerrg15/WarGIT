@@ -94,20 +94,16 @@ public class MapView extends JPanel implements Observer{
         // setLayout(new BorderLayout());
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-
 		//Cria e adiciona o label do jogador da vez
         currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 22));
         currentPlayerLabel.setForeground(Color.BLACK);
         add(currentPlayerLabel);
         JPanel panel = new JPanel();
-        // panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.add(labelColor);
         panel.add(currentPlayerLabel);
-
         add(panel);
 		
 		JPanel buttonPanel = new JPanel();
-
 		buttonPanel.add(saveButton);
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(placeArmyButton);
@@ -116,48 +112,32 @@ public class MapView extends JPanel implements Observer{
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-
         add(buttonPanel);
 
         
 		add(continueButton);
-
-		// cardsTradeButton.setBounds(1250,535,200,30);
 		add(cardsTradeButton);
 
 
 		attackingTerritories = new JComboBox<String>();
 		defendingTerritories = new JComboBox<String>();
 
-		// attackingTerritories.setBounds(1250, 200, 200, 30);
-        // defendingTerritories.setBounds(1250, 250, 200, 30);
-
 		add(attackingTerritories);
         add(defendingTerritories);
 
-		// playDicesButton.setBounds(1250,200,200,30);
 		add(playDicesButton);
 
-		// endAtackButton.setBounds(1250,200,200,30);
 		add(endAtackButton);
 
 		originTerritories = new JComboBox<String>();
 		destinyTerritories = new JComboBox<String>();
 		numReplacementBox = new JComboBox<Integer>();
 
-		// originTerritories.setBounds(600, 300, 200, 30);
-		// numReplacementBox.setBounds(600, 350, 200, 30);
-		// destinyTerritories.setBounds(600, 400, 200, 30);
-
 		add(originTerritories);
 		add(numReplacementBox);
 		add(destinyTerritories);
 
-
-		// reposicionarButton.setBounds(1250,200,200,30);
 		add(reposicionarButton);
-
-		// changePlayer.setBounds(1250,200,200,30);
 		add(changePlayer);
 
 		originTerritories.addActionListener(new ActionListener() {
@@ -311,8 +291,12 @@ public class MapView extends JPanel implements Observer{
 		drawArmies(this.g);
 
 		if (addTroopsMode) {
+			if (currentArmySum == controller.getNumTerritoryPlayer(playerSelectedColor) / 2 + bonusTradeSum){
 			// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
 			continueButton.setVisible(true);
+			} else {
+				continueButton.setVisible(false);
+			}
 		} else {
 			if (controller.canTradeCards()){
 				cardsTradeButton.setVisible(true);
