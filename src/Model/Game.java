@@ -6,6 +6,7 @@ import java.util.Arrays;
 import Controller.APIController;
 import View.Observed;
 import View.Observer;
+import java.util.List;
 
 class Game implements Observed{
     private static Game game = null;
@@ -14,6 +15,8 @@ class Game implements Observed{
     private ArrayList<Player> players = new ArrayList<Player>();
 
     private ArrayList<Observer> lst = new ArrayList<Observer>();
+
+	private List<TerritoryCard> territoryCards;
 
 
     private Map map = Map.getMap();
@@ -114,6 +117,186 @@ class Game implements Observed{
         }
     }
 
+	//Verifica se o jogador pode trocar cartas
+	public boolean temTroca(Player player){
+		int circulos = 0, quadrados = 0, triangulos = 0;
+		territoryCards = player.getCard();
+
+		// Conta quantas cartas de cada formato o jogador possui
+		for (TerritoryCard cards: territoryCards){
+			if (cards.getShape().equals(Shape.Circle))
+				circulos++;
+			else if (cards.getShape().equals(Shape.Square))
+				quadrados++;
+			else if (cards.getShape().equals(Shape.Triangle))
+				triangulos++;
+			//se for jocker adiciona 1 em todos pois o jocker entra em qualquer caso
+			else{
+				circulos++;
+				quadrados++;
+				triangulos++;
+			}
+		}
+
+		// Se o jogador possui 3 cartas de um formato ou 1 de cada formato, pode trocar
+		if (circulos >= 3 || quadrados >= 3 || triangulos >= 3 || (circulos >= 1 && quadrados >= 1 && triangulos >= 1)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	//Retorna a quantidade de bonus de exércitos que o jogador recebe de bonus na troca
+	public Integer trocarCartas (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map, Player player) {
+		
+	
+		ArrayList<TerritoryCard> circulos = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> quadrados = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> triangulos = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> coringas = new ArrayList<TerritoryCard>();
+
+		// Separa as cartas por formato
+		for (TerritoryCard carta: territoryCards){
+			if (carta.getShape().equals(Shape.Circle))
+				circulos.add(carta);
+			else if (carta.getShape().equals(Shape.Square))
+				quadrados.add(carta);
+			else if (carta.getShape().equals(Shape.Triangle))
+				triangulos.add(carta);
+			else
+				coringas.add(carta);
+		}
+		
+
+		if (circulos.size() >= 3){
+			// Troca três cartas de círculo e devolve elas para o baralho
+			for (int i = 0; i < 3; i++){
+				usaCarta(circulos, territoryCardDeck, map, player);
+			}
+		}
+
+		else if (quadrados.size() >= 3){
+			// Troca três cartas de quadrado e devolve elas para o baralho
+			for (int i = 0; i < 3; i++){
+				usaCarta(quadrados, territoryCardDeck, map, player);
+			}
+		}
+
+		else if (triangulos.size() >= 3){
+			// Troca três cartas de triângulo e devolve elas para o baralho
+			for (int i = 0; i < 3; i++){
+				usaCarta(triangulos, territoryCardDeck, map, player);
+			}
+		}
+
+		else {
+			int cont = coringas.size();
+			switch (cont){
+				case 0:
+					// Troca uma de cada e devolve elas para o baralho
+					usaCarta(circulos, territoryCardDeck, map, player);
+					usaCarta(quadrados, territoryCardDeck, map, player);
+					usaCarta(triangulos, territoryCardDeck, map, player);
+					break;
+				case 1:
+					usaCarta(coringas, territoryCardDeck, map, player);
+					if (circulos.size() == 0){
+						// Remove um coringa, um quadrado e um triângulo
+						usaCarta(quadrados, territoryCardDeck, map, player);
+						usaCarta(triangulos, territoryCardDeck, map, player);
+					}
+
+					else if (quadrados.size() == 0){
+						// Remove um coringa, um círculo e um triângulo
+						usaCarta(circulos, territoryCardDeck, map, player);
+						usaCarta(triangulos, territoryCardDeck, map, player);
+					}
+
+					else{
+						// Remove um coringa, um círculo e um quadrado
+						usaCarta(circulos, territoryCardDeck, map, player);
+						usaCarta(quadrados, territoryCardDeck, map, player);
+					}
+
+					break;
+
+				case 2:
+					// Remove dois coringas e uma carta de qualquer formato
+					usaCarta(coringas, territoryCardDeck, map, player);
+					usaCarta(coringas, territoryCardDeck, map, player);
+					if (circulos.size() == 0 && quadrados.size() == 0){
+						usaCarta(triangulos, territoryCardDeck, map, player);
+					}
+
+					else if (quadrados.size() == 0 && triangulos.size() == 0){
+						usaCarta(circulos, territoryCardDeck, map, player);
+					}
+
+					else if (circulos.size() == 0 && triangulos.size() == 0){
+						usaCarta(quadrados, territoryCardDeck, map, player);
+					}
+
+					else if (circulos.size() == 1){
+						usaCarta(circulos, territoryCardDeck, map, player);
+					}
+
+					else if (quadrados.size() == 1){
+						usaCarta(quadrados, territoryCardDeck, map, player);
+					}
+
+					else{
+						usaCarta(triangulos, territoryCardDeck, map, player);
+					}
+			}
+		}
+
+
+		Integer qtd;
+		//Quando temos até 5 trocas já efetuadas
+		if (numDeTrocas <= 5) {
+			qtd = 4 + (2 * (numDeTrocas));
+		}
+
+		else if (numDeTrocas == 6) {
+			qtd = 15;
+		}
+
+		//Temos mais de 6 trocas já efetuadas
+		else {
+			int diferenca = numDeTrocas - 6;
+			qtd = 15 + (diferenca * 5);
+		}
+
+		return qtd;
+	}
+
+	// Remove a carta do topo do baralho e adiciona ao jogador
+	private void usaCarta(ArrayList<TerritoryCard> lista, TerritoryCardDeck territoryCardDeck, Map map, Player player){
+
+		TerritoryCard terrCard = lista.get(0);
+
+		territoryCards.remove(terrCard);
+		lista.remove(terrCard);
+
+		territoryCardDeck.returnCard(terrCard);
+
+		System.out.println("nome carta de territorio: " + terrCard.getName());
+		System.out.println("lista restante carta de territorio: " + territoryCards);
+		
+		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
+		if (terrCard.getName() != null){
+			Territory territory = map.findTerritory(terrCard.getName());
+			if (territory != null && territory.getOwner() == player) {
+				System.out.println("exercitos antes: " + territory.getArmies());
+				territory.alterarQndExercitos(2);
+				//Atualiza os territórios modificados
+				mod1 = territory;
+				mod2 = null;
+				System.out.println("exercitos depois: " + territory.getArmies());
+				this.notifyObservers();
+			}
+		}
+	}
 
     // Adiciona jogador na partida
     public boolean addPlayer(Player jogador){
@@ -127,8 +310,7 @@ class Game implements Observed{
         }
         return true;
     }
-
-    
+ 
     //Valida um ataque
 	public boolean VerificarAtaque(Territory tAtacante, Territory tDefensor) {
 		// Verifica se o atacante tem mais de um exército e se o defensor não é dele
@@ -220,7 +402,7 @@ class Game implements Observed{
 			//Atualiza os territórios modificados
 			mod1 = atacante;
 			mod2 = defensor;
-			
+
 			// Se conquistou
 			if (defensor.getArmies()==0) {
 				// Atualiza defensor
@@ -232,6 +414,7 @@ class Game implements Observed{
 					defensor.getOwner().setJMatou(atacante.getOwner());
 					APIController.getInstance().addEliminado(defensor.getOwner().getName());
 				}
+				
 				defensor.setOwner(atacante.getOwner());
 
 				// Adiciona território conquistado ao jogador que conquistou
@@ -249,6 +432,7 @@ class Game implements Observed{
 				defensor.setArmies(qtdPassada);
 
 			}
+
 			//Notifica os observadores
 			this.notifyObservers();
 

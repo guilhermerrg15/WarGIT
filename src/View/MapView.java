@@ -669,7 +669,6 @@ public class MapView extends JPanel implements Observer{
 
 	public Integer updateBonusTroca (int bonus){
 		this.bonusTradeSum = bonus;
-		System.out.println("bonus view " + bonus);
 		return bonusTradeSum;
 	}
 

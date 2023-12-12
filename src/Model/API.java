@@ -480,8 +480,8 @@ public class API {
         
         
         // Se o jogador puder trocar cartas, chama o método de trocar cartas de Jogo
-        if (player.temTroca()){
-            Integer la = player.trocarCartas(numDeTrocas, territoryCardDeck, map);
+        if (game.temTroca(player)){
+            Integer la = game.trocarCartas(numDeTrocas, territoryCardDeck, map, player);
             // this.notificaObsJogo();
             return la;
         }
