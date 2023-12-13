@@ -342,6 +342,10 @@ public class APIController {
         api.notificaObsJogo();
 
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        view.setFirstRound(firstRound);
+        
+       
+        
     }
 
     // Singleton

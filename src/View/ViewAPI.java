@@ -56,8 +56,16 @@ public class ViewAPI {
         MapView.getMapView().updateBonusTroca(bonus);
     }
 
+    public void setFirstRound(boolean first){
+        MapView.getMapView().setFirstRound(first);
+    }
     private ViewAPI() {
     }
+
+    public void clearDices(){
+        MapView.getMapView().clearDices();
+    }
+
 
 	//Verifica se o jogador ganhou a partida
 	public void jogadorGanhou(String nome, PlayerColor cor){
