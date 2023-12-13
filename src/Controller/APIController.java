@@ -15,38 +15,36 @@ public class APIController {
     private int turn = 0;
     private String[] territoriesReplacementName;
     private Integer[] numArmiesReplacement;
-    private boolean canTrade = true;
     private boolean isSaveEnabled = true;
 
     // Guarda o bônus de troca de cartas
-    private Integer bonusTroca = 0;
+    private Integer tradeBonus = 0;
     // Guarda o número de trocas de cartas
-    private Integer numDeTrocas = 0;
+    private Integer numTrades = 0;
 
     // Guarda os nomes dos jogadores eliminados nessa rodada
-    ArrayList<String> eliminadosNessaRodada = new ArrayList<String>();
+    ArrayList<String> eliminatedThisRound = new ArrayList<String>();
 
     // Instância de APIs
     private ViewAPI view = ViewAPI.getInstance();
     private API api = API.getInstance();
 
 
-    public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
-        int numPlayers = nomes.size();
+    public boolean startMatch(ArrayList<String> names, ArrayList<PlayerColor> colors) {
+        int numPlayers = names.size();
         for(int i = 0; i < numPlayers; i++){
-            // Verificar se há um nome igual a null
-            if(nomes.get(i) == null || nomes.get(i).equals("")) {
+            
+            if(names.get(i) == null || names.get(i).equals("")) {
                 api.resetPlayers();
                 return false;
             }
-            if(api.addPlayer(nomes.get(i), cores.get(i), i) == false){
+            if(api.addPlayer(names.get(i), colors.get(i), i) == false){
                 api.resetPlayers();
                 return false;
             };
-            // cont++;
         }
         if(api.startGame()) {
-            view.determineFirstPlayer(api.getNomeJogadorVez(0), api.getCorJogadorVez(0));
+            view.determineFirstPlayer(api.getPlayerTurn(0), api.getPlayerColorTurn(0));
             return true;
         }
 
@@ -64,8 +62,8 @@ public class APIController {
         api.initDeckTerritory();
     }
 
-    public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
-        return API.getInstance().getNumTerritoryPlayer(corDoJogador);
+    public int getNumTerritoryPlayer(PlayerColor playerColor) {
+        return API.getInstance().getNumTerritoryPlayer(playerColor);
     }
 
      //get vez do jogador
@@ -79,8 +77,8 @@ public class APIController {
     }
 
     // Pegar o nome dos jogadores
-    public String[] getNomesJogadores(){
-        return api.getNomesJogadores();
+    public String[] getPlayersNames(){
+        return api.getPlayersNames();
     }
 
     // Método que retorna a lista de territórios do jogo
@@ -96,21 +94,21 @@ public class APIController {
         return api.getTerritoryCards(turn);
     }
 
-     public void resetConquista(){
-        api.resetConquista(turn);
+     public void resetConquer(){
+        api.resetConquer(turn);
      }
      
      // Método chamado quando ocorre o clique na bolinha
-     public void setNumArmiesTerritory(String territorio, int count) {
-        api.setNumArmiesTerritory(territorio, count);
+     public void setNumArmiesTerritory(String territory, int count) {
+        api.setNumArmiesTerritory(territory, count);
     }
 
     public Integer getNumArmiesTerritory(String t){
         return api.getNumArmiesTerritory(t);
     }
 
-    public Integer getQtdExercitosAntigos(String t){
-        return api.getQntExTerritorioAntigos(t);
+    public Integer getNumOldArmies(String t){
+        return api.getNumOldArmies(t);
     }
 
     // Método que retorna a cor de um território
@@ -123,12 +121,12 @@ public class APIController {
     }
 
     // Método para trocar cartas
-    public void clicouTrocar(){
-        this.bonusTroca = api.trocarCartas(turn, numDeTrocas);
-        if (bonusTroca != 0){
-            numDeTrocas++;
-            view.updateBonusTroca(bonusTroca);
-            this.bonusTroca = 0;
+    public void clickedTrade(){
+        this.tradeBonus = api.tradeCards(turn, numTrades);
+        if (tradeBonus != 0){
+            numTrades++;
+            view.updateBonusTrade(tradeBonus);
+            this.tradeBonus = 0;
             return;
         }
 }
@@ -138,7 +136,7 @@ public class APIController {
         api.continentDomain(turn);
 
         // Verifica se ganhou após reposicionar
-        verificaGanhou(turn);
+        verifyWin(turn);
         isSaveEnabled = false;
     }
 
@@ -146,7 +144,7 @@ public class APIController {
         if (firstRound) {
             turn = (turn + 1) % api.getNumPlayers();
 
-            view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+            view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
 
             if (turn == 0){
                 firstRound = false;
@@ -157,13 +155,13 @@ public class APIController {
 
             return true;
         } else {
-            String[] la = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+            String[] la = api.getTerritoryMoreOne(api.getPlayerColorTurn(turn));
             if (la == null){
                 clickedChangePlayer();
             }
             view.atualizaAtacantes(la);
 
-            verificaGanhou(turn);
+            verifyWin(turn);
             return false;
         }
 
@@ -171,14 +169,14 @@ public class APIController {
 
     public void clickedAttack() {
         
-        view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+        view.atualizaAtacantes(api.getTerritoryMoreOne(api.getPlayerColorTurn(turn)));
         
         // Verifica se tem algum jogador eliminado nessa rodada
-        if (eliminadosNessaRodada.size() != 0){
-            verificaGanhou(-1);
-            for (int i = 0; i < eliminadosNessaRodada.size();i++){
-                api.retiraEliminado(eliminadosNessaRodada.get(i));
-                eliminadosNessaRodada.remove(0);
+        if (eliminatedThisRound.size() != 0){
+            verifyWin(-1);
+            for (int i = 0; i < eliminatedThisRound.size();i++){
+                api.retiraEliminado(eliminatedThisRound.get(i));
+                eliminatedThisRound.remove(0);
             }
         }
     }
@@ -186,18 +184,18 @@ public class APIController {
     public void clickedEndAtack(){
         
         // Verifica se tem algum jogador eliminado nessa rodada
-        if (eliminadosNessaRodada.size() != 0){
-            verificaGanhou(-1);
-            for (int i = 0; i < eliminadosNessaRodada.size();i++){
-                api.retiraEliminado(eliminadosNessaRodada.get(i));
-                eliminadosNessaRodada.remove(0);
+        if (eliminatedThisRound.size() != 0){
+            verifyWin(-1);
+            for (int i = 0; i < eliminatedThisRound.size();i++){
+                api.retiraEliminado(eliminatedThisRound.get(i));
+                eliminatedThisRound.remove(0);
             }
         }
 
         giveTerritoryCard();
-        resetConquista();
+        resetConquer();
 
-        territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+        territoriesReplacementName = api.getTerritoryMoreOne(api.getPlayerColorTurn(turn));
 
             // Atualiza a view para reposicionamento
             if (territoriesReplacementName == null){
@@ -219,15 +217,15 @@ public class APIController {
     public void clickedChangePlayer(){
 
         turn = (turn + 1) % api.getNumPlayers();
-        view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
 
         // se proximo jogador foi eliminado nessa rodada passa para o proximo
         if (api.getJogadorVezEliminadoRodada(turn)){
             turn = (turn + 1) % api.getNumPlayers();
-            view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+            view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
         }
         // Verifica se ganhou após reposicionar
-        verificaGanhou(turn);
+        verifyWin(turn);
         isSaveEnabled = true;
 
     }
@@ -253,7 +251,7 @@ public class APIController {
         // Se tiver exércitos para reposicionar continua na etapa de reposicionamento
         for (int j = 0; j < territoriesReplacementName.length; j++){
             if (numArmiesReplacement[j] > 0){
-                    territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+                    territoriesReplacementName = api.getTerritoryMoreOne(api.getPlayerColorTurn(turn));
                 // Se tiver algum território com mais de 1 exército para reposicionar
                 if (territoriesReplacementName != null) {
                     numArmiesReplacement = new Integer[territoriesReplacementName.length];
@@ -269,12 +267,12 @@ public class APIController {
         }
 
         // Verifica se ganhou após reposicionar
-        verificaGanhou(turn);
+        verifyWin(turn);
     }
 
     // Adiciona um nome à lista de eliminados nessa rodada
     public void addEliminado(String nome){
-        eliminadosNessaRodada.add(nome);
+        eliminatedThisRound.add(nome);
     }
 
     // Método chamado quando o jogador seleciona um território para defender
@@ -310,9 +308,9 @@ public class APIController {
     }
 
     // Método que verifica se jogador ganhou e lida com o resultado
-    public void verificaGanhou(int pos){
-        if (api.verificaGanhou(pos)){
-            view.jogadorGanhou(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+    public void verifyWin(int pos){
+        if (api.verifyWin(pos)){
+            view.jogadorGanhou(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
         }
     }
 
@@ -324,8 +322,8 @@ public class APIController {
         this.firstRound = firstRound;
     }
 
-    public Integer getNumTrocas() {
-        return numDeTrocas;
+    public Integer getNumTrades() {
+        return numTrades;
     }
 
     // Adicione este método para obter o estado do botão de salvar
@@ -347,9 +345,9 @@ public class APIController {
     // }
 
 
-    public void reiniciarJogo(){
+    public void restartGame(){
         // Reinicia dados de model
-        api.reiniciarJogo();
+        api.restartGame();
 
         // Reinicia dados do controller
         this.turn = 0;
@@ -358,7 +356,7 @@ public class APIController {
         // Reinicia dados da view
         api.notificaObsJogo();
 
-        view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
         view.setFirstRound(firstRound);
         
        
