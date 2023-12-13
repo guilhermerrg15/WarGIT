@@ -135,9 +135,6 @@ public class APIController {
 
     //Metodo chamado qaundo o jogador clica em posicionar tropa para aicionar territorios se tiver continente dominado
     public void clickedPlaceArmy(){
-
-        isSaveEnabled = false;
-
         api.continentDomain(turn);
 
         // Verifica se ganhou após reposicionar
@@ -153,17 +150,19 @@ public class APIController {
 
             if (turn == 0){
                 firstRound = false;
+                isSaveEnabled = false;
+            } else {
+                isSaveEnabled = true;
             }
 
             return true;
         } else {
             String[] la = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-            if (la == null || api.getTerritorioJogadorVez(turn) == 0){
+            if (la == null){
                 clickedChangePlayer();
             }
             view.atualizaAtacantes(la);
 
-            
             verificaGanhou(turn);
             return false;
         }
@@ -174,7 +173,6 @@ public class APIController {
         
         view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
         
-        isSaveEnabled = false;
         // Verifica se tem algum jogador eliminado nessa rodada
         if (eliminadosNessaRodada.size() != 0){
             verificaGanhou(-1);
@@ -186,7 +184,6 @@ public class APIController {
     }
 
     public void clickedEndAtack(){
-        isSaveEnabled = false;
         
         // Verifica se tem algum jogador eliminado nessa rodada
         if (eliminadosNessaRodada.size() != 0){
@@ -217,23 +214,21 @@ public class APIController {
 
             
             view.updateReplacement(territoriesReplacementName);
-            isSaveEnabled = true;
     }
 
     public void clickedChangePlayer(){
-        isSaveEnabled = false;
 
         turn = (turn + 1) % api.getNumPlayers();
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-        isSaveEnabled = true;
+
         // se proximo jogador foi eliminado nessa rodada passa para o proximo
-        if (api.getJogadorVezEliminadoRodada(turn) || api.getTerritorioJogadorVez(turn) == 0){
+        if (api.getJogadorVezEliminadoRodada(turn)){
             turn = (turn + 1) % api.getNumPlayers();
             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
         }
         // Verifica se ganhou após reposicionar
         verificaGanhou(turn);
-        
+        isSaveEnabled = true;
 
     }
 
