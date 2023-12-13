@@ -77,6 +77,8 @@ public class MapView extends JPanel implements Observer{
 
 	Boolean showTerritoryCards = false;
 
+	
+
     //Lista de territórios no jogo
 	String[] territories;
 	// TerritoryCardView territoryCardView = new TerritoryCardView();
@@ -294,9 +296,10 @@ public class MapView extends JPanel implements Observer{
 		drawArmies(this.g);
 
 		if (addTroopsMode) {
-			if (currentArmySum == controller.getNumTerritoryPlayer(playerSelectedColor) / 2 + bonusTradeSum){
-			// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
-			continueButton.setVisible(true);
+			Integer qnt = controller.getNumTerritoryPlayer(playerSelectedColor) / 2;
+			if (currentArmySum == qnt + bonusTradeSum){
+				// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
+				continueButton.setVisible(true);
 			} else {
 				continueButton.setVisible(false);
 			}
@@ -676,23 +679,21 @@ public class MapView extends JPanel implements Observer{
 	// fazer uma logica aqui para se o numero de exercitos chegar no máximo, trocar de jogador
 	private void handleBallClick(int mouseX, int mouseY) {
 		if (addTroopsMode) {
-			// Restaurar quantidade original no início do loop
+			
+			// Calcular a quantidade máxima de exércitos permitidos
+			
+			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2; 
+			
 
 			// Atualizar o número total de exercítos antes do incremento da rodada
 			if (currentArmySum==0) {
+
 				firstArmySum = getNumArmiesTotal(armyList); 
 			}
 			int somaExAtual = getNumArmiesTotal(armyList);
 
 			currentArmySum = somaExAtual - firstArmySum;
 
-			// Calcular a quantidade máxima de exércitos permitidos
-			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2; 
-
-			if (quantidadeMaximaExercitos <= 3){
-				quantidadeMaximaExercitos = 3;
-			}
-			
 			quantidadeMaximaExercitos = quantidadeMaximaExercitos + bonusTradeSum;
 
 			// Verificar se a soma atual não excede a quantidade máxima permitida

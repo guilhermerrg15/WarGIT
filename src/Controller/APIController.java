@@ -57,7 +57,6 @@ public class APIController {
     public void showObjCards() {
         api.initDeckObjective();
         api.shuffleObjectives(api.getAllPlayers(), api.getDeckCardObjective());
-        System.out.println("CLICKED");
 
     }
 
@@ -77,6 +76,7 @@ public class APIController {
     //set vez do jogador
     public void setTurn(int i){
         this.turn = i;
+        System.out.println("turn api: " + turn);
     }
 
     // Pegar o nome dos jogadores
@@ -154,8 +154,13 @@ public class APIController {
 
             return true;
         } else {
-            view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
-            // Verifica se ganhou após reposicionar
+            String[] la = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+            if (la == null){
+                clickedChangePlayer();
+            }
+            view.atualizaAtacantes(la);
+
+            
             verificaGanhou(turn);
             return false;
         }
@@ -165,8 +170,15 @@ public class APIController {
     public void clickedAttack() {
         
         view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
-        // Verifica se ganhou após reposicionar
-        verificaGanhou(turn);
+        
+        // Verifica se tem algum jogador eliminado nessa rodada
+        if (eliminadosNessaRodada.size() != 0){
+            verificaGanhou(-1);
+            for (int i = 0; i < eliminadosNessaRodada.size();i++){
+                api.retiraEliminado(eliminadosNessaRodada.get(i));
+                eliminadosNessaRodada.remove(0);
+            }
+        }
     }
 
     public void clickedEndAtack(){
@@ -175,7 +187,6 @@ public class APIController {
         if (eliminadosNessaRodada.size() != 0){
             verificaGanhou(-1);
             for (int i = 0; i < eliminadosNessaRodada.size();i++){
-                // Retira marcação de eliminado nessa rodada
                 api.retiraEliminado(eliminadosNessaRodada.get(i));
                 eliminadosNessaRodada.remove(0);
             }
@@ -185,6 +196,11 @@ public class APIController {
         resetConquista();
 
         territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+
+            // Atualiza a view para reposicionamento
+            if (territoriesReplacementName == null){
+                clickedChangePlayer();
+            }
             // Se tiver algum território com mais de 1 exército para reposicionar
             if (territoriesReplacementName != null) {
                 numArmiesReplacement = new Integer[territoriesReplacementName.length];
@@ -194,13 +210,20 @@ public class APIController {
                 numArmiesReplacement[i] = (api.getNumArmiesTerritory(territoriesReplacementName[i]) - 1);
             }
 
-            // Atualiza a view para reposicionamento
+            
             view.updateReplacement(territoriesReplacementName);
     }
 
     public void clickedChangePlayer(){
+
         turn = (turn + 1) % api.getNumPlayers();
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+
+        // se proximo jogador foi eliminado nessa rodada passa para o proximo
+        if (api.getJogadorVezEliminadoRodada(turn)){
+            turn = (turn + 1) % api.getNumPlayers();
+            view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        }
         // Verifica se ganhou após reposicionar
         verificaGanhou(turn);
 

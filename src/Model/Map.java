@@ -93,11 +93,11 @@ class Map {
 	private Continent createEurope() {
         List<Territory> europaTerritories = Arrays.asList(
             new Territory("Reino Unido", "Europa", Arrays.asList("Groelândia", "França")),
-            new Territory("França", "Europa", Arrays.asList("Espanha", "Itália", "Suécia", "Argélia", "Reino Unido")),
+            new Territory("França", "Europa", Arrays.asList("Espanha", "Itália", "Suécia", "Reino Unido")),
             new Territory("Espanha", "Europa", Arrays.asList("Argélia", "França")),
             new Territory("Itália", "Europa", Arrays.asList("França", "Argélia", "Polônia", "Romênia", "Suécia")),
             new Territory("Suécia", "Europa", Arrays.asList("França", "Itália", "Letônia", "Estônia")),
-            new Territory("Polônia", "Europa", Arrays.asList("Itália", "Letônia", "Polônia", "Ucrânia")),
+            new Territory("Polônia", "Europa", Arrays.asList("Itália", "Letônia", "Romênia", "Ucrânia")),
             new Territory("Romênia", "Europa", Arrays.asList("Egito", "Itália", "Polônia", "Ucrânia")),
             new Territory("Ucrânia", "Europa", Arrays.asList("Polônia", "Romênia", "Letônia", "Turquia"))
         );

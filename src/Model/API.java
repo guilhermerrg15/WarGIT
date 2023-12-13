@@ -316,8 +316,8 @@ public class API {
         if (turn == -1){
             for (Player player : game.getPlayers()) {
                 if (player.getObjective().checkStatus()){
-                    // Se algum jogador ganhou, atualiza a vez
-                    APIController.getInstance().setTurn(game.getPlayers().indexOf(player));
+                    APIController.getInstance().setTurn(game.getPlayer(player.getName()).getIndex());
+                    System.out.println("turn: " + game.getPlayer(player.getName()).getIndex());
                     return true;
                 }
             }
@@ -386,13 +386,16 @@ public class API {
 
     // Pegar o nome do jogador da vez
     public String getNomeJogadorVez(int i){
-
         return game.getJogadorVez(i).getName();
     }
     
     // Método que retorna a cor do jogador da vez
     public PlayerColor getCorJogadorVez(int i){
         return game.getJogadorVez(i).getColor();
+    }
+
+    public boolean getJogadorVezEliminadoRodada(int i){
+        return game.getJogadorVez(i).getEliminadoNessaRodada();
     }
 
     public ObjectiveCardDeck getDeckCardObjective(){
