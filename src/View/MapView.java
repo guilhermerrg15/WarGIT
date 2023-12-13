@@ -34,6 +34,10 @@ public class MapView extends JPanel implements Observer{
 	JButton reposicionarButton = new JButton("Reposicionar");
 	JButton changePlayer = new JButton("Finalizar");
 	JButton cardsTradeButton = new JButton("Trocar Cartas");
+
+	String dicaValues[] = {"1","2","3","4","5","6"};
+	JComboBox attackDices = new JComboBox(dicaValues);
+	JComboBox defenseDices = new JComboBox(dicaValues);
 	
     Image backgroundImage;
 	Image objectiveCard;
@@ -125,7 +129,9 @@ public class MapView extends JPanel implements Observer{
 		defendingTerritories = new JComboBox<String>();
 
 		add(attackingTerritories);
+		add(attackDices);
         add(defendingTerritories);
+		add(defenseDices);
 
 		add(playDicesButton);
 
@@ -233,7 +239,7 @@ public class MapView extends JPanel implements Observer{
 				int [] dicesDefense = new int [3];
 
 				//Chama a função de jogar os dados
-				int[] diceValues= api.makeAttack(attackingTerritories.getSelectedItem().toString(), defendingTerritories.getSelectedItem().toString());
+				int[] diceValues= api.makeAttack(attackingTerritories.getSelectedItem().toString(), defendingTerritories.getSelectedItem().toString(), Integer.valueOf((String)attackDices.getSelectedItem()), Integer.valueOf((String)defenseDices.getSelectedItem()));
 				dicesAttack[0] = diceValues[0];
 				dicesAttack[1] = diceValues[1];
 				dicesAttack[2] = diceValues[2];
@@ -325,7 +331,9 @@ public class MapView extends JPanel implements Observer{
 
 		if(firstRound) {
 			attackingTerritories.setVisible(false);
+			attackDices.setVisible(false);
 			defendingTerritories.setVisible(false);
+			defenseDices.setVisible(false);
 			originTerritories.setVisible(false);
 			numReplacementBox.setVisible(false);
 			destinyTerritories.setVisible(false);
@@ -334,18 +342,25 @@ public class MapView extends JPanel implements Observer{
 			changePlayer.setVisible(false);
 			endAtackButton.setVisible(false);
 			cardsTradeButton.setVisible(false);
+			// Retirar dados da tela
+			diceView.clearDices();
+			repaint();
 
 		} else {
 			if (endPosic) {
 				attackingTerritories.setVisible(true);
+				attackDices.setVisible(true);
 				defendingTerritories.setVisible(true);
+				defenseDices.setVisible(true);
 				playDicesButton.setVisible(true);
 				endAtackButton.setVisible(true);
 				cardsTradeButton.setVisible(false);
 				
 			} else{
 				attackingTerritories.setVisible(false);
+				attackDices.setVisible(false);
 				defendingTerritories.setVisible(false);
+				defenseDices.setVisible(false);
 				playDicesButton.setVisible(false);
 				endAtackButton.setVisible(false);
 			}
