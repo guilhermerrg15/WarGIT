@@ -16,7 +16,7 @@ public class APIController {
     private String[] territoriesReplacementName;
     private Integer[] numArmiesReplacement;
     private boolean canTrade = true;
-    
+    private boolean isSaveEnabled = true;
 
     // Guarda o bônus de troca de cartas
     private Integer bonusTroca = 0;
@@ -135,10 +135,14 @@ public class APIController {
 
     //Metodo chamado qaundo o jogador clica em posicionar tropa para aicionar territorios se tiver continente dominado
     public void clickedPlaceArmy(){
+
+        isSaveEnabled = false;
+
         api.continentDomain(turn);
 
         // Verifica se ganhou após reposicionar
         verificaGanhou(turn);
+        isSaveEnabled = false;
     }
 
     public boolean clickedContinue() {
@@ -170,6 +174,7 @@ public class APIController {
         
         view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
         
+        isSaveEnabled = false;
         // Verifica se tem algum jogador eliminado nessa rodada
         if (eliminadosNessaRodada.size() != 0){
             verificaGanhou(-1);
@@ -181,6 +186,7 @@ public class APIController {
     }
 
     public void clickedEndAtack(){
+        isSaveEnabled = false;
         
         // Verifica se tem algum jogador eliminado nessa rodada
         if (eliminadosNessaRodada.size() != 0){
@@ -211,13 +217,15 @@ public class APIController {
 
             
             view.updateReplacement(territoriesReplacementName);
+            isSaveEnabled = true;
     }
 
     public void clickedChangePlayer(){
+        isSaveEnabled = false;
 
         turn = (turn + 1) % api.getNumPlayers();
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-
+        isSaveEnabled = true;
         // se proximo jogador foi eliminado nessa rodada passa para o proximo
         if (api.getJogadorVezEliminadoRodada(turn)){
             turn = (turn + 1) % api.getNumPlayers();
@@ -225,6 +233,7 @@ public class APIController {
         }
         // Verifica se ganhou após reposicionar
         verificaGanhou(turn);
+        
 
     }
 
@@ -324,9 +333,18 @@ public class APIController {
         return numDeTrocas;
     }
 
+    // Adicione este método para obter o estado do botão de salvar
+    public boolean isSaveEnabled() {
+        return isSaveEnabled;
+}
+
     public void clickedSave() {
-        api.saveGame();
-        view.showWarning("Jogo salvo com sucesso!");
+        if (isSaveEnabled()) {
+            api.saveGame();
+            view.showWarning("Jogo salvo com sucesso!");
+        } else {
+            view.showWarning("Você só pode salvar o jogo antes do posicionamento de tropas.");
+        }
     }
 
     // public void clickedLoad() {
