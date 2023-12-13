@@ -1,0 +1,61 @@
+Turno: 0
+Jogador: Nome do jogador3, Cor: VERDE
+Objetivo: objetivo12
+   Cartas: 
+Jogador: Nome do jogador1, Cor: AMARELO
+Objetivo: objetivo14
+   Cartas: 
+Jogador: Nome do jogador2, Cor: PRETO
+Objetivo: objetivo7
+   Cartas: 
+Território: França, Tropas: 1
+Território: Tailândia, Tropas: 1
+Território: Rússia, Tropas: 1
+Território: Nova Zelândia, Tropas: 1
+Território: Nova York, Tropas: 1
+Território: Calgary, Tropas: 1
+Território: Coreia do Norte, Tropas: 1
+Território: Reino Unido, Tropas: 1
+Território: Vancouver, Tropas: 1
+Território: Groelândia, Tropas: 9
+Território: Califórnia, Tropas: 1
+Território: Turquia, Tropas: 1
+Território: Índia, Tropas: 1
+Território: Austrália, Tropas: 1
+Território: Paquistão, Tropas: 1
+Território: Cazaquistão, Tropas: 1
+Território: Iraque, Tropas: 1
+Território: Japão, Tropas: 1
+Território: Jordânia, Tropas: 1
+Território: Bangladesh, Tropas: 1
+Território: Síria, Tropas: 9
+Território: Egito, Tropas: 1
+Território: México, Tropas: 1
+Território: Perth, Tropas: 1
+Território: Itália, Tropas: 1
+Território: Nigéria, Tropas: 1
+Território: Alasca, Tropas: 1
+Território: Somália, Tropas: 1
+Território: Polônia, Tropas: 9
+Território: Arábia Saudita, Tropas: 1
+Território: Irã, Tropas: 1
+Território: Ucrânia, Tropas: 1
+Território: Venezuela, Tropas: 1
+Território: Estônia, Tropas: 1
+Território: África do Sul, Tropas: 1
+Território: Quebec, Tropas: 1
+Território: Suécia, Tropas: 1
+Território: Romênia, Tropas: 1
+Território: Peru, Tropas: 1
+Território: Mongólia, Tropas: 1
+Território: Espanha, Tropas: 1
+Território: Indonésia, Tropas: 1
+Território: Brasil, Tropas: 1
+Território: Letônia, Tropas: 1
+Território: Coreia do Sul, Tropas: 1
+Território: Angola, Tropas: 1
+Território: Argélia, Tropas: 1
+Território: Argentina, Tropas: 1
+Território: Texas, Tropas: 1
+Território: Sibéria, Tropas: 1
+Território: China, Tropas: 1

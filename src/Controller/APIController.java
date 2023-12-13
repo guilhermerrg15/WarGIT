@@ -313,6 +313,18 @@ public class APIController {
         }
     }
 
+    public boolean getFirstRound() {
+        return firstRound;
+    }
+
+    public Integer getNumTrocas() {
+        return numDeTrocas;
+    }
+
+    public void clickedSave() {
+        api.saveGame("saveWar.txt");
+    }
+
 
     public void reiniciarJogo(){
         // Reinicia dados de model

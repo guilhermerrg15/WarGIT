@@ -21,6 +21,14 @@ class ConquerTwoContinentsObjectiveCard extends ObjectiveCard{
         return continent1.checkContinentDomain(owner) && continent2.checkContinentDomain(owner);
     }
 
+    public Continent getFirstCont() {
+        return this.continent1;
+    }
+
+    public Continent getSecondCont() {
+        return this.continent2;
+    }
+
      public void checkOwner(Player dono) {
          this.owner = dono;
      }
