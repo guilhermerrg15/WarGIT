@@ -316,6 +316,10 @@ public class APIController {
         return firstRound;
     }
 
+    public void setFirstRound(boolean firstRound){
+        this.firstRound = firstRound;
+    }
+
     public Integer getNumTrocas() {
         return numDeTrocas;
     }
@@ -325,9 +329,9 @@ public class APIController {
         view.showWarning("Jogo salvo com sucesso!");
     }
 
-    public void clickedLoad() {
-        api.loadGame();
-    }
+    // public void clickedLoad() {
+    //     api.loadGame();
+    // }
 
 
     public void reiniciarJogo(){

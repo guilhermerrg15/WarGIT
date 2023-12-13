@@ -51,12 +51,12 @@ class StartView extends JPanel {
             }
         });
 
-        continueGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                APIController.getInstance().clickedLoad();
-            }
-        });
+        // continueGame.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         APIController.getInstance().clickedLoad();
+        //     }
+        // });
 
         // Carregar fundo da tela inicial
 		try {
