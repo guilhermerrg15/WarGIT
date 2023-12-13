@@ -37,8 +37,6 @@ class Territory {
    
     }
 
-    
-
     /**
      * Obtém o nome do território.
      * @return O nome do território.
@@ -128,17 +126,15 @@ class Territory {
     }
 
 
-		// Int positivo add exercitos e negativo subtrai 
-		protected boolean alterarQndExercitos (int qnd) {
-			// se tentar subtrair mais exércitos do que tem (sem poder zerar)
-			if (qnd < 0)
-				if ((qnd * (-1)) >= this.armies)
-					return false;
-			this.armies += qnd;
-			return true;
-		}
-
-
+    // Int positivo add exercitos e negativo subtrai 
+    protected boolean alterarQndExercitos (int qnd) {
+        // se tentar subtrair mais exércitos do que tem (sem poder zerar)
+        if (qnd < 0)
+            if ((qnd * (-1)) >= this.armies)
+                return false;
+        this.armies += qnd;
+        return true;
+    }
 
     /**
      * Remove exércitos do território.

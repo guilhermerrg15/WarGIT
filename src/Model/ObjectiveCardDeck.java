@@ -16,12 +16,12 @@ public class ObjectiveCardDeck {
         this.colorToObjectiveMapping = new HashMap<>();
 
         // Mapeamento automático de cor para objetivo
-        colorToObjectiveMapping.put(PlayerColor.BLUE, "objetivo1");
-        colorToObjectiveMapping.put(PlayerColor.GREEN, "objetivo2");
-        colorToObjectiveMapping.put(PlayerColor.RED, "objetivo3");
-        colorToObjectiveMapping.put(PlayerColor.WHITE, "objetivo4");
-        colorToObjectiveMapping.put(PlayerColor.BLACK, "objetivo5");
-        colorToObjectiveMapping.put(PlayerColor.YELLOW, "objetivo6");
+        colorToObjectiveMapping.put(PlayerColor.AZUL, "objetivo1");
+        colorToObjectiveMapping.put(PlayerColor.VERDE, "objetivo2");
+        colorToObjectiveMapping.put(PlayerColor.VERMELHO, "objetivo3");
+        colorToObjectiveMapping.put(PlayerColor.BRANCO, "objetivo4");
+        colorToObjectiveMapping.put(PlayerColor.PRETO, "objetivo5");
+        colorToObjectiveMapping.put(PlayerColor.AMARELO, "objetivo6");
 
         for (Player player : todos_jogadores) {
             String objectiveName = colorToObjectiveMapping.get(player.getColor());

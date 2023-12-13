@@ -44,10 +44,6 @@ class StartView extends JPanel {
                 // PlayerConfig.getPlayerConfig();
                 Window.getWindow().goToCsPanel();
             }
-
-            // TODO: Adicionar método de retirar visibilidade do panel da tela inicial
-
-            //////////////////////////////////////////////////////////////////////////
         });
 
         // Carregar fundo da tela inicial

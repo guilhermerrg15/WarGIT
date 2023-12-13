@@ -33,10 +33,10 @@ public class Window extends JFrame {
     }
 
     // Direcionamento entre os frames (tela inicial)
-		public void goToCsPanel() {
-			startView.setVisible(false); // Esconde o painel inicial
-			getContentPane().add(numPlayersView); // Adiciona o painel de seleção de jogadores
-		}
+    public void goToCsPanel() {
+        startView.setVisible(false); // Esconde o painel inicial
+        getContentPane().add(numPlayersView); // Adiciona o painel de seleção de jogadores
+    }
 
     // Fechar tela inicial e exibir tela de configuração de jogadores
 	public void configurePlayers() {
@@ -47,6 +47,7 @@ public class Window extends JFrame {
 
     public void configureMap() {
         APIController.getInstance().showObjCards();
+        APIController.getInstance().initTerritoryDeck();
         startView.setVisible(false);
         numPlayersView.setVisible(false);
         playerConfig.setVisible(false);

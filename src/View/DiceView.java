@@ -56,19 +56,18 @@ class DiceView {
 
 	//Desenha as imagens dos dados
 	public void drawDices(Graphics g) {
-		System.out.println("--------------------Entrou no PaintComponent--------------------");
 		g2d = (Graphics2D) g;
 
 		int dimension = 50;
 		int diceSpacing = 10;
 
 		// showDices(null, null);
-		g2d.drawImage(ataque1,20,40,dimension,dimension,null);
-		g2d.drawImage(ataque2,20 + dimension + diceSpacing,40,dimension,dimension,null);
-		g2d.drawImage(ataque3,20 + (dimension + diceSpacing)*2,40,dimension,dimension,null);
-		g2d.drawImage(defesa1,20,40+dimension+diceSpacing,dimension,dimension,null);
-		g2d.drawImage(defesa2,20 + dimension + diceSpacing,40+dimension+diceSpacing,dimension,dimension,null);
-		g2d.drawImage(defesa3,20 + (dimension + diceSpacing)*2,40+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(ataque1,20,60,dimension,dimension,null);
+		g2d.drawImage(ataque2,20 + dimension + diceSpacing,60,dimension,dimension,null);
+		g2d.drawImage(ataque3,20 + (dimension + diceSpacing)*2,60,dimension,dimension,null);
+		g2d.drawImage(defesa1,20,60+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa2,20 + dimension + diceSpacing,60+dimension+diceSpacing,dimension,dimension,null);
+		g2d.drawImage(defesa3,20 + (dimension + diceSpacing)*2,60+dimension+diceSpacing,dimension,dimension,null);
 	}
 
 	//Mostra os dados de ataque e defesa na tela
@@ -79,5 +78,15 @@ class DiceView {
 		defesa1 = dadoDefensor[dadosDefesa[0]];
 		defesa2 = dadoDefensor[dadosDefesa[1]];
 		defesa3 = dadoDefensor[dadosDefesa[2]];
+	}
+
+	// Resetar valores dos dados como null para não aparecem
+	public void clearDices() {
+		ataque1 = null;
+		ataque2 = null;
+		ataque3 = null;
+		defesa1 = null;
+		defesa2 = null;
+		defesa3 = null;
 	}
 }

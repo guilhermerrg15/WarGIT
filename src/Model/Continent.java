@@ -74,7 +74,7 @@ class Continent {
                 return territory;
             }
         }
-        return null; // Retorna null se o território não for encontrado no continente
+        return null; 
     }
 
 

@@ -24,22 +24,22 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
 
     public boolean checkStatus() {
 
-        if (enemy.getColor().equals(color)) {
-            if (owner.getTerritoryNumber() >= 24){
+        if (owner.getColor() != enemy.getColor()) {
+            if (enemy.getTerritoryNumber() > 0){
+                return false;
+            }
+            if (enemy.getEliminadoNessaRodada() && enemy.getJMatou() == owner){
                 return true;
             }
-            return false;
         }
-        if (enemy == null){
-            return false;
+        else {
+            if (owner.getTerritoryNumber() >= 24){
+                    return true;
+            }
         }
-        else if (enemy.equals(owner)){
-            return true;
-        }
-        else if (owner.getTerritoryNumber() >= 24){
-            return true;
-        }
+        
         return false;
+       
     }
 
     public void checkOwner(Player dono) {

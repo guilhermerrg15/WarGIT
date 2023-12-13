@@ -39,20 +39,8 @@ public class PlayerConfig extends JPanel {
 
     // Construtor da tela de configuração de jogadores
     public PlayerConfig() {
-        // Carregar a imagem de fundo
-        // ImageIcon background = new ImageIcon(imagePath);
-        // JLabel backgroundLabel = new JLabel(background);
-        // setLayout(new BorderLayout());
-        // add(backgroundLabel, BorderLayout.CENTER);
-
-        // JPanel playersPanel = new JPanel();
-        // playersPanel.setLayout(new GridLayout(2, 3));
-        // playersPanel.setOpaque(false);
-        // add(playersPanel, BorderLayout.SOUTH);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        
 
         startGameButton.setAlignmentX(CENTER_ALIGNMENT);
 

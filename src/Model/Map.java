@@ -31,14 +31,6 @@ class Map {
 		return map;
 	}
 
-	//Inicializando o tabuleiro
-	// public void Inicializa() {
-	// 	for (Territory t: listaTerritorios) {
-	// 		t.getNeighbours();
-	// 	}
-	// 	initializeContinents();
-	// }
-
 	// Inicializando os continentes
     private void initializeContinents() {
         continents.add(createOceania());
@@ -239,6 +231,9 @@ class Map {
 	    return null;
 	}
 	
+	public List<Continent> getContinents() {
+		return continents;
+	}
 	
 }
 	

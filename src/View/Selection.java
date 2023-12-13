@@ -18,9 +18,6 @@ class Selection extends JPanel {
 
     // Escolher cor do jogador
 	JComboBox<PlayerColor> comboBox = new JComboBox<>(PlayerColor.values());
-	
-	// Guarda a cor escolhida
-	private Color cor; 
 
 	// Guarda o nome escolhido
 	private String nome; 

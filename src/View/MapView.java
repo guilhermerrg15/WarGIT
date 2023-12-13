@@ -21,6 +21,7 @@ import java.awt.geom.Ellipse2D;
 import javax.imageio.ImageIO;
 
 public class MapView extends JPanel implements Observer{
+
     public static MapView MapView = null;
 
     JButton checkObjectivesButton = new JButton("Ver Carta de Objetivo");
@@ -29,21 +30,34 @@ public class MapView extends JPanel implements Observer{
 	JButton continueButton = new JButton("Continuar");
 	JButton saveButton = new JButton("Salvar Jogo");
 	JButton playDicesButton = new JButton( "Atacar");
+	JButton endAtackButton = new JButton("Terminar Ataque");
+	JButton reposicionarButton = new JButton("Reposicionar");
+	JButton changePlayer = new JButton("Finalizar");
+	JButton cardsTradeButton = new JButton("Trocar Cartas");
+	
     Image backgroundImage;
-    Image territoriesImage;
 	Image objectiveCard;
+
 	private Map<Ellipse2D, String> territoryMapping = new HashMap<>();
 	private boolean addTroopsMode = false;
+	private boolean endPosic = false;
+	private boolean endAtack = false;
+
     Graphics2D g;
 	JLabel labelColor = new JLabel();
+
 	int currentArmySum = 0;
 	int firstArmySum = 0;
+	int bonusTradeSum = 0;
+
 	private boolean firstRound = true;
 	API api = API.getInstance();
 
     //Jogador da vez e cor do jogador
 	String currentPlayer;
+
 	// Color corDoJogador;
+
 	String objectiveDescription;
 	JLabel currentPlayerLabel = new JLabel();
 	JLabel objective = new JLabel();
@@ -61,42 +75,35 @@ public class MapView extends JPanel implements Observer{
     //Boolean para saber se os exércitos já foram criados
 	Boolean armyCreation = true;
 
+	Boolean showTerritoryCards = false;
+
     //Lista de territórios no jogo
 	String[] territories;
+	// TerritoryCardView territoryCardView = new TerritoryCardView();
 
 	//Painel dos dados
 	DiceView diceView = new DiceView();
 
 	JComboBox<String> attackingTerritories;
 	JComboBox<String> defendingTerritories;
+	JComboBox<String> originTerritories;
+	JComboBox<String> destinyTerritories;
+	JComboBox<Integer> numReplacementBox;
 
     public MapView() {
         // setLayout(new BorderLayout());
-        setLayout(null);
-
-      	continueButton.setBounds(1250,535,200,30);
-		add(continueButton);
-
-		attackingTerritories = new JComboBox<String>();
-		defendingTerritories = new JComboBox<String>();
-
-		// Configurar a posição e tamanho dos JComboBox
-        attackingTerritories.setBounds(1250, 200, 200, 30);
-        defendingTerritories.setBounds(1250, 250, 200, 30);
-
-
-        // Adicionar JComboBox ao painel
-        add(attackingTerritories);
-        add(defendingTerritories);
-
-		playDicesButton.setBounds(1250,200,200,30);
-		add(playDicesButton);
-
-        JPanel buttonPanel = new JPanel();
-        // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-
+		//Cria e adiciona o label do jogador da vez
+        currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        currentPlayerLabel.setForeground(Color.BLACK);
+        add(currentPlayerLabel);
+        JPanel panel = new JPanel();
+        panel.add(labelColor);
+        panel.add(currentPlayerLabel);
+        add(panel);
+		
+		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(saveButton);
 		buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(placeArmyButton);
@@ -105,26 +112,75 @@ public class MapView extends JPanel implements Observer{
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         buttonPanel.add(checkCardsButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        // buttonPanel.add(cancelButton);
-
-
-		add(Box.createHorizontalStrut(20));
         add(buttonPanel);
-		add(Box.createHorizontalStrut(50));
-        //Cria e adiciona o label do jogador da vez
-        currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        currentPlayerLabel.setForeground(Color.BLACK);
-        add(currentPlayerLabel);
 
+        
+		add(continueButton);
+		add(cardsTradeButton);
+
+
+		attackingTerritories = new JComboBox<String>();
+		defendingTerritories = new JComboBox<String>();
+
+		add(attackingTerritories);
+        add(defendingTerritories);
+
+		add(playDicesButton);
+
+		add(endAtackButton);
+
+		originTerritories = new JComboBox<String>();
+		destinyTerritories = new JComboBox<String>();
+		numReplacementBox = new JComboBox<Integer>();
+
+		add(originTerritories);
+		add(numReplacementBox);
+		add(destinyTerritories);
+
+		add(reposicionarButton);
+		add(changePlayer);
+
+		originTerritories.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.selectedOrigin((String) originTerritories.getSelectedItem());
+			}
+		});
+
+		// Adiciona ação ao clicar no botão de reposicionar
+		reposicionarButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(originTerritories.getSelectedItem() != null && destinyTerritories.getSelectedItem() != null){
+					controller.clicouReposicionar(originTerritories.getSelectedItem().toString(), destinyTerritories.getSelectedItem().toString(), (Integer) numReplacementBox.getSelectedItem());
+				}
+				
+			}
+		});
+
+		//Adiciona ação ao clicar no botão de trocar cartas
+		cardsTradeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.clicouTrocar();
+			}
+		});
+
+		changePlayer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				endAtack = false;
+				controller.clickedChangePlayer();
+			}
+		});
 
 		placeArmyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+				if (!addTroopsMode){
+				controller.clickedPlaceArmy();
+				}
                 // Trocar o estado do modo de alocação de tropas ao clicar no botão
                 addTroopsMode = true;
             }
         });
-
 
 		addMouseListener(new MouseAdapter() {
             @Override
@@ -140,6 +196,17 @@ public class MapView extends JPanel implements Observer{
 				firstRound = controller.clickedContinue();
 				currentArmySum = 0;
 				salvaArmyAntigo();
+				endPosic = true;
+				bonusTradeSum = 0;
+			}
+		});
+
+		endAtackButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.clickedEndAtack();
+				endAtack = true;
+				endPosic =  false;
 			}
 		});
 
@@ -167,11 +234,10 @@ public class MapView extends JPanel implements Observer{
 
 				// Mostra os dados na tela
 				diceView.showDices(dicesAttack, dicesDefense);
+				controller.clickedAttack();
 				repaint();
 			}
 		});
-
-
 
 		checkObjectivesButton.addActionListener(new ActionListener() {
             // Adicionar ação do botão de ver carta de objetivo do jogador da vez
@@ -193,6 +259,15 @@ public class MapView extends JPanel implements Observer{
             }
         });
 
+		checkCardsButton.addActionListener(new ActionListener() {
+            // Adicionar ação do botão de ver carta de territorio do jogador da vez
+            @Override
+            public void actionPerformed(ActionEvent e) {
+				showTerritoryCards = !showTerritoryCards;
+				repaint();
+            }
+        });
+
 		try {
 			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
             // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
@@ -206,7 +281,12 @@ public class MapView extends JPanel implements Observer{
         this.g = (Graphics2D) graphic;
 
         this.g.drawImage(backgroundImage, 0, 0, 1440, 900, null);
+
         currentPlayerLabel.setText(currentPlayer);
+
+		// Desenhar imagem dos dados
+		diceView.drawDices(graphic);
+
         if(armyCreation) {
 			createArmies(g);
 			armyCreation = false;
@@ -214,9 +294,18 @@ public class MapView extends JPanel implements Observer{
 		drawArmies(this.g);
 
 		if (addTroopsMode) {
+			if (currentArmySum == controller.getNumTerritoryPlayer(playerSelectedColor) / 2 + bonusTradeSum){
 			// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
 			continueButton.setVisible(true);
+			} else {
+				continueButton.setVisible(false);
+			}
 		} else {
+			if (controller.canTradeCards()){
+				cardsTradeButton.setVisible(true);
+			}else{
+				cardsTradeButton.setVisible(false);
+			}
 			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continueButton.setVisible(false);
 		}
@@ -224,11 +313,50 @@ public class MapView extends JPanel implements Observer{
 		if(firstRound) {
 			attackingTerritories.setVisible(false);
 			defendingTerritories.setVisible(false);
+			originTerritories.setVisible(false);
+			numReplacementBox.setVisible(false);
+			destinyTerritories.setVisible(false);
 			playDicesButton.setVisible(false);
+			reposicionarButton.setVisible(false);
+			changePlayer.setVisible(false);
+			endAtackButton.setVisible(false);
+			cardsTradeButton.setVisible(false);
+
 		} else {
-			attackingTerritories.setVisible(true);
-			defendingTerritories.setVisible(true);
-			playDicesButton.setVisible(true);
+			if (endPosic) {
+				attackingTerritories.setVisible(true);
+				defendingTerritories.setVisible(true);
+				playDicesButton.setVisible(true);
+				endAtackButton.setVisible(true);
+				cardsTradeButton.setVisible(false);
+				
+			} else{
+				attackingTerritories.setVisible(false);
+				defendingTerritories.setVisible(false);
+				playDicesButton.setVisible(false);
+				endAtackButton.setVisible(false);
+				cardsTradeButton.setVisible(false);
+			}
+			if (endAtack) {
+				originTerritories.setVisible(true);
+				numReplacementBox.setVisible(true);
+				destinyTerritories.setVisible(true);
+				reposicionarButton.setVisible(true);
+				changePlayer.setVisible(true);
+				cardsTradeButton.setVisible(false);
+
+				// Retirar dados da tela
+				diceView.clearDices();
+				repaint();
+			} else{
+				originTerritories.setVisible(false);
+				numReplacementBox.setVisible(false);
+				destinyTerritories.setVisible(false);
+				reposicionarButton.setVisible(false);
+				changePlayer.setVisible(false);
+				cardsTradeButton.setVisible(false);
+			}
+			
 		}
 
 		if(showObjectiveCard) {
@@ -242,11 +370,12 @@ public class MapView extends JPanel implements Observer{
 			this.g.drawImage(objectiveCard, centerX, centerY, 350, 500, null);
 		}
 
-		// Desenhar imagem dos dados
-		diceView.drawDices(graphic);
+		
+		if(showTerritoryCards){
+			// System.err.println(controller.getTerritoryCards());
+			TerritoryCardView.drawTerritoryCard(g, controller.getTerritoryCards());
+		}
     }
-
-
 
 	public void salvaArmyAntigo(){
 		for (ArmyView army : armyList) {
@@ -256,7 +385,6 @@ public class MapView extends JPanel implements Observer{
 
 		}
 	}
-
 
     // Singleton
     public static MapView getMapView() {
@@ -270,7 +398,7 @@ public class MapView extends JPanel implements Observer{
 	public void determineFirstPlayer(String currentPlayer, PlayerColor playerColor){
 		this.currentPlayer = currentPlayer;
         this.playerSelectedColor = playerColor;
-        addSquareColor();
+        addSquareColor(); 
 	}
 
 	// Muda o jogador da vez na view
@@ -281,7 +409,6 @@ public class MapView extends JPanel implements Observer{
 		addSquareColor();
 		repaint();
 	}
-
 
 	// Atualiza view no início da rodada de posicionamento para atualizar os jogadores atacantes
 	public void updateAttackers(String[] attackers){
@@ -303,24 +430,37 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-
 	private void addSquareColor() {
 
         labelColor.setOpaque(true);
         labelColor.setBackground(getColorFromPlayerColor(playerSelectedColor));
         labelColor.setPreferredSize(new Dimension(20, 20));
 
-        // Adiciona o quadrado de cor à esquerda do jogadorDaVezLabel
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.add(labelColor, BorderLayout.WEST);
-        panel.add(currentPlayerLabel, BorderLayout.CENTER);
-
-        // Define a posição e tamanho do painel combinado
-        panel.setBounds(10, 660, 300, 30); // Ajuste as coordenadas conforme necessário
-
-        add(panel);
     }
+
+	public void updateReplacement(String[] territories) {
+		originTerritories.removeAllItems();
+
+		originTerritories.addItem(null);
+
+		for (String s: territories){
+			originTerritories.addItem(s);
+		}
+	}
+
+	public void updateNumReplacement(Integer qtd){
+		numReplacementBox.removeAllItems();
+		for (Integer i = 0; i <= qtd; i++){
+			numReplacementBox.addItem(i);
+		}
+	}
+
+	public void updateDestiny(String[] destinies){
+		destinyTerritories.removeAllItems();
+		for (String s: destinies){
+			destinyTerritories.addItem(s);
+		}
+	}
 
     // Desenha cada bolinha nos territórios
 	void drawArmies(Graphics2D graphic) {
@@ -517,7 +657,10 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-
+	public Integer updateBonusTroca (int bonus){
+		this.bonusTradeSum = bonus;
+		return bonusTradeSum;
+	}
 
     // Retorna quantidade de exércitos que tem em um território
     public Integer getNumArmiesTotal(ArrayList<ArmyView> armyList) {
@@ -537,14 +680,20 @@ public class MapView extends JPanel implements Observer{
 
 			// Atualizar o número total de exercítos antes do incremento da rodada
 			if (currentArmySum==0) {
-				firstArmySum = getNumArmiesTotal(armyList); //17
+				firstArmySum = getNumArmiesTotal(armyList); 
 			}
-			int somaExAtual = getNumArmiesTotal(armyList);//17
+			int somaExAtual = getNumArmiesTotal(armyList);
 
-			currentArmySum = somaExAtual - firstArmySum;//0
+			currentArmySum = somaExAtual - firstArmySum;
 
 			// Calcular a quantidade máxima de exércitos permitidos
-			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2;
+			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2; 
+
+			if (quantidadeMaximaExercitos <= 3){
+				quantidadeMaximaExercitos = 3;
+			}
+			
+			quantidadeMaximaExercitos = quantidadeMaximaExercitos + bonusTradeSum;
 
 			// Verificar se a soma atual não excede a quantidade máxima permitida
 			for (ArmyView army : armyList) {
@@ -566,13 +715,11 @@ public class MapView extends JPanel implements Observer{
 
 							// Incrementar o número de exércitos no território ao clicar na bolinha
 							int newArmies = quantidadeAtualizada + 1;
-							// System.out.println("quant atual " + quantidadeAtualizada);
 
-							controller.incrementArmies(territorioNome, 1);
+							controller.setNumArmiesTerritory(territorioNome, newArmies);
 
 							// Atualizar a quantidade de exércitos na bolinha
 							army.setNumArmies(String.valueOf(newArmies));
-
 							// Atualizar a exibição
 							repaint();
 							break;
@@ -583,7 +730,7 @@ public class MapView extends JPanel implements Observer{
 					}
 					else {
 						army.setNumArmies(String.valueOf(quantidadeOriginal));
-						// System.out.println("quantidade original" + quantidadeOriginal);
+						controller.setNumArmiesTerritory(territoryMapping.get(bolinha), quantidadeOriginal);
 						repaint();
 						break;
 
@@ -596,79 +743,71 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-
-
     private Color getColorFromPlayerColor(PlayerColor playerColor) {
         switch (playerColor) {
-            case YELLOW:
+            case AMARELO:
                 return Color.YELLOW;
-            case BLUE:
+            case AZUL:
                 return Color.BLUE;
-            case WHITE:
+            case BRANCO:
                 return Color.WHITE;
-            case BLACK:
+            case PRETO:
                 return Color.BLACK;
-            case RED:
+            case VERMELHO:
                 return Color.RED;
-            case GREEN:
+            case VERDE:
                 return Color.GREEN;
             default:
-                return Color.BLACK;
+                return Color.BLACK; 
         }
     }
 
-	
     @Override
     public void notify(Observed o){
 
-	// // Ao ser notificado, o observador recebe um objeto do tipo Object
-	// Object[] infos = (Object[]) o.get();
+	// Ao ser notificado, o observador recebe um objeto do tipo Object
+	Object[] infos = (Object[]) o.get();
 
-	// // Conferindo se o objeto recebido é do tipo esperado, podemos converter os tipos
-	// if (infos[0] instanceof ArrayList<?> && infos[1] instanceof ArrayList<?> && infos[2] instanceof Integer && infos[3] instanceof Integer){
-	// 	ArrayList<String> qtds = (ArrayList<String>) infos[0];
-	// 	ArrayList<Color> cores = (ArrayList<Color>) infos[1];
-	// 	Integer mod1 = (Integer) infos[2];
-	// 	Integer mod2 = (Integer) infos[3];
+		// Conferindo se o objeto recebido é do tipo esperado, podemos converter os tipos
+		if (infos[0] instanceof ArrayList<?> && infos[1] instanceof ArrayList<?> && infos[2] instanceof Integer && infos[3] instanceof Integer){
+			ArrayList<String> qtds = (ArrayList<String>) infos[0];
+			ArrayList<PlayerColor> cores = (ArrayList<PlayerColor>) infos[1];
+			Integer mod1 = (Integer) infos[2];
+			Integer mod2 = (Integer) infos[3];
 
-	// 	// Se nenhum território em específico foi modificado, então redesenha todos
-	// 	if (mod1 == -1 && mod2 == -1){
-	// 		int cont = 0;
-	// 		for(ArmyView e: armyList){
-	// 			e.setNumArmies(qtds.get(cont));
-	// 			e.setCor(cores.get(cont));
-	// 			cont++;
-	// 			//redesenhar todos os exércitos
-	// 			e.repaint();
-	// 			e.drawPlayer(g);
-	// 			e.repaint();
-	// 		}
-	// 	}
-	// 	// Se tiver específicos, redesenha apenas eles
-	// 	else{
-	// 		// Redesenha o primeiro modificado
-	// 		ArmyView e = armyList.get(mod1);
-	// 		e.setNumArmies(qtds.get(mod1));
-	// 		e.setCor(cores.get(mod1));
-	// 		e.repaint();
-	// 		e.drawPlayer(g);
-	// 		repaint();
+			// Se nenhum território em específico foi modificado, então redesenha todos
+			if (mod1 == -1 && mod2 == -1){
+				int cont = 0;
+				for(ArmyView e: armyList){
+					e.setNumArmies(qtds.get(cont));
+					e.setCor(getColorFromPlayerColor(cores.get(cont)));
+					cont++;
+					//redesenhar todos os exércitos
+					e.repaint();
+					e.drawPlayer(g);
+					e.repaint();
+				}
+			}
+			// Se tiver específicos, redesenha apenas eles
+			else{
+				// Redesenha o primeiro modificado
+				ArmyView e = armyList.get(mod1);
+				e.setNumArmies(qtds.get(mod1));
+				e.setCor(getColorFromPlayerColor(cores.get(mod1)));
+				e.repaint();
+				e.drawPlayer(g);
+				repaint();
 
-	// 		// Se tiver um segundo modificado, redesenha ele também
-	// 		if (mod2 != -1){
-	// 			e = armyList.get(mod2);
-	// 			e.setNumArmies(qtds.get(mod2));
-	// 			e.setCor(cores.get(mod2));
-	// 			e.repaint();
-	// 			e.drawPlayer(g);
-	// 		}
-	// 	}
-	// }
-
-
-
-
-
+				// Se tiver um segundo modificado, redesenha ele também
+				if (mod2 != -1){
+					e = armyList.get(mod2);
+					e.setNumArmies(qtds.get(mod2));
+					e.setCor(getColorFromPlayerColor(cores.get(mod2)));
+					e.repaint();
+					e.drawPlayer(g);
+				}
+			}
+		}
 
     }
 }
