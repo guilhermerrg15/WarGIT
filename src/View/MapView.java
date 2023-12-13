@@ -341,6 +341,7 @@ public class MapView extends JPanel implements Observer{
 				defendingTerritories.setVisible(true);
 				playDicesButton.setVisible(true);
 				endAtackButton.setVisible(true);
+				cardsTradeButton.setVisible(false);
 				
 			} else{
 				attackingTerritories.setVisible(false);
@@ -354,6 +355,7 @@ public class MapView extends JPanel implements Observer{
 				destinyTerritories.setVisible(true);
 				reposicionarButton.setVisible(true);
 				changePlayer.setVisible(true);
+				cardsTradeButton.setVisible(false);
 
 				// Retirar dados da tela
 				diceView.clearDices();
@@ -386,6 +388,9 @@ public class MapView extends JPanel implements Observer{
 		}
     }
 
+	public void setFirstRound(boolean isFirst){
+		this.firstRound = true;
+	}
 	public void salvaArmyAntigo(){
 		for (ArmyView army : armyList) {
 			if (controller.getTerritoryColor(territoryMapping.get(new Ellipse2D.Float(army.getPosX(), army.getPosY(), 22, 22))) == playerSelectedColor) {
@@ -476,6 +481,10 @@ public class MapView extends JPanel implements Observer{
 		for (ArmyView army : armyList) {
 			army.drawPlayer(graphic);
 		}
+	}
+
+	public void clearDices(){
+		diceView.clearDices();
 	}
 
     // Instancia os objetos dos exércitos

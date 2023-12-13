@@ -46,7 +46,7 @@ public class API {
 
     // Método para reiniciar o jogo
     public void reiniciarJogo(){
-        game.reiniciarJogo();
+        game.reiniciarJogo(objectiveDeck, territoryCardDeck);
         game.setMod1(null);
         game.setMod2(null);
     }
@@ -537,6 +537,7 @@ public class API {
         game.notifyObservers();
     }
 }
+
 // public void saveGame(){
 //     int retrival = chooser.showSaveDialog(null);
 //     if (retrival == JFileChooser.APPROVE_OPTION) {

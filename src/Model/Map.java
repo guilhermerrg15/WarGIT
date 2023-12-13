@@ -68,9 +68,9 @@ class Map {
 			t.setOwner(j);
 
 			// Define 1 para a quantidade de exércitos do território
-			t.addArmies(1);
+			t.setArmies(1);
 
-			t.addArmiesInicial(1);
+			t.setInicialArmies(1);
 
 			// Adiciona o território na lista de territórios do jogador
 			j.addTerritorio(t);
