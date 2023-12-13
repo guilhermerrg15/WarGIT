@@ -45,8 +45,8 @@ public class API {
     // Método para reiniciar o jogo
     public void restartGame(){
         game.reiniciarJogo(objectiveDeck, territoryCardDeck);
-        game.setMod1(null);
-        game.setMod2(null);
+        game.setAlt1(null);
+        game.setAlt2(null);
     }
 
     public void giveTerritoryCard(int t){
@@ -81,17 +81,14 @@ public class API {
     }
 
     public String[] getTerritoriosDoJogador (PlayerColor playerColor){
-        int quant = 0;
-
-        // Obtém a lista de territórios do objeto Map
+        int num = 0;
         ArrayList<Territory> territories = map.getTerritoriesList();
         String[] territoryList = new String[getNumTerritoryPlayer(playerColor)];
 
-        // Adiciona na lista os nomes dos territórios
     	for (Territory t: territories) {
             if (t.getOwner().getColor() == playerColor) {
-                territoryList[quant] = t.getName();
-                quant++;
+                territoryList[num] = t.getName();
+                num++;
             }
 
     	}
@@ -474,7 +471,7 @@ public class API {
 
     public boolean canTradeCards(int turn){
         Player player = game.getPlayerTurn(turn);
-        return game.temTroca(player);
+        return game.hasTrade(player);
     }
 
     // Troca cartas do jogador da vez
@@ -482,7 +479,7 @@ public class API {
         Player player = game.getPlayerTurn(turn);
 
         // Se o jogador puder trocar cartas, chama o método de trocar cartas de Jogo
-        if (game.temTroca(player)){
+        if (game.hasTrade(player)){
             return game.trocarCartas(numDeTrocas, territoryCardDeck, map, player);
         }
 

@@ -53,7 +53,7 @@ class Map {
 
 
 		// Distribui os territórios entre os jogadores, colocando um exército em cada
-	public void distribuiTerritorios(ArrayList<Player> player){
+	public void distributeTerritories(ArrayList<Player> player){
 		// Embaralha a lista de territórios
 		Collections.shuffle(listaTerritorios);
 

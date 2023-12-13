@@ -25,13 +25,12 @@ class Game implements Observed{
     private Map map = Map.getMap();
 
 
-    // Últimos territórios alterados
-	private Territory mod1 = null;
-	private Territory mod2 = null;
+	private Territory alt1 = null;
+	private Territory alt2 = null;
 
     // Inicializa o jogo
     public boolean initiateGame(){
-        map.distribuiTerritorios(players);
+        map.distributeTerritories(players);
 
         return true;
     }
@@ -58,32 +57,29 @@ class Game implements Observed{
         // Array de informações
         Object infos[] = new Object[4];
 
-        // Array de quantidade de exércitos
-        ArrayList<String> qtdExercitos = new ArrayList<String>();
+        
+        ArrayList<String> numArmies = new ArrayList<String>();
 
-        // Array de cores
-        ArrayList<PlayerColor> cores = new ArrayList<PlayerColor>();
+        ArrayList<PlayerColor> colors = new ArrayList<PlayerColor>();
 
-        // Preenche arrays com informações atuais do model
         for (Territory t: map.getTerritoriesList()){
-            qtdExercitos.add(((Integer)t.getArmies()).toString());
-            cores.add(t.getCor());
+            numArmies.add(((Integer)t.getArmies()).toString());
+            colors.add(t.getCor());
         }
-        infos[0] = qtdExercitos;
-        infos[1] = cores;
+        infos[0] = numArmies;
+        infos[1] = colors;
 
-        // Preenche no array qual o índice dos territórios que foram modificados
-        if (mod1 == null){
+        if (alt1 == null){
             infos[2] = -1;
         }
         else{
-            infos[2] = map.getTerritoriesList().indexOf(mod1);
+            infos[2] = map.getTerritoriesList().indexOf(alt1);
         }
-        if (mod2 == null){
+        if (alt2 == null){
             infos[3] = -1;
         }
         else{
-            infos[3] = map.getTerritoriesList().indexOf(mod2);
+            infos[3] = map.getTerritoriesList().indexOf(alt2);
         }
         return infos;
     }
@@ -93,7 +89,6 @@ class Game implements Observed{
         return players;
     }
 
-    // Pegar o jogador da vez
     public Player getPlayerTurn(int turn){
 
         for (int i = 0; i < players.size(); i++) {
@@ -105,13 +100,12 @@ class Game implements Observed{
 
 	}
 
-    //Altera o mod1 e o mod2
-	public void setMod1(Territory t){
-		mod1 = t;
+	public void setAlt1(Territory t){
+		alt1 = t;
 	}
 
-	public void setMod2(Territory t){
-		mod2 = t;
+	public void setAlt2(Territory t){
+		alt2 = t;
 	}
 
     public void notifyObservers() {
@@ -121,132 +115,130 @@ class Game implements Observed{
     }
 
 	//Verifica se o jogador pode trocar cartas
-	public boolean temTroca(Player player){
-		int circulos = 0, quadrados = 0, triangulos = 0;
+	public boolean hasTrade(Player player){
+		int circles = 0, squares = 0, triangles = 0;
 		territoryCards = player.getCard();
 
 		// Conta quantas cartas de cada formato o jogador possui
 		for (TerritoryCard cards: territoryCards){
 			if (cards.getShape().equals(Shape.Circle))
-				circulos++;
+				circles++;
 			else if (cards.getShape().equals(Shape.Square))
-				quadrados++;
+				squares++;
 			else if (cards.getShape().equals(Shape.Triangle))
-				triangulos++;
+				triangles++;
 			//se for jocker adiciona 1 em todos pois o jocker entra em qualquer caso
 			else{
-				circulos++;
-				quadrados++;
-				triangulos++;
+				circles++;
+				squares++;
+				triangles++;
 			}
 		}
 
 		// Se o jogador possui 3 cartas de um formato ou 1 de cada formato, pode trocar
-		if (circulos >= 3 || quadrados >= 3 || triangulos >= 3 || (circulos >= 1 && quadrados >= 1 && triangulos >= 1)){
+		if (circles >= 3 || squares >= 3 || triangles >= 3 || (circles >= 1 && squares >= 1 && triangles >= 1)){
 			return true;
 		}
 
 		return false;
 	}
 
-	//Retorna a quantidade de bonus de exércitos que o jogador recebe de bonus na troca
 	public Integer trocarCartas (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map, Player player) {
 
-
-		ArrayList<TerritoryCard> circulos = new ArrayList<TerritoryCard>();
-		ArrayList<TerritoryCard> quadrados = new ArrayList<TerritoryCard>();
-		ArrayList<TerritoryCard> triangulos = new ArrayList<TerritoryCard>();
-		ArrayList<TerritoryCard> coringas = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> circles = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> squares = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> triangles = new ArrayList<TerritoryCard>();
+		ArrayList<TerritoryCard> jokers = new ArrayList<TerritoryCard>();
 
 		// Separa as cartas por formato
-		for (TerritoryCard carta: territoryCards){
-			if (carta.getShape().equals(Shape.Circle))
-				circulos.add(carta);
-			else if (carta.getShape().equals(Shape.Square))
-				quadrados.add(carta);
-			else if (carta.getShape().equals(Shape.Triangle))
-				triangulos.add(carta);
+		for (TerritoryCard card: territoryCards){
+			if (card.getShape().equals(Shape.Circle))
+				circles.add(card);
+			else if (card.getShape().equals(Shape.Square))
+				squares.add(card);
+			else if (card.getShape().equals(Shape.Triangle))
+				triangles.add(card);
 			else
-				coringas.add(carta);
+				jokers.add(card);
 		}
 
 
-		if (circulos.size() >= 3){
+		if (circles.size() >= 3){
 			// Troca três cartas de círculo e devolve elas para o baralho
 			for (int i = 0; i < 3; i++){
-				usaCarta(circulos, territoryCardDeck, map, player);
+				useCards(circles, territoryCardDeck, map, player);
 			}
 		}
 
-		else if (quadrados.size() >= 3){
+		else if (squares.size() >= 3){
 			// Troca três cartas de quadrado e devolve elas para o baralho
 			for (int i = 0; i < 3; i++){
-				usaCarta(quadrados, territoryCardDeck, map, player);
+				useCards(squares, territoryCardDeck, map, player);
 			}
 		}
 
-		else if (triangulos.size() >= 3){
+		else if (triangles.size() >= 3){
 			// Troca três cartas de triângulo e devolve elas para o baralho
 			for (int i = 0; i < 3; i++){
-				usaCarta(triangulos, territoryCardDeck, map, player);
+				useCards(triangles, territoryCardDeck, map, player);
 			}
 		}
 
 		else {
-			if(coringas.size() == 0 );{
+			if(jokers.size() == 0 );{
 				// Troca uma de cada e devolve elas para o baralho
-				usaCarta(circulos, territoryCardDeck, map, player);
-				usaCarta(quadrados, territoryCardDeck, map, player);
-				usaCarta(triangulos, territoryCardDeck, map, player);
+				useCards(circles, territoryCardDeck, map, player);
+				useCards(squares, territoryCardDeck, map, player);
+				useCards(triangles, territoryCardDeck, map, player);
 			}
-			if (coringas.size() == 1 ){
-				usaCarta(coringas, territoryCardDeck, map, player);
-				if (circulos.size() == 0){
+			if (jokers.size() == 1 ){
+				useCards(jokers, territoryCardDeck, map, player);
+				if (circles.size() == 0){
 					// Remove um coringa, um quadrado e um triângulo
-					usaCarta(quadrados, territoryCardDeck, map, player);
-					usaCarta(triangulos, territoryCardDeck, map, player);
+					useCards(squares, territoryCardDeck, map, player);
+					useCards(triangles, territoryCardDeck, map, player);
 					// break;
 				}
 			
-				else if (quadrados.size() == 0){
+				else if (squares.size() == 0){
 					// Remove um coringa, um círculo e um triângulo
-					usaCarta(circulos, territoryCardDeck, map, player);
-					usaCarta(triangulos, territoryCardDeck, map, player);
+					useCards(circles, territoryCardDeck, map, player);
+					useCards(triangles, territoryCardDeck, map, player);
 				}
 
 				else{
 					// Remove um coringa, um círculo e um quadrado
-					usaCarta(circulos, territoryCardDeck, map, player);
-					usaCarta(quadrados, territoryCardDeck, map, player);
+					useCards(circles, territoryCardDeck, map, player);
+					useCards(squares, territoryCardDeck, map, player);
 				}
 
 			}
-			if (coringas.size() == 2){
+			if (jokers.size() == 2){
 				// Remove dois coringas e uma carta de qualquer formato
-				usaCarta(coringas, territoryCardDeck, map, player);
-				usaCarta(coringas, territoryCardDeck, map, player);
-				if (circulos.size() == 0 && quadrados.size() == 0){
-					usaCarta(triangulos, territoryCardDeck, map, player);
+				useCards(jokers, territoryCardDeck, map, player);
+				useCards(jokers, territoryCardDeck, map, player);
+				if (circles.size() == 0 && squares.size() == 0){
+					useCards(triangles, territoryCardDeck, map, player);
 				}
 
-				else if (quadrados.size() == 0 && triangulos.size() == 0){
-					usaCarta(circulos, territoryCardDeck, map, player);
+				else if (squares.size() == 0 && triangles.size() == 0){
+					useCards(circles, territoryCardDeck, map, player);
 				}
 
-				else if (circulos.size() == 0 && triangulos.size() == 0){
-					usaCarta(quadrados, territoryCardDeck, map, player);
+				else if (circles.size() == 0 && triangles.size() == 0){
+					useCards(squares, territoryCardDeck, map, player);
 				}
 
-				else if (circulos.size() == 1){
-					usaCarta(circulos, territoryCardDeck, map, player);
+				else if (circles.size() == 1){
+					useCards(circles, territoryCardDeck, map, player);
 				}
 
-				else if (quadrados.size() == 1){
-					usaCarta(quadrados, territoryCardDeck, map, player);
+				else if (squares.size() == 1){
+					useCards(squares, territoryCardDeck, map, player);
 				}
 
 				else{
-					usaCarta(triangulos, territoryCardDeck, map, player);
+					useCards(triangles, territoryCardDeck, map, player);
 				}
 			}
 
@@ -269,7 +261,7 @@ class Game implements Observed{
 	}
 
 	// Remove a carta do topo do baralho e adiciona ao jogador
-	private void usaCarta(ArrayList<TerritoryCard> lista, TerritoryCardDeck territoryCardDeck, Map map, Player player){
+	private void useCards(ArrayList<TerritoryCard> lista, TerritoryCardDeck territoryCardDeck, Map map, Player player){
 
 		TerritoryCard terrCard = lista.get(0);
 
@@ -282,10 +274,10 @@ class Game implements Observed{
 		if (terrCard.getName() != null){
 			Territory territory = map.findTerritory(terrCard.getName());
 			if (territory != null && territory.getOwner() == player) {
-				territory.alterarQndExercitos(2);
+				territory.changeNumArmies(2);
 				//Atualiza os territórios modificados
-				mod1 = territory;
-				mod2 = null;
+				alt1 = territory;
+				alt2 = null;
 				this.notifyObservers();
 			}
 		}
@@ -311,12 +303,12 @@ class Game implements Observed{
 				Collections.shuffle(territorios);
 
 				// Pega apenas o primeiro território da lista (aleatório)
-				Territory territorioAleatorio = territorios.get(0);
+				Territory randomTerritory = territorios.get(0);
 
-				territorioAleatorio.alterarQndExercitos(qtd);
+				randomTerritory.changeNumArmies(qtd);
 				// Atualiza os territórios modificados
-				mod1 = territorioAleatorio;
-				mod2 = null;
+				alt1 = randomTerritory;
+				alt2 = null;
 				this.notifyObservers();
             }
         }
@@ -334,7 +326,7 @@ class Game implements Observed{
     }
 
      // Retorna quantidade de exércitos a posicionar no continente
-     public Integer getExCont(int vez, String c){
+     public Integer getExCont(int turn, String c){
         Integer qtd = map.findContinent(c).getBonusArmies();
         return qtd;
     }
@@ -438,8 +430,8 @@ class Game implements Observed{
 			defensor.setArmies(defensor.getArmies() - qtdDefesaPerdidos);
 
 			
-			mod1 = atacante;
-			mod2 = defensor;
+			alt1 = atacante;
+			alt2 = defensor;
 
 			
 			if (defensor.getArmies()==0) {
@@ -462,7 +454,7 @@ class Game implements Observed{
 				int qtdPassada = atacante.getArmies() - 1;
 				if (qtdPassada > 3) {qtdPassada = 3;}
 
-				atacante.alterarQndExercitos(-qtdPassada);
+				atacante.changeNumArmies(-qtdPassada);
 				defensor.setArmies(qtdPassada);
 			}
 
@@ -487,10 +479,10 @@ class Game implements Observed{
 
 	// Método para reposicionar exércitos
 	public void reposicionarExercitos(Territory origem, Territory destino, Integer qtd){
-		origem.alterarQndExercitos(-qtd);
-		destino.alterarQndExercitos(qtd);
-		mod1 = origem;
-		mod2 = destino;
+		origem.changeNumArmies(-qtd);
+		destino.changeNumArmies(qtd);
+		alt1 = origem;
+		alt2 = destino;
 		this.notifyObservers();
 	}
 
@@ -508,7 +500,7 @@ class Game implements Observed{
 			player.reset();
 		}
 		// Redistribui territórios
-		map.distribuiTerritorios(players);
+		map.distributeTerritories(players);
 
 		// Redistribui objetivos
 		Collections.shuffle(players);

@@ -127,7 +127,7 @@ class Territory {
 
 
     // Int positivo add exercitos e negativo subtrai 
-    protected boolean alterarQndExercitos (int qnd) {
+    protected boolean changeNumArmies (int qnd) {
         // se tentar subtrair mais exércitos do que tem (sem poder zerar)
         if (qnd < 0)
             if ((qnd * (-1)) >= this.armies)

@@ -4,19 +4,19 @@ class Army {
 	protected int army;
 	protected Continent continent;
 	
-	public Army(Continent continent) {
+	private Army(Continent continent) {
 		this.continent = continent;
 	}
 
-	public Continent retrieveContinent() {
+	Continent retrieveContinent() {
 		return this.continent;
 	}
 
-    public void addArmy(int num) {
+    void addArmy(int num) {
 		this.army += num;
 	}
 
-	public int retrieveArmyCount() {
+	int retrieveArmyCount() {
 		return this.army;
 	}
 }
