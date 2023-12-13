@@ -113,6 +113,11 @@ class Player {
         this.eliminadoNessaRodada = eliminadoNessaRodada;
     }
 
+	//Retorna se o jogador foi eliminado nessa rodada
+	public boolean getEliminadoNessaRodada() {
+		return eliminadoNessaRodada;
+	}
+
     //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
 	public void setConquistouNessaRodada(boolean conquistouNessaRodada) {
 		this.conquistouNessaRodada = conquistouNessaRodada;

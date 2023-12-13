@@ -23,15 +23,13 @@ public class APIController {
     // Guarda o número de trocas de cartas
     private Integer numDeTrocas = 0;
 
+    // Guarda os nomes dos jogadores eliminados nessa rodada
+    ArrayList<String> eliminadosNessaRodada = new ArrayList<String>();
 
     // Instância de APIs
     private ViewAPI view = ViewAPI.getInstance();
     private API api = API.getInstance();
 
-    // Guarda os nomes dos jogadores eliminados nessa rodada
-    ArrayList<String> eliminadosNessaRodada = new ArrayList<String>();
-
-    // Lista dinâmica de territórios disponíveis para reposicionamento
 
     public boolean startMatch(ArrayList<String> nomes, ArrayList<PlayerColor> cores) {
         int numPlayers = nomes.size();
@@ -139,6 +137,9 @@ public class APIController {
     //Metodo chamado qaundo o jogador clica em posicionar tropa para aicionar territorios se tiver continente dominado
     public void clickedPlaceArmy(){
         api.continentDomain(turn);
+
+        // Verifica se ganhou após reposicionar
+        verificaGanhou(turn);
     }
 
     public boolean clickedContinue() {
@@ -154,17 +155,35 @@ public class APIController {
             return true;
         } else {
             view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+            // Verifica se ganhou após reposicionar
+            verificaGanhou(turn);
             return false;
         }
+
     }
 
     public void clickedAttack() {
+        
         view.atualizaAtacantes(api.getTerritoryMoreOne(api.getCorJogadorVez(turn)));
+        // Verifica se ganhou após reposicionar
+        verificaGanhou(turn);
     }
 
     public void clickedEndAtack(){
+        
+        // Verifica se tem algum jogador eliminado nessa rodada
+        if (eliminadosNessaRodada.size() != 0){
+            verificaGanhou(-1);
+            for (int i = 0; i < eliminadosNessaRodada.size();i++){
+                // Retira marcação de eliminado nessa rodada
+                api.retiraEliminado(eliminadosNessaRodada.get(i));
+                eliminadosNessaRodada.remove(0);
+            }
+        }
+
         giveTerritoryCard();
         resetConquista();
+
         territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
             // Se tiver algum território com mais de 1 exército para reposicionar
             if (territoriesReplacementName != null) {
@@ -181,54 +200,55 @@ public class APIController {
 
     public void clickedChangePlayer(){
         turn = (turn + 1) % api.getNumPlayers();
-        //colocar parte da carta, ver se conquistou allgum territorio se sim da uma carta
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        // Verifica se ganhou após reposicionar
+        verificaGanhou(turn);
+
     }
 
     // Método chamado quando o jogador seleciona um território para reposicionar
     public void clicouReposicionar(String origem, String destino, Integer qtd){
 
-            // Reposiciona os exércitos
-            api.reposicionarExercitos(origem, destino, qtd);
+        // Reposiciona os exércitos
+        api.reposicionarExercitos(origem, destino, qtd);
 
-            // Verifica se ganhou após reposicionar
-            //esta com bug
-            // verificaGanhou(turn);
+        // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
+        int i = 0;
 
-            // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
-            int i = 0;
-
-            for (; i < territoriesReplacementName.length; i++) {
-                if (territoriesReplacementName[i].equals(origem)) {
-                    break;
-                }
+        for (; i < territoriesReplacementName.length; i++) {
+            if (territoriesReplacementName[i].equals(origem)) {
+                break;
             }
+        }
 
-            // Diminui a quantidade que ainda pode reposicionar
-            numArmiesReplacement[i] -= qtd;
+        // Diminui a quantidade que ainda pode reposicionar
+        numArmiesReplacement[i] -= qtd;
 
-            // Se tiver exércitos para reposicionar continua na etapa de reposicionamento
-            for (int j = 0; j < territoriesReplacementName.length; j++){
-                if (numArmiesReplacement[j] > 0){
-                     territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-                    // Se tiver algum território com mais de 1 exército para reposicionar
-                    if (territoriesReplacementName != null) {
-                        numArmiesReplacement = new Integer[territoriesReplacementName.length];
-                    }
-                    // Pega a quantidade de exércitos que pode reposicionar em cada território
-                    for (int k = 0; k < territoriesReplacementName.length; k++){
-                        numArmiesReplacement[k] = (api.getNumArmiesTerritory(territoriesReplacementName[k]) - 1);
-                    }
-                    view.updateReplacement(territoriesReplacementName);
-                    view.updateNumReplacement(0);
-                    return;
+        // Se tiver exércitos para reposicionar continua na etapa de reposicionamento
+        for (int j = 0; j < territoriesReplacementName.length; j++){
+            if (numArmiesReplacement[j] > 0){
+                    territoriesReplacementName = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
+                // Se tiver algum território com mais de 1 exército para reposicionar
+                if (territoriesReplacementName != null) {
+                    numArmiesReplacement = new Integer[territoriesReplacementName.length];
                 }
+                // Pega a quantidade de exércitos que pode reposicionar em cada território
+                for (int k = 0; k < territoriesReplacementName.length; k++){
+                    numArmiesReplacement[k] = (api.getNumArmiesTerritory(territoriesReplacementName[k]) - 1);
+                }
+                view.updateReplacement(territoriesReplacementName);
+                view.updateNumReplacement(0);
+                return;
             }
+        }
 
-            // Se não tiver mais exércitos para reposicionar, passa para o próximo jogador
-            //criar logica para voltar para posicionamento do proximo jogador
-            // turn = (turn + 1) % api.getNumPlayers();
-            // view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
+        // Verifica se ganhou após reposicionar
+        verificaGanhou(turn);
+    }
+
+    // Adiciona um nome à lista de eliminados nessa rodada
+    public void addEliminado(String nome){
+        eliminadosNessaRodada.add(nome);
     }
 
     // Método chamado quando o jogador seleciona um território para defender
@@ -265,16 +285,11 @@ public class APIController {
 
     // Método que verifica se jogador ganhou e lida com o resultado
     public void verificaGanhou(int pos){
-        // Se vez = -1, verifica todos os jogadores
         if (api.verificaGanhou(pos)){
             view.jogadorGanhou(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
         }
     }
 
-     // Adiciona um nome à lista de eliminados nessa rodada
-     public void addEliminado(String nome){
-        eliminadosNessaRodada.add(nome);
-    }
 
     public void reiniciarJogo(){
         // Reinicia dados de model
@@ -288,7 +303,6 @@ public class APIController {
         api.notificaObsJogo();
 
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
-        // primeiroPosicionamento();
     }
 
     // Singleton

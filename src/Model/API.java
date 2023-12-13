@@ -150,6 +150,11 @@ public class API {
         return game.getPlayers().size();
     }
 
+    // Altera o estado de eliminação do jogador
+    public void retiraEliminado(String name){
+        game.getPlayer(name).setEliminadoNessaRodada(false);
+    }
+
      // Retorna lista de nomes de territórios
      public String[] getTerritoriesList() {
 		String [] terr = new String[51]; 
@@ -286,13 +291,13 @@ public class API {
         int[] array = game.RealizaAtaque(Tatacante, Tdefensor, numAtaque, numDefesa);
 
         // Verifica se jogador ganhou após essa rodada
-		// APIController.getInstance().verificaGanhou(APIController.getInstance().getTurn());
+		APIController.getInstance().verificaGanhou(APIController.getInstance().getTurn());
         return array;
     }
 
     // Retorna array com os nomes dos territórios das cartas do jogador
-    public String[] getNomesCartasJogador(int vez){
-        List<TerritoryCard> cartas = game.getJogadorVez(vez).getCard();
+    public String[] getNomesCartasJogador(int turn){
+        List<TerritoryCard> cartas = game.getJogadorVez(turn).getCard();
         String[] arrayCartas = new String[cartas.size()];
         int cont = 0;
 
@@ -307,21 +312,20 @@ public class API {
 
 
     //Verifica se o jogador da vez ganhou o jogo
-    public boolean verificaGanhou(int vez){
-        // Se a vez for -1, verifica todos os jogadores
-        if (vez == -1){
-            for (Player j: game.getPlayers()) {
-                if (j.getObjective().checkStatus()){
+    public boolean verificaGanhou(int turn){
+        if (turn == -1){
+            for (Player player : game.getPlayers()) {
+                if (player.getObjective().checkStatus()){
                     // Se algum jogador ganhou, atualiza a vez
-                    APIController.getInstance().setTurn(game.getPlayers().indexOf(j));
+                    APIController.getInstance().setTurn(game.getPlayers().indexOf(player));
                     return true;
                 }
             }
             return false;
         }
-        // Se não, verifica se o jogador da vez cumpriu seu objetivo, condicao para ganhar o jogo
-        Player j = game.getJogadorVez(vez);
-        return j.getObjective().checkStatus();
+
+        Player player = game.getJogadorVez(turn);
+        return player.getObjective().checkStatus();
     }
 
     public String[] getNomesJogadores() {

@@ -104,7 +104,6 @@ public class ViewAPI {
 	}
 
     public void showWin(String nome, String cor) {
-
         JOptionPane.showMessageDialog(null, nome + " de cor " + cor + " ganhou o jogo! ", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
 		if (JOptionPane.showConfirmDialog(null, "Deseja continuar jogando?", "Fim de jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			APIController.getInstance().reiniciarJogo();

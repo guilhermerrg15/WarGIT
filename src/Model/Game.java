@@ -19,6 +19,10 @@ class Game implements Observed{
 
 	private List<TerritoryCard> territoryCards;
 
+	private ObjectiveCardDeck objCardDeck;
+
+	private TerritoryCardDeck terrCardDeck;
+
 	private Integer numContinent = 0;
 
     private Map map = Map.getMap();
@@ -507,27 +511,38 @@ class Game implements Observed{
 	public void reiniciarJogo(){
 
 		for (Player player: players){
-			// Devolve objetivo do jogador para lista
-			// objectiveCardDeck.add(j.getObj());
 
+			// Devolve objetivo do jogador para lista
+			objCardDeck.returnObjectiveCard(player.getObjective());
+	
 			// Devolve cartas do jogador para lista
-			// for (Carta c: j.getCartas()){
-			// 	listaCartas.add(c);
-			// }
+			for (TerritoryCard terrCard: player.getCard()){
+				terrCardDeck.returnCard(terrCard);
+			}
 			player.reset();
 		}
-
 
 		// Redistribui territórios
 		map.distribuiTerritorios(players);
 
 		// Redistribui objetivos
-		// Collections.shuffle(objetivos);
-		// for (int i = 0;i < jogadores.size();i++){
-		// 	Objetivo obj = objetivos.get(0);
-		// 	jogadores.get(i).setObj(obj);
-		// 	objetivos.remove(obj);
-		// }
-    }
+		Collections.shuffle(players);
+		for(Player player : players) {
+			objCardDeck.shuffleObjective(player);
+		}
+	}
+
+	//Retorna o jogador pelo nome
+	public Player getPlayer(String name) {
+		for(Player player : players) {
+			if (player.getName().equals(name)) {
+				return player;
+			}
+		}
+		return null;
+	}
 
 }
+
+
+
