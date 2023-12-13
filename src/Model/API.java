@@ -519,7 +519,22 @@ public class API {
                 for (Player player : game.getPlayers()) {
                     writer.write("Jogador: " + player.getName() + ", Cor: " + player.getColor() + "\n");
                     writer.write("Objetivo: " + player.getObjectiveName() + "\n");
+
+                    if(player.getCard().size() == 0){
+                        writer.write("0" + "\n");
+                    }
+
+                    writer.write("Quantidade de cartas de territorio: " + player.getCard().size() + "\n"); 
+
+                    for (TerritoryCard territoryCard : player.getCard()) {
+                        if(territoryCard.getContinent() == null){
+                            writer.write("Carta de território: Coringa"+ "\n") ;
+                        } else{
+                            writer.write("Carta de território: " + territoryCard.getName() + "\n"); 
+                        }
+                    }
                 }
+                writer.write("Numeros de trocas de carta: " + APIController.getInstance().getNumTrades().toString());
     
                 // Informações dos territórios e seus proprietários
                 for (Territory territory : map.getTerritoriesList()) {
