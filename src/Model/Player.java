@@ -24,7 +24,7 @@ class Player {
     //Guarda a quantidade de territórios em sua posse
 	private int numTerritories = 0;  
     //Guarda se o jogador foi eliminado nessa rodada
-	private boolean eliminadoNessaRodada = false; 
+	private boolean eliminatedThisRound = false; 
 	private Player jMatou;
     //Guarda se o jogador conquistou um território nessa rodada
 	private boolean conquistouNessaRodada = false; 
@@ -71,12 +71,12 @@ class Player {
     public void reset() {
 		this.territories.clear();
 		this.objective = null;
-		this.eliminadoNessaRodada = false;
+		this.eliminatedThisRound = false;
 		this.conquistouNessaRodada = false;
         this.conqueredTerritory = false;
         this.numTerritories =0;
         this.armies = 0;
-        this.eliminadoNessaRodada = false;
+        this.eliminatedThisRound = false;
 		this.conquistouNessaRodada = false;
         this.territoryCards.clear();
         this.territories.clear();
@@ -109,18 +109,18 @@ class Player {
     }
 
     //Altera se o jogador foi eliminado nessa rodada para verificação de objetivos
-    public void setEliminadoNessaRodada(boolean eliminadoNessaRodada) {
-        this.eliminadoNessaRodada = eliminadoNessaRodada;
+    public void setEliminatedThisRound(boolean eliminatedThisRound) {
+        this.eliminatedThisRound = eliminatedThisRound;
     }
 
 	//Retorna se o jogador foi eliminado nessa rodada
 	public boolean getEliminadoNessaRodada() {
-		return eliminadoNessaRodada;
+		return eliminatedThisRound;
 	}
 
     //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
-	public void setConquistouNessaRodada(boolean conquistouNessaRodada) {
-		this.conquistouNessaRodada = conquistouNessaRodada;
+	public void setConqueredThisRound(boolean conqueredThisRound) {
+		this.conquistouNessaRodada = conqueredThisRound;
 	}
 
     //Altera se o jogador conquistou um território nessa rodada para recepção de cartas

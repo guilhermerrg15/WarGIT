@@ -26,7 +26,7 @@ public class ViewAPI {
 		MapView.getMapView().determineFirstPlayer(nome, cor);
 	}
     //Muda o jogador atual
-	public void mudaJogador(String player, PlayerColor color){
+	public void changePlayer(String player, PlayerColor color){
 		MapView.getMapView().changePlayer(player, color);
 	}
 
@@ -52,8 +52,8 @@ public class ViewAPI {
 		MapView.getMapView().updateDestiny(destinies);
 	}
 
-    public void updateBonusTroca(int bonus) {
-        MapView.getMapView().updateBonusTroca(bonus);
+    public void updateBonusTrade(int bonus) {
+        MapView.getMapView().updateBonusTrade(bonus);
     }
 
     public void setFirstRound(boolean first){
@@ -118,7 +118,7 @@ public class ViewAPI {
     public void showWin(String nome, String cor) {
         JOptionPane.showMessageDialog(null, nome + " de cor " + cor + " ganhou o jogo! ", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
 		if (JOptionPane.showConfirmDialog(null, "Deseja continuar jogando?", "Fim de jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			APIController.getInstance().reiniciarJogo();
+			APIController.getInstance().restartGame();
 		} else {
 			System.exit(0);
 		}
