@@ -290,6 +290,19 @@ public class APIController {
         }
     }
 
+    public boolean getFirstRound() {
+        return firstRound;
+    }
+
+    public Integer getNumTrocas() {
+        return numDeTrocas;
+    }
+
+    public void clickedSave() {
+        api.saveGame();
+        System.out.println("Jogo salvo com sucesso");
+    }
+
 
     public void reiniciarJogo(){
         // Reinicia dados de model
