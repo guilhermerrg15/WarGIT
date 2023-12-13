@@ -175,7 +175,7 @@ public class APIController {
         if (eliminatedThisRound.size() != 0){
             verifyWin(-1);
             for (int i = 0; i < eliminatedThisRound.size();i++){
-                api.retiraEliminado(eliminatedThisRound.get(i));
+                api.withdrawEliminated(eliminatedThisRound.get(i));
                 eliminatedThisRound.remove(0);
             }
         }
@@ -187,7 +187,7 @@ public class APIController {
         if (eliminatedThisRound.size() != 0){
             verifyWin(-1);
             for (int i = 0; i < eliminatedThisRound.size();i++){
-                api.retiraEliminado(eliminatedThisRound.get(i));
+                api.withdrawEliminated(eliminatedThisRound.get(i));
                 eliminatedThisRound.remove(0);
             }
         }
@@ -234,7 +234,7 @@ public class APIController {
     public void clicouReposicionar(String origem, String destino, Integer qtd){
 
         // Reposiciona os exércitos
-        api.reposicionarExercitos(origem, destino, qtd);
+        api.replaceArmies(origem, destino, qtd);
 
         // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
         int i = 0;

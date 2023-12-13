@@ -94,7 +94,7 @@ class Game implements Observed{
     }
 
     // Pegar o jogador da vez
-    public Player getJogadorVez(int turn){
+    public Player getPlayerTurn(int turn){
 
         for (int i = 0; i < players.size(); i++) {
             if(players.get(i).getIndex() == turn) {
@@ -324,7 +324,7 @@ class Game implements Observed{
 
     // Retorna se o jogador domina o continente
     public boolean dominaCont(int turn, String continent){
-        return map.findContinent(continent).checkContinentDomain(game.getJogadorVez(turn));
+        return map.findContinent(continent).checkContinentDomain(game.getPlayerTurn(turn));
     }
 
     // Retorna lista de nomes dos territórios de um continente
@@ -448,7 +448,7 @@ class Game implements Observed{
 
 				if (defensor.getOwner().getTerritoryNumber() == 0){
 					
-					defensor.getOwner().setEliminadoNessaRodada(true);
+					defensor.getOwner().setEliminatedThisRound(true);
 					defensor.getOwner().setJMatou(atacante.getOwner());
 					APIController.getInstance().addEliminado(defensor.getOwner().getName());
 				}
@@ -457,7 +457,7 @@ class Game implements Observed{
 
 				atacante.getOwner().addTerritorio(defensor);
 
-				atacante.getOwner().setConquistouNessaRodada(true);
+				atacante.getOwner().setConqueredThisRound(true);
 
 				int qtdPassada = atacante.getArmies() - 1;
 				if (qtdPassada > 3) {qtdPassada = 3;}
