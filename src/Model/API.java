@@ -326,7 +326,6 @@ public class API {
             for (Player player : game.getPlayers()) {
                 if (player.getObjective().checkStatus()){
                     APIController.getInstance().setTurn(game.getPlayer(player.getName()).getIndex());
-                    System.out.println("turn: " + game.getPlayer(player.getName()).getIndex());
                     return true;
                 }
             }
