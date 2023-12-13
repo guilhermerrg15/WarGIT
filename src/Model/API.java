@@ -1,8 +1,10 @@
 package Model;
 import View.ViewAPI;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -497,169 +499,120 @@ public class API {
         game.continentDomain(turn);
     }
 
-    public void saveGame(String filePath) {
-        try {
-            File file = new File(filePath);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+    public void saveGame() {
 
-            // Escrever informações relevantes do jogo no arquivo
-            writer.write("Turno: " + turn + "\n");
+        JFileChooser fileChooser = new JFileChooser();
 
-            // Informações dos jogadores
-            for (Player player : game.getPlayers()) {
-                writer.write("Jogador: " + player.getName() + ", Cor: " + player.getColor() + "\n");
-                writer.write("Objetivo: " + player.getObjectiveName() + "\n");
+        int userSelection = fileChooser.showSaveDialog(null);
 
-                // Informações sobre as cartas do jogador
-                List<TerritoryCard> playerCards = player.getCard();
-                writer.write("   Cartas: \n");
-                for (TerritoryCard card : playerCards) {
-                    writer.write("      " + card.getName() + "\n");
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave));
+                
+                writer.write(String.valueOf(APIController.getInstance().getFirstRound()));
+                writer.write("\n");
+
+                //Escreve qtd de jogadores e vez do jogador
+                writer.write(String.valueOf(game.getPlayers().size()));
+                writer.write("\n");
+                writer.write(String.valueOf(APIController.getInstance().getTurn()));
+                writer.write("\n");
+
+                // Informações dos jogadores (nome, cor, objetivo)
+                for (Player player : game.getPlayers()) {
+                    writer.write("Jogador: " + player.getName() + ", Cor: " + player.getColor() + "\n");
+                    writer.write("Objetivo: " + player.getObjectiveName() + "\n");
+
                 }
 
-                // Adicione mais informações conforme necessário
-            }
+                // Informações dos territórios e seus proprietários
+                for (Territory territory : map.getTerritoriesList()) {
+                    writer.write("Território: " + territory.getName() + ", Tropas: " + territory.getArmies() + "/ ");
 
-            // Informações dos territórios
-            for (Territory territory : map.getTerritoriesList()) {
-                writer.write("Território: " + territory.getName() + ", Tropas: " + territory.getArmies() + "\n");
-                
-            }
-            writer.close();
+                    // Verificar se o território tem um proprietário
+                    if (territory.getOwner() != null) {
+                        writer.write("Proprietário: " + territory.getOwner().getName() + "\n");
+                    } else {
+                        writer.write("Sem Proprietário\n");
+                    }
 
-            System.out.println("Jogo salvo com sucesso em " + filePath);
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar o jogo: " + e.getMessage());
+                }
+
+
+                writer.close();
+
+
+
+                System.out.println("Jogo salvo com sucesso em " + fileToSave.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("Erro ao salvar o jogo: " + e.getMessage());
+            }
         }
     }
+
+    public void loadGame() {
+        JFileChooser fileChooser = new JFileChooser();
+
+        int userSelection = fileChooser.showOpenDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToLoad = fileChooser.getSelectedFile();
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(fileToLoad));
+
+                // Limpar o estado atual do jogo (reiniciar ou reinicializar conforme necessário)
+
+                // Ler as informações dos jogadores
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("Jogador:")) {
+                        // Processar informações do jogador e restaurar o estado
+                        String playerName = line.split(": ")[1];
+                        String colorLine = reader.readLine();
+                        String color = colorLine.split(": ")[1];
+                        // Adicione mais processamento conforme necessário
+
+                        // Crie um novo jogador com as informações lidas e adicione ao jogo
+                        Player player = new Player(playerName, PlayerColor.valueOf(color), 0); // Supondo que você tenha um construtor adequado
+                        game.addPlayer(player);
+
+                        // Leia e ignore as linhas restantes relacionadas ao jogador
+                        reader.readLine(); // Pule a linha em branco
+                        reader.readLine(); // Pule a linha "Objetivo:"
+                        // Adicione mais linhas de leitura conforme necessário
+                    }
+
+                    // Processar informações dos territórios
+                    if (line.startsWith("Território:")) {
+                        // Processar informações do território e restaurar o estado
+                        String territoryName = line.split(": ")[1];
+                        String armiesLine = reader.readLine();
+                        int armies = Integer.parseInt(armiesLine.split(": ")[1]);
+                        // Adicione mais processamento conforme necessário
+
+                        // Encontre o território correspondente no jogo e atualize o estado
+                        Territory territory = map.findTerritory(territoryName);
+                        territory.setArmies(armies);
+
+                        // Leia e ignore as linhas restantes relacionadas ao território
+                        reader.readLine(); // Pule a linha em branco
+                        // Adicione mais linhas de leitura conforme necessário
+                    }
+                }
+
+                reader.close();
+
+                System.out.println("Jogo carregado com sucesso de " + fileToLoad.getAbsolutePath());
+            } catch (IOException e) {
+                System.err.println("Erro ao carregar o jogo: " + e.getMessage());
+            }
+        }
+    }
+
 
     // Notifica observadores de jogo
     public void notificaObsJogo(){
         game.notifyObservers();
     }
 }
-// public void saveGame(){
-//     int retrival = chooser.showSaveDialog(null);
-//     if (retrival == JFileChooser.APPROVE_OPTION) {
-        
-//         try {
-//             inputStream = new FileWriter(chooser.getSelectedFile(),false);
-//             //Escreve se está na primeira rodada
-//             inputStream.write(String.valueOf(APIController.getInstance().getFirstRound()));
-//             inputStream.write("\n");
-
-//             //Escreve qtd de jogadores e vez do jogador
-//             inputStream.write(String.valueOf(game.getPlayers().size()));
-//             inputStream.write("\n");
-//             inputStream.write(String.valueOf(APIController.getInstance().getTurn()));
-//             inputStream.write("\n");
-            
-//             //Escreve o nome dos jogadores
-//             for (Player j: game.getPlayers()) {
-//                 inputStream.write(j.getName());
-//                 //Se não for o último jogador, escreve um espaço
-//                 if (j != game.getPlayers().get(game.getPlayers().size()-1))
-//                     inputStream.write(";");
-//             }
-            
-//             inputStream.write("\n");
-            
-//             //Escreve as cores dos jogadores
-//             for (Player j: game.getPlayers()) {
-//                 inputStream.write(String.valueOf(j.getColor()));
-//                 // Se não for o último jogador, escreve um espaço
-//                 if (j != game.getPlayers().get(game.getPlayers().size()-1))
-//                     inputStream.write(";");
-//             }
-//             inputStream.write("\n");
-
-//             //Escreve a qtd de exercitos em cada territorio e o nome do jogador que o domina
-//             for (Territory t: map.getTerritoriesList()) {
-//                 inputStream.write(t.getName() + ";");
-//                 inputStream.write(String.valueOf(t.getArmies()) + ";" + t.getOwner().getName());
-//                 inputStream.write("\n");
-//             }
-
-//             //Escreve os objetivos dos jogadores
-//             for (Player j: game.getPlayers()) {
-//                 switch(j.getObjective().getClass().getName()){
-//                     case "Model.ConquerTwoContinentsObjectiveCard":
-//                         inputStream.write("1;");
-//                         inputStream.write(((ConquerTwoContinentsObjectiveCard)j.getObjective()).getFirstCont().getName() + ";");
-//                         inputStream.write(((ConquerTwoContinentsObjectiveCard)j.getObjective()).getSecondCont().getName() + ";");
-//                         inputStream.write(String.valueOf(((ConquerTwoContinentsObjectiveCard)j.getObjective()).getQtdContinentes()));
-//                         break;
-
-//                     case "Model.ConquerThreeContinentsObjectiveCard":
-//                     inputStream.write("2;");
-//                     inputStream.write(((ConquerThreeContinentsObjectiveCard)j.getObjective()).getFirstCont().getName() + ";");
-//                     inputStream.write(((ConquerThreeContinentsObjectiveCard)j.getObjective()).getSecondCont().getName() + ";");
-//                     inputStream.write(((ConquerThreeContinentsObjectiveCard)j.getObjective()).getThirdCont().getName() + ";");
-//                     inputStream.write(String.valueOf(((ConquerThreeContinentsObjectiveCard)j.getObjective()).getQtdContinentes()));
-//                     break;
-
-//                     case "Model.ObjetivoTerritorios":
-//                     inputStream.write("3;");
-//                     inputStream.write(String.valueOf(((ObjetivoTerritorios)j.getObj()).getQtdTerritorios()));
-//                     break;
-//                 }
-//                 inputStream.write("\n");
-//             }
-
-//             //Escreve as cartas dos jogadores
-//             for (Player j: game.getPlayers()) {
-
-//                 if(j.getCard().size() == 0) {
-//                     inputStream.write("0");
-//                     inputStream.write("\n");
-//                     continue;
-//                 }
-
-//                 inputStream.write(String.valueOf(j.getCard().size()) + ";");
-
-//                 for (TerritoryCard c: j.getCard()) {
-//                     // Carta de coringa
-//                     if(c.getTerritorio() == null){
-//                         inputStream.write("Coringa");
-//                     }
-
-//                     // Carta de território
-//                     else{
-//                         inputStream.write(c.getTerritorio().getNome());
-//                     }
-
-//                     // Se não for a última carta, escreve um ;
-//                     if( c != j.getCard().get(j.getCard().size()-1)){
-//                         inputStream.write(";");
-//                     }
-        
-//                 }
-//         inputStream.write("\n");
-                
-//             }
-//             //Escreve a quantidade de trocas de cartas que o jogador fez
-//             inputStream.write(APIController.getInstance().getNumTrocas().toString());
-                
-//         } 
-
-//         //Caso ocorra algum erro
-//         catch (IOException ex) {
-//             System.out.println("Erro ao abrir arquivo para salvar jogo");
-//         }
-
-//         //No fim da leitura, fecha o arquivo
-//         finally {
-//             if (inputStream != null) {
-
-//                 try {
-//                     inputStream.close();
-//                 } 
-
-//                 //Caso ocorra algum erro
-//                 catch (IOException ex) {
-//                     System.out.println("Erro ao fechar arquivo para salvar jogo");
-//                 }
-//             }
-//         }
-//     }
-// }

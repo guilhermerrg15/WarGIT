@@ -322,7 +322,11 @@ public class APIController {
     }
 
     public void clickedSave() {
-        api.saveGame("saveWar.txt");
+        api.saveGame();
+    }
+
+    public void clickedLoad() {
+        api.loadGame();
     }
 
 
