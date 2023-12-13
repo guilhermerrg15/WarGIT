@@ -290,14 +290,13 @@ public class API {
 
 
     //Método de realizar ataque
-    public int[] makeAttack(String atacante,String defensor) {
-        Integer numAtaque = 0;
-        Integer numDefesa = 0;
+    public int[] makeAttack(String atacante,String defensor, Integer numAtaque, Integer numDefesa) {
+
     	Territory Tatacante = map.findTerritory(atacante);
     	Territory Tdefensor = map.findTerritory(defensor);
 
         // Realiza ataque e retorna array com os resultados
-        int[] array = game.RealizaAtaque(Tatacante, Tdefensor, numAtaque, numDefesa);
+        int[] array = game.realizaAtaque(Tatacante, Tdefensor, numAtaque, numDefesa);
 
         // Verifica se jogador ganhou após essa rodada
 		APIController.getInstance().verificaGanhou(APIController.getInstance().getTurn());

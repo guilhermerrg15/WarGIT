@@ -361,14 +361,13 @@ class Game implements Observed{
 	}
 
     //Realiza um ataque
-	public int[] RealizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
+	public int[] realizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
+
 		if(VerificarAtaque(atacante, defensor)){
-			//Verifica se o atacante tem mais de 3 exércitos
+
 			int qtdAtaque = atacante.getArmies() - 1;
 			if  (qtdAtaque > 3) {qtdAtaque = 3;}
 
-			//Verifica se o defensor tem mais de 3 exércitos
-			//ta dando 17 exercitos sendo que tem 9
 			int qtdDefesa = defensor.getArmies();
 			if  (qtdDefesa > 3) {qtdDefesa = 3;}
 
@@ -381,9 +380,9 @@ class Game implements Observed{
 			int qtdAtaquePerdidos = 0;
 			int qtdDefesaPerdidos = 0;
 
+
 			int i;
-			//Verifica se o jogador escolheu um número forçado
-			//acho que não precisa desse if -> tirei esse forçado
+
 			if (numAtaque != 0){
 				for (i = 0;i < 3;i++) {
 					if (i < qtdAtaque)
@@ -399,11 +398,11 @@ class Game implements Observed{
 					else
 						dadosAtaque[i] = 0;
 				}
-				//Ordena os dados se for aleatório
+				
 				Arrays.sort(dadosAtaque);
 			}
 
-			//debugar essa parte de novo
+			
 			if (numDefesa != 0){
 				for (i = 0;i < 3;i++) {
 					if (i < qtdDefesa)
@@ -419,11 +418,11 @@ class Game implements Observed{
 					else
 						dadosDefesa[i] = 0;
 				}
-				//Ordena os dados se for aleatório
+				
 				Arrays.sort(dadosDefesa);
 			}
 
-			//Compara os dados
+			
 			for (i = 0;i < 3;i++) {
 				if (dadosAtaque[i] != 0 && dadosDefesa[i] != 0){
 					if (dadosAtaque[i] > dadosDefesa[i]) {
@@ -435,21 +434,21 @@ class Game implements Observed{
 				}
 			}
 
-			//Atualiza os exércitos
+			
 			atacante.setArmies(atacante.getArmies() - qtdAtaquePerdidos);
 			defensor.setArmies(defensor.getArmies() - qtdDefesaPerdidos);
 
-			//Atualiza os territórios modificados
+			
 			mod1 = atacante;
 			mod2 = defensor;
 
-			// Se conquistou
+			
 			if (defensor.getArmies()==0) {
-				// Atualiza defensor
+				
 				defensor.getOwner().loseTerritory(defensor);
 
 				if (defensor.getOwner().getTerritoryNumber() == 0){
-					// Jogador foi eliminado nessa rodada
+					
 					defensor.getOwner().setEliminadoNessaRodada(true);
 					defensor.getOwner().setJMatou(atacante.getOwner());
 					APIController.getInstance().addEliminado(defensor.getOwner().getName());
@@ -457,27 +456,19 @@ class Game implements Observed{
 
 				defensor.setOwner(atacante.getOwner());
 
-				// Adiciona território conquistado ao jogador que conquistou
 				atacante.getOwner().addTerritorio(defensor);
 
-				// Conquistou nessa rodada ao jogador que conquistou
 				atacante.getOwner().setConquistouNessaRodada(true);
 
-				// Calcula quantos exércitos o jogador pode colocar no território conquistado (sempre máximo possível)
 				int qtdPassada = atacante.getArmies() - 1;
 				if (qtdPassada > 3) {qtdPassada = 3;}
 
-				// Altera a quantidade de exércitos dos territórios
 				atacante.alterarQndExercitos(-qtdPassada);
 				defensor.setArmies(qtdPassada);
-
 			}
 
 			//Notifica os observadores
 			this.notifyObservers();
-
-
-			// Retorna os dados em um array único
 
 			int[] dados = new int[6];
 			for (i = 0;i < 3;i++) {
@@ -508,7 +499,6 @@ class Game implements Observed{
 	public void reiniciarJogo(ObjectiveCardDeck objectiveCardDeck, TerritoryCardDeck territoryCardDeck){
 
 		for (Player player: players){
-
 			// Devolve objetivo do jogador para lista
 			objectiveCardDeck.returnObjectiveCard(player.getObjective());
 	
