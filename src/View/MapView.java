@@ -210,6 +210,13 @@ public class MapView extends JPanel implements Observer{
 			}
 		});
 
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.clickedSave();
+			}
+		});
+
 		// Adiciona ação ao selecionar um atacante
 		attackingTerritories.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {

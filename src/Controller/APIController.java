@@ -299,8 +299,7 @@ public class APIController {
     }
 
     public void clickedSave() {
-        api.saveGame();
-        System.out.println("Jogo salvo com sucesso");
+        api.saveGame("saveWar.txt");
     }
 
 
