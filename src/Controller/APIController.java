@@ -322,6 +322,7 @@ public class APIController {
 
     public void clickedSave() {
         api.saveGame();
+        view.showWarning("Jogo salvo com sucesso!");
     }
 
     public void clickedLoad() {

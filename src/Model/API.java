@@ -527,7 +527,7 @@ public class API {
 
                 // Informações dos territórios e seus proprietários
                 for (Territory territory : map.getTerritoriesList()) {
-                    writer.write("Território: " + territory.getName() + ", Tropas: " + territory.getArmies() + "/ ");
+                    writer.write("Território: " + territory.getName() + ", Tropas: " + territory.getArmies() + " / ");
 
                     // Verificar se o território tem um proprietário
                     if (territory.getOwner() != null) {
@@ -537,11 +537,7 @@ public class API {
                     }
 
                 }
-
-
                 writer.close();
-
-
 
                 System.out.println("Jogo salvo com sucesso em " + fileToSave.getAbsolutePath());
             } catch (IOException e) {
@@ -553,6 +549,7 @@ public class API {
     public void loadGame() {
         JFileChooser fileChooser = new JFileChooser();
 
+        // Configurar o JFileChooser para abrir a caixa de diálogo de abrir arquivo
         int userSelection = fileChooser.showOpenDialog(null);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
@@ -560,43 +557,50 @@ public class API {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(fileToLoad));
 
-                // Limpar o estado atual do jogo (reiniciar ou reinicializar conforme necessário)
+                // Leitura de informações do arquivo
+                // APIController.getInstance().setFirstRound(Boolean.parseBoolean(reader.readLine()));
 
-                // Ler as informações dos jogadores
+                // Ler quantidade de jogadores e vez do jogador
+                int numPlayers = Integer.parseInt(reader.readLine());
+                int currentTurn = Integer.parseInt(reader.readLine());
+                APIController.getInstance().setTurn(currentTurn);
+
+                // Limpar jogadores existentes
+                game.getPlayers().clear();
+
+                // Ler informações dos jogadores
+                for (int i = 0; i < numPlayers; i++) {
+                    String playerName = reader.readLine().split(":")[1].trim();
+                    String playerColor = reader.readLine().split(":")[1].trim();
+                    String objective = reader.readLine().split(":")[1].trim();
+                    Player player = new Player(playerName, PlayerColor.valueOf(playerColor), i);
+                    // player.setObjective(ObjectiveFactory.createObjective(objective)); // Substitua ObjectiveFactory.createObjective pela lógica real da sua fábrica
+                    game.addPlayer(player);
+                }
+
+                // Limpar proprietários existentes dos territórios
+                for (Territory territory : map.getTerritoriesList()) {
+                    territory.setOwner(null);
+                }
+
+                // Ler informações dos territórios
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    if (line.startsWith("Jogador:")) {
-                        // Processar informações do jogador e restaurar o estado
-                        String playerName = line.split(": ")[1];
-                        String colorLine = reader.readLine();
-                        String color = colorLine.split(": ")[1];
-                        // Adicione mais processamento conforme necessário
-
-                        // Crie um novo jogador com as informações lidas e adicione ao jogo
-                        Player player = new Player(playerName, PlayerColor.valueOf(color), 0); // Supondo que você tenha um construtor adequado
-                        game.addPlayer(player);
-
-                        // Leia e ignore as linhas restantes relacionadas ao jogador
-                        reader.readLine(); // Pule a linha em branco
-                        reader.readLine(); // Pule a linha "Objetivo:"
-                        // Adicione mais linhas de leitura conforme necessário
-                    }
-
-                    // Processar informações dos territórios
-                    if (line.startsWith("Território:")) {
-                        // Processar informações do território e restaurar o estado
-                        String territoryName = line.split(": ")[1];
-                        String armiesLine = reader.readLine();
-                        int armies = Integer.parseInt(armiesLine.split(": ")[1]);
-                        // Adicione mais processamento conforme necessário
-
-                        // Encontre o território correspondente no jogo e atualize o estado
-                        Territory territory = map.findTerritory(territoryName);
+                    String[] territoryInfo = line.split("/");
+                    String territoryName = territoryInfo[0].split(":")[1].trim();
+                    int armies = Integer.parseInt(territoryInfo[1].split(":")[1].trim());
+                    String ownerName = territoryInfo[2].split(":")[1].trim();
+                    
+                    // Encontrar o território pelo nome
+                    Territory territory = map.findTerritory(territoryName);
+                    if (territory != null) {
                         territory.setArmies(armies);
 
-                        // Leia e ignore as linhas restantes relacionadas ao território
-                        reader.readLine(); // Pule a linha em branco
-                        // Adicione mais linhas de leitura conforme necessário
+                        // Atribuir proprietário se disponível
+                        if (!ownerName.equals("Sem Proprietário")) {
+                            Player owner = game.getPlayer(ownerName);
+                            territory.setOwner(owner);
+                        }
                     }
                 }
 
