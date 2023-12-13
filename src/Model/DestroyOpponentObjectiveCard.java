@@ -17,11 +17,6 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
         return this.name;
     } 
 
-    //Retorna o jogador que deve ser destruído
-    public Player getJAlvo(){
-        return this.enemy;
-    }
-
     public boolean checkStatus() {
 
         if (owner.getColor() != enemy.getColor()) {
@@ -29,13 +24,13 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
             if (enemy.getTerritoryNumber() > 0){
                 return false;
             }
-            if (enemy.getEliminadoNessaRodada() && enemy.getJMatou() == owner){
+            if (enemy.getEliminatedThisRound() && enemy.getPlayerKilled() == owner){
                 return true;
             }
-            if (enemy.getEliminadoNessaRodada() &&  enemy.getJMatou() != owner && owner.getTerritoryNumber() >= 24){
+            if (enemy.getEliminatedThisRound() &&  enemy.getPlayerKilled() != owner && owner.getTerritoryNumber() >= 24){
                 return true;
             }
-            if (enemy.getTerritoryNumber() == 0 && enemy.getJMatou() != owner  && owner.getTerritoryNumber() >= 24)
+            if (enemy.getTerritoryNumber() == 0 && enemy.getPlayerKilled() != owner  && owner.getTerritoryNumber() >= 24)
             {
                 return true;
             }
@@ -50,8 +45,8 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
        
     }
 
-    public void checkOwner(Player dono) {
-        this.owner = dono;
+    public void checkOwner(Player owner) {
+        this.owner = owner;
     }
 
 }

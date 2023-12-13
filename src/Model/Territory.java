@@ -2,8 +2,8 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import View.Observer;
+
 /**
  * Representa um território no jogo War.
  */
@@ -103,7 +103,7 @@ class Territory {
         this.armies = armies;
     }
 
-    public int getInicialArmie(){
+    public int getInitialArmy(){
         return inicialArmie;
     }
 

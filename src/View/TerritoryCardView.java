@@ -3,9 +3,7 @@ package View;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
-
 import javax.imageio.ImageIO;
-
 import Model.TerritoryCard;
 
 class TerritoryCardView {
@@ -13,7 +11,6 @@ class TerritoryCardView {
 	//Construtor
 	public TerritoryCardView(){
 
-		
 	}
 	//Desenha as imagens das cartas
 	static public void drawTerritoryCard(Graphics2D g2d, List<TerritoryCard> cards) {

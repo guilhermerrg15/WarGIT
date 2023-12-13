@@ -25,7 +25,7 @@ class Conquer18TerritoriesObjectiveCard extends ObjectiveCard {
         return false;
     }
 
-     public void checkOwner(Player dono) {
-         this.owner = dono;
+     public void checkOwner(Player owner) {
+         this.owner = owner;
      }
 }

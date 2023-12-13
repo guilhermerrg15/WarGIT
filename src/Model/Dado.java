@@ -1,6 +1,5 @@
 package Model;
 
-//import java.util.concurrent.ThreadLocalRandom;
 import java.lang.Math;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -9,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Este dado é usado para simular lançamentos de dados para ataques e defesas.
  */
 class Dado {
-    private static int valor;
+    private static int value;
 
     Dado() {} // Construtor privado para impedir a criação de instâncias
     
@@ -18,9 +17,9 @@ class Dado {
      *
      * @return O valor do dado após o lançamento.
      */
-    public int jogaDado() {
-        valor = Math.abs((ThreadLocalRandom.current().nextInt()) % 6) + 1;
-        return valor;
+    public int throwDice() {
+        value = Math.abs((ThreadLocalRandom.current().nextInt()) % 6) + 1;
+        return value;
     }
 
     /**
@@ -28,8 +27,8 @@ class Dado {
      *
      * @return O valor do dado.
      */
-    public static int getDado() {
-        return valor;
+    public static int getDice() {
+        return value;
     }
 }
 

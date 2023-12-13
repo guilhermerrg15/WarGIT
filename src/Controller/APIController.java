@@ -2,7 +2,6 @@ package Controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import Model.API;
 import Model.PlayerColor;
 import Model.TerritoryCard;
@@ -160,7 +159,7 @@ public class APIController {
             if (la == null){
                 clickedChangePlayer();
             }
-            view.atualizaAtacantes(la);
+            view.updateAttackers(la);
 
             verifyWin(turn);
             return false;
@@ -172,7 +171,7 @@ public class APIController {
         
         this.isSaveEnabled = false;
 
-        view.atualizaAtacantes(api.getTerritoryMoreOne(api.getPlayerColorTurn(turn)));
+        view.updateAttackers(api.getTerritoryMoreOne(api.getPlayerColorTurn(turn)));
         
         // Verifica se tem algum jogador eliminado nessa rodada
         if (eliminatedThisRound.size() != 0){
@@ -225,7 +224,7 @@ public class APIController {
         view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
 
         // se proximo jogador foi eliminado nessa rodada passa para o proximo
-        if (api.getJogadorVezEliminadoRodada(turn)){
+        if (api.getPlayerTurnEliminated(turn)){
             turn = (turn + 1) % api.getNumPlayers();
             view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
         }
@@ -237,18 +236,18 @@ public class APIController {
     }
 
     // Método chamado quando o jogador seleciona um território para reposicionar
-    public void clicouReposicionar(String origem, String destino, Integer qtd){
+    public void clickedReplace(String origin, String destino, Integer qtd){
 
         this.isSaveEnabled = false;
 
         // Reposiciona os exércitos
-        api.replaceArmies(origem, destino, qtd);
+        api.replaceArmies(origin, destino, qtd);
 
         // Pega o index do território selecionado para diminuir a quantidade que ainda pode reposicionar
         int i = 0;
 
         for (; i < territoriesReplacementName.length; i++) {
-            if (territoriesReplacementName[i].equals(origem)) {
+            if (territoriesReplacementName[i].equals(origin)) {
                 break;
             }
         }
@@ -279,8 +278,8 @@ public class APIController {
     }
 
     // Adiciona um nome à lista de eliminados nessa rodada
-    public void addEliminado(String nome){
-        eliminatedThisRound.add(nome);
+    public void addEliminated(String name){
+        eliminatedThisRound.add(name);
     }
 
     // Método chamado quando o jogador seleciona um território para defender
@@ -304,13 +303,13 @@ public class APIController {
     }
 
     // Método chamado quando o jogador seleciona um território para atacar
-    public void selecionouAtacante(String atacante){
+    public void attackerSelected(String atacante){
         if(atacante != null){
             // Atualiza comboBox dos defensores com os adjacentes
             if(api.getNeiboursNotDominated(atacante, turn) != null){
-                view.atualizaDefensores(api.getNeiboursNotDominated(atacante, turn));
+                view.updateDefenders(api.getNeiboursNotDominated(atacante, turn));
             } else {
-                view.atualizaDefensores(new String[0]);
+                view.updateDefenders(new String[0]);
             }
         }
     }
@@ -318,7 +317,7 @@ public class APIController {
     // Método que verifica se jogador ganhou e lida com o resultado
     public void verifyWin(int pos){
         if (api.verifyWin(pos)){
-            view.jogadorGanhou(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
+            view.playerWon(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
         }
     }
 
@@ -362,7 +361,7 @@ public class APIController {
         this.firstRound = true;
 
         // Reinicia dados da view
-        api.notificaObsJogo();
+        api.notifyGameObserver();
 
         view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
         view.setFirstRound(firstRound);

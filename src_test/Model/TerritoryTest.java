@@ -53,13 +53,13 @@ public class TerritoryTest {
 
     @Test
     public void testAlterarQndExercitos() {
-        assertTrue(territory.alterarQndExercitos(3));
+        assertTrue(territory.changeNumArmies(3));
         assertEquals(3, territory.getArmies());
 
-        assertTrue(territory.alterarQndExercitos(-2));
+        assertTrue(territory.changeNumArmies(-2));
         assertEquals(1, territory.getArmies());
 
-        assertFalse(territory.alterarQndExercitos(-5)); // Trying to subtract more armies than available
+        assertFalse(territory.changeNumArmies(-5)); // Trying to subtract more armies than available
         assertEquals(1, territory.getArmies());
     }
 

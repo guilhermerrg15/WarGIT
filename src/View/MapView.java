@@ -159,7 +159,7 @@ public class MapView extends JPanel implements Observer{
 		reposicionarButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(originTerritories.getSelectedItem() != null && destinyTerritories.getSelectedItem() != null){
-					controller.clicouReposicionar(originTerritories.getSelectedItem().toString(), destinyTerritories.getSelectedItem().toString(), (Integer) numReplacementBox.getSelectedItem());
+					controller.clickedReplace(originTerritories.getSelectedItem().toString(), destinyTerritories.getSelectedItem().toString(), (Integer) numReplacementBox.getSelectedItem());
 				}
 				
 			}
@@ -228,7 +228,7 @@ public class MapView extends JPanel implements Observer{
 		// Adiciona ação ao selecionar um atacante
 		attackingTerritories.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				controller.selecionouAtacante((String) attackingTerritories.getSelectedItem());
+				controller.attackerSelected((String) attackingTerritories.getSelectedItem());
 	        }
 		});
 

@@ -3,7 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
 import Controller.APIController;
 import View.Observed;
 import View.Observer;
@@ -143,7 +142,7 @@ class Game implements Observed{
 		return false;
 	}
 
-	public Integer trocarCartas (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map, Player player) {
+	public Integer changeCards (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map, Player player) {
 
 		ArrayList<TerritoryCard> circles = new ArrayList<TerritoryCard>();
 		ArrayList<TerritoryCard> squares = new ArrayList<TerritoryCard>();
@@ -344,7 +343,7 @@ class Game implements Observed{
     }
 
     //Valida um ataque
-	public boolean VerificarAtaque(Territory tAtacante, Territory tDefensor) {
+	public boolean verifyAttack(Territory tAtacante, Territory tDefensor) {
 		// Verifica se o atacante tem mais de um exército e se o defensor não é dele
 		if(tAtacante.getArmies() > 1 && tAtacante.getOwner() != tDefensor.getOwner())
 			return true;
@@ -352,9 +351,9 @@ class Game implements Observed{
 	}
 
     //Realiza um ataque
-	public int[] realizaAtaque(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
+	public int[] makeAttack(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
 
-		if(VerificarAtaque(atacante, defensor)){
+		if(verifyAttack(atacante, defensor)){
 
 			int qtdAtaque = atacante.getArmies() - 1;
 			if  (qtdAtaque > 3) {qtdAtaque = 3;}
@@ -385,7 +384,7 @@ class Game implements Observed{
 			else{
 				for (i = 0;i < 3;i++) {
 					if (i < qtdAtaque)
-						dadosAtaque[i] = dado.jogaDado();
+						dadosAtaque[i] = dado.throwDice();
 					else
 						dadosAtaque[i] = 0;
 				}
@@ -405,7 +404,7 @@ class Game implements Observed{
 			else{
 				for (i = 0;i < 3;i++) {
 					if (i < qtdDefesa)
-						dadosDefesa[i] = dado.jogaDado();
+						dadosDefesa[i] = dado.throwDice();
 					else
 						dadosDefesa[i] = 0;
 				}
@@ -442,7 +441,7 @@ class Game implements Observed{
 					
 					defensor.getOwner().setEliminatedThisRound(true);
 					defensor.getOwner().setJMatou(atacante.getOwner());
-					APIController.getInstance().addEliminado(defensor.getOwner().getName());
+					APIController.getInstance().addEliminated(defensor.getOwner().getName());
 				}
 
 				defensor.setOwner(atacante.getOwner());
@@ -487,7 +486,7 @@ class Game implements Observed{
 	}
 
     // Método para reiniciar o jogo
-	public void reiniciarJogo(ObjectiveCardDeck objectiveCardDeck, TerritoryCardDeck territoryCardDeck){
+	public void restartGame(ObjectiveCardDeck objectiveCardDeck, TerritoryCardDeck territoryCardDeck){
 
 		for (Player player: players){
 			// Devolve objetivo do jogador para lista

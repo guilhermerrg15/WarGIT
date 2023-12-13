@@ -10,7 +10,7 @@ public class ObjectiveCardDeck {
 	private Map map;
     private HashMap<PlayerColor, String> colorToObjectiveMapping; 
     
-    public ObjectiveCardDeck(Map map, List<Player> todos_jogadores) {
+    public ObjectiveCardDeck(Map map, List<Player> allPlayers) {
     	this.map = map;
         this.objectiveCards = new ArrayList<>(); 
         this.colorToObjectiveMapping = new HashMap<>();
@@ -23,7 +23,7 @@ public class ObjectiveCardDeck {
         colorToObjectiveMapping.put(PlayerColor.PRETO, "objetivo5");
         colorToObjectiveMapping.put(PlayerColor.AMARELO, "objetivo6");
 
-        for (Player player : todos_jogadores) {
+        for (Player player : allPlayers) {
             String objectiveName = colorToObjectiveMapping.get(player.getColor());
             if (objectiveName != null) {
                 objectiveCards.add(new DestroyOpponentObjectiveCard(objectiveName, player.getColor().toString(), player));

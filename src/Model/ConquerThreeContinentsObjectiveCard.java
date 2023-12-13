@@ -29,16 +29,8 @@ class ConquerThreeContinentsObjectiveCard extends ObjectiveCard {
 		return false;
     }
 
-    public Continent getFirstCont() {
-        return this.continent1;
-    }
-
-    public Continent getSecondCont() {
-        return this.continent2;
-    }
-
-     public void checkOwner(Player dono) {
-         this.owner = dono;
+     public void checkOwner(Player owner) {
+         this.owner = owner;
      }
     
 }

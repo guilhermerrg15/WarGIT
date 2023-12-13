@@ -14,7 +14,7 @@ class Map {
 	// private Continent[] continents;
 	private List<Continent> continents = new ArrayList<>();
 	private static Map map = null;
-	private ArrayList<Territory> listaTerritorios = new ArrayList<Territory>();
+	private ArrayList<Territory> territoriesList = new ArrayList<Territory>();
 	
 	public Map() {
 		
@@ -43,28 +43,26 @@ class Map {
 
 	private void initializeTerritories(List<Continent> continents) {
 		for ( Continent c : continents) {
-			listaTerritorios.addAll(c.getTerritories());
+			territoriesList.addAll(c.getTerritories());
 		}
 
-		for (Territory t: listaTerritorios) {
+		for (Territory t: territoriesList) {
 			t.getNeighbours();
 		}
 	}
 
-
-		// Distribui os territórios entre os jogadores, colocando um exército em cada
 	public void distributeTerritories(ArrayList<Player> player){
-		// Embaralha a lista de territórios
-		Collections.shuffle(listaTerritorios);
+		
+		Collections.shuffle(territoriesList);
 
-		int qtdJogadores = player.size();
-		int qtdTerritorios = listaTerritorios.size();
+		int numPlayers = player.size();
+		int qtdTerritorios = territoriesList.size();
 
 		for (int i = 0; i < qtdTerritorios; i++) {
-			Territory t = listaTerritorios.get(i);
-			Player j = player.get(i % qtdJogadores);
+			Territory t = territoriesList.get(i);
+			Player j = player.get(i % numPlayers);
 
-			// Define o jogador do território
+
 			t.setOwner(j);
 
 			// Define 1 para a quantidade de exércitos do território
@@ -72,7 +70,6 @@ class Map {
 
 			t.setInicialArmies(1);
 
-			// Adiciona o território na lista de territórios do jogador
 			j.addTerritorio(t);
 
 		}
@@ -181,7 +178,7 @@ class Map {
      */
 	//Retorna o array de territorios
 	public ArrayList<Territory> getTerritoriesList() {
-    	return listaTerritorios;
+    	return territoriesList;
 }
 	
 	

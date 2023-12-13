@@ -1,8 +1,6 @@
 package Model;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 
 //
 /**
@@ -16,38 +14,15 @@ class Player {
     private List<TerritoryCard> territoryCards; // cartas para troca
     private int armies;
     private boolean conqueredTerritory;
-    private static int cont = 0;
+    // private static int cont = 0;
     private int index;
     private ObjectiveCard objective;
-    private List<Continent> continents;
     protected List<Army> continentalArmies;
-    //Guarda a quantidade de territórios em sua posse
 	private int numTerritories = 0;  
-    //Guarda se o jogador foi eliminado nessa rodada
 	private boolean eliminatedThisRound = false; 
-	private Player jMatou;
-    //Guarda se o jogador conquistou um território nessa rodada
-	private boolean conquistouNessaRodada = false; 
+	private Player jKilled;
+	private boolean conqueredThisRound = false; 
     
-    // Pegar número de cartas
-    public int getCards () {
-        return territoryCards.size();
-    }
-
-    // Pegar lista de territórios conquistados
-    public ArrayList<Territory> getConqueredTerritories() {
-        return territories;
-    }
-
-    public int getIndex(){
-        return this.index;
-    }
-
-    public int setIndex(int index){
-        return this.index = index;
-
-    }
-
      /**
      * Construtor da classe Player.
     *
@@ -69,14 +44,31 @@ class Player {
 		this.territories.clear();
 		this.objective = null;
 		this.eliminatedThisRound = false;
-		this.conquistouNessaRodada = false;
+		this.conqueredThisRound = false;
         this.conqueredTerritory = false;
         this.numTerritories =0;
         this.armies = 0;
         this.eliminatedThisRound = false;
-		this.conquistouNessaRodada = false;
+		this.conqueredThisRound = false;
         this.territoryCards.clear();
         this.territories.clear();
+    }
+
+    public int getCards () {
+        return territoryCards.size();
+    }
+
+    public ArrayList<Territory> getConqueredTerritories() {
+        return territories;
+    }
+
+    public int getIndex(){
+        return this.index;
+    }
+
+    public int setIndex(int index){
+        return this.index = index;
+
     }
 
     public List<TerritoryCard> getAllCards() {
@@ -111,32 +103,32 @@ class Player {
     }
 
 	//Retorna se o jogador foi eliminado nessa rodada
-	public boolean getEliminadoNessaRodada() {
+	public boolean getEliminatedThisRound() {
 		return eliminatedThisRound;
 	}
 
     //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
 	public void setConqueredThisRound(boolean conqueredThisRound) {
-		this.conquistouNessaRodada = conqueredThisRound;
+		this.conqueredThisRound = conqueredThisRound;
 	}
 
     //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
-	public boolean getConquistouNessaRodada() {
-		return conquistouNessaRodada;
+	public boolean getConqueredThisRound() {
+		return conqueredThisRound;
 	}
 
-    public Player getJMatou() {
-		return jMatou;
+    public Player getPlayerKilled() {
+		return jKilled;
 	}
 
-	public void setJMatou(Player jMatou) {
-		this.jMatou = jMatou;
+	public void setJMatou(Player jKilled) {
+		this.jKilled = jKilled;
 	}
     
-    public void receiveObjective(ObjectiveCard objetivo) {
-        if (objetivo != null) {
-            objective = objetivo;
-            objetivo.checkOwner(this);
+    public void receiveObjective(ObjectiveCard obj) {
+        if (obj != null) {
+            objective = obj;
+            obj.checkOwner(this);
         }
     }
 
@@ -169,11 +161,8 @@ class Player {
         return false;
     }
 
-
-    //Adiciona um território ao jogador
 	public void addTerritorio(Territory t) {
 		territories.add(t);
-		// Aumenta em 1 a quantidade de territórios
 		this.numTerritories++;
 	}
 

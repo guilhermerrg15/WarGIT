@@ -6,12 +6,9 @@ import javax.swing.JOptionPane;
 import Controller.APIController;
 import Model.PlayerColor;
 
-// import Controller.TabuleiroObservador;
-
 public class ViewAPI {
     private static ViewAPI apiInstance = null;
 
-    // Array de nomes dos jogadores
 	String[] nomesJogadores = new String[6];
 
     // Singleton
@@ -21,22 +18,19 @@ public class ViewAPI {
 		JOptionPane.showMessageDialog(null, warn);
 	}
 
-    // Pegar primeiro jogador
     public void determineFirstPlayer(String nome, PlayerColor cor){
 		MapView.getMapView().determineFirstPlayer(nome, cor);
 	}
-    //Muda o jogador atual
+    
 	public void changePlayer(String player, PlayerColor color){
 		MapView.getMapView().changePlayer(player, color);
 	}
 
-    //Atalixa os territorios atancantes no painel de ataque
-	public void atualizaAtacantes(String[] atacantes){
+	public void updateAttackers(String[] atacantes){
 		MapView.getMapView().updateAttackers(atacantes);
 	}
 
-    //Atualiza os territorios defensores no painel de ataque
-	public void atualizaDefensores(String[] defensores){
+	public void updateDefenders(String[] defensores){
 		MapView.getMapView().updateDefenders(defensores);
 	}
 
@@ -59,8 +53,7 @@ public class ViewAPI {
     public void setFirstRound(boolean first){
         MapView.getMapView().setFirstRound(first);
     }
-    private ViewAPI() {
-    }
+    private ViewAPI() {}
 
     public void clearDices(){
         MapView.getMapView().clearDices();
@@ -68,34 +61,34 @@ public class ViewAPI {
 
 
 	//Verifica se o jogador ganhou a partida
-	public void jogadorGanhou(String nome, PlayerColor cor){
-		String nomeCor;
+	public void playerWon(String name, PlayerColor color){
+		String colorName;
 
 		//Verifica a cor do jogador
-		switch (cor) {
+		switch (color) {
 			case AMARELO:
-                nomeCor = "Amarelo";
+                colorName = "Amarelo";
                 break;
             case AZUL:
-                nomeCor = "Azul";
+                colorName = "Azul";
                 break;
             case BRANCO:
-                nomeCor = "Branco";
+                colorName = "Branco";
                 break;               
             case PRETO:
-                nomeCor = "Preto";
+                colorName = "Preto";
                 break;
             case VERMELHO:
-                nomeCor = "Vermelho";
+                colorName = "Vermelho";
             case VERDE:
-                nomeCor = "Verde";
+                colorName = "Verde";
                 break;
             default:
-                nomeCor = "Preto";
+                colorName = "Preto";
                 break;
 		
         }
-		showWin(nome, nomeCor);
+		showWin(name, colorName);
 	}
     
 
@@ -109,11 +102,6 @@ public class ViewAPI {
     public Observer getObserver() {
         return MapView.getMapView();
     }
-
-    //Retorna os nomes dos jogadores
-	public String[] getNomesJogadores(){
-		return nomesJogadores;
-	}
 
     public void showWin(String nome, String cor) {
         JOptionPane.showMessageDialog(null, nome + " de cor " + cor + " ganhou o jogo! ", "Fim de jogo", JOptionPane.INFORMATION_MESSAGE);
