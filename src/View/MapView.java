@@ -687,7 +687,13 @@ public class MapView extends JPanel implements Observer{
 			currentArmySum = somaExAtual - firstArmySum;
 
 			// Calcular a quantidade máxima de exércitos permitidos
-			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2 + bonusTradeSum;
+			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2; 
+
+			if (quantidadeMaximaExercitos <= 3){
+				quantidadeMaximaExercitos = 3;
+			}
+			
+			quantidadeMaximaExercitos = quantidadeMaximaExercitos + bonusTradeSum;
 
 			// Verificar se a soma atual não excede a quantidade máxima permitida
 			for (ArmyView army : armyList) {
