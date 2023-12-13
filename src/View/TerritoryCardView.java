@@ -37,7 +37,6 @@ class TerritoryCardView {
 
     static private Image getImage(TerritoryCard card){
         String imagePath = generateName(card);
-        System.err.println(imagePath);
         try {
             return (ImageIO.read(new File(imagePath)));
         } catch (Exception e) {
