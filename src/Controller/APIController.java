@@ -76,7 +76,6 @@ public class APIController {
     //set vez do jogador
     public void setTurn(int i){
         this.turn = i;
-        System.out.println("turn api: " + turn);
     }
 
     // Pegar o nome dos jogadores

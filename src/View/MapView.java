@@ -308,17 +308,20 @@ public class MapView extends JPanel implements Observer{
 				// Se o modoAddTropas for verdadeiro, mostra o botão "Continuar"
 				continueButton.setVisible(true);
 			} else {
+				if (controller.canTradeCards()){
+			cardsTradeButton.setVisible(true);
+		}else{
+			cardsTradeButton.setVisible(false);
+		}
 				continueButton.setVisible(false);
 			}
 		} else {
-			if (controller.canTradeCards()){
-				cardsTradeButton.setVisible(true);
-			}else{
-				cardsTradeButton.setVisible(false);
-			}
+		
 			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continueButton.setVisible(false);
 		}
+
+		
 
 		if(firstRound) {
 			attackingTerritories.setVisible(false);
@@ -338,14 +341,12 @@ public class MapView extends JPanel implements Observer{
 				defendingTerritories.setVisible(true);
 				playDicesButton.setVisible(true);
 				endAtackButton.setVisible(true);
-				cardsTradeButton.setVisible(false);
 				
 			} else{
 				attackingTerritories.setVisible(false);
 				defendingTerritories.setVisible(false);
 				playDicesButton.setVisible(false);
 				endAtackButton.setVisible(false);
-				cardsTradeButton.setVisible(false);
 			}
 			if (endAtack) {
 				originTerritories.setVisible(true);
@@ -353,7 +354,6 @@ public class MapView extends JPanel implements Observer{
 				destinyTerritories.setVisible(true);
 				reposicionarButton.setVisible(true);
 				changePlayer.setVisible(true);
-				cardsTradeButton.setVisible(false);
 
 				// Retirar dados da tela
 				diceView.clearDices();
@@ -364,7 +364,6 @@ public class MapView extends JPanel implements Observer{
 				destinyTerritories.setVisible(false);
 				reposicionarButton.setVisible(false);
 				changePlayer.setVisible(false);
-				cardsTradeButton.setVisible(false);
 			}
 			
 		}
