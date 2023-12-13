@@ -15,7 +15,7 @@ public class APIController {
     private int turn = 0;
     private String[] territoriesReplacementName;
     private Integer[] numArmiesReplacement;
-    private boolean isSaveEnabled = true;
+    private boolean isSaveEnabled = false;
 
     // Guarda o bônus de troca de cartas
     private Integer tradeBonus = 0;
@@ -131,30 +131,31 @@ public class APIController {
         }
 }
 
-    //Metodo chamado qaundo o jogador clica em posicionar tropa para aicionar territorios se tiver continente dominado
+    //Metodo chamado quando o jogador clica em posicionar tropa para aicionar territorios se tiver continente dominado
     public void clickedPlaceArmy(){
+        this.isSaveEnabled = false;
         api.continentDomain(turn);
 
         // Verifica se ganhou após reposicionar
         verifyWin(turn);
-        isSaveEnabled = false;
+        
     }
 
     public boolean clickedContinue() {
         if (firstRound) {
-            turn = (turn + 1) % api.getNumPlayers();
+            isSaveEnabled = true;
 
+            turn = (turn + 1) % api.getNumPlayers();
             view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
 
             if (turn == 0){
                 firstRound = false;
-                isSaveEnabled = false;
-            } else {
-                isSaveEnabled = true;
-            }
+            } 
 
             return true;
         } else {
+
+            this.isSaveEnabled = false;
             String[] la = api.getTerritoryMoreOne(api.getPlayerColorTurn(turn));
             if (la == null){
                 clickedChangePlayer();
@@ -169,6 +170,8 @@ public class APIController {
 
     public void clickedAttack() {
         
+        this.isSaveEnabled = false;
+
         view.atualizaAtacantes(api.getTerritoryMoreOne(api.getPlayerColorTurn(turn)));
         
         // Verifica se tem algum jogador eliminado nessa rodada
@@ -182,7 +185,9 @@ public class APIController {
     }
 
     public void clickedEndAtack(){
-        
+
+        this.isSaveEnabled = false;
+
         // Verifica se tem algum jogador eliminado nessa rodada
         if (eliminatedThisRound.size() != 0){
             verifyWin(-1);
@@ -226,12 +231,15 @@ public class APIController {
         }
         // Verifica se ganhou após reposicionar
         verifyWin(turn);
-        isSaveEnabled = true;
+
+        this.isSaveEnabled = true;
 
     }
 
     // Método chamado quando o jogador seleciona um território para reposicionar
     public void clicouReposicionar(String origem, String destino, Integer qtd){
+
+        this.isSaveEnabled = false;
 
         // Reposiciona os exércitos
         api.replaceArmies(origem, destino, qtd);
@@ -328,7 +336,7 @@ public class APIController {
 
     // Adicione este método para obter o estado do botão de salvar
     public boolean isSaveEnabled() {
-        return isSaveEnabled;
+        return this.isSaveEnabled;
 }
 
     public void clickedSave() {
@@ -336,7 +344,7 @@ public class APIController {
             api.saveGame();
             view.showWarning("Jogo salvo com sucesso!");
         } else {
-            view.showWarning("Você só pode salvar o jogo antes do posicionamento de tropas.");
+            view.showWarning("Só é possível salvar o jogo após um jogador ter concluído a sua jogada.");
         }
     }
 
@@ -358,8 +366,6 @@ public class APIController {
 
         view.changePlayer(api.getPlayerTurn(turn), api.getPlayerColorTurn(turn));
         view.setFirstRound(firstRound);
-        
-       
         
     }
 
