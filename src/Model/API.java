@@ -63,6 +63,10 @@ public class API {
         game.getJogadorVez(t).setConquistouNessaRodada(false);
     }
 
+    public Integer getTerritorioJogadorVez(int turn){
+        return game.getJogadorVez(turn).getTerritoryNumber();
+    }
+
     // Método para obter a quantidade de territórios de um jogador específico
     public int getNumTerritoryPlayer(PlayerColor corDoJogador) {
         int quantidadeTerritorios = 0;

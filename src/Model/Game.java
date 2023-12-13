@@ -347,7 +347,6 @@ class Game implements Observed{
         }
         players.add(jogador);
         for (Player player : players) {
-            System.out.println(player.getName());
         }
         return true;
     }

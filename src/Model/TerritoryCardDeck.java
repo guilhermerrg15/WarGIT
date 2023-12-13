@@ -125,13 +125,10 @@ class TerritoryCardDeck {
 		shuffleCards();
 		TerritoryCard pickedCard = cards.get(0);
 
-		// System.err.println(pickedCard.getName());
 		if (pickedCard != null){
 			player.addCard(pickedCard);
 			cards.remove(0);
 		}
-
-		// System.err.println(pickedCard);
 	}
 
 	// Retorna uma carta ao deck

@@ -14,7 +14,7 @@ class Selection extends JPanel {
 	public static Selection Selection = null;
 	
     // Escrever nome do jogador
-	JTextField textField = new JTextField("Nome do jogador",20);
+	JTextField textField = new JTextField("Insira o jogador",20);
 
     // Escolher cor do jogador
 	JComboBox<PlayerColor> comboBox = new JComboBox<>(PlayerColor.values());

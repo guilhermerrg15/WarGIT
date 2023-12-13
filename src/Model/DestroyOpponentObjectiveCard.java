@@ -25,7 +25,7 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
     public boolean checkStatus() {
 
         if (owner.getColor() != enemy.getColor()) {
-            
+
             if (enemy.getTerritoryNumber() > 0){
                 return false;
             }
@@ -33,6 +33,10 @@ class DestroyOpponentObjectiveCard extends ObjectiveCard{
                 return true;
             }
             if (enemy.getEliminadoNessaRodada() &&  enemy.getJMatou() != owner && owner.getTerritoryNumber() >= 24){
+                return true;
+            }
+            if (enemy.getTerritoryNumber() == 0 && enemy.getJMatou() != owner  && owner.getTerritoryNumber() >= 24)
+            {
                 return true;
             }
         }

@@ -158,7 +158,7 @@ public class APIController {
             return true;
         } else {
             String[] la = api.getTerritoryMoreOne(api.getCorJogadorVez(turn));
-            if (la == null){
+            if (la == null || api.getTerritorioJogadorVez(turn) == 0){
                 clickedChangePlayer();
             }
             view.atualizaAtacantes(la);
@@ -227,7 +227,7 @@ public class APIController {
         view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
         isSaveEnabled = true;
         // se proximo jogador foi eliminado nessa rodada passa para o proximo
-        if (api.getJogadorVezEliminadoRodada(turn)){
+        if (api.getJogadorVezEliminadoRodada(turn) || api.getTerritorioJogadorVez(turn) == 0){
             turn = (turn + 1) % api.getNumPlayers();
             view.mudaJogador(api.getNomeJogadorVez(turn), api.getCorJogadorVez(turn));
         }

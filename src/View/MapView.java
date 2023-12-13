@@ -398,7 +398,6 @@ public class MapView extends JPanel implements Observer{
 
 		
 		if(showTerritoryCards){
-			// System.err.println(controller.getTerritoryCards());
 			TerritoryCardView.drawTerritoryCard(g, controller.getTerritoryCards());
 		}
     }

@@ -57,7 +57,7 @@ public class PlayerConfig extends JPanel {
 					coresJogadores.clear();
 					JOptionPane.showMessageDialog(null, "Nomes ou cores inválidos ou repetidos", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
-                System.out.println("HELLOO");
+                
             }
         });
 
