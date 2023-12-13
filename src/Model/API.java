@@ -4,9 +4,11 @@ import View.ViewAPI;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.*;
 
 import javax.swing.JFileChooser;
@@ -502,120 +504,55 @@ public class API {
     }
 
     public void saveGame() {
-
         JFileChooser fileChooser = new JFileChooser();
-
+    
         int userSelection = fileChooser.showSaveDialog(null);
-
+    
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
+    
+            // Adicione a extensão .txt se ainda não estiver presente
+            if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
+                fileToSave = new File(fileToSave.getAbsolutePath() + ".txt");
+            }
+    
             try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave));
-
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileToSave), "UTF-8"));
+    
                 writer.write(String.valueOf(APIController.getInstance().getFirstRound()));
                 writer.write("\n");
-
-                //Escreve qtd de jogadores e vez do jogador
+    
+                // Escreve qtd de jogadores e vez do jogador
                 writer.write(String.valueOf(game.getPlayers().size()));
                 writer.write("\n");
                 writer.write(String.valueOf(APIController.getInstance().getTurn()));
                 writer.write("\n");
-
+    
                 // Informações dos jogadores (nome, cor, objetivo)
                 for (Player player : game.getPlayers()) {
                     writer.write("Jogador: " + player.getName() + ", Cor: " + player.getColor() + "\n");
                     writer.write("Objetivo: " + player.getObjectiveName() + "\n");
-
                 }
-
+    
                 // Informações dos territórios e seus proprietários
                 for (Territory territory : map.getTerritoriesList()) {
                     writer.write("Território: " + territory.getName() + ", Tropas: " + territory.getArmies() + " / ");
-
+    
                     // Verificar se o território tem um proprietário
                     if (territory.getOwner() != null) {
                         writer.write("Proprietário: " + territory.getOwner().getName() + "\n");
                     } else {
                         writer.write("Sem Proprietário\n");
                     }
-
                 }
                 writer.close();
-
+    
                 System.out.println("Jogo salvo com sucesso em " + fileToSave.getAbsolutePath());
             } catch (IOException e) {
                 System.err.println("Erro ao salvar o jogo: " + e.getMessage());
             }
         }
     }
-
-    public void loadGame() {
-        JFileChooser fileChooser = new JFileChooser();
-
-        // Configurar o JFileChooser para abrir a caixa de diálogo de abrir arquivo
-        int userSelection = fileChooser.showOpenDialog(null);
-
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToLoad = fileChooser.getSelectedFile();
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(fileToLoad));
-
-                // Leitura de informações do arquivo
-                // APIController.getInstance().setFirstRound(Boolean.parseBoolean(reader.readLine()));
-
-                // Ler quantidade de jogadores e vez do jogador
-                int numPlayers = Integer.parseInt(reader.readLine());
-                int currentTurn = Integer.parseInt(reader.readLine());
-                APIController.getInstance().setTurn(currentTurn);
-
-                // Limpar jogadores existentes
-                game.getPlayers().clear();
-
-                // Ler informações dos jogadores
-                for (int i = 0; i < numPlayers; i++) {
-                    String playerName = reader.readLine().split(":")[1].trim();
-                    String playerColor = reader.readLine().split(":")[1].trim();
-                    String objective = reader.readLine().split(":")[1].trim();
-                    Player player = new Player(playerName, PlayerColor.valueOf(playerColor), i);
-                    // player.setObjective(ObjectiveFactory.createObjective(objective)); // Substitua ObjectiveFactory.createObjective pela lógica real da sua fábrica
-                    game.addPlayer(player);
-                }
-
-                // Limpar proprietários existentes dos territórios
-                for (Territory territory : map.getTerritoriesList()) {
-                    territory.setOwner(null);
-                }
-
-                // Ler informações dos territórios
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] territoryInfo = line.split("/");
-                    String territoryName = territoryInfo[0].split(":")[1].trim();
-                    int armies = Integer.parseInt(territoryInfo[1].split(":")[1].trim());
-                    String ownerName = territoryInfo[2].split(":")[1].trim();
-                    
-                    // Encontrar o território pelo nome
-                    Territory territory = map.findTerritory(territoryName);
-                    if (territory != null) {
-                        territory.setArmies(armies);
-
-                        // Atribuir proprietário se disponível
-                        if (!ownerName.equals("Sem Proprietário")) {
-                            Player owner = game.getPlayer(ownerName);
-                            territory.setOwner(owner);
-                        }
-                    }
-                }
-
-                reader.close();
-
-                System.out.println("Jogo carregado com sucesso de " + fileToLoad.getAbsolutePath());
-            } catch (IOException e) {
-                System.err.println("Erro ao carregar o jogo: " + e.getMessage());
-            }
-        }
-    }
-
 
     // Notifica observadores de jogo
     public void notificaObsJogo(){

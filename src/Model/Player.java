@@ -142,9 +142,17 @@ class Player {
             objetivo.checkOwner(this);
         }
     }
+
     
     public ObjectiveCard getObjective() {
        return objective;
+    }
+
+    public void setObjective(ObjectiveCard objective) {
+        this.objective = objective;
+        if (objective != null) {
+            objective.checkOwner(this);
+        }
     }
     
     public String getObjectiveName() {
