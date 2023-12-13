@@ -17,6 +17,10 @@ public class ViewAPI {
     // Singleton
     StartView start = StartView.getStartView();
 
+    public void showWarning(String warn){
+		JOptionPane.showMessageDialog(null, warn);
+	}
+
     // Pegar primeiro jogador
     public void determineFirstPlayer(String nome, PlayerColor cor){
 		MapView.getMapView().determineFirstPlayer(nome, cor);
