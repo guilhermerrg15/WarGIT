@@ -4,10 +4,15 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import Controller.APIController;
+import Model.API;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +48,13 @@ class StartView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // PlayerConfig.getPlayerConfig();
                 Window.getWindow().goToCsPanel();
+            }
+        });
+
+        continueGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                APIController.getInstance().clickedLoad();
             }
         });
 
