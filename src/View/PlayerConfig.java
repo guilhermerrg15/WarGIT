@@ -13,28 +13,22 @@ import Controller.APIController;
 import Model.PlayerColor;
 
 public class PlayerConfig extends JPanel {
-    // private String imagePath = "resources/imagens/war_tabuleiro_fundo.png";
+    
     public static PlayerConfig playerConfig = null;
     private int numPlayers;
 
-    // Botão de iniciar jogo
     JButton startGameButton = new JButton("Iniciar o Jogo");
         
-    // Guarda os componentes de seleção de personagem
 	private ArrayList <Selection> selectionComponents = new ArrayList<Selection>();
 
-    // Guarda os nomes e cores dos jogadores em um array
 	private ArrayList <String> nomesJogadores = new ArrayList<String>();
     private ArrayList <PlayerColor> coresJogadores = new ArrayList<PlayerColor>();
 
-    // Adicionar fundo da tela inicial
 	Image background;
 
-    // Componente gráfico da tela inicial
 	Graphics2D graphic;
 
 
-    // Construtor da tela de configuração de jogadores
     public PlayerConfig() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -59,11 +53,8 @@ public class PlayerConfig extends JPanel {
         });
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
-        
     }
 
-    // Desenha a imagem de fundo
 	public void paintComponent(Graphics graphic) {
 		super.paintComponent(graphic);
 		this.graphic = (Graphics2D) graphic;
@@ -71,7 +62,6 @@ public class PlayerConfig extends JPanel {
 
 	}
 
-    // Desenha jogadores
 	public void drawPlayers() {
         add(Box.createVerticalStrut(150));
 		for(int i = 0;i < numPlayers;i++) {
@@ -91,23 +81,19 @@ public class PlayerConfig extends JPanel {
 		}
 	}
     
-
-    // Altera número de jogadores
 	public void setNumPlayers(int numPlayers) {
 		this.numPlayers = numPlayers;
 	}
 
-    // Pegar o nome dos jogadores
 	public ArrayList<String> getNomesJogadores() {
 		return nomesJogadores;
 	}
 
-	// Pegar a cor dos jogadores
+
 	public ArrayList<PlayerColor> getCoresJogadores() {
 		return coresJogadores;
 	}
 
-    // Singleton
     public static PlayerConfig getPlayerConfig() {
         if(playerConfig == null) {
             playerConfig = new PlayerConfig();

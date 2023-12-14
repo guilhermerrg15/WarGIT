@@ -57,10 +57,7 @@ public class MapView extends JPanel implements Observer{
 	private boolean firstRound = true;
 	API api = API.getInstance();
 
-    //Jogador da vez e cor do jogador
 	String currentPlayer;
-
-	// Color corDoJogador;
 
 	String objectiveDescription;
 	JLabel currentPlayerLabel = new JLabel();
@@ -72,22 +69,15 @@ public class MapView extends JPanel implements Observer{
     APIController controller = APIController.getInstance();
     API game = API.getInstance();
 
-    //Array list de exércitos
 	ArrayList<ArmyView> armyList = new ArrayList<ArmyView>();
 	ArmyView army;
 
-    //Boolean para saber se os exércitos já foram criados
 	Boolean armyCreation = true;
 
 	Boolean showTerritoryCards = false;
 
-	
-
-    //Lista de territórios no jogo
 	String[] territories;
-	// TerritoryCardView territoryCardView = new TerritoryCardView();
 
-	//Painel dos dados
 	DiceView diceView = new DiceView();
 
 	JComboBox<String> attackingTerritories;
@@ -97,10 +87,8 @@ public class MapView extends JPanel implements Observer{
 	JComboBox<Integer> numReplacementBox;
 
     public MapView() {
-        // setLayout(new BorderLayout());
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		//Cria e adiciona o label do jogador da vez
         currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 22));
         currentPlayerLabel.setForeground(Color.BLACK);
         add(currentPlayerLabel);
@@ -795,32 +783,28 @@ public class MapView extends JPanel implements Observer{
     @Override
     public void notify(Observed o){
 
-	// Ao ser notificado, o observador recebe um objeto do tipo Object
 	Object[] infos = (Object[]) o.get();
 
-		// Conferindo se o objeto recebido é do tipo esperado, podemos converter os tipos
 		if (infos[0] instanceof ArrayList<?> && infos[1] instanceof ArrayList<?> && infos[2] instanceof Integer && infos[3] instanceof Integer){
 			ArrayList<String> qtds = (ArrayList<String>) infos[0];
 			ArrayList<PlayerColor> cores = (ArrayList<PlayerColor>) infos[1];
 			Integer mod1 = (Integer) infos[2];
 			Integer mod2 = (Integer) infos[3];
 
-			// Se nenhum território em específico foi modificado, então redesenha todos
 			if (mod1 == -1 && mod2 == -1){
 				int cont = 0;
 				for(ArmyView e: armyList){
 					e.setNumArmies(qtds.get(cont));
 					e.setCor(getColorFromPlayerColor(cores.get(cont)));
 					cont++;
-					//redesenhar todos os exércitos
 					e.repaint();
 					e.drawPlayer(g);
 					e.repaint();
 				}
 			}
-			// Se tiver específicos, redesenha apenas eles
+			
 			else{
-				// Redesenha o primeiro modificado
+				
 				ArmyView e = armyList.get(mod1);
 				e.setNumArmies(qtds.get(mod1));
 				e.setCor(getColorFromPlayerColor(cores.get(mod1)));
@@ -828,7 +812,6 @@ public class MapView extends JPanel implements Observer{
 				e.drawPlayer(g);
 				repaint();
 
-				// Se tiver um segundo modificado, redesenha ele também
 				if (mod2 != -1){
 					e = armyList.get(mod2);
 					e.setNumArmies(qtds.get(mod2));

@@ -9,7 +9,6 @@ class DiceView {
 
 	Image[] dadoAtacante = new Image[7];
 
-	//Array de imagens dos dados de defesa
 	Image[] dadoDefensor = new Image[7];
 	Image ataque1;
 	Image ataque2;
@@ -17,14 +16,9 @@ class DiceView {
 	Image defesa1;
 	Image defesa2;
 	Image defesa3;
-
-	//Componente gráfico
 	Graphics2D g2d;
 
-	//Construtor
 	public DiceView(){
-
-		//Carrega as imagens dos dados
 		try {
 			dadoAtacante[0] = (ImageIO.read(new File("resources/imagens/dado_desativado.png")));
 			dadoAtacante[1] =(ImageIO.read(new File("resources/imagens/dado_ataque_1.png")));
@@ -43,22 +37,18 @@ class DiceView {
 			dadoDefensor[6] =(ImageIO.read(new File("resources/imagens/dado_defesa_6.png")));
 
 		}
-
-		//Caso não consiga carregar as imagens, mostra uma mensagem de erro
 		catch (IOException e) {
 			System.out.println("Nao foi possivel carregar a imagem dos dados");
 
 		}
 	}
 
-	//Desenha as imagens dos dados
 	public void drawDices(Graphics g) {
 		g2d = (Graphics2D) g;
 
 		int dimension = 50;
 		int diceSpacing = 10;
 
-		// showDices(null, null);
 		g2d.drawImage(ataque1,20,60,dimension,dimension,null);
 		g2d.drawImage(ataque2,20 + dimension + diceSpacing,60,dimension,dimension,null);
 		g2d.drawImage(ataque3,20 + (dimension + diceSpacing)*2,60,dimension,dimension,null);
@@ -67,7 +57,6 @@ class DiceView {
 		g2d.drawImage(defesa3,20 + (dimension + diceSpacing)*2,60+dimension+diceSpacing,dimension,dimension,null);
 	}
 
-	//Mostra os dados de ataque e defesa na tela
 	public void showDices(int[] dadosAtaque, int[] dadosDefesa) {
 		ataque1 = dadoAtacante[dadosAtaque[0]];
 		ataque2 = dadoAtacante[dadosAtaque[1]];
@@ -77,7 +66,6 @@ class DiceView {
 		defesa3 = dadoDefensor[dadosDefesa[2]];
 	}
 
-	// Resetar valores dos dados como null para não aparecem
 	public void clearDices() {
 		ataque1 = null;
 		ataque2 = null;

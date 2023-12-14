@@ -19,13 +19,9 @@ public class NumPlayersView extends JPanel {
     JRadioButton player6Button = new JRadioButton("6 jogadores");
     ButtonGroup allButtons = new ButtonGroup();
     JButton confirmeButton = new JButton("Confirmar");
-
-    // Adicionar fundo da tela inicial
 	Image background;
     Image foreground;
-    
 
-    // Componente gráfico da tela inicial
 	Graphics2D graphic;
 
     public NumPlayersView() {
@@ -94,16 +90,15 @@ public class NumPlayersView extends JPanel {
         gbc.gridy++;
         add(player6Button, gbc);
         gbc.gridy++;
-        gbc.anchor = GridBagConstraints.CENTER; // Alinha o botão Confirmar ao centro
+        gbc.anchor = GridBagConstraints.CENTER;
         add(confirmeButton, gbc);
 
-        //Carrega a imagem de fundo
 		try {
 			background = ImageIO.read(new File ("resources/imagens/war_tabuleiro_fundo.png"));
             foreground = ImageIO.read(new File("resources/imagens/bgconfiguracao.png"));
 		}
 		catch (IOException e) {
-			System.out.println("Erro na leitura do plano de fundo\n");
+			System.out.println("erro na leitura\n");
 		}
     }
 
@@ -115,20 +110,17 @@ public class NumPlayersView extends JPanel {
 		this.graphic.drawImage(background, 0, 0, 1440, 900, null);
         this.graphic.drawImage(foreground, 520, 120, 400, 600, null);
 
-        // Desenha um retângulo entre a imagem de foreground e os botões
         int rectangleWidth = 340;
         int rectangleHeight = 380;
         int rectangleX = 550;
         int rectangleY = 250;
 
-        this.graphic.setColor(Color.LIGHT_GRAY); // Cor do retângulo
+        this.graphic.setColor(Color.LIGHT_GRAY);
         this.graphic.fillRect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
-        this.graphic.setColor(Color.BLACK); // Cor da borda do retângulo
+        this.graphic.setColor(Color.BLACK);
         this.graphic.drawRect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
 
 	}
-
-
     public static NumPlayersView getNumPlayersView() {
         if(numPlayersView == null) {
             numPlayersView = new NumPlayersView();
