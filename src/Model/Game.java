@@ -72,20 +72,20 @@ class Game implements Observed{
             numArmies.add(((Integer)t.getArmies()).toString());
             colors.add(t.getCor());
         }
-        infos[2] = numArmies;
-        infos[3] = colors;
+        infos[0] = numArmies;
+        infos[1] = colors;
 
         if (alt1 == null){
-            infos[0] = -1;
+            infos[2] = -1;
         }
         else{
-            infos[0] = map.getTerritoriesList().indexOf(alt1);
+            infos[2] = map.getTerritoriesList().indexOf(alt1);
         }
         if (alt2 == null){
-            infos[1] = -1;
+            infos[3] = -1;
         }
         else{
-            infos[1] = map.getTerritoriesList().indexOf(alt2);
+            infos[3] = map.getTerritoriesList().indexOf(alt2);
         }
         return infos;
     }

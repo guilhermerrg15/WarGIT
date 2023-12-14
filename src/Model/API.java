@@ -40,7 +40,7 @@ public class API {
         return apiInstance;
     }
 
-    // Método para reiniciar o jogo
+
     public void restartGame(){
         game.restartGame(objectiveDeck, territoryCardDeck);
         game.setAlt1(null);
@@ -61,16 +61,11 @@ public class API {
         return game.getPlayerTurn(turn).getTerritoryNumber();
     }
 
-    // Método para obter a quantidade de territórios de um jogador específico
     public int getNumTerritoryPlayer(PlayerColor playerColor) {
         int numTerritories = 0;
 
-        // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
-
-        // Percorre a lista de territórios
         for (Territory territory : territories) {
-            // Verifica se o território pertence ao jogador da cor específica
             if (territory.getOwner().getColor() == playerColor) {
                 numTerritories++;
             }
@@ -95,36 +90,27 @@ public class API {
 
     }
 
-    //pega vizinhos que não são do jogador
     public String[] getNeiboursNotDominated(String t, int vez) {
         List<Territory> territoriesList = map.getTerritoriesList();
         List<String> territoriesNotDominated = new ArrayList<>();
 
         for (Territory ter : territoriesList) {
-            // Verifica se o território é vizinho e não é dominado pelo jogador
             if (ter.isNeighbor(t) && !ter.getOwner().getName().equals(game.getPlayerTurn(vez).getName())) {
                 territoriesNotDominated.add(ter.getName());
             }
         }
-
-        // Se não houver territórios não dominados, retorna null
         if (territoriesNotDominated.isEmpty()) {
             return null;
         }
-
-        // Converte a lista para um array
         return territoriesNotDominated.toArray(new String[0]);
     }
 
-    //pega territorios vizinhos que tem mais de um exercito
    public String[] getTerritoryMoreOne(PlayerColor playerColor) {
         int quant = 0;
 
-        // Obtém a lista de territórios do objeto Map
         ArrayList<Territory> territories = map.getTerritoriesList();
         List<String> territoriesMoreOneArmy = new ArrayList<>();
 
-        // Adiciona na lista os nomes dos territórios com mais de um exército
         for (Territory t : territories) {
             if (t.getOwner().getColor() == playerColor && t.getArmies() > 1) {
                 territoriesMoreOneArmy.add(t.getName());
@@ -132,99 +118,69 @@ public class API {
             }
         }
 
-        // Se não houver territórios com mais de um exército, retorna null
         if (territoriesMoreOneArmy.isEmpty()) {
             return null;
         }
 
-        // Copia a lista para uma lista final, removendo espaços vazios
         String[] finalTerritories = new String[quant];
-        territoriesMoreOneArmy.toArray(finalTerritories);//
+        territoriesMoreOneArmy.toArray(finalTerritories);
 
         return finalTerritories;
     }
 
-    // Retornar todos os jogadores
     public ArrayList<Player> getAllPlayers() {
         return this.game.getPlayers();
     }
 
-    // Método que retorna a quantidade de jogadores
     public int getNumPlayers(){
         return game.getPlayers().size();
     }
 
-    // Altera o estado de eliminação do jogador
     public void withdrawEliminated(String name){
         game.getPlayer(name).setEliminatedThisRound(false);
     }
 
-
-    // Retorna quantidade de exércitos que tem em um território
     public Integer getNumArmiesTerritory(String territorio) {
-        // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
-
-        // Percorre a lista de territórios
         for (Territory territory : territories) {
-            // Verifica se o nome do território é igual ao território desejado
             if (territory.getName().equals(territorio)) {
-                // Retorna a quantidade de exércitos do território encontrado
                 return territory.getArmies();
             }
         }
-        // Retorna null se o território não for encontrado
         return null;
     }
 
-    // Chama reposicionarExercitos de Jogo
     public void replaceArmies(String origin, String destiny, Integer num){
-        // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
         Territory TOrigin = null;
         Territory TDestiny = null;
 
-        // Percorre a lista de territórios
         for (Territory territory : territories) {
-            // Verifica se o nome do território é igual ao território desejado
             if (territory.getName().equals(origin)) {
-                // Retorna a quantidade de exércitos do território encontrado
                 TOrigin = territory;
             }
             if (territory.getName().equals(destiny)) {
-                // Retorna a quantidade de exércitos do território encontrado
                 TDestiny = territory;
             }
         }
 
-        // Verifica se encontrou os territórios de origem e destino
         if (TOrigin != null && TDestiny != null) {
-            // Chama o método de reposicionarExercitos
             game.reposicionarExercitos(TOrigin, TDestiny, num);
         } else {
             System.out.println("Territórios de origem ou destino não encontrados.");
         }
     }
 
-    // Retorna quantidade de exércitos que tem em um território
     public Integer getNumOldArmies(String territorio) {
-        // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
-
-        // Percorre a lista de territórios
         for (Territory territory : territories) {
-            // Verifica se o nome do território é igual ao território desejado
             if (territory.getName().equals(territorio)) {
-                // Retorna a quantidade de exércitos do território encontrado
                 return territory.getInitialArmy();
             }
         }
-        // Retorna null se o território não for encontrado
         return null;
     }
 
-
-    // Retorna lista de nomes de territórios
     public String[] getTerritoriesList() {
 		String [] terr = new String[51];
 		int cont = 0;
@@ -262,43 +218,31 @@ public class API {
         return dominatedTerritories.toArray(new String[0]);
     }
 
-     // Atualiza a quantidade de exércitos em um território
      public void setNumArmiesTerritory(String territorio, int count) {
-        // Obtém a lista de territórios do objeto Map
         List<Territory> territories = map.getTerritoriesList();
-
-        // Percorre a lista de territórios
         for (Territory territory : territories) {
-            // Verifica se o nome do território é igual ao território desejado
             if (territory.getName().equals(territorio)) {
-                // Usa o método addArmies para incrementar a quantidade de exércitos
                 territory.setArmies(count);
                 return;
             }
         }
     }
 
-    //Método de realizar ataque
     public int[] makeAttack(String attacker,String defender, Integer numAttack, Integer numDefense) {
 
     	Territory Tattacker = map.findTerritory(attacker);
     	Territory Tdefender = map.findTerritory(defender);
 
-        // Realiza ataque e retorna array com os resultados
         int[] array = game.makeAttack(Tattacker, Tdefender, numAttack, numDefense);
 
-        // Verifica se jogador ganhou após essa rodada
 		APIController.getInstance().verifyWin(APIController.getInstance().getTurn());
         return array;
     }
 
-    // Retorna array com os nomes dos territórios das cartas do jogador
     public String[] getPlayerCardNames(int turn){
         List<TerritoryCard> cards = game.getPlayerTurn(turn).getCard();
         String[] cardArray = new String[cards.size()];
         int cont = 0;
-
-        // Adiciona na lista os nomes dos territórios das cartas
         for (TerritoryCard c: cards) {
             cardArray[cont] = c.getName();
             cont++;
@@ -307,7 +251,6 @@ public class API {
         return cardArray;
     }
 
-    //Verifica se o jogador da vez ganhou o jogo
     public boolean verifyWin(int turn){
         if (turn == -1){
             for (Player player : game.getPlayers()) {
@@ -344,7 +287,6 @@ public class API {
         return r;
     }
 
-    // Pegar carta de objetivo do jogador
     public String playerObjective(String name) {
         for(Player player : game.getPlayers()){
             if(player.getName() == name) {
@@ -366,23 +308,19 @@ public class API {
         return game.getPlayerTurn(t).getCard();
     }
 
-    // Pegar lista de territórios em posse do jogador
     public List<Territory> retrieveTerritories() {
         return game.getPlayers().get(this.turn).getConqueredTerritories();
     }
 
-    // Adicionar jogadores
     public boolean addPlayer(String name, PlayerColor color, int index) {
         Player player = new Player(name, color, index);
         return game.addPlayer(player);
     }
 
-    // Pegar o nome do jogador da vez
     public String getPlayerTurn(int i){
         return game.getPlayerTurn(i).getName();
     }
 
-    // Método que retorna a cor do jogador da vez
     public PlayerColor getPlayerColorTurn(int i){
         return game.getPlayerTurn(i).getColor();
     }
@@ -407,46 +345,38 @@ public class API {
         game.getPlayers().clear();
     }
 
-    // Sorteia objetivos para todos os jogadores
     public void shuffleObjectives(List<Player> players, ObjectiveCardDeck objectiveDeck) {
 		Collections.shuffle(players);
 		for(Player player : players) {
 			objectiveDeck.shuffleObjective(player);
 		}
 	}
-
-    // Conferir vencedor da batalha
+    
     public Integer[] battleWinner(List<Integer> diceAttack, List<Integer> diceDefense) {
-        // Criar lista de quantidade de derrotas
         Integer[] battle = new Integer[2];
 
         int attackCount = diceAttack.size();
         int defenseCount = diceDefense.size();
-
-        // Contador de derrotas
+        
         int countAttack = 0;
         int countDefense = 0;
 
-        // Verifica que ambos ainda possuem dados a serem comparados
         while(attackCount != 0 && defenseCount != 0){
             int attackValue = 0;
             int defenseValue = 0;
 
-            // Encontrar o maior valor de ataque
+            
             for(int i = 0; i < attackCount; i++) {
                 if(diceAttack.get(attackValue) < diceAttack.get(i)) {
                     attackValue = i;
                 }
             }
-
-            // Encontrar o maior valor de defesa
+            
             for(int i = 0; i< defenseCount; i++) {
                 if(diceDefense.get(defenseValue) < diceDefense.get(i)) {
                     defenseValue = i;
                 }
             }
-
-            // Comparar os dois maiores valores encontrados
             if(diceAttack.get(attackValue) < diceDefense.get(defenseValue)) {
                 countAttack++;
             } else {
@@ -454,7 +384,6 @@ public class API {
             }
         }
 
-        // Salvar quantidade de derrotas
         battle[0] = countAttack;
         battle[1] = countDefense;
 
@@ -466,11 +395,10 @@ public class API {
         return game.hasTrade(player);
     }
 
-    // Troca cartas do jogador da vez
+    
     public Integer tradeCards(int turn, int numTrades){
         Player player = game.getPlayerTurn(turn);
 
-        // Se o jogador puder trocar cartas, chama o método de trocar cartas de Jogo
         if (game.hasTrade(player)){
             return game.changeCards(numTrades, territoryCardDeck, map, player);
         }
@@ -490,7 +418,7 @@ public class API {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
     
-            // Adicione a extensão .txt se ainda não estiver presente
+            
             if (!fileToSave.getName().toLowerCase().endsWith(".txt")) {
                 fileToSave = new File(fileToSave.getAbsolutePath() + ".txt");
             }
@@ -500,14 +428,13 @@ public class API {
     
                 writer.write(String.valueOf(APIController.getInstance().getFirstRound()));
                 writer.write("\n");
-    
-                // Escreve qtd de jogadores e vez do jogador
+                
                 writer.write(String.valueOf(game.getPlayers().size()));
                 writer.write("\n");
                 writer.write(String.valueOf(APIController.getInstance().getTurn()));
                 writer.write("\n");
     
-                // Informações dos jogadores (nome, cor, objetivo)
+                
                 for (Player player : game.getPlayers()) {
                     writer.write("Jogador: " + player.getName() + ", Cor: " + player.getColor() + "\n");
                     writer.write("Objetivo: " + player.getObjectiveName() + "\n");
@@ -528,11 +455,11 @@ public class API {
                 }
                 writer.write("Numeros de trocas de carta: " + APIController.getInstance().getNumTrades().toString());
     
-                // Informações dos territórios e seus proprietários
+                
                 for (Territory territory : map.getTerritoriesList()) {
                     writer.write("Território: " + territory.getName() + ", Tropas: " + territory.getArmies() + " / ");
     
-                    // Verificar se o território tem um proprietário
+                    
                     if (territory.getOwner() != null) {
                         writer.write("Proprietário: " + territory.getOwner().getName() + "\n");
                     } else {

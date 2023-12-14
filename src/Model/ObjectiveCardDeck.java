@@ -1,6 +1,5 @@
 
 package Model;
-//
 import java.util.*;
 /**
  * Uma lista com todos os objetivos do jogo.
@@ -15,7 +14,7 @@ public class ObjectiveCardDeck {
         this.objectiveCards = new ArrayList<>(); 
         this.colorToObjectiveMapping = new HashMap<>();
 
-        // Mapeamento automático de cor para objetivo
+
         colorToObjectiveMapping.put(PlayerColor.AZUL, "objetivo1");
         colorToObjectiveMapping.put(PlayerColor.VERDE, "objetivo2");
         colorToObjectiveMapping.put(PlayerColor.VERMELHO, "objetivo3");

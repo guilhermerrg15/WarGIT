@@ -13,12 +13,9 @@ class Territory {
     private Player owner;
     private int armies;
     private String continent;
-    // private List<Territory> neighbours;
     private List<String> neighbours;
     private List<Observer> lst = new ArrayList<Observer>();
     private int inicialArmie;
-
-    //Guarda a cor do território 
 	private PlayerColor cor;
 
     private int i1, i2 = -1;
@@ -98,7 +95,6 @@ class Territory {
         return armies;
     }
 
-    //Altera a quantidade de exércitos
     public void setArmies(int armies) {
         this.armies = armies;
     }
@@ -107,7 +103,6 @@ class Territory {
         return inicialArmie;
     }
 
-    //Altera a quantidade de exércitos
     public void setInicialArmies(int armies) {
         this.inicialArmie = armies;
     }
@@ -125,10 +120,7 @@ class Territory {
         this.armies += count;
     }
 
-
-    // Int positivo add exercitos e negativo subtrai 
     protected boolean changeNumArmies (int qnd) {
-        // se tentar subtrair mais exércitos do que tem (sem poder zerar)
         if (qnd < 0)
             if ((qnd * (-1)) >= this.armies)
                 return false;
@@ -148,20 +140,10 @@ class Territory {
         }
     } 
 
-    
-    /**
-     * Obtém a lista de territórios vizinhos.
-     *
-     * @return A lista de territórios vizinhos.
-     */
-    // public List<Territory> getNeighbours() {
-    //     return neighbours;
-    // }
     public List<String> getNeighbours() {
         return neighbours;
     }
 
-    //Retorna a cor do territorio
     public PlayerColor getCor() {
         return cor;
     }

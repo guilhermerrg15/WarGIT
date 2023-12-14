@@ -11,19 +11,17 @@ import java.util.ArrayList;
  */
 class Map {
 	
-	// private Continent[] continents;
+
 	private List<Continent> continents = new ArrayList<>();
 	private static Map map = null;
 	private ArrayList<Territory> territoriesList = new ArrayList<Territory>();
 	
 	public Map() {
-		
-		//nao sei se ta certo
 		initializeContinents();
 		initializeTerritories(continents);
 	}
 
-	//Retorna a instância do tabuleiro
+
 	public static synchronized Map getMap() {
 		if (map == null){
 			map = new Map();
@@ -31,7 +29,6 @@ class Map {
 		return map;
 	}
 
-	// Inicializando os continentes
     private void initializeContinents() {
         continents.add(createOceania());
         continents.add(createEurope());
@@ -65,7 +62,6 @@ class Map {
 
 			t.setOwner(j);
 
-			// Define 1 para a quantidade de exércitos do território
 			t.setArmies(1);
 
 			t.setInicialArmies(1);

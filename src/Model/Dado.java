@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 class Dado {
     private static int value;
 
-    Dado() {} // Construtor privado para impedir a criação de instâncias
+    Dado() {}
     
     /**
      * Simula o lançamento do dado e define seu valor.

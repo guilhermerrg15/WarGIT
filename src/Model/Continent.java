@@ -89,8 +89,8 @@ class Continent {
     
     public boolean checkContinentDomain(Player player) {
 		for(Territory territory: territories) {
-			if(player != territory.getOwner()) { //verifica se o jogador dos paises é diferente do jogador que queremos conferir
-				return false;
+			if(player != territory.getOwner()) { 
+                return false;
 			}
 		}
 		return true;

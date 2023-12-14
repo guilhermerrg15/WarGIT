@@ -120,7 +120,6 @@ class TerritoryCardDeck {
 		return cards;
 	}
 
-	// Pegar uma carta após o fim de jogada com conquista
 	public void pickRandomCard(Player player) {
 		shuffleCards();
 		TerritoryCard pickedCard = cards.get(0);
@@ -131,12 +130,10 @@ class TerritoryCardDeck {
 		}
 	}
 
-	// Retorna uma carta ao deck
 	public void returnCard(TerritoryCard card) {
 		cards.add(card);
 	}
 
-	// maximo de cartas por jogador
 	public int getMaximumCards() {
 		return this.maximumCards;
 	}

@@ -75,9 +75,8 @@ public class MapView extends JPanel implements Observer{
 	Boolean armyCreation = true;
 
 	Boolean showTerritoryCards = false;
-
 	String[] territories;
-
+	
 	DiceView diceView = new DiceView();
 
 	JComboBox<String> attackingTerritories;
@@ -89,6 +88,7 @@ public class MapView extends JPanel implements Observer{
     public MapView() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
+		//Cria e adiciona o label do jogador da vez
         currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 22));
         currentPlayerLabel.setForeground(Color.BLACK);
         add(currentPlayerLabel);
@@ -143,7 +143,6 @@ public class MapView extends JPanel implements Observer{
 			}
 		});
 
-		// Adiciona ação ao clicar no botão de reposicionar
 		reposicionarButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(originTerritories.getSelectedItem() != null && destinyTerritories.getSelectedItem() != null){
@@ -153,7 +152,6 @@ public class MapView extends JPanel implements Observer{
 			}
 		});
 
-		//Adiciona ação ao clicar no botão de trocar cartas
 		cardsTradeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.clickedTrade();
@@ -213,20 +211,17 @@ public class MapView extends JPanel implements Observer{
 			}
 		});
 
-		// Adiciona ação ao selecionar um atacante
 		attackingTerritories.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				controller.attackerSelected((String) attackingTerritories.getSelectedItem());
 	        }
 		});
 
-		//Adiciona ação ao clicar no botão de jogar os dados
 		playDicesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int [] dicesAttack = new int [3];
 				int [] dicesDefense = new int [3];
 
-				//Chama a função de jogar os dados
 				int[] diceValues= api.makeAttack(attackingTerritories.getSelectedItem().toString(), defendingTerritories.getSelectedItem().toString(), Integer.valueOf((String)attackDices.getSelectedItem()), Integer.valueOf((String)defenseDices.getSelectedItem()));
 				dicesAttack[0] = diceValues[0];
 				dicesAttack[1] = diceValues[1];
@@ -235,7 +230,6 @@ public class MapView extends JPanel implements Observer{
 				dicesDefense[1] = diceValues[4];
 				dicesDefense[2] = diceValues[5];
 
-				// Mostra os dados na tela
 				diceView.showDices(dicesAttack, dicesDefense);
 				controller.clickedAttack();
 				repaint();
@@ -243,17 +237,14 @@ public class MapView extends JPanel implements Observer{
 		});
 
 		checkObjectivesButton.addActionListener(new ActionListener() {
-            // Adicionar ação do botão de ver carta de objetivo do jogador da vez
             @Override
             public void actionPerformed(ActionEvent e) {
 				objectiveDescription = game.playerObjective(currentPlayer);
 
-				// Pegar imagem da carta de objetivo de acordo com o jogador da vez
 				try {
                     objectiveCard = ImageIO.read(new File("resources/imagens/war_carta_" + objectiveDescription + ".png"));
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    // Handle the exception appropriately (e.g., load a default image)
                 }
 
 				// Toggle da carta de objetivo
@@ -263,7 +254,6 @@ public class MapView extends JPanel implements Observer{
         });
 
 		checkCardsButton.addActionListener(new ActionListener() {
-            // Adicionar ação do botão de ver carta de territorio do jogador da vez
             @Override
             public void actionPerformed(ActionEvent e) {
 				showTerritoryCards = !showTerritoryCards;
@@ -273,7 +263,6 @@ public class MapView extends JPanel implements Observer{
 
 		try {
 			backgroundImage = ImageIO.read(new File("resources/imagens/imagemFundo.png"));
-            // g.drawImage(backgroundImage, 0, 0, 1200, 700, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -287,7 +276,6 @@ public class MapView extends JPanel implements Observer{
 
         currentPlayerLabel.setText(currentPlayer);
 
-		// Desenhar imagem dos dados
 		diceView.drawDices(graphic);
 
         if(armyCreation) {
@@ -310,12 +298,8 @@ public class MapView extends JPanel implements Observer{
 				continueButton.setVisible(false);
 			}
 		} else {
-		
-			// Se o modoAddTropas for falso, esconde o botão "Continuar"
 			continueButton.setVisible(false);
 		}
-
-		
 
 		if(firstRound) {
 			attackingTerritories.setVisible(false);
@@ -410,14 +394,12 @@ public class MapView extends JPanel implements Observer{
         return MapView;
     }
 
-    // Atualiza view no início da rodada de posicionamento para determinar o primeiro jogador
 	public void determineFirstPlayer(String currentPlayer, PlayerColor playerColor){
 		this.currentPlayer = currentPlayer;
         this.playerSelectedColor = playerColor;
         addSquareColor(); 
 	}
 
-	// Muda o jogador da vez na view
 	public void changePlayer(String name, PlayerColor color){
 		this.currentPlayer = name;
 		this.playerSelectedColor = color;
@@ -426,9 +408,7 @@ public class MapView extends JPanel implements Observer{
 		repaint();
 	}
 
-	// Atualiza view no início da rodada de posicionamento para atualizar os jogadores atacantes
 	public void updateAttackers(String[] attackers){
-		// Esvazia a comboBox de atacantes e adiciona os novos territórios
 		attackingTerritories.removeAllItems();
 
 		for (String s: attackers){
@@ -436,9 +416,7 @@ public class MapView extends JPanel implements Observer{
 		}
 	}
 
-	// Atualiza os territórios a serem atacados a partir do território selecionado
 	public void updateDefenders(String[] defenders){
-		// Esvazia a comboBox de defensores e adiciona os novos territórios
 		defendingTerritories.removeAllItems();
 
 		for (String s: defenders){
@@ -489,15 +467,33 @@ public class MapView extends JPanel implements Observer{
 		diceView.clearDices();
 	}
 
-    // Instancia os objetos dos exércitos
 	void createArmies(Graphics2D g2d) {
-		//Pega a lista de territórios
 		this.territories = controller.getTerritoriesList();
 		ArmyView armies;
 
-		//Verifica qual o território e desenha o exército na posição correta
 		for (String t: territories) {
 			switch(t){
+
+				// //África
+				case "Egito":
+					armies = new ArmyView(800,446,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Argélia":
+					armies = new ArmyView(629,432,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Nigéria":
+					armies = new ArmyView(670,489,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Somália":
+					armies = new ArmyView(871,554,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Angola":
+					armies = new ArmyView(772,600,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "África do Sul":
+					armies = new ArmyView(809,660,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+
 				//América do Sul
 				case "Brasil":
 					armies = new ArmyView(425,540,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
@@ -541,53 +537,7 @@ public class MapView extends JPanel implements Observer{
 					armies = new ArmyView(245,285,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
 					break;
 
-				// //Europa
-				case "Polônia":
-					armies = new ArmyView(796,239,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "França":
-					armies = new ArmyView(670,292,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Suécia":
-					armies = new ArmyView(745,162,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Espanha":
-					armies = new ArmyView(621,315,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Reino Unido":
-					armies = new ArmyView(645,215,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Romênia":
-					armies = new ArmyView(805,298,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Ucrânia":
-					armies = new ArmyView(835,284,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Itália":
-					armies = new ArmyView(732,285,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-
-				// //África
-				case "Egito":
-					armies = new ArmyView(800,446,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Argélia":
-					armies = new ArmyView(629,432,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Nigéria":
-					armies = new ArmyView(670,489,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Somália":
-					armies = new ArmyView(871,554,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "Angola":
-					armies = new ArmyView(772,600,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-				case "África do Sul":
-					armies = new ArmyView(809,660,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
-					break;
-
-				// //Ásia
+			// //Ásia
 				case "Estônia":
 					armies = new ArmyView(944,150,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
 					break;
@@ -649,6 +599,32 @@ public class MapView extends JPanel implements Observer{
 					armies = new ArmyView(946,486,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
 					break;
 
+				// //Europa
+				case "Polônia":
+					armies = new ArmyView(796,239,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "França":
+					armies = new ArmyView(670,292,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Suécia":
+					armies = new ArmyView(745,162,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Espanha":
+					armies = new ArmyView(621,315,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Reino Unido":
+					armies = new ArmyView(645,215,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Romênia":
+					armies = new ArmyView(805,298,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Ucrânia":
+					armies = new ArmyView(835,284,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+				case "Itália":
+					armies = new ArmyView(732,285,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
+					break;
+
 				// //Oceania
 				case "Austrália":
 					armies = new ArmyView(1234,669,controller.getTerritoryColor(t), controller.getNumArmiesTerritory(t).toString(), controller.getNumOldArmies(t).toString());
@@ -669,9 +645,7 @@ public class MapView extends JPanel implements Observer{
 
 			}
 
-			//Desenha o território
             armies.drawPlayer(g2d);
-			//Adiciona exército na lista
 			armyList.add(armies);
 			territoryMapping.put(new Ellipse2D.Float(armies.getPosX(), armies.getPosY(), 22, 22), t);
 		}
@@ -682,7 +656,6 @@ public class MapView extends JPanel implements Observer{
 		return bonusTradeSum;
 	}
 
-    // Retorna quantidade de exércitos que tem em um território
     public Integer getNumArmiesTotal(ArrayList<ArmyView> armyList) {
 		int sumArmies = 0;
 		for (ArmyView army : armyList) {
@@ -693,12 +666,10 @@ public class MapView extends JPanel implements Observer{
 		return sumArmies;
     }
 
-	// fazer uma logica aqui para se o numero de exercitos chegar no máximo, trocar de jogador
 	private void handleBallClick(int mouseX, int mouseY) {
 		if (addTroopsMode) {
 			
 			// Calcular a quantidade máxima de exércitos permitidos
-			
 			int quantidadeMaximaExercitos = controller.getNumTerritoryPlayer(playerSelectedColor) / 2; 
 			
 
@@ -780,7 +751,7 @@ public class MapView extends JPanel implements Observer{
         }
     }
 
-    @Override
+	@Override
     public void notify(Observed o){
 
 	Object[] infos = (Object[]) o.get();
@@ -802,9 +773,7 @@ public class MapView extends JPanel implements Observer{
 					e.repaint();
 				}
 			}
-			
 			else{
-				
 				ArmyView e = armyList.get(mod1);
 				e.setNumArmies(qtds.get(mod1));
 				e.setCor(getColorFromPlayerColor(cores.get(mod1)));

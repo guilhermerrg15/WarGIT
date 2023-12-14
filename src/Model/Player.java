@@ -2,7 +2,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-//
 /**
  * Representa um jogador no jogo.
  */
@@ -11,10 +10,9 @@ class Player {
     private String name;
     private PlayerColor color;
     protected ArrayList <Territory> territories;
-    private List<TerritoryCard> territoryCards; // cartas para troca
+    private List<TerritoryCard> territoryCards;
     private int armies;
     private boolean conqueredTerritory;
-    // private static int cont = 0;
     private int index;
     private ObjectiveCard objective;
     protected List<Army> continentalArmies;
@@ -39,7 +37,7 @@ class Player {
         this.continentalArmies = new ArrayList<Army>();
     }
 
-    // Resetar o jogador
+
     public void reset() {
 		this.territories.clear();
 		this.objective = null;
@@ -97,22 +95,21 @@ class Player {
         this.numTerritories--;
     }
 
-    //Altera se o jogador foi eliminado nessa rodada para verificação de objetivos
+
     public void setEliminatedThisRound(boolean eliminatedThisRound) {
         this.eliminatedThisRound = eliminatedThisRound;
     }
 
-	//Retorna se o jogador foi eliminado nessa rodada
+
 	public boolean getEliminatedThisRound() {
 		return eliminatedThisRound;
 	}
 
-    //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
 	public void setConqueredThisRound(boolean conqueredThisRound) {
 		this.conqueredThisRound = conqueredThisRound;
 	}
 
-    //Altera se o jogador conquistou um território nessa rodada para recepção de cartas
+
 	public boolean getConqueredThisRound() {
 		return conqueredThisRound;
 	}
