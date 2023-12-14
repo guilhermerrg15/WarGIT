@@ -35,7 +35,7 @@ public class MapView extends JPanel implements Observer{
 	JButton changePlayer = new JButton("Finalizar");
 	JButton cardsTradeButton = new JButton("Trocar Cartas");
 
-	String dicaValues[] = {"1","2","3","4","5","6"};
+	String dicaValues[] = {"0","1","2","3","4","5","6"};
 	JComboBox attackDices = new JComboBox(dicaValues);
 	JComboBox defenseDices = new JComboBox(dicaValues);
 	

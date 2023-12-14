@@ -8,20 +8,28 @@ import View.Observed;
 import View.Observer;
 import java.util.List;
 
+
+
+
 class Game implements Observed{
     private static Game game = null;
 
-    // Lista de jogadores
+	
+
     private ArrayList<Player> players = new ArrayList<Player>();
 
     private ArrayList<Observer> lst = new ArrayList<Observer>();
 
 	private List<TerritoryCard> territoryCards;
 
+	private static final int MAX_DICE = 3;
+    private static final int MIN_ARMIES_TO_ATTACK = 3;
 
 	private Integer numContinent = 0;
 
     private Map map = Map.getMap();
+
+	protected Integer qtd = 0;
 
 
 	private Territory alt1 = null;
@@ -115,7 +123,7 @@ class Game implements Observed{
 
 	//Verifica se o jogador pode trocar cartas
 	public boolean hasTrade(Player player){
-		int circles = 0, squares = 0, triangles = 0;
+		int circles = 0, squares = 0, triangles = 0, jockers = 0;
 		territoryCards = player.getCard();
 
 		// Conta quantas cartas de cada formato o jogador possui
@@ -126,23 +134,20 @@ class Game implements Observed{
 				squares++;
 			else if (cards.getShape().equals(Shape.Triangle))
 				triangles++;
-			//se for jocker adiciona 1 em todos pois o jocker entra em qualquer caso
 			else{
-				circles++;
-				squares++;
-				triangles++;
+				jockers++;
 			}
 		}
 
 		// Se o jogador possui 3 cartas de um formato ou 1 de cada formato, pode trocar
-		if (circles >= 3 || squares >= 3 || triangles >= 3 || (circles >= 1 && squares >= 1 && triangles >= 1)){
+		if (circles >= 3 || squares >= 3 || triangles >= 3 || (circles >= 1 && squares >= 1 && triangles >= 1) || (jockers == 1 && circles >= 2) || (jockers == 1 && triangles >= 2) || (jockers == 1 && squares >= 2) || (jockers == 2 && circles >= 1) || (jockers == 2 && triangles >= 1) || (jockers == 2 && squares >= 1) || (jockers == 1 && circles >= 1 && squares >= 1) || (jockers == 1 && circles >= 1 && triangles >= 1) || (jockers == 1 && triangles >= 1 && squares >= 1)){
 			return true;
 		}
 
 		return false;
 	}
 
-	public Integer changeCards (int numDeTrocas, TerritoryCardDeck territoryCardDeck, Map map, Player player) {
+	public Integer changeCards (int num, TerritoryCardDeck territoryCardDeck, Map map, Player player) {
 
 		ArrayList<TerritoryCard> circles = new ArrayList<TerritoryCard>();
 		ArrayList<TerritoryCard> squares = new ArrayList<TerritoryCard>();
@@ -162,100 +167,76 @@ class Game implements Observed{
 		}
 
 
-		if (circles.size() >= 3){
-			// Troca três cartas de círculo e devolve elas para o baralho
-			for (int i = 0; i < 3; i++){
-				useCards(circles, territoryCardDeck, map, player);
-			}
-		}
+		int i;
 
-		else if (squares.size() >= 3){
-			// Troca três cartas de quadrado e devolve elas para o baralho
-			for (int i = 0; i < 3; i++){
+
+		if (squares.size() >= 3){
+			for (i = 0; i < 3; i++){
 				useCards(squares, territoryCardDeck, map, player);
 			}
 		}
 
 		else if (triangles.size() >= 3){
-			// Troca três cartas de triângulo e devolve elas para o baralho
-			for (int i = 0; i < 3; i++){
+			for (i = 0; i < 3; i++){
 				useCards(triangles, territoryCardDeck, map, player);
 			}
 		}
 
+		 else if (circles.size() >= 3){
+			for (i = 0; i < 3; i++){
+				useCards(circles, territoryCardDeck, map, player);
+			}
+		}
 		else {
 			if(jokers.size() == 0 );{
-				// Troca uma de cada e devolve elas para o baralho
-				useCards(circles, territoryCardDeck, map, player);
 				useCards(squares, territoryCardDeck, map, player);
+				useCards(circles, territoryCardDeck, map, player);
 				useCards(triangles, territoryCardDeck, map, player);
 			}
 			if (jokers.size() == 1 ){
 				useCards(jokers, territoryCardDeck, map, player);
-				if (circles.size() == 0){
-					// Remove um coringa, um quadrado e um triângulo
+				if (squares.size() == 0){
+					useCards(triangles, territoryCardDeck, map, player);
+					useCards(circles, territoryCardDeck, map, player);
+				}
+				 else if (circles.size() == 0){
 					useCards(squares, territoryCardDeck, map, player);
 					useCards(triangles, territoryCardDeck, map, player);
-					// break;
-				}
-			
-				else if (squares.size() == 0){
-					// Remove um coringa, um círculo e um triângulo
-					useCards(circles, territoryCardDeck, map, player);
-					useCards(triangles, territoryCardDeck, map, player);
-				}
-
+				 }
 				else{
-					// Remove um coringa, um círculo e um quadrado
-					useCards(circles, territoryCardDeck, map, player);
 					useCards(squares, territoryCardDeck, map, player);
+					useCards(circles, territoryCardDeck, map, player);
 				}
 
 			}
 			if (jokers.size() == 2){
-				// Remove dois coringas e uma carta de qualquer formato
 				useCards(jokers, territoryCardDeck, map, player);
 				useCards(jokers, territoryCardDeck, map, player);
-				if (circles.size() == 0 && squares.size() == 0){
+				if (triangles.size() == 1 || circles.size() == 0 && squares.size() == 0){
 					useCards(triangles, territoryCardDeck, map, player);
 				}
 
-				else if (squares.size() == 0 && triangles.size() == 0){
+				else if (circles.size() == 1 || squares.size() == 0 && triangles.size() == 0){
 					useCards(circles, territoryCardDeck, map, player);
 				}
 
-				else if (circles.size() == 0 && triangles.size() == 0){
+				else if (squares.size() == 1 || circles.size() == 0 && triangles.size() == 0){
 					useCards(squares, territoryCardDeck, map, player);
-				}
-
-				else if (circles.size() == 1){
-					useCards(circles, territoryCardDeck, map, player);
-				}
-
-				else if (squares.size() == 1){
-					useCards(squares, territoryCardDeck, map, player);
-				}
-
-				else{
-					useCards(triangles, territoryCardDeck, map, player);
 				}
 			}
 
 		}
-
-		Integer qtd;
-		if (numDeTrocas <= 5) {
-			qtd = 4 + (2 * (numDeTrocas));
+		
+		if (num <= 5 ) {
+			qtd = 4 + (2 * (num));
 		}
 
-		else if (numDeTrocas == 6) {
+		else if (num == 6) {
 			qtd = 15;
 		}
-		else {
-			int diferenca = numDeTrocas - 6;
-			qtd = 15 + (diferenca * 5);
+		else if (num > 6) {
+			qtd += 5;
 		}
-
 		return qtd;
 	}
 
@@ -268,13 +249,10 @@ class Game implements Observed{
 		lista.remove(terrCard);
 
 		territoryCardDeck.returnCard(terrCard);
-
-		// Se o território da carta pertence ao jogador, aumenta em 2 a quantidade de exércitos
 		if (terrCard.getName() != null){
 			Territory territory = map.findTerritory(terrCard.getName());
 			if (territory != null && territory.getOwner() == player) {
 				territory.changeNumArmies(2);
-				//Atualiza os territórios modificados
 				alt1 = territory;
 				alt2 = null;
 				this.notifyObservers();
@@ -297,15 +275,9 @@ class Game implements Observed{
             if (dominaCont(turn, continents[numContinent])){
                 territorios = getTerritoriosCont(continents[numContinent]);
                 qtd = getExCont(turn, continents[numContinent]);
-
-				 // Embaralha a lista de territórios
 				Collections.shuffle(territorios);
-
-				// Pega apenas o primeiro território da lista (aleatório)
 				Territory randomTerritory = territorios.get(0);
-
 				randomTerritory.changeNumArmies(qtd);
-				// Atualiza os territórios modificados
 				alt1 = randomTerritory;
 				alt2 = null;
 				this.notifyObservers();
@@ -313,24 +285,21 @@ class Game implements Observed{
         }
     }
 
-    // Retorna se o jogador domina o continente
     public boolean dominaCont(int turn, String continent){
         return map.findContinent(continent).checkContinentDomain(game.getPlayerTurn(turn));
     }
 
-    // Retorna lista de nomes dos territórios de um continente
     public List<Territory> getTerritoriosCont(String c){
         List<Territory> listaTerritorios = map.findContinent(c).getTerritories();
         return listaTerritorios;
     }
 
-     // Retorna quantidade de exércitos a posicionar no continente
      public Integer getExCont(int turn, String c){
         Integer qtd = map.findContinent(c).getBonusArmies();
         return qtd;
     }
 
-    // Adiciona jogador na partida
+
     public boolean addPlayer(Player jogador){
         for (Player j: players){
             if (j.getName().equals(jogador.getName()) || j.getColor() == jogador.getColor())
@@ -342,141 +311,96 @@ class Game implements Observed{
         return true;
     }
 
-    //Valida um ataque
 	public boolean verifyAttack(Territory tAtacante, Territory tDefensor) {
-		// Verifica se o atacante tem mais de um exército e se o defensor não é dele
 		if(tAtacante.getArmies() > 1 && tAtacante.getOwner() != tDefensor.getOwner())
 			return true;
 		return false;
 	}
 
-    //Realiza um ataque
-	public int[] makeAttack(Territory atacante, Territory defensor, Integer numAtaque, Integer numDefesa) {
+	public int[] makeAttack(Territory attacker, Territory defender, Integer numAttack, Integer numDefense) {
+        if (!verifyAttack(attacker, defender)) {
+            System.out.println("Não foi possível realizar o ataque");
+            return new int[]{0, 0, 0, 0, 0, 0};
+        }
 
-		if(verifyAttack(atacante, defensor)){
+		int qtdAtaque = attacker.getArmies() - 1;
+		if  (qtdAtaque > 3) {qtdAtaque = 3;}
 
-			int qtdAtaque = atacante.getArmies() - 1;
-			if  (qtdAtaque > 3) {qtdAtaque = 3;}
+		int qtdDefesa = defender.getArmies();
+		if  (qtdDefesa > 3) {qtdDefesa = 3;}
 
-			int qtdDefesa = defensor.getArmies();
-			if  (qtdDefesa > 3) {qtdDefesa = 3;}
+        int[] attackDice = rollDice(numAttack, attacker.getArmies());
+        int[] defenseDice = rollDice(numDefense, defender.getArmies());
 
-			//Cria os arrays de dados
-			int[] dadosAtaque = new int[3];
-			int[] dadosDefesa = new int[3];
-			//Cria um dado
-			Dado dado = new Dado();
-			//Variáveis para contar quantos exércitos foram perdidos
-			int qtdAtaquePerdidos = 0;
-			int qtdDefesaPerdidos = 0;
+        Arrays.sort(attackDice);
+        Arrays.sort(defenseDice);
 
+        int attackLosses = calculateLosses(attackDice, defenseDice);
+        int defenseLosses = MAX_DICE - attackLosses;
 
-			int i;
+		attacker.setArmies(attacker.getArmies() - attackLosses);
+		defender.setArmies(defender.getArmies() - defenseLosses);
 
-			if (numAtaque != 0){
-				for (i = 0;i < 3;i++) {
-					if (i < qtdAtaque)
-						dadosAtaque[i] = numAtaque;
-					else
-						dadosAtaque[i] = 0;
-				}
-			}
-			else{
-				for (i = 0;i < 3;i++) {
-					if (i < qtdAtaque)
-						dadosAtaque[i] = dado.throwDice();
-					else
-						dadosAtaque[i] = 0;
-				}
-				
-				Arrays.sort(dadosAtaque);
-			}
+		alt1 = attacker;
+		alt2 = defender;
 
-			
-			if (numDefesa != 0){
-				for (i = 0;i < 3;i++) {
-					if (i < qtdDefesa)
-						dadosDefesa[i] = numDefesa;
-					else
-						dadosDefesa[i] = 0;
-				}
-			}
-			else{
-				for (i = 0;i < 3;i++) {
-					if (i < qtdDefesa)
-						dadosDefesa[i] = dado.throwDice();
-					else
-						dadosDefesa[i] = 0;
-				}
-				
-				Arrays.sort(dadosDefesa);
-			}
+        if (defender.getArmies() == 0) {
+            handleConqueredTerritory(attacker, defender);
+        }
 
-			
-			for (i = 0;i < 3;i++) {
-				if (dadosAtaque[i] != 0 && dadosDefesa[i] != 0){
-					if (dadosAtaque[i] > dadosDefesa[i]) {
-						qtdDefesaPerdidos++;
-					}
-					else {
-						qtdAtaquePerdidos++;
-					}
-				}
-			}
+        this.notifyObservers();
 
-			
-			atacante.setArmies(atacante.getArmies() - qtdAtaquePerdidos);
-			defensor.setArmies(defensor.getArmies() - qtdDefesaPerdidos);
+        int[] result = new int[MAX_DICE * 2];
+        for (int i = 0; i < MAX_DICE; i++) {
+            result[i] = attackDice[i];
+            result[i + MAX_DICE] = defenseDice[i];
+        }
 
-			
-			alt1 = atacante;
-			alt2 = defensor;
+        return result;
+    }
 
-			
-			if (defensor.getArmies()==0) {
-				
-				defensor.getOwner().loseTerritory(defensor);
+	private int[] rollDice(Integer numDice, int armies) {
+        int[] dice = new int[MAX_DICE];
+        Dado dado = new Dado();
 
-				if (defensor.getOwner().getTerritoryNumber() == 0){
-					
-					defensor.getOwner().setEliminatedThisRound(true);
-					defensor.getOwner().setJMatou(atacante.getOwner());
-					APIController.getInstance().addEliminated(defensor.getOwner().getName());
-				}
+        for (int i = 0; i < MAX_DICE; i++) {
+            dice[i] = (numDice != null && i < numDice) ? numDice : dado.throwDice();
+        }
 
-				defensor.setOwner(atacante.getOwner());
+        return dice;
+    }
 
-				atacante.getOwner().addTerritorio(defensor);
+	private int calculateLosses(int[] attackDice, int[] defenseDice) {
+        int losses = 0;
 
-				atacante.getOwner().setConqueredThisRound(true);
+        for (int i = 0; i < MAX_DICE; i++) {
+            if (attackDice[i] > defenseDice[i]) {
+                losses++;
+            }
+        }
 
-				int qtdPassada = atacante.getArmies() - 1;
-				if (qtdPassada > 3) {qtdPassada = 3;}
+        return losses;
+    }
 
-				atacante.changeNumArmies(-qtdPassada);
-				defensor.setArmies(qtdPassada);
-			}
+	private void handleConqueredTerritory(Territory attacker, Territory defender) {
+        defender.getOwner().loseTerritory(defender);
 
-			//Notifica os observadores
-			this.notifyObservers();
+        if (defender.getOwner().getTerritoryNumber() == 0) {
+            defender.getOwner().setEliminatedThisRound(true);
+			defender.getOwner().setJMatou(attacker.getOwner());
+			APIController.getInstance().addEliminated(defender.getOwner().getName());
+        }
 
-			int[] dados = new int[6];
-			for (i = 0;i < 3;i++) {
-				dados[i] = dadosAtaque[i];
-			}
-			for (int j = 0;j < 3;j++) {
-				dados[i] = dadosDefesa[j];
-				i++;
-			}
+        defender.setOwner(attacker.getOwner());
+        attacker.getOwner().addTerritorio(defender);
+        attacker.getOwner().setConqueredThisRound(true);
 
-			return dados;
-		}
+        int armiesToMove = attacker.getArmies() - 1;
+		if (armiesToMove > 3) {armiesToMove = 3;}
+        attacker.changeNumArmies(-armiesToMove);
+        defender.setArmies(armiesToMove);
+    }
 
-		System.out.println("Nao foi possivel realizar o ataque");
-		return new int [] {0,0,0,0,0,0};
-	}
-
-	// Método para reposicionar exércitos
 	public void reposicionarExercitos(Territory origem, Territory destino, Integer qtd){
 		origem.changeNumArmies(-qtd);
 		destino.changeNumArmies(qtd);
@@ -485,30 +409,25 @@ class Game implements Observed{
 		this.notifyObservers();
 	}
 
-    // Método para reiniciar o jogo
 	public void restartGame(ObjectiveCardDeck objectiveCardDeck, TerritoryCardDeck territoryCardDeck){
 
 		for (Player player: players){
-			// Devolve objetivo do jogador para lista
 			objectiveCardDeck.returnObjectiveCard(player.getObjective());
 	
-			// Devolve cartas do jogador para lista
+
 			for (TerritoryCard terrCard: player.getCard()){
 				territoryCardDeck.returnCard(terrCard);
 			}
 			player.reset();
 		}
-		// Redistribui territórios
 		map.distributeTerritories(players);
 
-		// Redistribui objetivos
 		Collections.shuffle(players);
 		for(Player player : players) {
 			objectiveCardDeck.shuffleObjective(player);
 		}
 	}
 
-	//Retorna o jogador pelo nome
 	public Player getPlayer(String name) {
 		for(Player player : players) {
 			if (player.getName().equals(name)) {
@@ -519,6 +438,3 @@ class Game implements Observed{
 	}
 
 }
-
-
-

@@ -34,4 +34,3 @@ class ConquerThreeContinentsObjectiveCard extends ObjectiveCard {
      }
     
 }
-
