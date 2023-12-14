@@ -8,11 +8,8 @@ import Model.TerritoryCard;
 
 class TerritoryCardView {
 
-	//Construtor
-	public TerritoryCardView(){
-
-	}
-	//Desenha as imagens das cartas
+	public TerritoryCardView(){}
+    
 	static public void drawTerritoryCard(Graphics2D g2d, List<TerritoryCard> cards) {
 
 		int dimensionWidth = 150;

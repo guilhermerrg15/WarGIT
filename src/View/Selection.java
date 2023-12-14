@@ -13,22 +13,16 @@ class Selection extends JPanel {
 	
 	public static Selection Selection = null;
 	
-    // Escrever nome do jogador
-	JTextField textField = new JTextField("Insira o jogador",20);
+	JTextField textField = new JTextField("",20);
 
-    // Escolher cor do jogador
 	JComboBox<PlayerColor> comboBox = new JComboBox<>(PlayerColor.values());
 
-	// Guarda o nome escolhido
 	private String nome; 
 
-	// Adicionar fundo da tela inicial
 	Image background;
 
-    // Componente gráfico da tela inicial
 	Graphics2D graphic;
 
-	// Construtor
 	public Selection() {
 		add(textField);
 		add(comboBox);
@@ -37,11 +31,11 @@ class Selection extends JPanel {
 			background = ImageIO.read(new File ("resources/imagens/war_tabuleiro_fundo.png"));
 		}
 		catch (IOException e) {
-			System.out.println("Erro na leitura do plano de fundo\n");
+			System.out.println("erro na leitura\n");
 		}
 	}
 
-	// Desenha a imagem de fundo
+
 	public void paintComponent(Graphics graphic) {
 		super.paintComponent(graphic);
 		this.graphic = (Graphics2D) graphic;
@@ -49,22 +43,21 @@ class Selection extends JPanel {
 
 	}
 
-	// Pega o nome do jogador
 	private void setNome() {
 		if (!textField.getText().equals("Nome do jogador")) {
 			this.nome = textField.getText();
 		}
 	}
+
+	public PlayerColor getCor() {
+
+		return (PlayerColor) comboBox.getSelectedItem();
+	}
 	
-	// Devolve o nome que está na textField
 	public String getNome() {
 		setNome();
 		return nome;
 	}
 
-	// Devolve a cor que está no comboBox
-	public PlayerColor getCor() {
-		// setCor();
-		return (PlayerColor) comboBox.getSelectedItem();
-	}
+	
 }

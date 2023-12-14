@@ -11,7 +11,6 @@ public class ViewAPI {
 
 	String[] nomesJogadores = new String[6];
 
-    // Singleton
     StartView start = StartView.getStartView();
 
     public void showWarning(String warn){
@@ -59,12 +58,9 @@ public class ViewAPI {
         MapView.getMapView().clearDices();
     }
 
-
-	//Verifica se o jogador ganhou a partida
 	public void playerWon(String name, PlayerColor color){
 		String colorName;
 
-		//Verifica a cor do jogador
 		switch (color) {
 			case AMARELO:
                 colorName = "Amarelo";
