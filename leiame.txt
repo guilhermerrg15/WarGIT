@@ -1,11 +1,13 @@
 Integrantes:
 Guilherme Ricardo Rezende Gomes: 2011280
-Isabella 
-Thalita
+Isabella Gomes Pereira: 2110317
+Thalita Rangel Bullos: 2020273
 
-Rodar no metodo main em Main.java localizada no source folder src, no pacote Controller
+Rodar no metodo main em Main.java localizada no source folder src, no pacote Controller:
+2011280-2110317-2020273/src/Controller/Main.java
 
-Link para os vídeos:
+
+Link para os vídeos: https://drive.google.com/drive/folders/12Q1ZDoo6I60dbr6WobxK9sjnSfNEq8Wn?usp=sharing
 
 
 Caso tenha algum problema para acessar, mande um email para: guilhermerrg15@gmail.com
