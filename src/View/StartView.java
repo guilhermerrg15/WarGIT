@@ -8,8 +8,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import Controller.APIController;
-import Model.API;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,8 +35,6 @@ class StartView extends JPanel {
         add(Box.createVerticalStrut(650));
 
         start.setAlignmentX(CENTER_ALIGNMENT);
-        continueGame.setAlignmentX(CENTER_ALIGNMENT);
-
 
         start.addActionListener(new ActionListener() {
             // Implementar ação do botão de iniciar jogo
@@ -49,12 +45,6 @@ class StartView extends JPanel {
             }
         });
 
-        // continueGame.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         APIController.getInstance().clickedLoad();
-        //     }
-        // });
 
         // Carregar fundo da tela inicial
 		try {
@@ -68,8 +58,6 @@ class StartView extends JPanel {
         add(Box.createVerticalGlue()); // Espaçamento acima dos botões
         add(start);
         add(Box.createVerticalStrut(10)); // Espaçamento entre os botões
-        add(continueGame);
-        add(Box.createVerticalGlue()); // Espaçamento abaixo dos botões
 
     }
 
