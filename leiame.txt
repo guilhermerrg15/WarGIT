@@ -1,0 +1,11 @@
+Integrantes:
+Guilherme Ricardo Rezende Gomes: 2011280
+Isabella 
+Thalita
+
+Rodar no metodo main em Main.java localizada no source folder src, no pacote Controller
+
+Link para os vídeos:
+
+
+Caso tenha algum problema para acessar, mande um email para: guilhermerrg15@gmail.com
